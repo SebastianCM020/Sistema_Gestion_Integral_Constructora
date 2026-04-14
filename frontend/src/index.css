@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { @apply border-gray-700; }
+  body { @apply bg-icaro-950 text-gray-100; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-icaro-700 hover:bg-icaro-500 text-white font-semibold py-2 px-4 rounded-lg
+           transition-all duration-200 active:scale-95;
+  }
+  .card {
+    @apply bg-gray-800/60 backdrop-blur border border-gray-700/50 rounded-xl p-6;
+  }
+}

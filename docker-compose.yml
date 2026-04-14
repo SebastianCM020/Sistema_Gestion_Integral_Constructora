@@ -1,0 +1,98 @@
+version: '3.9'
+
+services:
+
+  # ─────────────────────────────────────────────
+  # BASE DE DATOS — PostgreSQL 17
+  # ─────────────────────────────────────────────
+  db:
+    image: postgres:17-alpine
+    container_name: icaro_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: icaro_user
+      POSTGRES_PASSWORD: icaro_secret
+      POSTGRES_DB: Icaro_System
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Script de inicialización: restaura el dump al arrancar por primera vez
+      - ./docs/init-db:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U icaro_user -d Icaro_System"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - icaro_net
+
+  # ─────────────────────────────────────────────
+  # BACKEND — Node.js + Express + Prisma
+  # ─────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: icaro_backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    ports:
+      - "3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - icaro_net
+
+  # ─────────────────────────────────────────────
+  # FRONTEND — React.js + Vite (PWA)
+  # ─────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: icaro_frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - icaro_net
+
+  # ─────────────────────────────────────────────
+  # pgADMIN — Administración visual de PostgreSQL
+  # ─────────────────────────────────────────────
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: icaro_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@icaro.dev
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    networks:
+      - icaro_net
+
+# ─────────────────────────────────────────────
+# VOLÚMENES Y REDES
+# ─────────────────────────────────────────────
+volumes:
+  postgres_data:
+    name: icaro_postgres_data
+
+networks:
+  icaro_net:
+    name: icaro_network
+    driver: bridge

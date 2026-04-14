@@ -1,0 +1,30 @@
+# ─── Node ────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-error.log
+
+# ─── Entornos ─────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.env
+
+# ─── Build outputs ────────────────────────────
+frontend/dist/
+frontend/.vite/
+backend/dist/
+
+# ─── Docker ───────────────────────────────────
+.docker/
+
+# ─── Prisma (conservar migrations pero ignorar client generado) ──
+backend/node_modules/.prisma/
+
+# ─── OS ───────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.lnk
+
+# ─── VS Code ──────────────────────────────────
+.vscode/settings.json
+.vscode/launch.json
