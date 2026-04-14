@@ -1,0 +1,265 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// schema.prisma — Sistema ICARO CONSTRUCTORES BMGM S.A.S.
+// Basado en: diagramas_arquitectura.md (Sección 2.1 — Diagrama ER completo)
+// ─────────────────────────────────────────────────────────────────────────────
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── SEGURIDAD Y ACCESO ────────────────────────────────────────────────
+
+model Rol {
+  id          Int       @id @default(autoincrement())
+  nombre      String    @unique @db.VarChar(50)
+  descripcion String?   @db.Text
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  usuarios    Usuario[]
+
+  @@map("roles")
+}
+
+model Usuario {
+  id           String    @id @default(uuid()) @db.Uuid
+  nombre       String    @db.VarChar(100)
+  apellido     String    @db.VarChar(100)
+  email        String    @unique @db.VarChar(150)
+  passwordHash String    @map("password_hash") @db.VarChar(255)
+  idRol        Int       @map("id_rol")
+  activo       Boolean   @default(true)
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  rol                    Rol                       @relation(fields: [idRol], references: [id])
+  asignaciones           AsignacionProyectoUsuario[]
+  avancesRegistrados     AvanceObra[]              @relation("ResidenteAvance")
+  avancesValidados       AvanceObra[]              @relation("SuperintendenteAvance")
+  requerimientosSolicitados RequerimientoCompra[]  @relation("SolicitanteReq")
+  requerimientosAprobados   RequerimientoCompra[]  @relation("AprobadorReq")
+  cierresMensuales       CierreMensual[]
+  planillasGeneradas     PlanillaPdf[]
+  auditLogs              AuditLog[]
+
+  @@map("usuarios")
+}
+
+// ─── PROYECTOS ─────────────────────────────────────────────────────────
+
+model Proyecto {
+  id                 String    @id @default(uuid()) @db.Uuid
+  codigo             String    @unique @db.VarChar(30)
+  nombre             String    @db.VarChar(200)
+  descripcion        String?   @db.Text
+  entidadContratante String?   @map("entidad_contratante") @db.VarChar(200)
+  numeroContrato     String?   @map("numero_contrato") @db.VarChar(50)
+  presupuestoTotal   Decimal   @map("presupuesto_total") @db.Decimal(14, 2)
+  fechaInicio        DateTime  @map("fecha_inicio") @db.Date
+  fechaFinPrevista   DateTime  @map("fecha_fin_prevista") @db.Date
+  estado             String    @default("ACTIVO") @db.VarChar(20)
+  createdAt          DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  asignaciones       AsignacionProyectoUsuario[]
+  rubros             Rubro[]
+  avances            AvanceObra[]
+  requerimientos     RequerimientoCompra[]
+  inventarios        InventarioProyecto[]
+  cierres            CierreMensual[]
+
+  @@map("proyectos")
+}
+
+model AsignacionProyectoUsuario {
+  id            String    @id @default(uuid()) @db.Uuid
+  idUsuario     String    @map("id_usuario") @db.Uuid
+  idProyecto    String    @map("id_proyecto") @db.Uuid
+  fechaInicio   DateTime  @map("fecha_inicio") @db.Date
+  fechaFin      DateTime  @map("fecha_fin") @db.Date
+  accessMode    String    @default("READ_WRITE") @map("access_mode") @db.VarChar(20)
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  usuario        Usuario  @relation(fields: [idUsuario], references: [id])
+  proyecto       Proyecto @relation(fields: [idProyecto], references: [id])
+
+  @@map("asignacion_proyecto_usuario")
+}
+
+// ─── MÓDULO TÉCNICO — OBRA ─────────────────────────────────────────────
+
+model Rubro {
+  id                  String    @id @default(uuid()) @db.Uuid
+  idProyecto          String    @map("id_proyecto") @db.Uuid
+  codigo              String    @db.VarChar(30)
+  descripcion         String    @db.Text
+  unidad              String    @db.VarChar(20)
+  precioUnitario      Decimal   @map("precio_unitario") @db.Decimal(12, 4)
+  cantidadPresupuestada Decimal @map("cantidad_presupuestada") @db.Decimal(12, 4)
+  cantidadEjecutada   Decimal   @default(0) @map("cantidad_ejecutada") @db.Decimal(12, 4)
+  activo              Boolean   @default(true)
+  createdAt           DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  proyecto   Proyecto    @relation(fields: [idProyecto], references: [id])
+  avances    AvanceObra[]
+
+  @@map("rubros")
+}
+
+model AvanceObra {
+  id                String    @id @default(uuid()) @db.Uuid
+  idProyecto        String    @map("id_proyecto") @db.Uuid
+  idRubro           String    @map("id_rubro") @db.Uuid
+  idResidente       String    @map("id_residente") @db.Uuid
+  idSuperintendente String?   @map("id_superintendente") @db.Uuid
+  cantidadAvance    Decimal   @map("cantidad_avance") @db.Decimal(12, 4)
+  fechaRegistro     DateTime  @map("fecha_registro") @db.Date
+  // Estados: PENDING_SYNC | SYNCED | VALIDATED | REJECTED
+  estado            String    @default("PENDING_SYNC") @db.VarChar(20)
+  syncTimestamp     DateTime? @map("sync_timestamp") @db.Timestamptz
+  notas             String?   @db.Text
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  proyecto          Proyecto  @relation(fields: [idProyecto], references: [id])
+  rubro             Rubro     @relation(fields: [idRubro], references: [id])
+  residente         Usuario   @relation("ResidenteAvance", fields: [idResidente], references: [id])
+  superintendente   Usuario?  @relation("SuperintendenteAvance", fields: [idSuperintendente], references: [id])
+  evidencias        EvidenciaFotografica[]
+
+  @@map("avance_obra")
+}
+
+model EvidenciaFotografica {
+  id               String    @id @default(uuid()) @db.Uuid
+  idAvance         String    @map("id_avance") @db.Uuid
+  urlImagen        String    @map("url_imagen") @db.VarChar(500)
+  storageKey       String    @map("storage_key") @db.VarChar(300)
+  sizeBytes        Int?      @map("size_bytes")
+  mimeType         String?   @map("mime_type") @db.VarChar(50)
+  timestampCaptura DateTime? @map("timestamp_captura") @db.Timestamptz
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  avance  AvanceObra @relation(fields: [idAvance], references: [id], onDelete: Cascade)
+
+  @@map("evidencia_fotografica")
+}
+
+// ─── MÓDULO ADMINISTRATIVO — COMPRAS E INVENTARIO ──────────────────────
+
+model Material {
+  id        String    @id @default(uuid()) @db.Uuid
+  codigo    String    @unique @db.VarChar(30)
+  nombre    String    @db.VarChar(200)
+  unidad    String    @db.VarChar(20)
+  activo    Boolean   @default(true)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  detallesRequerimiento DetalleRequerimiento[]
+  inventarios           InventarioProyecto[]
+
+  @@map("materiales")
+}
+
+model RequerimientoCompra {
+  id                  String    @id @default(uuid()) @db.Uuid
+  idProyecto          String    @map("id_proyecto") @db.Uuid
+  idSolicitante       String    @map("id_solicitante") @db.Uuid
+  idAprobador         String?   @map("id_aprobador") @db.Uuid
+  // Estados: EN_REVISION | APROBADO | RECHAZADO | RECIBIDO
+  estado              String    @default("EN_REVISION") @db.VarChar(20)
+  justificacion       String?   @db.Text
+  comentarioRechazo   String?   @map("comentario_rechazo") @db.Text
+  fechaSolicitud      DateTime  @default(now()) @map("fecha_solicitud") @db.Timestamptz
+  fechaAprobacion     DateTime? @map("fecha_aprobacion") @db.Timestamptz
+  createdAt           DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  proyecto    Proyecto  @relation(fields: [idProyecto], references: [id])
+  solicitante Usuario   @relation("SolicitanteReq", fields: [idSolicitante], references: [id])
+  aprobador   Usuario?  @relation("AprobadorReq", fields: [idAprobador], references: [id])
+  detalles    DetalleRequerimiento[]
+
+  @@map("requerimiento_compra")
+}
+
+model DetalleRequerimiento {
+  id                 String   @id @default(uuid()) @db.Uuid
+  idRequerimiento    String   @map("id_requerimiento") @db.Uuid
+  idMaterial         String   @map("id_material") @db.Uuid
+  cantidadSolicitada Decimal  @map("cantidad_solicitada") @db.Decimal(12, 4)
+  cantidadRecibida   Decimal  @default(0) @map("cantidad_recibida") @db.Decimal(12, 4)
+
+  requerimiento RequerimientoCompra @relation(fields: [idRequerimiento], references: [id], onDelete: Cascade)
+  material      Material            @relation(fields: [idMaterial], references: [id])
+
+  @@map("detalle_requerimiento")
+}
+
+model InventarioProyecto {
+  idMaterial           String   @map("id_material") @db.Uuid
+  idProyecto           String   @map("id_proyecto") @db.Uuid
+  cantidadDisponible   Decimal  @default(0) @map("cantidad_disponible") @db.Decimal(12, 4)
+  ultimaActualizacion  DateTime @default(now()) @map("ultima_actualizacion") @db.Timestamptz
+
+  material  Material  @relation(fields: [idMaterial], references: [id])
+  proyecto  Proyecto  @relation(fields: [idProyecto], references: [id])
+
+  @@id([idMaterial, idProyecto])
+  @@map("inventario_proyecto")
+}
+
+// ─── MÓDULO CONTABLE Y REPORTES ────────────────────────────────────────
+
+model CierreMensual {
+  id           String    @id @default(uuid()) @db.Uuid
+  idProyecto   String    @map("id_proyecto") @db.Uuid
+  idContador   String    @map("id_contador") @db.Uuid
+  mesAnio      String    @map("mes_anio") @db.VarChar(7) // "YYYY-MM"
+  // Estados: ABIERTO | CERRADO
+  estadoCierre String    @default("ABIERTO") @map("estado_cierre") @db.VarChar(10)
+  montoTotal   Decimal   @default(0) @map("monto_total") @db.Decimal(14, 2)
+  hashSeguridad String?  @map("hash_seguridad") @db.VarChar(64)
+  fechaCierre  DateTime? @map("fecha_cierre") @db.Timestamptz
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  proyecto  Proyecto      @relation(fields: [idProyecto], references: [id])
+  contador  Usuario       @relation(fields: [idContador], references: [id])
+  planillas PlanillaPdf[]
+
+  @@map("cierre_mensual")
+}
+
+model PlanillaPdf {
+  id           String    @id @default(uuid()) @db.Uuid
+  idCierre     String    @map("id_cierre") @db.Uuid
+  idGenerador  String    @map("id_generador") @db.Uuid
+  urlArchivo   String?   @map("url_archivo") @db.VarChar(500)
+  storageKey   String?   @map("storage_key") @db.VarChar(300)
+  // Estados: PENDING | GENERATING | READY | ERROR
+  estadoGen    String    @default("PENDING") @map("estado_gen") @db.VarChar(15)
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  cierre     CierreMensual @relation(fields: [idCierre], references: [id])
+  generador  Usuario       @relation(fields: [idGenerador], references: [id])
+
+  @@map("planilla_pdf")
+}
+
+// ─── AUDITORÍA INMUTABLE ───────────────────────────────────────────────
+
+model AuditLog {
+  id          BigInt    @id @default(autoincrement())
+  tabla       String    @db.VarChar(60)
+  operacion   String    @db.VarChar(10) // INSERT | UPDATE | DELETE
+  idRegistro  String?   @map("id_registro") @db.Uuid
+  idUsuario   String?   @map("id_usuario") @db.Uuid
+  datosAntes  Json?     @map("datos_antes")
+  datosDespues Json?    @map("datos_despues")
+  ipOrigen    String?   @map("ip_origen") @db.VarChar(45)
+  timestamp   DateTime  @default(now()) @db.Timestamptz
+
+  usuario  Usuario? @relation(fields: [idUsuario], references: [id], onDelete: SetNull)
+
+  @@map("audit_log")
+}
