@@ -3,6 +3,7 @@ const express = require('express');
 const cors    = require('cors');
 const helmet  = require('helmet');
 const morgan  = require('morgan');
+const { auditMiddleware } = require('./middlewares/audit.middleware');
 
 const app  = express();
 const PORT = process.env.PORT || 3001;
@@ -12,6 +13,8 @@ app.use(helmet());
 app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
 app.use(morgan('dev'));
 app.use(express.json());
+// Auditoría automática de acciones CUD en todas las rutas /api/v1
+app.use('/api/v1', auditMiddleware);
 
 // ── Health check ────────────────────────────────────────────────────────────
 app.get('/health', (_req, res) => {
@@ -23,9 +26,10 @@ app.get('/health', (_req, res) => {
   });
 });
 
-// ── Rutas principales (se implementarán por módulo) ─────────────────────────
-// app.use('/api/v1/auth',      require('./routes/auth.routes'));
-// app.use('/api/v1/proyectos', require('./routes/proyectos.routes'));
+// ── Rutas principales ───────────────────────────────────────────────────────
+app.use('/api/v1/auth',      require('./routes/auth.routes'));
+app.use('/api/v1/users',     require('./routes/users.routes'));     // Act. 8 — CRUD usuarios
+app.use('/api/v1/proyectos', require('./routes/proyectos.routes')); // Act. 9 — Acceso por proyecto
 // app.use('/api/v1/avances',   require('./routes/avances.routes'));
 // app.use('/api/v1/compras',   require('./routes/compras.routes'));
 // app.use('/api/v1/reportes',  require('./routes/reportes.routes'));

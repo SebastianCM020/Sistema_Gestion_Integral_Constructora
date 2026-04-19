@@ -1,0 +1,43 @@
+export const mockAuxCatalogs = [
+  {
+    catalogId: 'project-zones',
+    catalogName: 'Zonas de proyecto',
+    description: 'Clasifica frentes y sectores operativos para reportes, inventario y consumo.',
+    isEditable: true,
+    supportsCode: true,
+    supportsSortOrder: true,
+    updatedAt: '2026-04-11T09:20:00.000Z',
+    updatedBy: 'Ana Beltrán',
+    items: [
+      { itemId: 'zone-1', itemCode: 'EST', itemLabel: 'Estructura', isActive: true, sortOrder: 1, updatedAt: '2026-04-11T09:20:00.000Z', updatedBy: 'Ana Beltrán' },
+      { itemId: 'zone-2', itemCode: 'ACA', itemLabel: 'Acabados', isActive: true, sortOrder: 2, updatedAt: '2026-04-10T12:00:00.000Z', updatedBy: 'Carlos Mendoza' },
+      { itemId: 'zone-3', itemCode: 'URB', itemLabel: 'Urbanismo', isActive: false, sortOrder: 3, updatedAt: '2026-04-08T15:45:00.000Z', updatedBy: 'Ana Beltrán' },
+    ],
+  },
+  {
+    catalogId: 'request-priorities',
+    catalogName: 'Prioridades de requerimiento',
+    description: 'Ordena la criticidad visible para compras, revisión y reportes operativos.',
+    isEditable: true,
+    supportsCode: true,
+    supportsSortOrder: true,
+    updatedAt: '2026-04-09T14:10:00.000Z',
+    updatedBy: 'Laura Paredes',
+    items: [
+      { itemId: 'priority-1', itemCode: 'ALTA', itemLabel: 'Alta prioridad', isActive: true, sortOrder: 1, updatedAt: '2026-04-09T14:10:00.000Z', updatedBy: 'Laura Paredes' },
+      { itemId: 'priority-2', itemCode: 'MEDIA', itemLabel: 'Prioridad media', isActive: true, sortOrder: 2, updatedAt: '2026-04-07T08:25:00.000Z', updatedBy: 'Ana Beltrán' },
+      { itemId: 'priority-3', itemCode: 'BAJA', itemLabel: 'Baja prioridad', isActive: true, sortOrder: 3, updatedAt: '2026-04-07T08:25:00.000Z', updatedBy: 'Ana Beltrán' },
+    ],
+  },
+  {
+    catalogId: 'document-origin-tags',
+    catalogName: 'Etiquetas de origen documental',
+    description: 'Permite clasificar el origen de documentos o soportes técnicos según el flujo de carga.',
+    isEditable: true,
+    supportsCode: true,
+    supportsSortOrder: false,
+    updatedAt: '2026-04-04T10:40:00.000Z',
+    updatedBy: 'Diego Rojas',
+    items: [],
+  },
+];
