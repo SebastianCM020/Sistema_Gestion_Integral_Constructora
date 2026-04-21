@@ -44,13 +44,16 @@ app.use((err, _req, res, _next) => {
 });
 
 // ── Inicio del servidor ─────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`
-  ╔═══════════════════════════════════════════════╗
-  ║   ICARO BACKEND  — Puerto ${PORT}                ║
-  ║   Env: ${process.env.NODE_ENV}                        ║
-  ╚═══════════════════════════════════════════════╝
-  `);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`
+    ╔═══════════════════════════════════════════════╗
+    ║   ICARO BACKEND  — Puerto ${PORT}                ║
+    ║   Env: ${process.env.NODE_ENV}                        ║
+    ╚═══════════════════════════════════════════════╝
+    `);
+  });
+}
+
 
 module.exports = app;
