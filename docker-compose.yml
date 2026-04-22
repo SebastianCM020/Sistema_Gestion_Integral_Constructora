@@ -4,9 +4,12 @@ services:
 
   # ─────────────────────────────────────────────
   # BASE DE DATOS — PostgreSQL 17
+  # Usa Dockerfile propio para convertir CRLF→LF en scripts de init
   # ─────────────────────────────────────────────
   db:
-    image: postgres:17-alpine
+    build:
+      context: ./docs/init-db
+      dockerfile: Dockerfile
     container_name: icaro_db
     restart: unless-stopped
     environment:
@@ -15,8 +18,8 @@ services:
       POSTGRES_DB: Icaro_System
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      # Script de inicialización: restaura el dump al arrancar por primera vez
-      - ./docs/init-db:/docker-entrypoint-initdb.d
+      # Solo el dump binario se monta en runtime (el script ya está en la imagen)
+      - ./docs/init-db/base.dump:/docker-entrypoint-initdb.d/base.dump:ro
     ports:
       - "5432:5432"
     healthcheck:
