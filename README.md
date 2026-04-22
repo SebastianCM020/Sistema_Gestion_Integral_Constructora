@@ -69,3 +69,8 @@ Toda la documentación teórica previa a la construcción ha sido movida a la su
 * `docs/Product_Backlog_ICARO.xlsx` : El Product Backlog ágil oficial de SCRUM.
 * `docs/Analisis_Inconsistencias_Historias_Usuario.pdf` : Consolidación y refinamiento de Historias de Usuario priorizadas según puntos de dolor.
 
+
+Repositorio documentacion modificable: https://liveespochedu-my.sharepoint.com/:f:/g/personal/ivan_pulgar_espoch_edu_ec/IgCenZ1NeEhBRLLExxGkEsEfATmXHb7xzCFyfLwW1LRF0Yw?e=Wq0Z4m
+
+Para parar el servicio: docker compose down
+

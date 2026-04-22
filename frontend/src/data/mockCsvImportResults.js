@@ -1,0 +1,30 @@
+export const mockCsvImportResults = [
+  {
+    id: 'imp-1001',
+    projectId: 'prj-2001',
+    fileName: 'rubros-altavista-marzo.csv',
+    startedAt: '2026-04-09T14:30:00.000Z',
+    finishedAt: '2026-04-09T14:31:30.000Z',
+    totalRows: 12,
+    importedRows: 9,
+    failedRows: 3,
+    status: 'partial',
+    errors: [
+      { row: 4, field: 'Precio Unitario', message: 'El precio unitario no puede ser negativo.' },
+      { row: 7, field: 'Código', message: 'El código ya existe dentro del proyecto.' },
+      { row: 10, field: 'Cantidad Presupuestada', message: 'La cantidad presupuestada debe ser positiva.' },
+    ],
+  },
+  {
+    id: 'imp-1002',
+    projectId: 'prj-2003',
+    fileName: 'rubros-torre-norte-abril.csv',
+    startedAt: '2026-04-10T08:05:00.000Z',
+    finishedAt: '2026-04-10T08:06:10.000Z',
+    totalRows: 8,
+    importedRows: 8,
+    failedRows: 0,
+    status: 'success',
+    errors: [],
+  },
+];

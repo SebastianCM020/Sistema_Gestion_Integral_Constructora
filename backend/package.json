@@ -4,11 +4,13 @@
   "description": "API REST — Sistema de Gestión Integral ICARO CONSTRUCTORES BMGM S.A.S.",
   "main": "src/server.js",
   "scripts": {
-    "dev": "nodemon src/server.js",
-    "start": "node src/server.js",
-    "prisma:migrate": "npx prisma migrate dev",
-    "prisma:generate": "npx prisma generate",
-    "prisma:studio": "npx prisma studio"
+    "dev":               "nodemon src/server.js",
+    "start":             "node src/server.js",
+    "test":              "jest --testPathPatterns=tests/ --forceExit --detectOpenHandles",
+    "test:security":     "jest --testPathPatterns=tests/security --forceExit",
+    "prisma:migrate":    "npx prisma migrate dev",
+    "prisma:generate":   "npx prisma generate",
+    "prisma:studio":     "npx prisma studio"
   },
   "dependencies": {
     "@prisma/client": "^5.13.0",
@@ -22,7 +24,17 @@
     "pg": "^8.11.5"
   },
   "devDependencies": {
+    "jest": "^30.3.0",
     "nodemon": "^3.1.0",
-    "prisma": "^5.13.0"
+    "prisma": "^5.13.0",
+    "supertest": "^7.2.2"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testTimeout": 15000,
+    "verbose": true
   }
 }
