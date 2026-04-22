@@ -14,7 +14,7 @@ export default function AdminRouterPage() {
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
 
-  let currentUser = getUserFromEmail(user.email);
+  let currentUser = getUserFromEmail(user.email, user.rol);
   if (!currentUser) {
     currentUser = {
       ...getUserFromEmail('admin@icaro.dev'),

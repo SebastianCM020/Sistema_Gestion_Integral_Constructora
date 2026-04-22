@@ -281,6 +281,8 @@ const roleCatalog = {
 
 const userCatalog = {
   'admin@icaro.com': { name: 'Ana Beltrán', email: 'admin@icaro.com', roleId: 'admin', status: 'Activo', lastAccess: 'Hoy, 07:48 AM' },
+  'admin@icaro.dev': { name: 'Administrador Sistema', email: 'admin@icaro.dev', roleId: 'admin', status: 'Activo', lastAccess: 'Actual' },
+  'isaac.castro@espoch.edu.ec': { name: 'Isaac Castro', email: 'isaac.castro@espoch.edu.ec', roleId: 'admin', status: 'Activo', lastAccess: 'Actual' },
   'adminerror@icaro.com': { name: 'Ana Beltrán', email: 'adminerror@icaro.com', roleId: 'admin', status: 'Activo', lastAccess: 'Hoy, 07:48 AM', adminUsersShouldFail: true },
   'gerencia@icaro.com': { name: 'Laura Paredes', email: 'gerencia@icaro.com', roleId: 'executive', status: 'Activo', lastAccess: 'Hoy, 07:32 AM' },
   'contador@icaro.com': { name: 'Diego Rojas', email: 'contador@icaro.com', roleId: 'accountant', status: 'Activo', lastAccess: 'Hoy, 08:02 AM' },
@@ -315,15 +317,24 @@ function getUserInitials(name) {
     .toUpperCase();
 }
 
-export function getUserFromEmail(email) {
-  const normalizedEmail = email.trim().toLowerCase();
+export function getUserFromEmail(email, dbRoleName = null) {
+  const normalizedEmail = email?.trim().toLowerCase() || 'desconocido@icaro.com';
   const baseUser = userCatalog[normalizedEmail] ?? {
-    name: 'Carlos Mendoza',
+    name: 'Usuario del Sistema',
     email: normalizedEmail,
     roleId: 'resident',
     status: 'Activo',
     lastAccess: 'Primer acceso de hoy',
   };
+
+  if (dbRoleName) {
+    if (dbRoleName === 'Administrador del Sistema' || dbRoleName === 'Administrador' || dbRoleName === 'admin') baseUser.roleId = 'admin';
+    else if (dbRoleName === 'Presidente / Gerente') baseUser.roleId = 'executive';
+    else if (dbRoleName === 'Contador') baseUser.roleId = 'accountant';
+    else if (dbRoleName === 'Auxiliar de Contabilidad') baseUser.roleId = 'assistant';
+    else if (dbRoleName === 'Residente') baseUser.roleId = 'resident';
+    else if (dbRoleName === 'Bodeguero') baseUser.roleId = 'storekeeper';
+  }
 
   const role = getRoleById(baseUser.roleId);
 

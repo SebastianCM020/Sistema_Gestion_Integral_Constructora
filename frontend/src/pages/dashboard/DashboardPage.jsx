@@ -8,9 +8,9 @@ export default function DashboardPage() {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // Mapear nuestro JWT a la estructura pesada del Prototipo Visual para respetar
-  // los cuadros estadísticos ("Mock Data"). Mapeamos por rol si no se halla el correo.
-  let mockUserContext = getUserFromEmail(user.email);
+  // Mapear nuestro JWT a la estructura pesada del Prototipo Visual
+  // usando explícitamente user.rol que viene desde la Base de Datos.
+  let mockUserContext = getUserFromEmail(user.email, user.rol);
   
   if (!mockUserContext) {
     // Si entró con isaac.castro, construimos datos default basados en su Rol Administrativo

@@ -8,7 +8,7 @@ async function main() {
 
   // 1. Crear Roles según la documentación oficial
   const rolesData = [
-    { nombre: 'Administrador', descripcion: 'Control total del sistema' },
+    { nombre: 'Administrador del Sistema', descripcion: 'Control total del sistema' },
     { nombre: 'Superintendente', descripcion: 'Valida avances y aprueba requerimientos' },
     { nombre: 'Residente', descripcion: 'Registra avances de obra' },
     { nombre: 'Bodeguero', descripcion: 'Controla inventario y emite requerimientos' },
@@ -25,7 +25,7 @@ async function main() {
   console.log('✅ Roles predeterminados creados.');
 
   // 2. Crear un usuario Administrador de prueba
-  const adminRol = await prisma.rol.findUnique({ where: { nombre: 'Administrador' } });
+  const adminRol = await prisma.rol.findUnique({ where: { nombre: 'Administrador del Sistema' } });
   
   if (adminRol) {
     const defaultPassword = 'admin'; // Contraseña temporal
@@ -36,7 +36,7 @@ async function main() {
       where: { email: 'admin@icaro.dev' },
       update: {},
       create: {
-        nombre: 'Administrador',
+        nombre: 'Administrador del Sistema',
         apellido: 'Sistema',
         email: 'admin@icaro.dev',
         passwordHash: hash,
