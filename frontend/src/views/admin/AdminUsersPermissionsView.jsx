@@ -72,6 +72,15 @@ export function AdminUsersPermissionsView({ currentUser, onGoHome, onOpenProfile
   const openOverlay  = (type, user = null) => setActiveOverlay({ type, user });
   const closeOverlay = () => setActiveOverlay(null);
 
+  const roleNameToId = {
+    'Administrador del Sistema': 1,
+    'Presidente / Gerente': 2,
+    'Contador': 3,
+    'Auxiliar de Contabilidad': 4,
+    'Residente': 5,
+    'Bodeguero': 6
+  };
+
   // ── Handlers con llamadas a API (+ fallback automático en el servicio) ──────
   const handleSaveUser = async (formValues) => {
     try {
@@ -81,6 +90,8 @@ export function AdminUsersPermissionsView({ currentUser, onGoHome, onOpenProfile
           apellido: formValues.lastName,
           email:    formValues.email,
           role:     formValues.role,
+          idRol:    roleNameToId[formValues.role] || 5,
+          activo:   formValues.isActive,
         });
         setUsers((prev) =>
           prev.map((u) => (u.id === activeOverlay.user.id ? res.user : u))
@@ -93,7 +104,7 @@ export function AdminUsersPermissionsView({ currentUser, onGoHome, onOpenProfile
           email:    formValues.email,
           password: formValues.password || 'Icaro2025!',
           role:     formValues.role,
-          idRol:    1, // fallback; el backend lo resuelve por nombre en el mock
+          idRol:    roleNameToId[formValues.role] || 5, // 5 = Residente por defecto si falla
         });
         setUsers((prev) => [res.user, ...prev]);
         setFeedback({ tone: 'success', message: `Usuario creado${res.isMock ? ' (modo offline)' : ''}.` });
@@ -108,7 +119,7 @@ export function AdminUsersPermissionsView({ currentUser, onGoHome, onOpenProfile
     const targetUser = activeOverlay?.user;
     if (!targetUser) return;
     try {
-      const res = await usersApi.changeUserRole(targetUser.id, newRole);
+      const res = await usersApi.changeUserRole(targetUser.id, newRole, roleNameToId[newRole] || 5);
       setUsers((prev) =>
         prev.map((u) => (u.id === targetUser.id ? res.user : u))
       );

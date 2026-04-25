@@ -6,12 +6,30 @@ import RecoveryPage from './pages/auth/RecoveryPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
 import ModuleRouterPage from './pages/dashboard/ModuleRouterPage';
 import AdminRouterPage from './pages/dashboard/AdminRouterPage';
+import { ForcePasswordChangeModal } from './components/auth/ForcePasswordChangeModal';
 
 // Componente para proteger las rutas privadas
 const PrivateRoute = ({ children }) => {
-  const { isAuthenticated, loading } = useContext(AuthContext);
+  const { user, isAuthenticated, loading } = useContext(AuthContext);
+  
   if (loading) return <div className="min-h-screen bg-icaro-950 flex items-center justify-center text-white">Cargando Sistema...</div>;
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+
+  return (
+    <>
+      {children}
+      {user?.mustChangePassword && (
+        <ForcePasswordChangeModal 
+          user={user} 
+          onComplete={(updatedUser) => {
+            const updated = { ...updatedUser, mustChangePassword: false };
+            localStorage.setItem('icaro_user', JSON.stringify(updated));
+            window.location.reload(); // Recargar para aplicar cambios en el AuthContext
+          }} 
+        />
+      )}
+    </>
+  );
 };
 
 const Placeholder = ({ title }) => {
@@ -40,6 +58,7 @@ export default function App() {
           {/* Rutas Privadas envueltas en PrivateRoute */}
           <Route path="/dashboard" element={<PrivateRoute><DashboardPage /></PrivateRoute>} />
           <Route path="/module/:moduleId" element={<PrivateRoute><ModuleRouterPage /></PrivateRoute>} />
+          <Route path="/admin" element={<Navigate to="/admin/users" replace />} />
           <Route path="/admin/:section" element={<PrivateRoute><AdminRouterPage /></PrivateRoute>} />
           
           <Route path="*"          element={<Placeholder title="404 — Página no encontrada" />} />

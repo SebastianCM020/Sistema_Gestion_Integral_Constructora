@@ -9,19 +9,11 @@ export default function DashboardPage() {
   const navigate = useNavigate();
 
   // Mapear nuestro JWT a la estructura pesada del Prototipo Visual
-  // usando explícitamente user.rol que viene desde la Base de Datos.
-  let mockUserContext = getUserFromEmail(user.email, user.rol);
-  
-  if (!mockUserContext) {
-    // Si entró con isaac.castro, construimos datos default basados en su Rol Administrativo
-    mockUserContext = {
-      ...getUserFromEmail('admin@icaro.dev'), // Plantilla base
-      name: `${user.nombre} ${user.apellido}`,
-      email: user.email,
-      roleName: user.rol,
-      projectLabel: 'Administración Central',
-    };
-  }
+  const mockUserContext = {
+    ...getUserFromEmail(user.email, user.rol),
+    name: `${user.nombre} ${user.apellido}`,
+    initials: `${user.nombre[0] || ''}${user.apellido[0] || ''}`.toUpperCase(),
+  };
 
   const handleOpenModule = (moduleId) => {
     // Redireccionamiento universal a rutas react-router

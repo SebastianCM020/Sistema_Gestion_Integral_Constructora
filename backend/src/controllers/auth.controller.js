@@ -84,6 +84,8 @@ const login = async (req, res) => {
 
     const token = generateToken(payload);
 
+    const mustChangePassword = password === 'Icaro2025!';
+
     return res.status(200).json({
       message: 'Login exitoso',
       token,
@@ -92,7 +94,8 @@ const login = async (req, res) => {
         nombre: user.nombre,
         apellido: user.apellido,
         email: user.email,
-        rol: user.rol.nombre
+        rol: user.rol.nombre,
+        mustChangePassword
       }
     });
 
@@ -173,8 +176,35 @@ const recoverPassword = async (req, res) => {
   }
 };
 
+/**
+ * Permite cambiar la contraseña obligatoria del usuario
+ * PATCH /api/v1/auth/change-password
+ */
+const changePassword = async (req, res) => {
+  try {
+    const { newPassword } = req.body;
+    
+    if (!newPassword || newPassword.length < 8) {
+      return res.status(400).json({ error: 'La nueva contraseña debe tener al menos 8 caracteres.' });
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, 12);
+
+    await prisma.usuario.update({
+      where: { id: req.user.id },
+      data: { passwordHash }
+    });
+
+    return res.status(200).json({ message: 'Contraseña actualizada correctamente.' });
+  } catch (error) {
+    console.error('Error en changePassword:', error);
+    return res.status(500).json({ error: 'Error actualizando la contraseña.' });
+  }
+};
+
 module.exports = {
   login,
   getMe,
-  recoverPassword
+  recoverPassword,
+  changePassword
 };
