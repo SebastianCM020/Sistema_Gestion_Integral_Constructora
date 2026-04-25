@@ -67,7 +67,13 @@ const requireRole = (roles) => {
       });
     }
 
-    if (!roles.includes(req.user.rol)) {
+    // Soporte para tokens legacy que decían "Administrador" en lugar de "Administrador del Sistema"
+    let userRol = req.user.rol;
+    if (userRol === 'Administrador' && roles.includes('Administrador del Sistema')) {
+      userRol = 'Administrador del Sistema';
+    }
+
+    if (!roles.includes(userRol)) {
       return res.status(403).json({
         error: `Acceso denegado. Se requiere uno de los siguientes roles: ${roles.join(', ')}.`
       });

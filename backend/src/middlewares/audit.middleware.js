@@ -36,8 +36,15 @@ const inferTabla = (path) => {
  */
 const inferIdRegistro = (path) => {
   const parts = path.replace(/^\/api\/v1\//, '').split('/');
-  // parts[0] = resource, parts[1] = id (si existe)
-  return parts[1] || null;
+  const possibleId = parts[1];
+  
+  // Validar estrictamente que sea un UUID v4 o similar, para evitar crashes en Prisma
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  
+  if (possibleId && uuidRegex.test(possibleId)) {
+    return possibleId;
+  }
+  return null;
 };
 
 /**

@@ -9,5 +9,6 @@ router.post('/recover-password', authController.recoverPassword);
 
 // Rutas Protegidas (Requieren llevar el token JWT en el header)
 router.get('/me', requireAuth, authController.getMe);
+router.patch('/change-password', requireAuth, authController.changePassword);
 
 module.exports = router;

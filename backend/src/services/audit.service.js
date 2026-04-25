@@ -2,6 +2,10 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
+const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const isValidUuid = (id) => (id && typeof id === 'string' && uuidRegex.test(id) ? id : null);
+
+
 /**
  * Extrae la IP real del cliente, soportando proxies y load balancers.
  * @param {import('express').Request} req
@@ -41,12 +45,15 @@ const logAction = async ({
   ipOrigen   = null,
 }) => {
   try {
+    const validIdRegistro = isValidUuid(idRegistro);
+    const validIdUsuario  = isValidUuid(idUsuario);
+
     await prisma.auditLog.create({
       data: {
         tabla,
         operacion,
-        idRegistro,
-        idUsuario,
+        idRegistro: validIdRegistro,
+        idUsuario: validIdUsuario,
         datosAntes,
         datosDespues,
         ipOrigen,
