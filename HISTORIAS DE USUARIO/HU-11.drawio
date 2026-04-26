@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="yb-DNavOBFVMM64YES4w">
+    <mxGraphModel dx="1414" dy="743" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-1" connectable="0" parent="1" style="group;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="130" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-2" parent="zEIvtYioTdW-cuiAe-tP-1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-3" parent="zEIvtYioTdW-cuiAe-tP-1" style="line;strokeWidth=4;html=1;perimeter=backbonePerimeter;points=[];outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="10" width="450" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-4" collapsed="1" parent="zEIvtYioTdW-cuiAe-tP-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;HU-11&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="50" as="geometry">
+            <mxRectangle height="30" width="60" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-5" parent="zEIvtYioTdW-cuiAe-tP-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;b&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;Consolidar información mensual para cierre contable&lt;/span&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="360" x="70" y="3" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-6" parent="zEIvtYioTdW-cuiAe-tP-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="Como Contador, quiero consolidar los gastos de bodega y los avances de obra de un proyecto en un periodo mensual, para preparar un cierre contable verificable y completo." vertex="1">
+          <mxGeometry height="130" width="430" x="10" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-7" parent="zEIvtYioTdW-cuiAe-tP-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Estimación tiempo : 10 horas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="190" x="10" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-8" parent="zEIvtYioTdW-cuiAe-tP-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Prioridad : Alta/Esencial&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="10" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-9" parent="zEIvtYioTdW-cuiAe-tP-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Dependiente :&lt;/font&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;HU-08, HU-09&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="190" x="260" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-10" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="130" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-11" connectable="0" parent="zEIvtYioTdW-cuiAe-tP-10" style="group;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-12" parent="zEIvtYioTdW-cuiAe-tP-10" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-13" parent="zEIvtYioTdW-cuiAe-tP-10" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=14;spacingLeft=10;" value="&lt;div&gt;• Con un proyecto y un mes válidos, cuando el Contador inicia la consolidación, el sistema reúne la información de bodega y de obra del periodo.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;• Con información disponible del periodo, cuando finaliza la consolidación, el sistema presenta un resumen listo para revisión contable.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;• Con un periodo futuro, cuando el Contador intenta consolidar información, el sistema impide la operación.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;• Con transacciones pendientes del mes, cuando el Contador intenta avanzar al cierre, el sistema muestra los registros que deben resolverse.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="270" width="446" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

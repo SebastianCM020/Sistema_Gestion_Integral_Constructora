@@ -1,0 +1,54 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="ALi2GAxVdgaDD5O_vP1G">
+    <mxGraphModel dx="1414" dy="743" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="AwjGEzCff2DVI-WQ2I3X-1" parent="1" style="whiteSpace=wrap;strokeWidth=2;align=left;verticalAlign=top;" value="Sistema web y móvil ICARO - Configuración de proyectos" vertex="1">
+          <mxGeometry height="287" width="865" x="250" y="99" as="geometry" />
+        </mxCell>
+        <mxCell id="AwjGEzCff2DVI-WQ2I3X-2" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="Administrador del Sistema" vertex="1">
+          <mxGeometry height="84" width="118" x="60" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="AwjGEzCff2DVI-WQ2I3X-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Crear proyecto" vertex="1">
+          <mxGeometry height="39" width="132" x="440" y="134" as="geometry" />
+        </mxCell>
+        <mxCell id="AwjGEzCff2DVI-WQ2I3X-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Cargar rubros masivamente" vertex="1">
+          <mxGeometry height="39" width="221" x="515" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="AwjGEzCff2DVI-WQ2I3X-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Validar archivo CSV" vertex="1">
+          <mxGeometry height="39" width="163" x="903" y="134" as="geometry" />
+        </mxCell>
+        <mxCell id="AwjGEzCff2DVI-WQ2I3X-6" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Insertar rubros" vertex="1">
+          <mxGeometry height="39" width="130" x="919" y="223" as="geometry" />
+        </mxCell>
+        <mxCell id="AwjGEzCff2DVI-WQ2I3X-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Asociar rubros al proyecto" vertex="1">
+          <mxGeometry height="39" width="212" x="878" y="312" as="geometry" />
+        </mxCell>
+        <mxCell id="AwjGEzCff2DVI-WQ2I3X-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Revertir transacción por error de formato" vertex="1">
+          <mxGeometry height="63" width="231" x="298" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="AwjGEzCff2DVI-WQ2I3X-9" edge="1" parent="1" source="AwjGEzCff2DVI-WQ2I3X-2" style="startArrow=none;endArrow=none;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="AwjGEzCff2DVI-WQ2I3X-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AwjGEzCff2DVI-WQ2I3X-10" edge="1" parent="1" source="AwjGEzCff2DVI-WQ2I3X-2" style="startArrow=none;endArrow=none;rounded=0;endFill=0;" target="AwjGEzCff2DVI-WQ2I3X-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AwjGEzCff2DVI-WQ2I3X-11" edge="1" parent="1" source="AwjGEzCff2DVI-WQ2I3X-4" style="dashPattern=2 3;startArrow=none;endArrow=block;exitX=0.64;exitY=0;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="AwjGEzCff2DVI-WQ2I3X-5" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AwjGEzCff2DVI-WQ2I3X-12" edge="1" parent="1" source="AwjGEzCff2DVI-WQ2I3X-4" style="dashPattern=2 3;startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="AwjGEzCff2DVI-WQ2I3X-6" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AwjGEzCff2DVI-WQ2I3X-13" edge="1" parent="1" source="AwjGEzCff2DVI-WQ2I3X-4" style="dashPattern=2 3;startArrow=none;endArrow=block;exitX=0.64;exitY=1;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="AwjGEzCff2DVI-WQ2I3X-7" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AwjGEzCff2DVI-WQ2I3X-14" edge="1" parent="1" source="AwjGEzCff2DVI-WQ2I3X-8" style="dashPattern=2 3;startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0.34;entryY=1;rounded=0;endFill=0;" target="AwjGEzCff2DVI-WQ2I3X-4" value="&lt;&lt;extend&gt;&gt;">
+          <mxGeometry relative="1" x="-0.0015" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

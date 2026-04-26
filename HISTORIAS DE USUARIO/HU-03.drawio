@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="bQSiHnD9MixA7-XcYmDc">
+    <mxGraphModel dx="1414" dy="743" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Q3rIHbWVIbV8S54wCumc-1" connectable="0" parent="1" style="group;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="184" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3rIHbWVIbV8S54wCumc-2" parent="Q3rIHbWVIbV8S54wCumc-1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3rIHbWVIbV8S54wCumc-3" parent="Q3rIHbWVIbV8S54wCumc-1" style="line;strokeWidth=4;html=1;perimeter=backbonePerimeter;points=[];outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="10" width="450" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3rIHbWVIbV8S54wCumc-4" collapsed="1" parent="Q3rIHbWVIbV8S54wCumc-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;HU-03&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="50" as="geometry">
+            <mxRectangle height="30" width="60" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Q3rIHbWVIbV8S54wCumc-5" parent="Q3rIHbWVIbV8S54wCumc-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;fontSize=14;" value="&lt;b&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;Capturar y asociar evidencia fotográfica del avance&lt;/span&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="390" x="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3rIHbWVIbV8S54wCumc-6" parent="Q3rIHbWVIbV8S54wCumc-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="Como Residente , quiero capturar y asociar evidencia fotográfica a cada avance físico registrado, para respaldar técnicamente la ejecución del rubro reportado." vertex="1">
+          <mxGeometry height="130" width="430" x="10" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3rIHbWVIbV8S54wCumc-7" parent="Q3rIHbWVIbV8S54wCumc-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Estimacion tiempo : 15 horas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="190" x="10" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3rIHbWVIbV8S54wCumc-8" parent="Q3rIHbWVIbV8S54wCumc-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Prioridad : Alta/Esencial&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="10" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3rIHbWVIbV8S54wCumc-9" parent="Q3rIHbWVIbV8S54wCumc-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Dependiente : HU-01&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="280" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3rIHbWVIbV8S54wCumc-10" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="184" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3rIHbWVIbV8S54wCumc-11" connectable="0" parent="Q3rIHbWVIbV8S54wCumc-10" style="group;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3rIHbWVIbV8S54wCumc-12" parent="Q3rIHbWVIbV8S54wCumc-10" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3rIHbWVIbV8S54wCumc-13" parent="Q3rIHbWVIbV8S54wCumc-10" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=14;spacingLeft=10;" value="&lt;div&gt;• Con un avance físico registrado, cuando el Residente captura una fotografía válida, el sistema la asocia automáticamente al avance y al rubro correspondiente.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;• Con una imagen en formato permitido y dentro del tamaño máximo, cuando el Residente confirma la captura, el sistema la comprime y la guarda correctamente.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;• Con una fotografía correctamente asociada, cuando el usuario consulta el avance, el sistema mantiene visible la relación entre el avance y su evidencia.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;• Con conectividad disponible o posterior sincronización, cuando se guarda la evidencia, el sistema conserva el vínculo con el registro de avance.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="270" width="446" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

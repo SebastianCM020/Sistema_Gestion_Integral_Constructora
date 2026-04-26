@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="E9mkzyWPEPONep0mZ6OY">
+    <mxGraphModel dx="1285" dy="675" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="wgTy8xsi1RIJN52i3a__-4" connectable="0" parent="1" style="group;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="150" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="wgTy8xsi1RIJN52i3a__-2" parent="wgTy8xsi1RIJN52i3a__-4" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="wgTy8xsi1RIJN52i3a__-3" parent="wgTy8xsi1RIJN52i3a__-4" style="line;strokeWidth=4;html=1;perimeter=backbonePerimeter;points=[];outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="10" width="450" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="wgTy8xsi1RIJN52i3a__-6" collapsed="1" parent="wgTy8xsi1RIJN52i3a__-4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;HU-01&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="100" as="geometry">
+            <mxRectangle height="30" width="60" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wgTy8xsi1RIJN52i3a__-7" parent="wgTy8xsi1RIJN52i3a__-4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Registrar avance físico en obra&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="310" x="70" as="geometry" />
+        </mxCell>
+        <mxCell id="wgTy8xsi1RIJN52i3a__-10" parent="wgTy8xsi1RIJN52i3a__-4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="Como Residente (Personal Técnico), quiero registrar el avance físico de un rubro de mi proyecto asignado desde la app móvil, para reportar la ejecución diaria de la obra con información oportuna y trazable." vertex="1">
+          <mxGeometry height="130" width="430" x="10" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="wgTy8xsi1RIJN52i3a__-11" parent="wgTy8xsi1RIJN52i3a__-4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="Estimacion tiempo : 16 horas" vertex="1">
+          <mxGeometry height="30" width="160" x="10" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="wgTy8xsi1RIJN52i3a__-12" parent="wgTy8xsi1RIJN52i3a__-4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="Prioridad : Alta/Esencial&amp;nbsp;" vertex="1">
+          <mxGeometry height="30" width="160" x="10" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="wgTy8xsi1RIJN52i3a__-13" parent="wgTy8xsi1RIJN52i3a__-4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="Dependiente: HU-17, HU-18" vertex="1">
+          <mxGeometry height="30" width="160" x="290" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="wgTy8xsi1RIJN52i3a__-24" connectable="0" parent="1" style="group;verticalAlign=bottom;spacing=0;align=left;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="150" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="wgTy8xsi1RIJN52i3a__-14" connectable="0" parent="wgTy8xsi1RIJN52i3a__-24" style="group;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="wgTy8xsi1RIJN52i3a__-15" parent="wgTy8xsi1RIJN52i3a__-24" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="wgTy8xsi1RIJN52i3a__-23" parent="wgTy8xsi1RIJN52i3a__-24" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=8;spacingTop=0;spacing=10;spacingLeft=0;spacingBottom=0;" value="&lt;div&gt;&lt;font style=&quot;font-size: 13px;&quot;&gt;• Con un proyecto asignado y un rubro activo, cuando el Residente registra una cantidad numérica mayor a cero, el sistema guarda el avance con estado Enviado o Pendiente de Sincronización.&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 13px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 13px;&quot;&gt;• Con campos incompletos o cantidades no numéricas, cuando el Residente intenta guardar el avance, el sistema impide el registro y solicita corrección de datos.&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 13px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 13px;&quot;&gt;• Con una obra activa y permisos vigentes, cuando el Residente registra el avance de un rubro permitido, el sistema asocia el registro al proyecto y al usuario correspondiente.&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 13px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 13px;&quot;&gt;• Con un usuario fuera de su proyecto o sin vigencia de acceso, cuando intenta registrar avance físico, el sistema deniega el acceso al módulo correspondiente.&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="270" width="446" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

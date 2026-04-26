@@ -1,0 +1,67 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="RXKeew3tGUhm7eh_r0-i">
+    <mxGraphModel dx="1664" dy="874" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-1" parent="1" style="whiteSpace=wrap;strokeWidth=2;align=left;verticalAlign=top;" value="Sistema web y móvil ICARO - Control de acceso por proyecto" vertex="1">
+          <mxGeometry height="444" width="876" x="410" y="267" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-3" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="Personal Técnico" vertex="1">
+          <mxGeometry height="84" width="110" x="230" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-4" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="Bodeguero" vertex="1">
+          <mxGeometry height="70" width="86" x="242" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Acceder a proyecto asignado" vertex="1">
+          <mxGeometry height="63" width="231" x="732" y="428" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-6" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Validar asignación de usuario a proyecto" vertex="1">
+          <mxGeometry height="63" width="231" x="1030" y="302" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Validar rango de fechas de acceso" vertex="1">
+          <mxGeometry height="63" width="231" x="1030" y="484" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Cargar interfaz del proyecto" vertex="1">
+          <mxGeometry height="63" width="231" x="1050" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-9" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Denegar acceso por proyecto no asignado" vertex="1">
+          <mxGeometry height="63" width="231" x="501" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-10" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Denegar acceso por fecha no autorizada" vertex="1">
+          <mxGeometry height="63" width="231" x="450" y="585" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-11" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Mostrar mensaje de acceso denegado" vertex="1">
+          <mxGeometry height="63" width="231" x="750" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-13" edge="1" parent="1" source="R_K7-QHqKJ7xo5X1uBNV-3" style="curved=1;startArrow=none;endArrow=none;exitX=1;exitY=0.75;entryX=0;entryY=0.5;rounded=0;exitDx=0;exitDy=0;endFill=0;entryDx=0;entryDy=0;" target="R_K7-QHqKJ7xo5X1uBNV-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-14" edge="1" parent="1" source="R_K7-QHqKJ7xo5X1uBNV-4" style="curved=1;startArrow=none;endArrow=none;exitX=1;exitY=0.5;entryX=0.017;entryY=0.641;rounded=0;exitDx=0;exitDy=0;endFill=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="R_K7-QHqKJ7xo5X1uBNV-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-15" edge="1" parent="1" source="R_K7-QHqKJ7xo5X1uBNV-5" style="curved=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=0.66;exitY=0;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="R_K7-QHqKJ7xo5X1uBNV-6" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-16" edge="1" parent="1" source="R_K7-QHqKJ7xo5X1uBNV-5" style="curved=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=0.86;exitY=1;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="R_K7-QHqKJ7xo5X1uBNV-7" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-17" edge="1" parent="1" source="R_K7-QHqKJ7xo5X1uBNV-5" style="curved=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=0.61;exitY=1;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="R_K7-QHqKJ7xo5X1uBNV-8" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-18" edge="1" parent="1" source="R_K7-QHqKJ7xo5X1uBNV-9" style="curved=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0.424;entryY=0;rounded=0;entryDx=0;entryDy=0;entryPerimeter=0;endFill=0;" target="R_K7-QHqKJ7xo5X1uBNV-5" value="&lt;&lt;extend&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-19" edge="1" parent="1" source="R_K7-QHqKJ7xo5X1uBNV-10" style="curved=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0.22;entryY=1;rounded=0;endFill=0;" target="R_K7-QHqKJ7xo5X1uBNV-5" value="&lt;&lt;extend&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-20" edge="1" parent="1" source="R_K7-QHqKJ7xo5X1uBNV-11" style="curved=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=0.5;exitY=0;entryX=0.39;entryY=1;rounded=0;exitDx=0;exitDy=0;endFill=0;" target="R_K7-QHqKJ7xo5X1uBNV-5" value="&lt;&lt;extend&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R_K7-QHqKJ7xo5X1uBNV-22" edge="1" parent="1" source="R_K7-QHqKJ7xo5X1uBNV-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="R_K7-QHqKJ7xo5X1uBNV-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

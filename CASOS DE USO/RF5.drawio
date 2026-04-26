@@ -1,0 +1,80 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="0295O30Fuvwouw1HYiA9">
+    <mxGraphModel dx="1414" dy="743" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-1" parent="1" style="whiteSpace=wrap;strokeWidth=2;align=left;verticalAlign=top;" value="Sistema web y móvil ICARO - Cierre contable" vertex="1">
+          <mxGeometry height="715" width="876" x="365" y="99" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-2" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="Contador" vertex="1">
+          <mxGeometry height="106.25" width="70" x="220" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Ejecutar cierre contable mensual" vertex="1">
+          <mxGeometry height="63" width="231" x="687" y="437" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Seleccionar proyecto y periodo mensual" vertex="1">
+          <mxGeometry height="63" width="231" x="680" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Validar periodo de cierre" vertex="1">
+          <mxGeometry height="39" width="203" x="860" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-6" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Consolidar gastos de bodega y avances de obra" vertex="1">
+          <mxGeometry height="63" width="231" x="970" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Confirmar cierre mensual" vertex="1">
+          <mxGeometry height="39" width="207" x="1020" y="449" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Bloquear edición de registros cerrados" vertex="1">
+          <mxGeometry height="63" width="231" x="985" y="538" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-9" parent="1" style="rounded=1;whiteSpace=wrap;arcSize=50;strokeWidth=2;" value="Generar hash de integridad" vertex="1">
+          <mxGeometry height="39" width="220" x="930" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-10" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Guardar cierre mensual" vertex="1">
+          <mxGeometry height="39" width="194" x="730" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-11" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Detener cierre por transacciones pendientes" vertex="1">
+          <mxGeometry height="63" width="231" x="380" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-12" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Rechazar cierre por periodo futuro" vertex="1">
+          <mxGeometry height="63" width="231" x="440" y="585" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-13" edge="1" parent="1" source="Mq1UXbzk5yTKrchzgUCl-2" style="startArrow=none;endArrow=none;entryX=0;entryY=0.5;rounded=0;endFill=0;entryDx=0;entryDy=0;" target="Mq1UXbzk5yTKrchzgUCl-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-14" edge="1" parent="1" source="Mq1UXbzk5yTKrchzgUCl-3" style="startArrow=none;endArrow=block;exitX=0.57;exitY=0;entryX=0.329;entryY=0.968;rounded=0;endFill=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="Mq1UXbzk5yTKrchzgUCl-4" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-15" edge="1" parent="1" source="Mq1UXbzk5yTKrchzgUCl-3" style="startArrow=none;endArrow=block;exitX=0.6;exitY=0;entryX=0.153;entryY=1.051;rounded=0;endFill=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="Mq1UXbzk5yTKrchzgUCl-5" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-16" edge="1" parent="1" source="Mq1UXbzk5yTKrchzgUCl-3" style="startArrow=none;endArrow=block;exitX=0.7;exitY=0;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="Mq1UXbzk5yTKrchzgUCl-6" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-17" edge="1" parent="1" source="Mq1UXbzk5yTKrchzgUCl-3" style="startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="Mq1UXbzk5yTKrchzgUCl-7" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-18" edge="1" parent="1" source="Mq1UXbzk5yTKrchzgUCl-3" style="startArrow=none;endArrow=block;exitX=0.7;exitY=1;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="Mq1UXbzk5yTKrchzgUCl-8" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-19" edge="1" parent="1" source="Mq1UXbzk5yTKrchzgUCl-3" style="startArrow=none;endArrow=block;exitX=0.6;exitY=1;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="Mq1UXbzk5yTKrchzgUCl-9" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-20" edge="1" parent="1" source="Mq1UXbzk5yTKrchzgUCl-3" style="startArrow=none;endArrow=block;exitX=0.57;exitY=1;entryX=0.32;entryY=-0.103;rounded=0;endFill=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="Mq1UXbzk5yTKrchzgUCl-10" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" x="-0.0007" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-21" edge="1" parent="1" source="Mq1UXbzk5yTKrchzgUCl-11" style="startArrow=none;endArrow=block;exitX=1;exitY=0.49;entryX=0.21;entryY=0;rounded=0;endFill=0;" target="Mq1UXbzk5yTKrchzgUCl-3" value="&lt;&lt;extend&gt;&gt;">
+          <mxGeometry relative="1" x="-0.007" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Mq1UXbzk5yTKrchzgUCl-22" edge="1" parent="1" source="Mq1UXbzk5yTKrchzgUCl-12" style="startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0.43;entryY=1;rounded=0;endFill=0;" target="Mq1UXbzk5yTKrchzgUCl-3" value="&lt;&lt;extend&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
