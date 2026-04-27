@@ -1,2 +1,0 @@
-﻿timestamp,category,formula_name,formula_latex,input_variables,input_values,result_variable,result_value
-"5/4/2026, 20:18:43","PFCS","Clientes promedio en el sistema","L = \sum_{n=0}^{M} n\,P_n","lambda_, mu, M","{""lambda_"":87,""mu"":77,""M"":200}","L",106.09756098

@@ -1,0 +1,121 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="h9zgk9HcLFPYvI3Rp6mo">
+    <mxGraphModel dx="2416" dy="1232" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="giZkKnGIiBGAGhuRimL8-1" parent="1" style="whiteSpace=wrap;strokeWidth=2;align=left;verticalAlign=top;fontSize=14;" value="Sistema web y móvil ICARO - Dashboards y reportes" vertex="1">
+          <mxGeometry height="940" width="1190" x="400" y="1100" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-2" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="Presidente / Gerente" vertex="1">
+          <mxGeometry height="140" width="160" x="110" y="1700" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-3" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="Contador" vertex="1">
+          <mxGeometry height="130" width="140" x="130" y="1990" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Consultar dashboards y reportes gerenciales" vertex="1">
+          <mxGeometry height="150" width="250" x="860" y="1600" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Seleccionar dashboard o reporte" vertex="1">
+          <mxGeometry height="75" width="190" x="800" y="1290" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-6" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Seleccionar proyecto" vertex="1">
+          <mxGeometry height="95" width="210" x="930" y="1169" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Seleccionar periodo de consulta" vertex="1">
+          <mxGeometry height="105" width="170" x="1071" y="1275" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Consultar avances de obra" vertex="1">
+          <mxGeometry height="104" width="160" x="1280" y="1330" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-9" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Consultar compras e inventario" vertex="1">
+          <mxGeometry height="75" width="140" x="1210" y="1490" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-10" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Consultar cierre contable" vertex="1">
+          <mxGeometry height="75" width="200" x="1340" y="1530" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-11" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Consultar planillas generadas" vertex="1">
+          <mxGeometry height="97" width="170" x="1270" y="1657" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-12" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Calcular indicadores consolidados" vertex="1">
+          <mxGeometry height="90" width="200" x="1310" y="1770" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-13" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Visualizar gráficos y tablas" vertex="1">
+          <mxGeometry height="90" width="200" x="980" y="1920" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-14" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Exportar reporte operativo" vertex="1">
+          <mxGeometry height="90" width="183" x="730" y="1890" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-15" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Registrar consulta en auditoría" vertex="1">
+          <mxGeometry height="91" width="210" x="1200" y="1860" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-16" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Mostrar mensaje sin datos disponibles" vertex="1">
+          <mxGeometry height="95" width="260" x="520" y="1335" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-17" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Restringir reporte por permisos insuficientes" vertex="1">
+          <mxGeometry height="115" width="227.5" x="440" y="1450" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-18" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Mostrar error por consulta fuera de rango" vertex="1">
+          <mxGeometry height="115" width="240" x="500" y="1580" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-19" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-2" style="startArrow=none;endArrow=none;entryX=0.4;entryY=1;rounded=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-20" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-3" style="startArrow=none;endArrow=none;exitX=0.64;exitY=-0.01;entryX=0.4;entryY=1;rounded=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-21" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-4" style="startArrow=none;endArrow=block;exitX=0.56;exitY=0;rounded=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-5" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-22" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-4" style="startArrow=none;endArrow=block;exitX=0.58;exitY=0;rounded=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-6" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-23" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-4" style="startArrow=none;endArrow=block;exitX=0.61;exitY=0;rounded=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-7" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-24" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-4" style="startArrow=none;endArrow=block;exitX=0.68;exitY=0;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-8" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-25" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-4" style="startArrow=none;endArrow=block;exitX=1;exitY=0.04;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-9" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-26" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-4" style="startArrow=none;endArrow=block;exitX=1;exitY=0.95;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-10" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" x="0.001" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-27" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-4" style="startArrow=none;endArrow=block;exitX=0.68;exitY=1;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-11" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" x="-0.0021" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-28" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-4" style="startArrow=none;endArrow=block;exitX=0.61;exitY=1;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-12" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-29" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-4" style="startArrow=none;endArrow=block;exitX=0.58;exitY=1;rounded=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-13" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-30" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-4" style="startArrow=none;endArrow=block;exitX=0.56;exitY=1;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-15" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-31" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-2" style="startArrow=none;endArrow=none;entryX=0;entryY=0.26;rounded=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-32" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-3" style="startArrow=none;endArrow=none;exitX=0.69;exitY=-0.01;entryX=0;entryY=0.63;rounded=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-33" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-16" style="startArrow=none;endArrow=block;exitX=0.808;exitY=0.947;entryX=0.4;entryY=0;rounded=0;exitDx=0;exitDy=0;exitPerimeter=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-4" value="&lt;&lt;extend&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-34" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-17" style="startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0.37;entryY=0;rounded=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-4" value="&lt;&lt;extend&gt;&gt;">
+          <mxGeometry relative="1" x="0.1278" y="16" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="giZkKnGIiBGAGhuRimL8-35" edge="1" parent="1" source="giZkKnGIiBGAGhuRimL8-18" style="startArrow=none;endArrow=block;exitX=1;exitY=0.5;rounded=0;endFill=0;" target="giZkKnGIiBGAGhuRimL8-4" value="&lt;&lt;extend&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

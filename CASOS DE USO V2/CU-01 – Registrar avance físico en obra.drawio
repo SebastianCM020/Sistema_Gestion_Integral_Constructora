@@ -1,0 +1,107 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36">
+  <diagram name="Página-1" id="DNdfL5Z_VHUynhDwDlO1">
+    <mxGraphModel dx="1414" dy="743" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="6vdINKmiiS8B9UTLOD-j-1" parent="1" style="whiteSpace=wrap;strokeWidth=2;verticalAlign=top;align=left;" value="Sistema web y móvil de gestión ICARO - Módulo técnico móvil" vertex="1">
+          <mxGeometry height="640" width="1120" x="180" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="6vdINKmiiS8B9UTLOD-j-2" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="Residente" vertex="1">
+          <mxGeometry height="144" width="90" x="30" y="293" as="geometry" />
+        </mxCell>
+        <mxCell id="vdU96nxwfK7EEGYI90gC-16" edge="1" parent="1" source="6vdINKmiiS8B9UTLOD-j-3" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;endFill=0;" target="6vdINKmiiS8B9UTLOD-j-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6vdINKmiiS8B9UTLOD-j-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Registrar avance físico en obra" vertex="1">
+          <mxGeometry height="63" width="231" x="460" y="323" as="geometry" />
+        </mxCell>
+        <mxCell id="6vdINKmiiS8B9UTLOD-j-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Acceder al módulo técnico móvil" vertex="1">
+          <mxGeometry height="63" width="231" x="790" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="6vdINKmiiS8B9UTLOD-j-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Validar autenticación del usuario" vertex="1">
+          <mxGeometry height="63" width="231" x="910" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="6vdINKmiiS8B9UTLOD-j-6" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Validar proyecto asignado y vigencia temporal" vertex="1">
+          <mxGeometry height="53" width="240" x="950" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="6vdINKmiiS8B9UTLOD-j-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Seleccionar proyecto y rubro" vertex="1">
+          <mxGeometry height="63" width="211" x="970" y="333.5" as="geometry" />
+        </mxCell>
+        <mxCell id="6vdINKmiiS8B9UTLOD-j-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Ingresar cantidad ejecutada" vertex="1">
+          <mxGeometry height="39" width="220" x="970" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="6vdINKmiiS8B9UTLOD-j-9" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Denegar acceso por proyecto no asignado o vigencia expirada" vertex="1">
+          <mxGeometry height="103" width="251" x="310" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="6vdINKmiiS8B9UTLOD-j-10" edge="1" parent="1" source="6vdINKmiiS8B9UTLOD-j-2" style="startArrow=none;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;rounded=0;exitDx=0;exitDy=0;entryDx=0;entryDy=0;" target="6vdINKmiiS8B9UTLOD-j-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6vdINKmiiS8B9UTLOD-j-11" edge="1" parent="1" source="6vdINKmiiS8B9UTLOD-j-3" style="startArrow=none;endArrow=block;exitX=0.6;exitY=0;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="6vdINKmiiS8B9UTLOD-j-4" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6vdINKmiiS8B9UTLOD-j-12" edge="1" parent="1" source="6vdINKmiiS8B9UTLOD-j-3" style="startArrow=none;endArrow=block;exitX=0.7;exitY=0;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="6vdINKmiiS8B9UTLOD-j-5" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6vdINKmiiS8B9UTLOD-j-13" edge="1" parent="1" source="6vdINKmiiS8B9UTLOD-j-3" style="startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="6vdINKmiiS8B9UTLOD-j-6" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6vdINKmiiS8B9UTLOD-j-15" edge="1" parent="1" source="6vdINKmiiS8B9UTLOD-j-3" style="startArrow=none;endArrow=block;exitX=0.6;exitY=1;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="6vdINKmiiS8B9UTLOD-j-8" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6vdINKmiiS8B9UTLOD-j-16" edge="1" parent="1" source="6vdINKmiiS8B9UTLOD-j-9" style="startArrow=none;endArrow=block;exitX=0.5;exitY=0;entryX=0.39;entryY=1;rounded=0;exitDx=0;exitDy=0;endFill=0;" target="6vdINKmiiS8B9UTLOD-j-3" value="&lt;&lt;extend&gt;&gt;">
+          <mxGeometry relative="1" x="-0.118" y="-1" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="470" y="595.5" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vdU96nxwfK7EEGYI90gC-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Validar datos de entrada" vertex="1">
+          <mxGeometry height="39" width="220" x="980" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="vdU96nxwfK7EEGYI90gC-4" edge="1" parent="1" source="6vdINKmiiS8B9UTLOD-j-3" style="startArrow=none;endArrow=block;entryX=0;entryY=0.5;rounded=0;endFill=0;exitX=0.589;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="vdU96nxwfK7EEGYI90gC-3" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="599" y="461" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vdU96nxwfK7EEGYI90gC-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Verificar límite del presupuesto central" vertex="1">
+          <mxGeometry height="39" width="220" x="990" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="vdU96nxwfK7EEGYI90gC-6" edge="1" parent="1" source="6vdINKmiiS8B9UTLOD-j-3" style="startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0;entryY=0.5;rounded=0;endFill=0;exitDx=0;exitDy=0;" target="vdU96nxwfK7EEGYI90gC-5" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="649" y="537" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vdU96nxwfK7EEGYI90gC-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Guardar registro de avance" vertex="1">
+          <mxGeometry height="39" width="220" x="915.5" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="vdU96nxwfK7EEGYI90gC-8" edge="1" parent="1" source="6vdINKmiiS8B9UTLOD-j-3" style="startArrow=none;endArrow=block;exitX=0.463;exitY=1;entryX=0;entryY=0.5;rounded=0;endFill=0;exitDx=0;exitDy=0;exitPerimeter=0;" target="vdU96nxwfK7EEGYI90gC-7" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="680" y="600" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vdU96nxwfK7EEGYI90gC-11" edge="1" parent="1" source="vdU96nxwfK7EEGYI90gC-9" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;endArrow=block;endFill=0;" target="6vdINKmiiS8B9UTLOD-j-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vdU96nxwfK7EEGYI90gC-13" connectable="0" parent="vdU96nxwfK7EEGYI90gC-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.0299" y="-1" as="geometry">
+            <mxPoint y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vdU96nxwfK7EEGYI90gC-9" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Guardar avance como pendiente de sincronización" vertex="1">
+          <mxGeometry height="63" width="231" x="220" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="vdU96nxwfK7EEGYI90gC-12" edge="1" parent="1" source="vdU96nxwfK7EEGYI90gC-10" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=0;" target="6vdINKmiiS8B9UTLOD-j-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vdU96nxwfK7EEGYI90gC-14" connectable="0" parent="vdU96nxwfK7EEGYI90gC-12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.3322" y="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vdU96nxwfK7EEGYI90gC-10" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Bloquear registro por exceso de presupuesto" vertex="1">
+          <mxGeometry height="63" width="231" x="451" y="107" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

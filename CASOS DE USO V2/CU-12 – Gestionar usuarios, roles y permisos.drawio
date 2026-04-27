@@ -1,0 +1,114 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="fAdDYkYYUZiidpG145lH">
+    <mxGraphModel dx="3761" dy="1496" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-1" parent="1" style="whiteSpace=wrap;strokeWidth=2;align=left;verticalAlign=top;fontSize=15;fontStyle=1" value="Sistema web y móvil ICARO - Usuarios, roles y permisos" vertex="1">
+          <mxGeometry height="920" width="1110" x="-110" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-2" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="Administrador del Sistema" vertex="1">
+          <mxGeometry height="111.5" width="130" x="-400" y="1340" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Gestionar usuarios, roles y permisos" vertex="1">
+          <mxGeometry height="100" width="230" x="-70" y="1370" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Crear usuario" vertex="1">
+          <mxGeometry height="60" width="156" x="40" y="1130" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Editar usuario" vertex="1">
+          <mxGeometry height="57.5" width="150" x="270" y="1100" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-6" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Activar o desactivar usuario" vertex="1">
+          <mxGeometry height="90" width="240" x="365" y="1180" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Asignar rol" vertex="1">
+          <mxGeometry height="61" width="155" x="413" y="1300.5" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Configurar permisos por rol" vertex="1">
+          <mxGeometry height="90" width="290" x="345.5" y="1391.5" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-9" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Validar datos del usuario" vertex="1">
+          <mxGeometry height="80" width="237" x="372" y="1490" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-10" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Guardar credenciales cifradas" vertex="1">
+          <mxGeometry height="90" width="230" x="490" y="1589" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-11" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Consultar listado de usuarios" vertex="1">
+          <mxGeometry height="70" width="260" x="365" y="1690" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-12" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Consultar permisos asignados" vertex="1">
+          <mxGeometry height="60" width="230" x="130" y="1650" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-13" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Registrar cambio en auditoría" vertex="1">
+          <mxGeometry height="68" width="230" x="-100" y="1611" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-14" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Bloquear creación por datos incompletos" vertex="1">
+          <mxGeometry height="95" width="240" x="-80" y="940" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-15" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Rechazar correo o identificación duplicada" vertex="1">
+          <mxGeometry height="80" width="160" x="205" y="940" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-16" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Denegar asignación de rol no permitido" vertex="1">
+          <mxGeometry height="80" width="270" x="700" y="1270" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-17" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Impedir desactivación del único administrador activo" vertex="1">
+          <mxGeometry height="90" width="267" x="540" y="1020" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-18" edge="1" parent="1" source="kt-1-eXQFn6PeqXRkGqF-2" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;rounded=0;" target="kt-1-eXQFn6PeqXRkGqF-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-19" edge="1" parent="1" source="kt-1-eXQFn6PeqXRkGqF-3" style="startArrow=none;endArrow=block;exitX=0.63;exitY=0;entryX=0.5;entryY=1;rounded=0;endFill=0;entryDx=0;entryDy=0;" target="kt-1-eXQFn6PeqXRkGqF-4" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-20" edge="1" parent="1" source="kt-1-eXQFn6PeqXRkGqF-3" style="startArrow=none;endArrow=block;exitX=0.65;exitY=0;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="kt-1-eXQFn6PeqXRkGqF-5" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-21" edge="1" parent="1" source="kt-1-eXQFn6PeqXRkGqF-3" style="startArrow=none;endArrow=block;exitX=0.74;exitY=0;entryX=0;entryY=0.67;rounded=0;endFill=0;" target="kt-1-eXQFn6PeqXRkGqF-6" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-22" edge="1" parent="1" source="kt-1-eXQFn6PeqXRkGqF-3" style="startArrow=none;endArrow=block;exitX=0.97;exitY=0;entryX=0;entryY=0.74;rounded=0;endFill=0;" target="kt-1-eXQFn6PeqXRkGqF-7" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-23" edge="1" parent="1" source="kt-1-eXQFn6PeqXRkGqF-3" style="startArrow=none;endArrow=block;exitX=1;exitY=0.23;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="kt-1-eXQFn6PeqXRkGqF-8" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" x="0.0033" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-24" edge="1" parent="1" source="kt-1-eXQFn6PeqXRkGqF-3" style="startArrow=none;endArrow=block;exitX=1;exitY=0.77;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="kt-1-eXQFn6PeqXRkGqF-9" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-25" edge="1" parent="1" source="kt-1-eXQFn6PeqXRkGqF-3" style="startArrow=none;endArrow=block;exitX=0.81;exitY=1;entryX=0;entryY=0.5;rounded=0;endFill=0;" target="kt-1-eXQFn6PeqXRkGqF-10" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-26" edge="1" parent="1" source="kt-1-eXQFn6PeqXRkGqF-3" style="startArrow=none;endArrow=block;exitX=0.68;exitY=1;rounded=0;endFill=0;" target="kt-1-eXQFn6PeqXRkGqF-11" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-27" edge="1" parent="1" source="kt-1-eXQFn6PeqXRkGqF-3" style="startArrow=none;endArrow=block;exitX=0.63;exitY=1;rounded=0;endFill=0;" target="kt-1-eXQFn6PeqXRkGqF-12" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-28" edge="1" parent="1" source="kt-1-eXQFn6PeqXRkGqF-3" style="startArrow=none;endArrow=block;exitX=0.6;exitY=1;entryX=0.571;entryY=0.025;rounded=0;endFill=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="kt-1-eXQFn6PeqXRkGqF-13" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-29" edge="1" parent="1" source="kt-1-eXQFn6PeqXRkGqF-14" style="startArrow=none;endArrow=block;rounded=0;endFill=0;" target="kt-1-eXQFn6PeqXRkGqF-4" value="&lt;&lt;extend&gt;&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="174" y="976" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-30" edge="1" parent="1" source="kt-1-eXQFn6PeqXRkGqF-15" style="startArrow=none;endArrow=block;exitX=0.5;exitY=1;rounded=0;endFill=0;exitDx=0;exitDy=0;" target="kt-1-eXQFn6PeqXRkGqF-4" value="&lt;&lt;extend&gt;&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="193" y="930" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-31" edge="1" parent="1" source="kt-1-eXQFn6PeqXRkGqF-16" style="startArrow=none;endArrow=block;exitX=-0.007;exitY=0.576;entryX=1;entryY=0.5;rounded=0;endFill=0;entryDx=0;entryDy=0;exitDx=0;exitDy=0;exitPerimeter=0;" target="kt-1-eXQFn6PeqXRkGqF-7" value="&lt;&lt;extend&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kt-1-eXQFn6PeqXRkGqF-32" edge="1" parent="1" source="kt-1-eXQFn6PeqXRkGqF-17" style="startArrow=none;endArrow=block;rounded=0;endFill=0;exitX=0.024;exitY=0.663;exitDx=0;exitDy=0;exitPerimeter=0;" target="kt-1-eXQFn6PeqXRkGqF-6" value="&lt;&lt;extend&gt;&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1348" y="828" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

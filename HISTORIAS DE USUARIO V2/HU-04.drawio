@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="Qhjqqcu9KrNZ_ViWZcms">
+    <mxGraphModel dx="1414" dy="743" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="zTrD6Wb69GZi2jDPGOGs-1" connectable="0" parent="1" style="group;fillColor=#fff2cc;strokeColor=#d6b656;align=left;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="100" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="zTrD6Wb69GZi2jDPGOGs-2" parent="zTrD6Wb69GZi2jDPGOGs-1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="zTrD6Wb69GZi2jDPGOGs-3" parent="zTrD6Wb69GZi2jDPGOGs-1" style="line;strokeWidth=4;html=1;perimeter=backbonePerimeter;points=[];outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="10" width="450" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="zTrD6Wb69GZi2jDPGOGs-4" collapsed="1" parent="zTrD6Wb69GZi2jDPGOGs-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;HU-04&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="50" as="geometry">
+            <mxRectangle height="30" width="60" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zTrD6Wb69GZi2jDPGOGs-5" parent="zTrD6Wb69GZi2jDPGOGs-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;b&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;Exigir evidencia fotográfica válida antes de guardar el avance&lt;/span&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="350" x="70" y="2" as="geometry" />
+        </mxCell>
+        <mxCell id="zTrD6Wb69GZi2jDPGOGs-6" parent="zTrD6Wb69GZi2jDPGOGs-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="Como Residente , quiero que el sistema exija evidencia fotográfica válida antes de completar el registro del avance, para asegurar respaldo documental mínimo por rubro." vertex="1">
+          <mxGeometry height="130" width="430" x="11" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="zTrD6Wb69GZi2jDPGOGs-7" parent="zTrD6Wb69GZi2jDPGOGs-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Estimación tiempo : 8 horas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="180" x="10" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="zTrD6Wb69GZi2jDPGOGs-8" parent="zTrD6Wb69GZi2jDPGOGs-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Prioridad : Alta/Escencial&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="10" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="zTrD6Wb69GZi2jDPGOGs-9" parent="zTrD6Wb69GZi2jDPGOGs-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Dependiente :&amp;nbsp;&lt;/font&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;HU-03&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="280" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="zTrD6Wb69GZi2jDPGOGs-10" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="100" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="zTrD6Wb69GZi2jDPGOGs-11" connectable="0" parent="zTrD6Wb69GZi2jDPGOGs-10" style="group;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="zTrD6Wb69GZi2jDPGOGs-12" parent="zTrD6Wb69GZi2jDPGOGs-10" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="zTrD6Wb69GZi2jDPGOGs-13" parent="zTrD6Wb69GZi2jDPGOGs-10" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=14;spacingLeft=10;" value="&lt;div&gt;• Con un avance sin fotografía adjunta, cuando el Residente intenta completar el registro, el sistema inhabilita el guardado.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;• Con un avance sin fotografía válida, cuando el sistema impide el guardado, muestra el mensaje &#39;Evidencia fotográfica obligatoria para este rubro&#39;.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;• Con una imagen de formato no permitido o tamaño excedido, cuando el Residente intenta adjuntarla, el sistema rechaza la carga.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;• Con al menos una fotografía válida adjunta, cuando el Residente guarda el avance, el sistema permite completar el registro.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="270" width="446" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
