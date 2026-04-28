@@ -38,11 +38,13 @@ export function ProjectRubrosView({
   onOpenModule,
   onOpenAdminSection,
 }) {
+  const PAGE_SIZE = 10;
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [rubros, setRubros] = useState(mockRubros);
   const [importResults, setImportResults] = useState(mockCsvImportResults);
   const [selectedProjectId, setSelectedProjectId] = useState(mockProjects[0]?.id ?? '');
   const [filters, setFilters] = useState(defaultRubroFilters);
+  const [currentPage, setCurrentPage] = useState(1);
   const [loadStatus, setLoadStatus] = useState('loading');
   const [retryCount, setRetryCount] = useState(0);
   const [feedback, setFeedback] = useState(null);
@@ -71,14 +73,27 @@ export function ProjectRubrosView({
     return () => window.clearTimeout(timer);
   }, [feedback]);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedProjectId, filters]);
+
   const currentProjectRubros = useMemo(() => getProjectRubros(rubros, selectedProjectId), [rubros, selectedProjectId]);
   const visibleRubros = useMemo(() => sortRubros(filterRubros(currentProjectRubros, filters), filters.sortBy), [currentProjectRubros, filters]);
+  const totalPages = Math.max(1, Math.ceil(visibleRubros.length / PAGE_SIZE));
+  const paginatedRubros = useMemo(() => {
+    const startIndex = (currentPage - 1) * PAGE_SIZE;
+    return visibleRubros.slice(startIndex, startIndex + PAGE_SIZE);
+  }, [visibleRubros, currentPage, PAGE_SIZE]);
   const units = useMemo(() => getRubroUnits(currentProjectRubros), [currentProjectRubros]);
   const latestImportResult = useMemo(
     () => importResults.filter((result) => result.projectId === selectedProjectId).sort((left, right) => new Date(right.finishedAt).getTime() - new Date(left.finishedAt).getTime())[0] ?? null,
     [importResults, selectedProjectId]
   );
   const summary = useMemo(() => getRubroSummary(currentProjectRubros, latestImportResult), [currentProjectRubros, latestImportResult]);
+
+  useEffect(() => {
+    setCurrentPage((previousPage) => Math.min(previousPage, totalPages));
+  }, [totalPages]);
 
   const handleFilterChange = (field, value) => {
     setFilters((previousFilters) => ({ ...previousFilters, [field]: value }));
@@ -250,8 +265,19 @@ export function ProjectRubrosView({
                   />
                 ) : (
                   <>
-                    <RubrosTable rubros={visibleRubros} onView={(rubro) => openOverlay('detail', rubro)} onEdit={(rubro) => openOverlay('edit', rubro)} />
-                    <RubrosMobileList rubros={visibleRubros} onView={(rubro) => openOverlay('detail', rubro)} onEdit={(rubro) => openOverlay('edit', rubro)} />
+                    <RubrosTable rubros={paginatedRubros} onView={(rubro) => openOverlay('detail', rubro)} onEdit={(rubro) => openOverlay('edit', rubro)} />
+                    <RubrosMobileList rubros={paginatedRubros} onView={(rubro) => openOverlay('detail', rubro)} onEdit={(rubro) => openOverlay('edit', rubro)} />
+
+                    {visibleRubros.length > PAGE_SIZE ? (
+                      <PaginationControls
+                        totalItems={visibleRubros.length}
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        pageSize={PAGE_SIZE}
+                        onPrevious={() => setCurrentPage((page) => Math.max(1, page - 1))}
+                        onNext={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
+                      />
+                    ) : null}
                   </>
                 )}
               </section>
@@ -277,6 +303,41 @@ export function ProjectRubrosView({
       {activeOverlay?.type === 'import' && currentProject ? (
         <CsvImportModal currentProject={currentProject} existingRubros={rubros} onCancel={closeOverlay} onComplete={handleImportComplete} />
       ) : null}
+    </div>
+  );
+}
+
+function PaginationControls({ totalItems, currentPage, totalPages, pageSize, onPrevious, onNext }) {
+  const startItem = (currentPage - 1) * pageSize + 1;
+  const endItem = Math.min(currentPage * pageSize, totalItems);
+
+  return (
+    <div className="flex flex-col gap-3 rounded-[12px] border border-[#D1D5DB] bg-white px-4 py-3 text-sm text-[#2F3A45] sm:flex-row sm:items-center sm:justify-between">
+      <p className="text-xs font-medium text-gray-500 sm:text-sm">
+        Mostrando {startItem}-{endItem} de {totalItems} rubros
+      </p>
+
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={onPrevious}
+          disabled={currentPage === 1}
+          className="inline-flex h-[40px] items-center justify-center rounded-[10px] border border-[#D1D5DB] px-3 text-xs font-semibold text-[#2F3A45] enabled:hover:bg-[#F7F9FC] disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          Anterior
+        </button>
+        <span className="min-w-[92px] text-center text-xs font-semibold text-gray-600">
+          Página {currentPage} de {totalPages}
+        </span>
+        <button
+          type="button"
+          onClick={onNext}
+          disabled={currentPage === totalPages}
+          className="inline-flex h-[40px] items-center justify-center rounded-[10px] border border-[#D1D5DB] px-3 text-xs font-semibold text-[#2F3A45] enabled:hover:bg-[#F7F9FC] disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          Siguiente
+        </button>
+      </div>
     </div>
   );
 }
