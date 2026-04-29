@@ -6,16 +6,16 @@ export const defaultProjectFilters = {
 };
 
 export const defaultProjectFormValues = {
-  code: '',
-  name: '',
-  description: '',
-  contractorEntity: '',
-  contractNumber: '',
-  totalBudget: '',
-  startDate: '',
-  plannedEndDate: '',
-  status: 'active',
-  managerName: '',
+  code:              '',
+  name:              '',
+  description:       '',
+  contractorEntity:  '',
+  contractNumber:    '',
+  totalBudget:       '',
+  startDate:         '',
+  plannedEndDate:    '',
+  status:            'active',
+  idResponsable:     '',
 };
 
 export const defaultProjectParametersValues = {
@@ -31,11 +31,14 @@ export const defaultProjectParametersValues = {
 };
 
 export function formatCurrency(value) {
+  const num = Number(value);
+  if (isNaN(num)) return 'Sin presupuesto';
+
   return new Intl.NumberFormat('es-CO', {
     style: 'currency',
     currency: 'COP',
     maximumFractionDigits: 0,
-  }).format(Number(value || 0));
+  }).format(num);
 }
 
 export function formatShortDate(dateValue) {
@@ -43,11 +46,33 @@ export function formatShortDate(dateValue) {
     return 'Sin definir';
   }
 
-  return new Intl.DateTimeFormat('es-CO', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  }).format(new Date(`${dateValue}T00:00:00`));
+  try {
+    // Si ya es un objeto Date, usarlo directamente
+    let dateObj = dateValue instanceof Date ? dateValue : null;
+
+    if (!dateObj) {
+      // Si es un string que parece YYYY-MM-DD (longitud 10), aplicar el parche T00 para evitar desfase de zona horaria
+      if (typeof dateValue === 'string' && dateValue.length === 10) {
+        dateObj = new Date(`${dateValue}T00:00:00`);
+      } else {
+        dateObj = new Date(dateValue);
+      }
+    }
+
+    // Validar que la fecha sea válida antes de formatear
+    if (isNaN(dateObj.getTime())) {
+      return 'Fecha inválida';
+    }
+
+    return new Intl.DateTimeFormat('es-CO', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    }).format(dateObj);
+  } catch (error) {
+    console.error('Error formatting short date:', error);
+    return 'Error fecha';
+  }
 }
 
 export function formatDateTime(dateValue) {
@@ -55,13 +80,20 @@ export function formatDateTime(dateValue) {
     return 'Sin registro';
   }
 
-  return new Intl.DateTimeFormat('es-CO', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  }).format(new Date(dateValue));
+  try {
+    const dateObj = new Date(dateValue);
+    if (isNaN(dateObj.getTime())) return 'Fecha inválida';
+
+    return new Intl.DateTimeFormat('es-CO', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(dateObj);
+  } catch (error) {
+    return 'Error fecha';
+  }
 }
 
 export function getProjectStatusMeta(status) {
@@ -88,17 +120,28 @@ export function attachProjectParameters(projects, parametersList) {
 }
 
 export function filterProjects(projects, filters) {
-  const normalizedQuery = filters.query.trim().toLowerCase();
-
   return projects.filter((project) => {
-    const matchesQuery =
-      !normalizedQuery ||
-      project.code.toLowerCase().includes(normalizedQuery) ||
-      project.name.toLowerCase().includes(normalizedQuery) ||
-      project.contractorEntity.toLowerCase().includes(normalizedQuery);
+    const normalizedQuery = (filters.query || '').trim().toLowerCase();
+    
+    // Normalización de campos para búsqueda
+    const code   = (project.code   || project.codigo || '').toLowerCase();
+    const name   = (project.name   || project.nombre || '').toLowerCase();
+    const entity = (project.contractorEntity || project.entidadContratante || '').toLowerCase();
+    
+    const matchesQuery = !normalizedQuery || 
+                        code.includes(normalizedQuery) || 
+                        name.includes(normalizedQuery) || 
+                        entity.includes(normalizedQuery);
 
-    const matchesStatus = filters.status === 'all' || project.status === filters.status;
-    const matchesManager = filters.manager === 'all' || project.managerName === filters.manager;
+    // Normalización de estado (comparación insensible a mayúsculas)
+    const projectStatus = (project.status || project.estado || '').toLowerCase();
+    const filterStatus  = (filters.status || 'all').toLowerCase();
+    const matchesStatus = filterStatus === 'all' || projectStatus === filterStatus;
+
+    // Normalización de responsable (comparación de IDs)
+    const projectManager = project.idResponsable || project.responsableId || '';
+    const filterManager  = filters.manager || 'all';
+    const matchesManager = filterManager === 'all' || projectManager === filterManager;
 
     return matchesQuery && matchesStatus && matchesManager;
   });
@@ -107,20 +150,29 @@ export function filterProjects(projects, filters) {
 export function sortProjects(projects, sortBy) {
   const nextProjects = [...projects];
 
-  nextProjects.sort((leftProject, rightProject) => {
+  nextProjects.sort((l, r) => {
     if (sortBy === 'name') {
-      return leftProject.name.localeCompare(rightProject.name, 'es');
+      const ln = l.name || l.nombre || '';
+      const rn = r.name || r.nombre || '';
+      return ln.localeCompare(rn, 'es');
     }
 
     if (sortBy === 'code') {
-      return leftProject.code.localeCompare(rightProject.code, 'es');
+      const lc = l.code || l.codigo || '';
+      const rc = r.code || r.codigo || '';
+      return lc.localeCompare(rc, 'es');
     }
 
     if (sortBy === 'startDate') {
-      return new Date(rightProject.startDate).getTime() - new Date(leftProject.startDate).getTime();
+      const ld = new Date(l.startDate || l.fechaInicio || 0).getTime();
+      const rd = new Date(r.startDate || r.fechaInicio || 0).getTime();
+      return rd - ld; // Descendente
     }
 
-    return new Date(rightProject.updatedAt).getTime() - new Date(leftProject.updatedAt).getTime();
+    // Default: updatedAt desc
+    const lu = new Date(l.updatedAt || 0).getTime();
+    const ru = new Date(r.updatedAt || 0).getTime();
+    return ru - lu;
   });
 
   return nextProjects;
@@ -130,18 +182,12 @@ export function getProjectSummary(projects) {
   return projects.reduce(
     (summary, project) => {
       summary.total += 1;
+      // Acepta campos en español o inglés
+      const st = project.estado || project.status || '';
 
-      if (project.status === 'active') {
-        summary.active += 1;
-      }
-
-      if (project.status === 'suspended') {
-        summary.suspended += 1;
-      }
-
-      if (project.status === 'closed') {
-        summary.closed += 1;
-      }
+      if (st === 'active'    || st === 'ACTIVO')     summary.active    += 1;
+      if (st === 'suspended' || st === 'SUSPENDIDO') summary.suspended += 1;
+      if (st === 'closed'    || st === 'CERRADO')    summary.closed    += 1;
 
       return summary;
     },
@@ -152,49 +198,40 @@ export function getProjectSummary(projects) {
 export function validateProjectForm(values, projects, currentProjectId = null) {
   const errors = {};
 
-  if (!values.code.trim()) {
+  // Soporta campos en español (backend) e inglés (modal/mock)
+  const code             = (values.code              ?? values.codigo             ?? '').trim();
+  const name             = (values.name              ?? values.nombre             ?? '').trim();
+  const contractorEntity = (values.contractorEntity  ?? values.entidadContratante ?? '').trim();
+  const totalBudget      =  values.totalBudget       ?? values.presupuestoTotal;
+  const startDate        =  values.startDate         ?? values.fechaInicio        ?? '';
+  const plannedEndDate   =  values.plannedEndDate     ?? values.fechaFinPrevista   ?? '';
+  const status           =  values.status            ?? values.estado             ?? '';
+
+  if (!code) {
     errors.code = 'El código del proyecto es obligatorio.';
   } else {
-    const duplicateProject = projects.find(
-      (project) => project.code.toLowerCase() === values.code.trim().toLowerCase() && project.id !== currentProjectId
+    const dup = projects.find(
+      (p) => (p.code || p.codigo || '').toLowerCase() === code.toLowerCase() && p.id !== currentProjectId
     );
-
-    if (duplicateProject) {
-      errors.code = 'Ya existe un proyecto registrado con este código.';
-    }
+    if (dup) errors.code = 'Ya existe un proyecto registrado con este código.';
   }
 
-  if (!values.name.trim()) {
-    errors.name = 'El nombre del proyecto es obligatorio.';
-  }
+  if (!name)             errors.name             = 'El nombre del proyecto es obligatorio.';
+  if (!contractorEntity) errors.contractorEntity  = 'La entidad contratante es obligatoria.';
 
-  if (!values.contractorEntity.trim()) {
-    errors.contractorEntity = 'La entidad contratante es obligatoria.';
-  }
-
-  if (!values.totalBudget && values.totalBudget !== 0) {
+  if (!totalBudget && totalBudget !== 0) {
     errors.totalBudget = 'El presupuesto total es obligatorio.';
-  } else if (Number(values.totalBudget) <= 0) {
+  } else if (Number(totalBudget) <= 0) {
     errors.totalBudget = 'El presupuesto total debe ser positivo.';
   }
 
-  if (!values.startDate) {
-    errors.startDate = 'La fecha de inicio es obligatoria.';
-  }
-
-  if (!values.plannedEndDate) {
-    errors.plannedEndDate = 'La fecha fin prevista es obligatoria.';
-  } else if (values.startDate && values.plannedEndDate < values.startDate) {
+  if (!startDate)      errors.startDate      = 'La fecha de inicio es obligatoria.';
+  if (!plannedEndDate) errors.plannedEndDate = 'La fecha fin prevista es obligatoria.';
+  else if (startDate && plannedEndDate < startDate)
     errors.plannedEndDate = 'La fecha fin prevista no puede ser anterior a la fecha de inicio.';
-  }
 
-  if (!values.status) {
-    errors.status = 'Seleccione un estado para continuar.';
-  }
-
-  if (!values.managerName.trim()) {
-    errors.managerName = 'Defina un responsable para el proyecto.';
-  }
+  if (!status)          errors.status         = 'Seleccione un estado para continuar.';
+  if (!values.idResponsable) errors.idResponsable = 'Defina un responsable para el proyecto.';
 
   return errors;
 }
@@ -213,7 +250,7 @@ export function createProjectPayload(values) {
     startDate: values.startDate,
     plannedEndDate: values.plannedEndDate,
     status: values.status,
-    managerName: values.managerName.trim(),
+    idResponsable: values.idResponsable,
     createdAt: timestamp,
     updatedAt: timestamp,
   };
@@ -231,7 +268,7 @@ export function updateProjectPayload(project, values) {
     startDate: values.startDate,
     plannedEndDate: values.plannedEndDate,
     status: values.status,
-    managerName: values.managerName.trim(),
+    idResponsable: values.idResponsable,
     updatedAt: new Date().toISOString(),
   };
 }

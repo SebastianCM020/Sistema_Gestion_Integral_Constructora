@@ -30,6 +30,8 @@ app.get('/health', (_req, res) => {
 app.use('/api/v1/auth',      require('./routes/auth.routes'));
 app.use('/api/v1/users',     require('./routes/users.routes'));     // Act. 8 — CRUD usuarios
 app.use('/api/v1/proyectos', require('./routes/proyectos.routes')); // Act. 9 — Acceso por proyecto
+app.use('/api/v1/materiales',require('./routes/materiales.routes'));// Sprint 3 — HU-02 Catálogo
+app.use('/api/v1/bodega',    require('./routes/bodega.routes'));    // Sprint 3 — HU-03 Bodega
 // app.use('/api/v1/avances',   require('./routes/avances.routes'));
 // app.use('/api/v1/compras',   require('./routes/compras.routes'));
 // app.use('/api/v1/reportes',  require('./routes/reportes.routes'));

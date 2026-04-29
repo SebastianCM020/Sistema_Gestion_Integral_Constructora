@@ -23,19 +23,21 @@ export function ProjectsTable({ projects, onView, onEdit, onOpenParameters, onCh
             {projects.map((project) => (
               <tr key={project.id} className="align-top hover:bg-[#F7F9FC]">
                 <td className="px-5 py-4">
-                  <p className="font-semibold text-[#2F3A45]">{project.code} · {project.name}</p>
-                  <p className="mt-1 text-gray-500">{project.managerName}</p>
+                  <p className="font-semibold text-[#2F3A45]">{project?.code} · {project?.name}</p>
+                  <p className="mt-1 text-sm text-gray-500">
+                    {project?.managerName || (project?.responsable ? `${project.responsable.nombre} ${project.responsable.apellido}` : 'Sin responsable asignado')}
+                  </p>
                 </td>
                 <td className="px-5 py-4">
-                  <p className="font-semibold text-[#2F3A45]">{project.contractorEntity}</p>
-                  <p className="mt-1 text-gray-500">{project.contractNumber || 'Sin contrato registrado'}</p>
+                  <p className="font-semibold text-[#2F3A45]">{project?.entidadContratante}</p>
+                  <p className="mt-1 text-gray-500">{project?.numeroContrato || 'Sin contrato registrado'}</p>
                 </td>
-                <td className="px-5 py-4">{formatCurrency(project.totalBudget)}</td>
-                <td className="px-5 py-4">{formatShortDate(project.startDate)}</td>
-                <td className="px-5 py-4">{formatShortDate(project.plannedEndDate)}</td>
-                <td className="px-5 py-4"><ProjectStatusBadge status={project.status} /></td>
+                <td className="px-5 py-4">{formatCurrency(project?.presupuestoTotal)}</td>
+                <td className="px-5 py-4">{formatShortDate(project?.fechaInicio)}</td>
+                <td className="px-5 py-4">{formatShortDate(project?.fechaFinPrevista)}</td>
+                <td className="px-5 py-4"><ProjectStatusBadge status={project?.estado} /></td>
                 <td className="px-5 py-4">
-                  <div className="grid gap-2 xl:grid-cols-[repeat(2,minmax(0,1fr))]">
+                  <div className="flex flex-wrap gap-2">
                     <ActionButton icon={Eye} label="Ver detalle" onClick={() => onView(project)} />
                     <ActionButton icon={Pencil} label="Editar" onClick={() => onEdit(project)} />
                     <ActionButton icon={Settings2} label="Parametrizar" onClick={() => onOpenParameters(project)} />
@@ -56,10 +58,10 @@ function ActionButton({ icon: Icon, label, onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex h-[40px] items-center justify-center gap-2 rounded-[10px] border border-[#D1D5DB] px-3 text-xs font-semibold text-[#2F3A45] hover:bg-white"
+      className="inline-flex min-h-[36px] min-w-[120px] items-center justify-center gap-2 rounded-[10px] border border-[#D1D5DB] px-3 py-1.5 text-xs font-semibold text-[#2F3A45] transition-colors hover:bg-gray-50 active:scale-95"
     >
-      <Icon size={14} />
-      {label}
+      <Icon size={14} className="shrink-0" />
+      <span className="whitespace-nowrap">{label}</span>
     </button>
   );
 }

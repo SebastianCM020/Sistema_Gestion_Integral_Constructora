@@ -19,11 +19,13 @@ const inferTabla = (path) => {
   const segment = path.replace(/^\/api\/v1\//, '').split('/')[0];
   // Normalizar nombres conocidos al nombre real de la tabla
   const tableMap = {
-    users:     'usuarios',
-    proyectos: 'proyectos',
-    avances:   'avance_obra',
-    compras:   'requerimiento_compra',
-    auth:      'usuarios',
+    users:      'usuarios',
+    proyectos:  'proyectos',
+    avances:    'avance_obra',
+    compras:    'requerimiento_compra',
+    auth:       'usuarios',
+    materiales: 'materiales',          // Sprint 3 — HU-02
+    bodega:     'movimiento_inventario',// Sprint 3 — HU-03
   };
   return tableMap[segment] || segment;
 };

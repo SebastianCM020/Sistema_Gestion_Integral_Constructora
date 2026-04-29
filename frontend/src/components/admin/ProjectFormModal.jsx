@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ModalShell } from '../ui/ModalShell.jsx';
 import { defaultProjectFormValues, validateProjectForm } from '../../utils/projectHelpers.js';
 
-export function ProjectFormModal({ project, projects, onCancel, onSave }) {
+export function ProjectFormModal({ project, projects, responsibles = [], onCancel, onSave }) {
   const isEditMode = Boolean(project);
   const [values, setValues] = useState(
     project
@@ -13,12 +13,13 @@ export function ProjectFormModal({ project, projects, onCancel, onSave }) {
           contractorEntity: project.contractorEntity,
           contractNumber: project.contractNumber,
           totalBudget: String(project.totalBudget),
-          startDate: project.startDate,
-          plannedEndDate: project.plannedEndDate,
+          // Las fechas deben ser YYYY-MM-DD para el input type="date"
+          startDate: (project.startDate || '').substring(0, 10),
+          plannedEndDate: (project.plannedEndDate || '').substring(0, 10),
           status: project.status,
-          managerName: project.managerName,
+          idResponsable: project.idResponsable || '',
         }
-      : defaultProjectFormValues
+      : { ...defaultProjectFormValues, idResponsable: '' }
   );
   const [errors, setErrors] = useState({});
 
@@ -66,7 +67,14 @@ export function ProjectFormModal({ project, projects, onCancel, onSave }) {
           <SelectField id="project-status" label="Estado" value={values.status} error={errors.status} onChange={(value) => handleChange('status', value)} options={[{ value: 'active', label: 'Activo' }, { value: 'suspended', label: 'Suspendido' }, { value: 'closed', label: 'Cerrado' }]} />
         </div>
 
-        <Field id="project-manager" label="Responsable" value={values.managerName} error={errors.managerName} onChange={(value) => handleChange('managerName', value)} placeholder="Nombre del responsable" />
+        <SelectField 
+          id="project-responsable" 
+          label="Responsable del proyecto" 
+          value={values.idResponsable} 
+          error={errors.idResponsable} 
+          onChange={(value) => handleChange('idResponsable', value)} 
+          options={responsibles.map(u => ({ value: u.id, label: `${u.firstName} ${u.lastName} (${u.role})` }))} 
+        />
 
         <div className="rounded-[12px] border border-[#D1D5DB] bg-[#F7F9FC] p-4 text-sm text-gray-600">
           La validación evita códigos duplicados, presupuestos inválidos y rangos de fecha inconsistentes para facilitar luego la integración con backend sin rehacer esta pantalla.
