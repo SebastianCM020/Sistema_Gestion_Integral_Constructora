@@ -24,7 +24,7 @@ export function ProjectDetailDrawer({ project, onClose, onEdit, onOpenParameters
           <InfoCard label="Entidad contratante" value={project.contractorEntity} />
           <InfoCard label="Número de contrato" value={project.contractNumber || 'Sin contrato registrado'} />
           <InfoCard label="Presupuesto total" value={formatCurrency(project.totalBudget)} />
-          <InfoCard label="Responsable" value={project.managerName} />
+          <InfoCard label="Responsable" value={project.managerName || 'Sin asignar'} />
           <InfoCard label="Fecha de inicio" value={formatShortDate(project.startDate)} />
           <InfoCard label="Fecha fin prevista" value={formatShortDate(project.plannedEndDate)} />
           <InfoCard label="Última actualización" value={formatDateTime(project.updatedAt)} />
@@ -37,7 +37,7 @@ export function ProjectDetailDrawer({ project, onClose, onEdit, onOpenParameters
             </div>
             <div>
               <p className="text-sm font-semibold text-[#2F3A45]">Resumen de fechas</p>
-              <p className="mt-1 text-sm text-gray-600">Inicio: {formatShortDate(project.startDate)} · Fin prevista: {formatShortDate(project.plannedEndDate)}</p>
+              <p className="mt-1 text-sm text-gray-600">Inicio: {formatShortDate(project.fechaInicio)} · Fin prevista: {formatShortDate(project.fechaFinPrevista)}</p>
             </div>
           </div>
         </section>
@@ -81,10 +81,10 @@ function ActionButton({ icon: Icon, label, onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex h-[44px] items-center justify-center gap-2 rounded-[12px] border border-[#D1D5DB] px-4 text-sm font-medium text-[#2F3A45] hover:bg-[#F7F9FC]"
+      className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-[12px] border border-[#D1D5DB] px-4 py-2 text-sm font-medium text-[#2F3A45] hover:bg-[#F7F9FC] transition-colors active:scale-95"
     >
-      <Icon size={16} />
-      {label}
+      <Icon size={16} className="shrink-0" />
+      <span>{label}</span>
     </button>
   );
 }

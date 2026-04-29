@@ -1,0 +1,11 @@
+Código,Descripción,Unidad,Precio Unitario,Cantidad Presupuestada
+OK-001,Cimentación tipo A,m3,45.00,100
+OK-002,Muro de ladrillo,m2,12.50,50
+OK-003,Acero de refuerzo,kg,10.00,200
+OK-004,Tubería PVC 1/2,ml,5.00,150
+ERR-005,ERROR PRECIO TEXTO,un,VALOR_INVALIDO,10
+OK-006,Excavación manual,m3,25.00,10
+OK-007,Cerámica piso,m2,15.00,30
+OK-008,Clavos 2 pulgadas,kg,8.50,45
+OK-009,Puntos de red,un,12.00,60
+OK-010,Pintura látex,gl,50.00,25

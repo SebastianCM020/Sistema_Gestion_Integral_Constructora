@@ -7,6 +7,8 @@ import DashboardPage from './pages/dashboard/DashboardPage';
 import ModuleRouterPage from './pages/dashboard/ModuleRouterPage';
 import AdminRouterPage from './pages/dashboard/AdminRouterPage';
 import { ForcePasswordChangeModal } from './components/auth/ForcePasswordChangeModal';
+import { CatalogoMaterialesView } from './views/inventario/CatalogoMaterialesView';
+import { EntradaMaterialesView }  from './views/inventario/EntradaMaterialesView';
 
 // Componente para proteger las rutas privadas
 const PrivateRoute = ({ children }) => {
@@ -60,6 +62,11 @@ export default function App() {
           <Route path="/module/:moduleId" element={<PrivateRoute><ModuleRouterPage /></PrivateRoute>} />
           <Route path="/admin" element={<Navigate to="/admin/users" replace />} />
           <Route path="/admin/:section" element={<PrivateRoute><AdminRouterPage /></PrivateRoute>} />
+
+          {/* Sprint 3 — HU-02 Catálogo de Materiales */}
+          <Route path="/bodega/catalogo" element={<PrivateRoute><CatalogoMaterialesView /></PrivateRoute>} />
+          {/* Sprint 3 — HU-03 Entrada de Materiales (Bodeguero) */}
+          <Route path="/bodega/entrada" element={<PrivateRoute><EntradaMaterialesView /></PrivateRoute>} />
           
           <Route path="*"          element={<Placeholder title="404 — Página no encontrada" />} />
         </Routes>

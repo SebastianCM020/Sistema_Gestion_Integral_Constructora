@@ -16,7 +16,8 @@ import { ProjectFormModal } from '../../components/admin/ProjectFormModal.jsx';
 import { ProjectStatusModal } from '../../components/admin/ProjectStatusModal.jsx';
 import { ProjectParametersPanel } from '../../components/admin/ProjectParametersPanel.jsx';
 import { ProjectDetailDrawer } from '../../components/admin/ProjectDetailDrawer.jsx';
-import { mockProjects } from '../../data/mockProjects.js';
+import { fetchProjects, createProject, updateProject } from '../../services/projects.service.js';
+import { getUsers } from '../../services/usersApi.js';
 import { mockProjectParameters } from '../../data/mockProjectParameters.js';
 import {
   attachProjectParameters,
@@ -41,7 +42,8 @@ export function ProjectsManagementView({
   onOpenAdminSection,
 }) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const [projects, setProjects] = useState(mockProjects);
+  const [projects, setProjects] = useState([]);
+  const [potentialResponsibles, setPotentialResponsibles] = useState([]);
   const [projectParameters, setProjectParameters] = useState(mockProjectParameters);
   const [filters, setFilters] = useState(defaultProjectFilters);
   const [loadStatus, setLoadStatus] = useState('loading');
@@ -50,18 +52,37 @@ export function ProjectsManagementView({
   const [activeOverlay, setActiveOverlay] = useState(null);
 
   const modules = getModulesForUser(currentUser);
-  const isAdmin = currentUser.roleName === 'Administrador del Sistema';
-  const managerOptions = useMemo(() => Array.from(new Set(projects.map((project) => project.managerName))).sort((left, right) => left.localeCompare(right, 'es')), [projects]);
+  // Usar roleId (ya normalizado por icaroData) en lugar de roleName (frágil a cambios de texto)
+  const isAdmin = currentUser.roleId === 'admin';
+  const managerOptions = useMemo(() => 
+    potentialResponsibles.map((u) => ({ value: u.id, label: `${u.firstName} ${u.lastName}` })), 
+    [potentialResponsibles]
+  );
 
   useEffect(() => {
-    setLoadStatus('loading');
+    const loadData = async () => {
+      setLoadStatus('loading');
+      try {
+        const [projectsData, usersResponse] = await Promise.all([
+          fetchProjects(),
+          getUsers()
+        ]);
+        setProjects(Array.isArray(projectsData) ? projectsData : []);
+        setPotentialResponsibles(Array.isArray(usersResponse?.data) ? usersResponse.data : []);
+        setLoadStatus('ready');
+      } catch (error) {
+        console.error('Error loading projects data:', error);
+        setLoadStatus('error');
+      }
+    };
 
-    const timer = window.setTimeout(() => {
-      setLoadStatus(currentUser.adminUsersShouldFail ? 'error' : 'ready');
-    }, 700);
-
-    return () => window.clearTimeout(timer);
-  }, [currentUser.adminUsersShouldFail, retryCount]);
+    if (isAdmin) {
+      loadData();
+    } else {
+      // Si no es admin, salir del estado loading para que el bloque de acceso denegado se muestre de inmediato
+      setLoadStatus('ready');
+    }
+  }, [isAdmin, retryCount]);
 
   useEffect(() => {
     if (!feedback) {
@@ -72,9 +93,9 @@ export function ProjectsManagementView({
     return () => window.clearTimeout(timer);
   }, [feedback]);
 
-  const enrichedProjects = useMemo(() => attachProjectParameters(projects, projectParameters), [projects, projectParameters]);
+  const enrichedProjects = useMemo(() => attachProjectParameters(projects || [], projectParameters || []), [projects, projectParameters]);
   const visibleProjects = useMemo(() => sortProjects(filterProjects(enrichedProjects, filters), filters.sortBy), [enrichedProjects, filters]);
-  const summary = useMemo(() => getProjectSummary(projects), [projects]);
+  const summary = useMemo(() => getProjectSummary(projects || []), [projects]);
 
   const handleFilterChange = (field, value) => {
     setFilters((previousFilters) => ({ ...previousFilters, [field]: value }));
@@ -88,35 +109,46 @@ export function ProjectsManagementView({
     setActiveOverlay(null);
   };
 
-  const handleSaveProject = (values) => {
-    if (activeOverlay?.type === 'edit' && activeOverlay.project) {
-      setProjects((previousProjects) =>
-        previousProjects.map((project) =>
-          project.id === activeOverlay.project.id ? updateProjectPayload(project, values) : project
-        )
-      );
-      setFeedback({ tone: 'success', message: 'Proyecto actualizado correctamente.' });
-    } else {
-      setProjects((previousProjects) => [createProjectPayload(values), ...previousProjects]);
-      setFeedback({ tone: 'success', message: 'Proyecto creado correctamente.' });
+  const handleSaveProject = async (values) => {
+    try {
+      if (activeOverlay?.type === 'edit' && activeOverlay.project) {
+        const updated = await updateProject(activeOverlay.project.id, values);
+        setProjects((prev) => prev.map((p) => (p.id === updated.id ? updated : p)));
+        setFeedback({ tone: 'success', message: 'Proyecto actualizado correctamente.' });
+      } else {
+        const created = await createProject(values);
+        setProjects((prev) => [created, ...prev]);
+        setFeedback({ tone: 'success', message: 'Proyecto creado correctamente.' });
+      }
+      closeOverlay();
+    } catch (error) {
+      setFeedback({ tone: 'error', message: error.response?.data?.error || 'Error al procesar la solicitud.' });
     }
-
-    closeOverlay();
   };
 
-  const handleSaveStatus = (status) => {
+  const handleSaveStatus = async (status) => {
     const targetProject = activeOverlay?.project;
     if (!targetProject) {
       return;
     }
 
-    setProjects((previousProjects) =>
-      previousProjects.map((project) =>
-        project.id === targetProject.id ? updateProjectStatusPayload(project, status) : project
-      )
-    );
-    setFeedback({ tone: 'success', message: 'El estado del proyecto fue actualizado.' });
-    closeOverlay();
+    try {
+      // Persistir el cambio de estado en el backend
+      const updated = await updateProject(targetProject.id, {
+        ...targetProject,
+        status: status,
+      });
+
+      setProjects((previousProjects) =>
+        previousProjects.map((project) => (project.id === updated.id ? updated : project))
+      );
+      
+      setFeedback({ tone: 'success', message: `El estado del proyecto se actualizó a "${status.toUpperCase()}".` });
+      closeOverlay();
+    } catch (error) {
+      console.error('Error updating project status:', error);
+      setFeedback({ tone: 'error', message: 'No se pudo actualizar el estado en el servidor.' });
+    }
   };
 
   const handleSaveParameters = (values) => {
@@ -287,6 +319,7 @@ export function ProjectsManagementView({
         <ProjectFormModal
           project={activeOverlay.project ?? null}
           projects={projects}
+          responsibles={potentialResponsibles}
           onCancel={closeOverlay}
           onSave={handleSaveProject}
         />
