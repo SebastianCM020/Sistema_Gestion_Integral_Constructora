@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="KDJjONq9j54bD4v2fC_5">
+    <mxGraphModel dx="2001" dy="598" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="F4UgaDz29o4aCMVHYkOb-1" connectable="0" parent="1" style="group;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="110" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="F4UgaDz29o4aCMVHYkOb-2" parent="F4UgaDz29o4aCMVHYkOb-1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="F4UgaDz29o4aCMVHYkOb-3" parent="F4UgaDz29o4aCMVHYkOb-1" style="line;strokeWidth=4;html=1;perimeter=backbonePerimeter;points=[];outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="10" width="450" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="F4UgaDz29o4aCMVHYkOb-4" collapsed="1" parent="F4UgaDz29o4aCMVHYkOb-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;HU-12&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="50" as="geometry">
+            <mxRectangle height="30" width="60" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F4UgaDz29o4aCMVHYkOb-5" parent="F4UgaDz29o4aCMVHYkOb-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;b&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;Ejecutar cierre contable mensual con integridad&lt;/span&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="350" x="70" as="geometry" />
+        </mxCell>
+        <mxCell id="F4UgaDz29o4aCMVHYkOb-6" parent="F4UgaDz29o4aCMVHYkOb-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="&lt;p data-start=&quot;4994&quot; data-end=&quot;5310&quot;&gt;Como Contador, quiero ejecutar el cierre contable mensual de un proyecto previamente consolidado, bloqueando la edición de los registros del periodo y generando un hash de integridad, para asegurar que la información cerrada sea estable, trazable, verificable y habilite la generación posterior de planillas de obra.&lt;/p&gt;&lt;br/&gt;&lt;p data-start=&quot;5312&quot; data-end=&quot;5636&quot;&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="130" width="430" x="10" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="F4UgaDz29o4aCMVHYkOb-7" parent="F4UgaDz29o4aCMVHYkOb-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Estimación tiempo : 14 horas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="190" x="10" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="F4UgaDz29o4aCMVHYkOb-8" parent="F4UgaDz29o4aCMVHYkOb-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Prioridad :Alta/Esencial&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="10" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="F4UgaDz29o4aCMVHYkOb-9" parent="F4UgaDz29o4aCMVHYkOb-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=10;" value="&lt;font&gt;Dependiente :&lt;/font&gt;&lt;font face=&quot;Arial, sans-serif&quot;&gt;&amp;nbsp;&lt;/font&gt;HU-01, HU-02, HU-03, HU-04, HU-05, HU-06, HU-07, HU-08, HU-09, HU-10, HU-11, HU-13, HU-14, HU-17, HU-18, HU-19, HU-21, HU-22, HU-23, HU-24, HU-25, HU-26" vertex="1">
+          <mxGeometry height="30" width="240" x="210" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="F4UgaDz29o4aCMVHYkOb-10" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="460" width="740" x="-20" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="F4UgaDz29o4aCMVHYkOb-11" connectable="0" parent="F4UgaDz29o4aCMVHYkOb-10" style="group;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="460.0000000000001" width="740.0000000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="F4UgaDz29o4aCMVHYkOb-12" parent="F4UgaDz29o4aCMVHYkOb-10" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="460.0000000000001" width="740.0000000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="F4UgaDz29o4aCMVHYkOb-13" parent="F4UgaDz29o4aCMVHYkOb-10" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=14;spacingLeft=10;" value="&lt;div&gt;&lt;p data-start=&quot;5668&quot; data-end=&quot;5846&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una sesión válida, rol Contador y acceso al módulo contable, cuando el usuario selecciona un proyecto activo y un periodo consolidado, el sistema permite iniciar el cierre.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5848&quot; data-end=&quot;6002&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con información mensual consolidada y sin pendientes críticos, cuando el Contador confirma el cierre, el sistema cambia el estado del periodo a Cerrado.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6004&quot; data-end=&quot;6178&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con cierre ejecutado correctamente, cuando finaliza la operación, el sistema bloquea la edición de avances, consumos, recepciones, compras e inventario del periodo cerrado.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6180&quot; data-end=&quot;6292&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con registros del mes cerrado, cuando un usuario operativo intenta modificarlos, el sistema impide la edición.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6294&quot; data-end=&quot;6429&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un cierre exitoso, cuando finaliza el proceso, el sistema genera y almacena un hash de integridad asociado al proyecto y periodo.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6431&quot; data-end=&quot;6575&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con cierre mensual guardado, cuando se registra la operación, el sistema conserva proyecto, mes/año, estado de cierre, Contador, fecha y hash.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6577&quot; data-end=&quot;6720&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con transacciones pendientes, cuando el Contador intenta cerrar el mes, el sistema detiene la operación y muestra los registros por resolver.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6722&quot; data-end=&quot;6871&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con operaciones móviles pendientes de sincronización, cuando existen avances, consumos o evidencias no sincronizadas, el sistema bloquea el cierre.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6873&quot; data-end=&quot;6964&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un periodo futuro, cuando el Contador intenta cerrar, el sistema impide la operación.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6966&quot; data-end=&quot;7110&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un proyecto inexistente, inactivo o sin acceso autorizado, cuando el Contador intenta ejecutar el cierre, el sistema bloquea la operación.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7112&quot; data-end=&quot;7226&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un periodo ya cerrado, cuando el Contador intenta cerrarlo nuevamente, el sistema impide duplicar el cierre.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7228&quot; data-end=&quot;7362&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con error de persistencia, hash o actualización de estados, cuando no puede completarse el cierre, el sistema revierte la operación.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7364&quot; data-end=&quot;7533&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con cierre ejecutado correctamente, cuando se registra el evento, el sistema guarda trazabilidad/auditoría del usuario, fecha, proyecto, periodo y datos antes/después.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7535&quot; data-end=&quot;7667&quot; data-is-last-node=&quot;&quot; data-is-only-node=&quot;&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con cierre completado y auditado, cuando el periodo queda cerrado, el sistema lo habilita para generar la planilla mensual en PDF.&lt;/font&gt;&lt;/p&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="443.5714285714286" width="717.4782608695654" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

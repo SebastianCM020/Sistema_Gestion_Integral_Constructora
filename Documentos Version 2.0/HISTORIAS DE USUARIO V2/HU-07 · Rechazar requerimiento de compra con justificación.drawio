@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="41YqKERFHG4NhB_ISy1O">
+    <mxGraphModel dx="2244" dy="722" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="viSWx5JVP49pPoCWj7jM-1" connectable="0" parent="1" style="group;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="90" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="viSWx5JVP49pPoCWj7jM-2" parent="viSWx5JVP49pPoCWj7jM-1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="viSWx5JVP49pPoCWj7jM-3" parent="viSWx5JVP49pPoCWj7jM-1" style="line;strokeWidth=4;html=1;perimeter=backbonePerimeter;points=[];outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="10" width="450" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="viSWx5JVP49pPoCWj7jM-4" collapsed="1" parent="viSWx5JVP49pPoCWj7jM-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;fontSize=16;" value="HU-07" vertex="1">
+          <mxGeometry height="30" width="50" x="5" y="5" as="geometry">
+            <mxRectangle height="30" width="60" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="viSWx5JVP49pPoCWj7jM-5" parent="viSWx5JVP49pPoCWj7jM-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;b&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;Rechazar requerimiento de compra con&lt;br/&gt;justificación&lt;/span&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="370" x="70" y="5" as="geometry" />
+        </mxCell>
+        <mxCell id="viSWx5JVP49pPoCWj7jM-6" parent="viSWx5JVP49pPoCWj7jM-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="Como Presidente/Gerente, quiero rechazar requerimientos de compra en estado En Revisión dejando una justificación obligatoria, para comunicar claramente la causa del rechazo, evitar ambigüedades en el proceso y mantener trazabilidad de la decisión tomada." vertex="1">
+          <mxGeometry height="130" width="430" x="10" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="viSWx5JVP49pPoCWj7jM-7" parent="viSWx5JVP49pPoCWj7jM-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Estimación tiempo : 6 horas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="180" x="10" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="viSWx5JVP49pPoCWj7jM-8" parent="viSWx5JVP49pPoCWj7jM-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Prioridad :Alta/Esencial&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="10" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="viSWx5JVP49pPoCWj7jM-9" parent="viSWx5JVP49pPoCWj7jM-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Dependiente :&amp;nbsp;&lt;/font&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;HU-05, HU-06, HU-08, HU-17, HU-18, HU-19, HU-21, HU-23, HU-24, HU-25, HU-26&lt;/span&gt;" vertex="1">
+          <mxGeometry height="40" width="230" x="220" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="viSWx5JVP49pPoCWj7jM-10" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="450" width="700" x="-30" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="viSWx5JVP49pPoCWj7jM-11" connectable="0" parent="viSWx5JVP49pPoCWj7jM-10" style="group;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="450" width="699.9999999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="viSWx5JVP49pPoCWj7jM-12" parent="viSWx5JVP49pPoCWj7jM-10" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="450" width="699.9999999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="viSWx5JVP49pPoCWj7jM-13" parent="viSWx5JVP49pPoCWj7jM-10" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=14;spacingLeft=10;" value="&lt;div&gt;&lt;p data-start=&quot;5028&quot; data-end=&quot;5223&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una sesión válida y rol Presidente/Gerente, cuando el usuario accede a la bandeja de requerimientos pendientes, el sistema muestra únicamente las solicitudes disponibles según sus permisos.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5225&quot; data-end=&quot;5432&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un requerimiento en estado En Revisión, cuando el Presidente/Gerente consulta el detalle, el sistema muestra materiales, cantidades, justificación inicial, proyecto, solicitante, fecha y estado actual.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5434&quot; data-end=&quot;5592&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un requerimiento en estado En Revisión, cuando el Presidente/Gerente selecciona Rechazar, el sistema solicita obligatoriamente un comentario de rechazo.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5594&quot; data-end=&quot;5768&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con ausencia de justificación de rechazo, cuando el Presidente/Gerente intenta confirmar el rechazo, el sistema impide completar la acción y mantiene el estado En Revisión.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5770&quot; data-end=&quot;5907&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una justificación de rechazo válida, cuando el Presidente/Gerente confirma la decisión, el sistema actualiza el estado a Rechazado.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5909&quot; data-end=&quot;6069&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un requerimiento rechazado correctamente, cuando se actualiza el estado, el sistema registra usuario responsable, fecha de rechazo y comentario ingresado.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6071&quot; data-end=&quot;6192&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un rechazo confirmado y comentado, cuando el sistema actualiza el estado, notifica el resultado al usuario creador.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6194&quot; data-end=&quot;6348&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un requerimiento rechazado, cuando se consulta su detalle, el sistema conserva visible comentario, estado final, fecha y responsable de la decisión.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6350&quot; data-end=&quot;6492&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un requerimiento previamente aprobado, rechazado, anulado o cerrado, cuando se intenta rechazar nuevamente, el sistema impide la acción.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6494&quot; data-end=&quot;6632&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un usuario sin rol autorizado, cuando intenta rechazar un requerimiento, el sistema deniega la operación y no modifica la solicitud.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6634&quot; data-end=&quot;6788&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con error de persistencia o falla del servicio, cuando no se puede completar el rechazo, el sistema mantiene el estado anterior e informa la incidencia.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6790&quot; data-end=&quot;6968&quot; data-is-last-node=&quot;&quot; data-is-only-node=&quot;&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un rechazo completado, cuando se registra la operación, el sistema conserva trazabilidad del cambio de estado, responsable, comentario, fecha, módulo y datos antes/después.&lt;/font&gt;&lt;/p&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="433.92857142857144" width="678.695652173913" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="d1Agw17vJFQ-R3V4MIGq">
+    <mxGraphModel dx="2539" dy="873" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="FtN8zXBAxtrEBbSOQXlj-1" connectable="0" parent="1" style="group;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="90" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="FtN8zXBAxtrEBbSOQXlj-2" parent="FtN8zXBAxtrEBbSOQXlj-1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="FtN8zXBAxtrEBbSOQXlj-3" parent="FtN8zXBAxtrEBbSOQXlj-1" style="line;strokeWidth=4;html=1;perimeter=backbonePerimeter;points=[];outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="10" width="450" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="FtN8zXBAxtrEBbSOQXlj-4" collapsed="1" parent="FtN8zXBAxtrEBbSOQXlj-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="HU-09" vertex="1">
+          <mxGeometry height="30" width="50" as="geometry">
+            <mxRectangle height="30" width="60" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FtN8zXBAxtrEBbSOQXlj-5" parent="FtN8zXBAxtrEBbSOQXlj-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Registrar consumo de materiales y descontar stock&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="360" x="70" as="geometry" />
+        </mxCell>
+        <mxCell id="FtN8zXBAxtrEBbSOQXlj-6" parent="FtN8zXBAxtrEBbSOQXlj-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="&lt;p data-start=&quot;4925&quot; data-end=&quot;5183&quot;&gt;Como Residente, quiero registrar desde obra el consumo de materiales asociados a mi proyecto, para descontar automáticamente el inventario disponible, reflejar la ejecución real de la obra y mantener consistencia entre bodega, consumo e información contable.&lt;/p&gt;&lt;br/&gt;&lt;p data-start=&quot;5185&quot; data-end=&quot;5424&quot;&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="130" width="430" x="10" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="FtN8zXBAxtrEBbSOQXlj-7" parent="FtN8zXBAxtrEBbSOQXlj-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Estimación tiempo : 8 horas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="180" x="10" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="FtN8zXBAxtrEBbSOQXlj-8" parent="FtN8zXBAxtrEBbSOQXlj-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Prioridad : Alta/Esencial&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="10" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="FtN8zXBAxtrEBbSOQXlj-9" parent="FtN8zXBAxtrEBbSOQXlj-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Dependiente :&lt;/font&gt;&lt;font style=&quot;font-size: 14.6667px;&quot; face=&quot;Arial, sans-serif&quot;&gt;&amp;nbsp;&lt;/font&gt;HU-01, HU-08, HU-10, HU-11, HU-12, HU-17, HU-18, HU-19, HU-21, HU-22, HU-24, HU-25, HU-26" vertex="1">
+          <mxGeometry height="30" width="220" x="230" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="FtN8zXBAxtrEBbSOQXlj-10" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="480" width="840" x="-50" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="FtN8zXBAxtrEBbSOQXlj-11" connectable="0" parent="FtN8zXBAxtrEBbSOQXlj-10" style="group;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="440" width="790" as="geometry" />
+        </mxCell>
+        <mxCell id="FtN8zXBAxtrEBbSOQXlj-12" parent="FtN8zXBAxtrEBbSOQXlj-10" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="480" width="790" as="geometry" />
+        </mxCell>
+        <mxCell id="FtN8zXBAxtrEBbSOQXlj-13" parent="FtN8zXBAxtrEBbSOQXlj-10" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=14;spacingLeft=10;" value="&lt;div&gt;&lt;p data-start=&quot;5456&quot; data-end=&quot;5654&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una sesión válida, rol Residente, proyecto asignado y vigencia activa, cuando el usuario accede al módulo de consumo, el sistema permite registrar materiales solo sobre el proyecto autorizado.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5656&quot; data-end=&quot;5836&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con materiales existentes en el inventario del proyecto, cuando el Residente selecciona un material y registra una cantidad numérica mayor a cero, el sistema valida la operación.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5838&quot; data-end=&quot;5978&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con stock suficiente, cuando el Residente registra el consumo, el sistema descuenta automáticamente la cantidad del inventario disponible.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5980&quot; data-end=&quot;6107&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un consumo válido registrado, cuando finaliza la operación, el sistema genera un movimiento de inventario de tipo salida.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6109&quot; data-end=&quot;6250&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con stock insuficiente, cuando el consumo supera el disponible, el sistema bloquea la operación y muestra una alerta de stock insuficiente.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6252&quot; data-end=&quot;6393&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con cantidad no numérica, igual a cero o menor que cero, cuando el Residente intenta registrar el consumo, el sistema rechaza la operación.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6395&quot; data-end=&quot;6540&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con materiales asociados a un proyecto distinto, cuando el usuario intenta consumirlos, el sistema rechaza la operación sobre inventario ajeno.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6542&quot; data-end=&quot;6657&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un usuario sin acceso vigente al proyecto, cuando intenta registrar consumo, el sistema deniega la operación.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6659&quot; data-end=&quot;6830&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con conectividad disponible, cuando se registra un consumo válido, el sistema envía la operación a la API REST, descuenta el stock y marca el registro como sincronizado.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6832&quot; data-end=&quot;7000&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Sin conectividad o con conexión inestable, cuando el Residente registra un consumo válido, el sistema guarda la operación localmente como Pendiente de sincronización.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7002&quot; data-end=&quot;7172&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con sincronización posterior exitosa, cuando el sistema envía el consumo pendiente al servidor, actualiza inventario, registra salida y cambia el estado a Sincronizado.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7174&quot; data-end=&quot;7333&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con error de sincronización o conflicto de stock, cuando el servidor rechaza el consumo pendiente, el sistema marca el registro como Error de sincronización.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7335&quot; data-end=&quot;7465&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con consumo válido registrado, cuando se consulta el inventario del proyecto, el saldo disponible refleja el descuento aplicado.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7467&quot; data-end=&quot;7661&quot; data-is-last-node=&quot;&quot; data-is-only-node=&quot;&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con operación completada, cuando se registra o sincroniza el consumo, el sistema conserva trazabilidad/auditoría del usuario, proyecto, material, cantidad, fecha, estado y datos antes/después.&lt;/font&gt;&lt;/p&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="440" width="765.3333333333333" x="10" y="10" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

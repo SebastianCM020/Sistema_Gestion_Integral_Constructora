@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="oUgpW9MuZ85DbzJPle_w">
+    <mxGraphModel dx="2001" dy="598" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="eSVirTn4XRbCqDk6yfx3-1" connectable="0" parent="1" style="group;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="110" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="eSVirTn4XRbCqDk6yfx3-2" parent="eSVirTn4XRbCqDk6yfx3-1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="-5" as="geometry" />
+        </mxCell>
+        <mxCell id="eSVirTn4XRbCqDk6yfx3-3" parent="eSVirTn4XRbCqDk6yfx3-1" style="line;strokeWidth=4;html=1;perimeter=backbonePerimeter;points=[];outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="10" width="450" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="eSVirTn4XRbCqDk6yfx3-4" collapsed="1" parent="eSVirTn4XRbCqDk6yfx3-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;HU-14&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="50" as="geometry">
+            <mxRectangle height="30" width="60" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eSVirTn4XRbCqDk6yfx3-5" parent="eSVirTn4XRbCqDk6yfx3-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;b&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;Consultar planilla mensual&lt;/span&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="310" x="70" as="geometry" />
+        </mxCell>
+        <mxCell id="eSVirTn4XRbCqDk6yfx3-6" parent="eSVirTn4XRbCqDk6yfx3-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="&lt;p data-start=&quot;4808&quot; data-end=&quot;5065&quot;&gt;Como Contador o Presidente/Gerente, quiero consultar la planilla mensual de obra de un proyecto y periodo cerrado, para revisar el consolidado técnico-económico, validar su contenido de cobro y acceder al archivo PDF generado cuando se encuentre disponible.&lt;/p&gt;&lt;br/&gt;&lt;p data-start=&quot;5067&quot; data-end=&quot;5397&quot;&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="130" width="430" x="10" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="eSVirTn4XRbCqDk6yfx3-7" parent="eSVirTn4XRbCqDk6yfx3-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Estimación tiempo : 5 horas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="180" x="10" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="eSVirTn4XRbCqDk6yfx3-8" parent="eSVirTn4XRbCqDk6yfx3-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Prioridad : Media/Deseado&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="10" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="eSVirTn4XRbCqDk6yfx3-9" parent="eSVirTn4XRbCqDk6yfx3-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;Dependiente :&amp;nbsp;HU-01, HU-02, HU-03, HU-04, HU-05, HU-06, HU-07, HU-08, HU-09, HU-10, HU-11, HU-12, HU-13, HU-15, HU-16, HU-17, HU-18, HU-19, HU-20, HU-21, HU-22, HU-23, HU-24, HU-25, HU-26&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="240" x="200" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="eSVirTn4XRbCqDk6yfx3-10" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="460" width="700" x="-10" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="eSVirTn4XRbCqDk6yfx3-11" connectable="0" parent="eSVirTn4XRbCqDk6yfx3-10" style="group;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="460" width="700.0000000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="eSVirTn4XRbCqDk6yfx3-12" parent="eSVirTn4XRbCqDk6yfx3-10" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="460" width="700.0000000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="eSVirTn4XRbCqDk6yfx3-13" parent="eSVirTn4XRbCqDk6yfx3-10" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=14;spacingLeft=10;" value="&lt;div&gt;&lt;p data-start=&quot;5429&quot; data-end=&quot;5622&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una sesión válida, rol Contador o Presidente/Gerente y permisos sobre el proyecto, cuando el usuario accede al módulo de planillas, el sistema permite consultar las planillas disponibles.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5624&quot; data-end=&quot;5786&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un proyecto y periodo mensual seleccionados, cuando el usuario consulta la planilla, el sistema valida que el proyecto exista y que el periodo esté cerrado.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5788&quot; data-end=&quot;5953&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un periodo cerrado y planilla generada, cuando el usuario consulta la planilla mensual, el sistema muestra el consolidado disponible y el archivo PDF asociado.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5955&quot; data-end=&quot;6124&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una planilla en proceso de generación diferida, cuando el usuario consulta el periodo, el sistema muestra el estado En proceso o Pendiente, sin habilitar descarga.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6126&quot; data-end=&quot;6309&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una planilla generada correctamente, cuando el usuario abre la consulta, el sistema muestra proyecto, periodo, fecha de generación, estado, responsable y referencia del archivo.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6311&quot; data-end=&quot;6462&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una planilla PDF disponible, cuando el usuario consulta el detalle, el sistema habilita la descarga o visualización del documento según permisos.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6464&quot; data-end=&quot;6636&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con evidencias fotográficas integradas, cuando se consulta el detalle, el sistema permite verificar que los anexos corresponden al proyecto, rubro y periodo seleccionado.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6638&quot; data-end=&quot;6782&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un proyecto sin cierre del periodo, cuando el usuario intenta consultar la planilla, el sistema informa que no existe planilla habilitada.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6784&quot; data-end=&quot;6923&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un periodo cerrado pero sin planilla generada, cuando el usuario consulta el periodo, el sistema informa que aún no ha sido generada.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6925&quot; data-end=&quot;7047&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con permisos insuficientes, cuando un usuario no autorizado intenta consultar la planilla, el sistema deniega el acceso.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7049&quot; data-end=&quot;7183&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un usuario con acceso a otro proyecto, cuando intenta consultar una planilla no autorizada, el sistema bloquea la visualización.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7185&quot; data-end=&quot;7340&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con error en el archivo almacenado o referencia no disponible, cuando el usuario intenta abrir o descargar la planilla, el sistema informa la incidencia.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7342&quot; data-end=&quot;7484&quot; data-is-last-node=&quot;&quot; data-is-only-node=&quot;&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con consulta completada, cuando el usuario accede a la planilla, el sistema conserva trazabilidad de consulta o descarga cuando corresponda.&lt;/font&gt;&lt;/p&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="443.57142857142856" width="678.6956521739131" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

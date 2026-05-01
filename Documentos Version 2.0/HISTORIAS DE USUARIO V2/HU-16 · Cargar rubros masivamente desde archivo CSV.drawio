@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="Zn3KcYo-OUNlF43IqzDz">
+    <mxGraphModel dx="2001" dy="598" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="QPZaaJY95XNV6vZ_7jgf-15" connectable="0" parent="1" style="group;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="110" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QPZaaJY95XNV6vZ_7jgf-16" parent="QPZaaJY95XNV6vZ_7jgf-15" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="QPZaaJY95XNV6vZ_7jgf-17" parent="QPZaaJY95XNV6vZ_7jgf-15" style="line;strokeWidth=4;html=1;perimeter=backbonePerimeter;points=[];outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="10" width="450" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="QPZaaJY95XNV6vZ_7jgf-18" collapsed="1" parent="QPZaaJY95XNV6vZ_7jgf-15" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;HU-16&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="50" as="geometry">
+            <mxRectangle height="30" width="60" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QPZaaJY95XNV6vZ_7jgf-19" parent="QPZaaJY95XNV6vZ_7jgf-15" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;b&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;Cargar rubros masivamente desde archivo CSV&lt;/span&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="350" x="70" as="geometry" />
+        </mxCell>
+        <mxCell id="QPZaaJY95XNV6vZ_7jgf-20" parent="QPZaaJY95XNV6vZ_7jgf-15" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="&lt;p data-start=&quot;4860&quot; data-end=&quot;5188&quot;&gt;Como Administrador del Sistema, quiero cargar rubros masivamente desde un archivo CSV válido asociado a un proyecto habilitado, para crear rápidamente el catálogo operativo de rubros de una obra sin registrar cada ítem de forma manual y asegurar que los avances posteriores se reporten sobre rubros correctamente parametrizados.&lt;/p&gt;&lt;br/&gt;&lt;p data-start=&quot;5190&quot; data-end=&quot;5416&quot;&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="130" width="430" x="10" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QPZaaJY95XNV6vZ_7jgf-21" parent="QPZaaJY95XNV6vZ_7jgf-15" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Estimación tiempo : 12 horas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="190" x="10" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="QPZaaJY95XNV6vZ_7jgf-22" parent="QPZaaJY95XNV6vZ_7jgf-15" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Prioridad :&lt;/font&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;Alta/Esencial&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="10" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="QPZaaJY95XNV6vZ_7jgf-23" parent="QPZaaJY95XNV6vZ_7jgf-15" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Dependiente :&amp;nbsp;HU-15, HU-17, HU-18, HU-19, HU-20, HU-21, HU-23, HU-24, HU-25, HU-26&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="200" x="250" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="QPZaaJY95XNV6vZ_7jgf-24" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="450" width="700" x="-10" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="QPZaaJY95XNV6vZ_7jgf-25" connectable="0" parent="QPZaaJY95XNV6vZ_7jgf-24" style="group;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="450" width="699.9999999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="QPZaaJY95XNV6vZ_7jgf-26" parent="QPZaaJY95XNV6vZ_7jgf-24" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="450" width="699.9999999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="QPZaaJY95XNV6vZ_7jgf-27" parent="QPZaaJY95XNV6vZ_7jgf-24" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=14;spacingLeft=10;" value="&lt;div&gt;&lt;p data-start=&quot;5448&quot; data-end=&quot;5607&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una sesión válida y rol Administrador del Sistema, cuando el usuario accede al módulo de rubros por proyecto, el sistema permite iniciar la carga masiva.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5609&quot; data-end=&quot;5770&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un proyecto existente, activo y habilitado para configuración, cuando el Administrador selecciona carga masiva, el sistema permite adjuntar un archivo CSV.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5772&quot; data-end=&quot;5936&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un CSV con cabecera exacta: Código, Descripción, Unidad, Precio Unitario, cuando se ejecuta la carga, el sistema valida la estructura antes de procesar filas.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5938&quot; data-end=&quot;6083&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con filas válidas en formato y tipo de dato, cuando el sistema procesa el archivo, inserta los rubros y los asocia al proyecto correspondiente.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6085&quot; data-end=&quot;6258&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una importación correcta, cuando finaliza el proceso, el sistema muestra resumen de filas procesadas, rubros importados, rechazados si aplica, proyecto y estado final.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6260&quot; data-end=&quot;6407&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una fila con error de formato, dato obligatorio vacío o tipo inválido, cuando se procesa el archivo, el sistema revierte toda la transacción.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6409&quot; data-end=&quot;6544&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una cabecera distinta a la requerida, cuando se intenta importar el archivo, el sistema rechaza la carga antes de procesar filas.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6546&quot; data-end=&quot;6667&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un archivo inválido, cuando la carga es rechazada, el sistema informa la línea o sección donde se detectó el error.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6669&quot; data-end=&quot;6795&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un proyecto inexistente, inactivo o no seleccionado, cuando se intenta cargar rubros, el sistema bloquea la importación.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6797&quot; data-end=&quot;6962&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con códigos de rubro duplicados dentro del archivo o ya existentes para el mismo proyecto, cuando se procesa la importación, el sistema evita duplicidad operativa.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6964&quot; data-end=&quot;7090&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con error de inserción o falla de persistencia, cuando no puede completarse la carga, el sistema no guarda rubros parciales.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7092&quot; data-end=&quot;7271&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con carga completada correctamente, cuando se registra la operación, el sistema conserva trazabilidad/auditoría del usuario, proyecto, archivo, fecha, resultado y datos creados.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7273&quot; data-end=&quot;7430&quot; data-is-last-node=&quot;&quot; data-is-only-node=&quot;&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con rubros importados correctamente, cuando el Residente registra avances, el sistema permite seleccionar solo rubros activos del proyecto correspondiente.&lt;/font&gt;&lt;/p&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="433.9285714285714" width="678.6956521739131" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

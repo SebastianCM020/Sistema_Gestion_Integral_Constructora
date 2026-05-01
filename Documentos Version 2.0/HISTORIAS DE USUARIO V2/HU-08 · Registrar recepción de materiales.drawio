@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="6kIkiWVRDceaNkCCyaka">
+    <mxGraphModel dx="2244" dy="722" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="xJLVZSSzEe3v9c47FOGg-1" connectable="0" parent="1" style="group;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="90" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xJLVZSSzEe3v9c47FOGg-2" parent="xJLVZSSzEe3v9c47FOGg-1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="xJLVZSSzEe3v9c47FOGg-3" parent="xJLVZSSzEe3v9c47FOGg-1" style="line;strokeWidth=4;html=1;perimeter=backbonePerimeter;points=[];outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="10" width="450" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xJLVZSSzEe3v9c47FOGg-4" collapsed="1" parent="xJLVZSSzEe3v9c47FOGg-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="HU-08" vertex="1">
+          <mxGeometry height="30" width="50" as="geometry">
+            <mxRectangle height="30" width="60" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xJLVZSSzEe3v9c47FOGg-5" parent="xJLVZSSzEe3v9c47FOGg-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;b&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;Registrar recepción de materiales&lt;/span&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="310" x="70" as="geometry" />
+        </mxCell>
+        <mxCell id="xJLVZSSzEe3v9c47FOGg-6" parent="xJLVZSSzEe3v9c47FOGg-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="Como Bodeguero, quiero registrar la recepción física de materiales asociados a un requerimiento aprobado, para mantener actualizado el ingreso real de insumos, incrementar el stock disponible del proyecto y conservar trazabilidad entre compra, recepción e inventario." vertex="1">
+          <mxGeometry height="130" width="430" x="10" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="xJLVZSSzEe3v9c47FOGg-7" parent="xJLVZSSzEe3v9c47FOGg-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Estimación tiempo : 6 horas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="180" x="10" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="xJLVZSSzEe3v9c47FOGg-8" parent="xJLVZSSzEe3v9c47FOGg-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Prioridad :Alta/Esencial&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="10" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="xJLVZSSzEe3v9c47FOGg-9" parent="xJLVZSSzEe3v9c47FOGg-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Dependiente :HU-05, HU-06, HU-07, HU-09, HU-10, HU-17, HU-18, HU-19, HU-21, HU-24, HU-25, HU-26&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="230" x="220" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="xJLVZSSzEe3v9c47FOGg-10" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="480" width="780" x="-50" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="xJLVZSSzEe3v9c47FOGg-11" connectable="0" parent="xJLVZSSzEe3v9c47FOGg-10" style="group;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="480" width="760" x="20" as="geometry" />
+        </mxCell>
+        <mxCell id="xJLVZSSzEe3v9c47FOGg-12" parent="xJLVZSSzEe3v9c47FOGg-10" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="480" width="760" x="20" as="geometry" />
+        </mxCell>
+        <mxCell id="xJLVZSSzEe3v9c47FOGg-13" parent="xJLVZSSzEe3v9c47FOGg-10" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=14;spacingLeft=10;" value="&lt;div&gt;&lt;p data-start=&quot;5175&quot; data-end=&quot;5380&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una sesión válida, rol Bodeguero y acceso vigente al proyecto, cuando el usuario ingresa al módulo de recepción, el sistema muestra únicamente los requerimientos aprobados disponibles para recepción.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5382&quot; data-end=&quot;5587&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un requerimiento aprobado, cuando el Bodeguero selecciona la solicitud e ingresa una cantidad física recibida numérica y mayor a cero, el sistema valida la operación y permite registrar la recepción.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5589&quot; data-end=&quot;5747&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una recepción válida, cuando el sistema confirma el registro, incrementa automáticamente el stock disponible del material en el inventario del proyecto.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5749&quot; data-end=&quot;5963&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una recepción correctamente registrada, cuando finaliza la operación, el sistema mantiene la relación entre requerimiento aprobado, material recibido, cantidad recibida, proyecto, fecha y usuario responsable.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5965&quot; data-end=&quot;6161&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un requerimiento no aprobado, rechazado, en revisión, anulado o inexistente, cuando el Bodeguero intenta registrar la recepción, el sistema bloquea la operación y no actualiza el inventario.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6163&quot; data-end=&quot;6346&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con cantidad recibida no numérica, igual a cero o menor que cero, cuando el Bodeguero intenta registrar la recepción, el sistema rechaza la operación y solicita una cantidad válida.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6348&quot; data-end=&quot;6576&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una cantidad recibida mayor a la cantidad aprobada, cuando el Bodeguero intenta registrar el excedente, el sistema genera la alerta “Excedente de recepción” y bloquea el ingreso del excedente hasta contar con autorización.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6578&quot; data-end=&quot;6767&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una cantidad recibida parcial menor a la aprobada, cuando el Bodeguero registra la recepción, el sistema permite guardar el ingreso parcial y conserva el saldo pendiente de recepción.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6769&quot; data-end=&quot;6950&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una recepción que completa la cantidad aprobada, cuando se registra el ingreso final, el sistema actualiza el estado de recepción del requerimiento como completado o recibido.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6952&quot; data-end=&quot;7129&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con error de persistencia o falla transaccional, cuando el sistema no puede actualizar el inventario, mantiene el stock anterior y no deja una recepción parcialmente aplicada.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7131&quot; data-end=&quot;7359&quot; data-is-last-node=&quot;&quot; data-is-only-node=&quot;&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con recepción completada, cuando se registra la operación, el sistema genera un movimiento de inventario de tipo ingreso y conserva trazabilidad/auditoría del usuario, fecha, material, cantidad, proyecto y datos antes/después.&lt;/font&gt;&lt;/p&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="462.86" width="740" x="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

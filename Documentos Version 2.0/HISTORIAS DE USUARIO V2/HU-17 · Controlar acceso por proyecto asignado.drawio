@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="NQ7GrOWwRiNrtN5IJ78i">
+    <mxGraphModel dx="1805" dy="499" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="tgCFcK-xVSy2qN76CJr0-1" connectable="0" parent="1" style="group;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="60" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tgCFcK-xVSy2qN76CJr0-2" parent="tgCFcK-xVSy2qN76CJr0-1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="tgCFcK-xVSy2qN76CJr0-3" parent="tgCFcK-xVSy2qN76CJr0-1" style="line;strokeWidth=4;html=1;perimeter=backbonePerimeter;points=[];outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="10" width="450" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tgCFcK-xVSy2qN76CJr0-4" collapsed="1" parent="tgCFcK-xVSy2qN76CJr0-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;HU-17&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="50" as="geometry">
+            <mxRectangle height="30" width="60" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tgCFcK-xVSy2qN76CJr0-5" parent="tgCFcK-xVSy2qN76CJr0-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;b&gt;Controlar acceso por proyecto asignado&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="310" x="70" as="geometry" />
+        </mxCell>
+        <mxCell id="tgCFcK-xVSy2qN76CJr0-6" parent="tgCFcK-xVSy2qN76CJr0-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="&lt;p data-start=&quot;4683&quot; data-end=&quot;4954&quot;&gt;Como Administrador del Sistema, quiero restringir el acceso de Residentes y Bodegueros únicamente a los proyectos que tienen asignados, para proteger la información operativa, evitar registros sobre obras ajenas y asegurar la segregación correcta de accesos por proyecto.&lt;/p&gt;&lt;br/&gt;&lt;p data-start=&quot;4956&quot; data-end=&quot;5202&quot;&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="130" width="430" x="10" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="tgCFcK-xVSy2qN76CJr0-7" parent="tgCFcK-xVSy2qN76CJr0-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Estimación tiempo : 6 horas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="180" x="10" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="tgCFcK-xVSy2qN76CJr0-8" parent="tgCFcK-xVSy2qN76CJr0-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Prioridad :&amp;nbsp;&lt;/font&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;Alta/Esencial&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="10" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="tgCFcK-xVSy2qN76CJr0-9" parent="tgCFcK-xVSy2qN76CJr0-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Dependiente :&amp;nbsp;HU-01, HU-08, HU-09, HU-10, HU-15, HU-16, HU-18, HU-19, HU-21, HU-22, HU-24, HU-25&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="240" x="210" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="tgCFcK-xVSy2qN76CJr0-10" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="430" width="710" x="-40" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="tgCFcK-xVSy2qN76CJr0-11" connectable="0" parent="tgCFcK-xVSy2qN76CJr0-10" style="group;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="430" width="710" as="geometry" />
+        </mxCell>
+        <mxCell id="tgCFcK-xVSy2qN76CJr0-12" parent="tgCFcK-xVSy2qN76CJr0-10" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="430" width="710" as="geometry" />
+        </mxCell>
+        <mxCell id="tgCFcK-xVSy2qN76CJr0-13" parent="tgCFcK-xVSy2qN76CJr0-10" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=14;spacingLeft=10;" value="&lt;div&gt;&lt;p data-start=&quot;5234&quot; data-end=&quot;5409&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una sesión válida y rol Administrador del Sistema, cuando el Administrador configura accesos, el sistema permite asignar un usuario a uno o varios proyectos autorizados.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5411&quot; data-end=&quot;5570&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un usuario Residente o Bodeguero y un proyecto existente, cuando el Administrador guarda la asignación, el sistema registra la relación usuario-proyecto.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5572&quot; data-end=&quot;5737&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un usuario asignado a un proyecto, cuando intenta acceder a la obra correspondiente, el sistema valida la asignación y permite cargar la interfaz del proyecto.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5739&quot; data-end=&quot;5887&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un usuario no asignado a un proyecto, cuando intenta abrir un proyecto ajeno, el sistema deniega el acceso y no muestra información operativa.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5889&quot; data-end=&quot;6024&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con acceso denegado por proyecto no asignado, cuando el sistema bloquea la entrada, muestra un mensaje controlado de acceso denegado.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6026&quot; data-end=&quot;6145&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con acceso denegado por proyecto no asignado, cuando la solicitud llega al backend, el sistema retorna 403 Forbidden.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6147&quot; data-end=&quot;6292&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con múltiples proyectos activos, cuando distintos usuarios acceden a sus obras asignadas, el sistema mantiene la segregación correcta de datos.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6294&quot; data-end=&quot;6439&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un usuario asignado a varios proyectos, cuando accede al sistema, el sistema muestra únicamente los proyectos asociados a su usuario y rol.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6441&quot; data-end=&quot;6593&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un usuario sin proyectos asignados, cuando intenta ingresar a módulos de obra o inventario, el sistema informa que no posee proyectos habilitados.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6595&quot; data-end=&quot;6728&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una asignación de proyecto revocada, cuando el usuario intenta acceder nuevamente al proyecto, el sistema deniega la operación.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6730&quot; data-end=&quot;6901&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con cambios en asignaciones usuario-proyecto, cuando el Administrador actualiza permisos, el sistema aplica la nueva configuración sin afectar proyectos no relacionados.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6903&quot; data-end=&quot;7086&quot; data-is-last-node=&quot;&quot; data-is-only-node=&quot;&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un intento de acceso no autorizado, cuando el sistema deniega la operación, conserva trazabilidad/auditoría del usuario, proyecto solicitado, fecha, módulo y motivo del rechazo.&lt;/font&gt;&lt;/p&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="414.64285714285717" width="688.3913043478261" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

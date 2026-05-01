@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="bJsTmtjFKwpL4zGFMFLw">
+    <mxGraphModel dx="2001" dy="598" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="EeHyF7LdUi18pj1jTFSb-1" connectable="0" parent="1" style="group;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="100" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="EeHyF7LdUi18pj1jTFSb-2" parent="EeHyF7LdUi18pj1jTFSb-1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="EeHyF7LdUi18pj1jTFSb-3" parent="EeHyF7LdUi18pj1jTFSb-1" style="line;strokeWidth=4;html=1;perimeter=backbonePerimeter;points=[];outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="10" width="450" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="EeHyF7LdUi18pj1jTFSb-4" collapsed="1" parent="EeHyF7LdUi18pj1jTFSb-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;HU-13&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="50" as="geometry">
+            <mxRectangle height="30" width="60" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EeHyF7LdUi18pj1jTFSb-5" parent="EeHyF7LdUi18pj1jTFSb-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;b&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;Exportar planilla mensual en PDF&lt;/span&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="310" x="70" as="geometry" />
+        </mxCell>
+        <mxCell id="EeHyF7LdUi18pj1jTFSb-6" parent="EeHyF7LdUi18pj1jTFSb-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="&lt;p data-start=&quot;5835&quot; data-end=&quot;6122&quot;&gt;Como Contador o Presidente/Gerente, quiero generar y exportar la planilla mensual de obra en formato PDF a partir de un periodo contable cerrado, para disponer de un soporte formal de revisión, respaldo y cobro que integre avances, cálculos económicos y anexos fotográficos del proyecto.&lt;/p&gt;&lt;br/&gt;&lt;p data-start=&quot;6124&quot; data-end=&quot;6455&quot;&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="130" width="430" x="10" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="EeHyF7LdUi18pj1jTFSb-7" parent="EeHyF7LdUi18pj1jTFSb-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Estimación tiempo : 10 horas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="190" x="10" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="EeHyF7LdUi18pj1jTFSb-8" parent="EeHyF7LdUi18pj1jTFSb-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Prioridad :Alta/Esencial&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="10" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="EeHyF7LdUi18pj1jTFSb-9" parent="EeHyF7LdUi18pj1jTFSb-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;font style=&quot;&quot;&gt;Dependiente :&lt;/font&gt;&lt;font style=&quot;&quot; face=&quot;Arial, sans-serif&quot;&gt;&amp;nbsp;&lt;/font&gt;HU-01, HU-02, HU-03, HU-04, HU-05, HU-06, HU-07, HU-08, HU-09, HU-10, HU-11, HU-12, HU-14, HU-15, HU-16, HU-17, HU-18, HU-19, HU-20, HU-21, HU-22, HU-23, HU-24, HU-25, HU-26&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="240" x="210" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="EeHyF7LdUi18pj1jTFSb-10" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="530" width="680" x="-10" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="EeHyF7LdUi18pj1jTFSb-11" connectable="0" parent="EeHyF7LdUi18pj1jTFSb-10" style="group;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="530" width="680.0000000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="EeHyF7LdUi18pj1jTFSb-12" parent="EeHyF7LdUi18pj1jTFSb-10" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="530" width="680.0000000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="EeHyF7LdUi18pj1jTFSb-13" parent="EeHyF7LdUi18pj1jTFSb-10" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=14;spacingLeft=10;" value="&lt;div&gt;&lt;p data-start=&quot;6487&quot; data-end=&quot;6674&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una sesión válida, rol Contador o Presidente/Gerente y acceso al módulo de planillas, cuando el usuario ingresa al módulo, el sistema permite seleccionar proyecto y periodo mensual.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6676&quot; data-end=&quot;6838&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un proyecto existente y un periodo mensual en estado Cerrado, cuando el usuario solicita generar la planilla, el sistema valida la elegibilidad del periodo.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6840&quot; data-end=&quot;6992&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un periodo abierto, futuro o con transacciones pendientes, cuando el usuario intenta generar la planilla, el sistema impide la generación del PDF.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6994&quot; data-end=&quot;7166&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un cierre mensual válido, cuando el sistema genera la planilla, consulta cierre, avances, rubros, cálculos económicos, consumos, inventario y evidencias fotográficas.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7168&quot; data-end=&quot;7310&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con evidencias fotográficas asociadas a los avances del periodo, cuando se genera la planilla, el sistema incorpora los anexos fotográficos.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7312&quot; data-end=&quot;7438&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con anexos fotográficos disponibles, cuando el sistema arma el documento, ordena las evidencias por proyecto, rubro y fecha.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7440&quot; data-end=&quot;7629&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con información técnica y económica consolidada, cuando se genera el PDF, la planilla incluye proyecto, periodo, rubros, cantidades de avance, valores económicos, cierre mensual y anexos.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7631&quot; data-end=&quot;7772&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un cierre que posee hash de integridad, cuando se genera la planilla, el sistema incorpora o referencia el identificador de integridad.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7774&quot; data-end=&quot;7926&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un procesamiento dentro del tiempo esperado, cuando el usuario solicita la planilla, el sistema genera el PDF, lo almacena y habilita la descarga.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7928&quot; data-end=&quot;8082&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un procesamiento extenso, cuando la generación supera el tiempo permitido, el sistema envía la tarea a procesamiento diferido mediante QueueService.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;8084&quot; data-end=&quot;8272&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una generación diferida completada, cuando el PDF queda listo, el sistema lo almacena mediante StorageService, actualiza el estado y notifica al usuario mediante NotificationService.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;8274&quot; data-end=&quot;8433&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una generación diferida fallida, cuando el procesamiento no puede completarse, el sistema marca la planilla con estado de error y notifica la incidencia.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;8435&quot; data-end=&quot;8575&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con el PDF generado y almacenado, cuando el usuario consulta la planilla, el sistema muestra el archivo disponible para descarga en HU-14.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;8577&quot; data-end=&quot;8706&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un usuario sin permisos sobre el proyecto o el módulo, cuando intenta generar la planilla, el sistema deniega la operación.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;8708&quot; data-end=&quot;8869&quot; data-is-last-node=&quot;&quot; data-is-only-node=&quot;&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con generación completada, cuando finaliza la operación, el sistema registra auditoría con usuario, rol, proyecto, periodo, fecha, estado y referencia del PDF.&lt;/font&gt;&lt;/p&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="511.07142857142856" width="659.3043478260869" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

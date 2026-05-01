@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="FkXtwPmuLkULwesIE5oT">
+    <mxGraphModel dx="2244" dy="722" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="m09FxCgBCpgML7xo-MtV-1" connectable="0" parent="1" style="group;fillColor=#fff2cc;strokeColor=#d6b656;align=left;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="80" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m09FxCgBCpgML7xo-MtV-2" parent="m09FxCgBCpgML7xo-MtV-1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="m09FxCgBCpgML7xo-MtV-3" parent="m09FxCgBCpgML7xo-MtV-1" style="line;strokeWidth=4;html=1;perimeter=backbonePerimeter;points=[];outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="10" width="450" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="m09FxCgBCpgML7xo-MtV-4" collapsed="1" parent="m09FxCgBCpgML7xo-MtV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;HU-06&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="50" as="geometry">
+            <mxRectangle height="30" width="60" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m09FxCgBCpgML7xo-MtV-5" parent="m09FxCgBCpgML7xo-MtV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;b&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;Aprobar requerimiento de compra&lt;/span&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="310" x="70" as="geometry" />
+        </mxCell>
+        <mxCell id="m09FxCgBCpgML7xo-MtV-6" parent="m09FxCgBCpgML7xo-MtV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="&lt;p data-start=&quot;4017&quot; data-end=&quot;4283&quot;&gt;Como Presidente/Gerente, quiero revisar y aprobar los requerimientos de compra recibidos en estado En Revisión, para autorizar adquisiciones necesarias, mantener control sobre el gasto del proyecto y habilitar posteriormente la recepción de materiales en inventario.&lt;/p&gt;&lt;br/&gt;&lt;p data-start=&quot;4285&quot; data-end=&quot;4524&quot;&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="130" width="430" x="10" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="m09FxCgBCpgML7xo-MtV-7" parent="m09FxCgBCpgML7xo-MtV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Estimacion tiempo : 8 horas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="180" x="10" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="m09FxCgBCpgML7xo-MtV-8" parent="m09FxCgBCpgML7xo-MtV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Prioridad : Alta/Esencial&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="10" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="m09FxCgBCpgML7xo-MtV-9" parent="m09FxCgBCpgML7xo-MtV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Dependiente :&amp;nbsp;&lt;/font&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;HU-05, HU-07, HU-08, HU-17, HU-18, HU-19, HU-21, HU-23, HU-24, HU-25, HU-26&lt;/span&gt;" vertex="1">
+          <mxGeometry height="50" width="240" x="210" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="m09FxCgBCpgML7xo-MtV-10" connectable="0" parent="1" style="group;align=left;" value="" vertex="1">
+          <mxGeometry height="400" width="640" x="-10" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="m09FxCgBCpgML7xo-MtV-11" connectable="0" parent="m09FxCgBCpgML7xo-MtV-10" style="group;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="400" width="640" as="geometry" />
+        </mxCell>
+        <mxCell id="m09FxCgBCpgML7xo-MtV-12" parent="m09FxCgBCpgML7xo-MtV-10" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="400" width="640" as="geometry" />
+        </mxCell>
+        <mxCell id="m09FxCgBCpgML7xo-MtV-13" parent="m09FxCgBCpgML7xo-MtV-10" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=14;spacingLeft=10;" value="&lt;div&gt;&lt;p data-start=&quot;4556&quot; data-end=&quot;4751&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una sesión válida y rol Presidente/Gerente, cuando el usuario accede a la bandeja de requerimientos pendientes, el sistema muestra únicamente las solicitudes disponibles según sus permisos.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;4753&quot; data-end=&quot;4952&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un requerimiento en estado En Revisión, cuando el Presidente/Gerente consulta el detalle, el sistema muestra materiales, cantidades, justificación, proyecto, solicitante, fecha y estado actual.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;4954&quot; data-end=&quot;5111&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un requerimiento en estado En Revisión, cuando el Presidente/Gerente selecciona Aprobar y confirma la decisión, el sistema cambia el estado a Aprobado.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5113&quot; data-end=&quot;5255&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un requerimiento aprobado correctamente, cuando el sistema confirma la decisión, registra aprobador, fecha de aprobación y estado final.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5257&quot; data-end=&quot;5387&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un requerimiento aprobado correctamente, cuando se actualiza el estado, el sistema notifica el resultado al usuario creador.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5389&quot; data-end=&quot;5570&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un requerimiento aprobado, cuando el Bodeguero consulte solicitudes disponibles para recepción, el sistema permite usar ese requerimiento para registrar ingreso de materiales&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5572&quot; data-end=&quot;5713&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un requerimiento previamente aprobado, rechazado, anulado o cerrado, cuando se intenta aprobar nuevamente, el sistema impide la acción.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5715&quot; data-end=&quot;5852&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un usuario sin rol autorizado, cuando intenta aprobar un requerimiento, el sistema deniega la operación y no modifica la solicitud.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5854&quot; data-end=&quot;6011&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con error de persistencia o falla del servicio, cuando no se puede completar la aprobación, el sistema mantiene el estado anterior e informa la incidencia.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6013&quot; data-end=&quot;6181&quot; data-is-last-node=&quot;&quot; data-is-only-node=&quot;&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una aprobación completada, cuando se registra la operación, el sistema conserva trazabilidad del cambio de estado, aprobador, fecha, módulo y datos antes/después.&lt;/font&gt;&lt;/p&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="385.7142857142857" width="620.5217391304348" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

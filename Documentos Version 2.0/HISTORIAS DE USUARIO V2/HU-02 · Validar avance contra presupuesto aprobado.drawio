@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="E9mkzyWPEPONep0mZ6OY">
+    <mxGraphModel dx="1417" dy="722" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="wKBuAJ1ibbbdh3H5rb4P-1" connectable="0" parent="1" style="group;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=24;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="140" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="wKBuAJ1ibbbdh3H5rb4P-2" parent="wKBuAJ1ibbbdh3H5rb4P-1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="wKBuAJ1ibbbdh3H5rb4P-3" parent="wKBuAJ1ibbbdh3H5rb4P-1" style="line;strokeWidth=4;html=1;perimeter=backbonePerimeter;points=[];outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="10" width="450" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="wKBuAJ1ibbbdh3H5rb4P-4" collapsed="1" parent="wKBuAJ1ibbbdh3H5rb4P-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="HU-02" vertex="1">
+          <mxGeometry height="30" width="50" as="geometry">
+            <mxRectangle height="30" width="60" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wKBuAJ1ibbbdh3H5rb4P-5" parent="wKBuAJ1ibbbdh3H5rb4P-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="&lt;b&gt;Validar avance contra presupuesto aprobado&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="330" x="70" as="geometry" />
+        </mxCell>
+        <mxCell id="wKBuAJ1ibbbdh3H5rb4P-6" parent="wKBuAJ1ibbbdh3H5rb4P-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;span data-start=&quot;1584&quot; data-end=&quot;1592&quot; style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Como&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt; Residente,&amp;nbsp;&lt;/span&gt;&lt;span data-start=&quot;1606&quot; data-end=&quot;1616&quot; style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;quiero&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt; que el sistema valide automáticamente la cantidad de avance físico registrada frente al presupuesto aprobado del rubro,&amp;nbsp;&lt;/span&gt;&lt;span data-start=&quot;1739&quot; data-end=&quot;1747&quot; style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;para&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt; evitar ejecuciones no autorizadas, controlar excedentes y asegurar que solo se registren avances permitidos o respaldados por una orden de cambio aprobada.&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="130" width="430" x="10" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="wKBuAJ1ibbbdh3H5rb4P-7" parent="wKBuAJ1ibbbdh3H5rb4P-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=14;" value="Estimación tiempo: 12 horas" vertex="1">
+          <mxGeometry height="30" width="180" x="10" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="wKBuAJ1ibbbdh3H5rb4P-8" parent="wKBuAJ1ibbbdh3H5rb4P-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=14;" value="Prioridad :&amp;nbsp;Alta/Esencial" vertex="1">
+          <mxGeometry height="30" width="170" x="10" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="wKBuAJ1ibbbdh3H5rb4P-9" parent="wKBuAJ1ibbbdh3H5rb4P-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=12;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Dependiente :&amp;nbsp;&lt;span lang=&quot;EN-US&quot; style=&quot;line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;HU-01&lt;/span&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="280" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="wKBuAJ1ibbbdh3H5rb4P-10" connectable="0" parent="1" style="group;verticalAlign=middle;align=left;" value="" vertex="1">
+          <mxGeometry height="370" width="685" x="30" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="wKBuAJ1ibbbdh3H5rb4P-11" connectable="0" parent="wKBuAJ1ibbbdh3H5rb4P-10" style="group;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="370" width="644.1044776119403" as="geometry" />
+        </mxCell>
+        <mxCell id="wKBuAJ1ibbbdh3H5rb4P-12" parent="wKBuAJ1ibbbdh3H5rb4P-10" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="391.14285714285717" width="685" y="-21.142857142857142" as="geometry" />
+        </mxCell>
+        <mxCell id="wKBuAJ1ibbbdh3H5rb4P-13" parent="wKBuAJ1ibbbdh3H5rb4P-10" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;spacingLeft=10;fontSize=14;" value="&lt;p data-start=&quot;6165&quot; data-end=&quot;6391&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font size=&quot;1&quot;&gt;• Con un rubro activo y presupuesto disponible, cuando el Residente registra una cantidad de avance que no supera el saldo presupuestario del rubro, el sistema acepta el registro y permite continuar con el guardado del avance.&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;&lt;p data-start=&quot;6165&quot; data-end=&quot;6391&quot;&gt;&lt;font size=&quot;1&quot;&gt;• Con una cantidad de avance que supera el presupuesto disponible del rubro, cuando el Residente intenta guardar el avance sin una orden de cambio aprobada, el sistema bloquea la operación y no registra el avance.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6165&quot; data-end=&quot;6391&quot;&gt;&lt;font size=&quot;1&quot;&gt;• Con exceso presupuestario detectado, cuando el sistema bloquea el registro, muestra la alerta: “Exceso de presupuesto: requiere orden de cambio aprobada por Presidencia”.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6165&quot; data-end=&quot;6391&quot;&gt;&lt;font size=&quot;1&quot;&gt;• Con una orden de cambio aprobada y vigente para el rubro correspondiente, cuando el avance supera el presupuesto original pero está dentro del nuevo límite autorizado, el sistema permite continuar con el registro.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6165&quot; data-end=&quot;6391&quot;&gt;&lt;font size=&quot;1&quot;&gt;• Con una orden de cambio inexistente, rechazada, vencida o asociada a otro rubro/proyecto, cuando el Residente intenta registrar el avance excedente, el sistema rechaza la operación.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6165&quot; data-end=&quot;6391&quot;&gt;&lt;font size=&quot;1&quot;&gt;• Con una cantidad válida y dentro del presupuesto autorizado, cuando el avance se guarda correctamente, el sistema conserva la trazabilidad del control presupuestario aplicado.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6165&quot; data-end=&quot;6391&quot;&gt;&lt;font size=&quot;1&quot;&gt;• Sin conectividad al momento de validar, cuando el sistema no pueda confirmar presupuesto actualizado u orden aprobada, el avance queda pendiente de validación o pendiente de sincronización.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6165&quot; data-end=&quot;6391&quot;&gt;&lt;font style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font size=&quot;1&quot;&gt;• Con intento de registro bloqueado por excedente, cuando se genera la alerta, el sistema deja evidencia del evento para trazabilidad sin crear un avance válido.&lt;/font&gt;&lt;/span&gt;&lt;font size=&quot;1&quot;&gt;&amp;nbsp;&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="356.7857142857143" width="654.3283582089553" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

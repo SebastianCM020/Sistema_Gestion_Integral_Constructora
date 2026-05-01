@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="yb-DNavOBFVMM64YES4w">
+    <mxGraphModel dx="1417" dy="722" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-1" connectable="0" parent="1" style="group;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" x="130" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-2" parent="zEIvtYioTdW-cuiAe-tP-1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="280" width="460" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-3" parent="zEIvtYioTdW-cuiAe-tP-1" style="line;strokeWidth=4;html=1;perimeter=backbonePerimeter;points=[];outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="10" width="450" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-4" collapsed="1" parent="zEIvtYioTdW-cuiAe-tP-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;HU-11&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="50" as="geometry">
+            <mxRectangle height="30" width="60" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-5" parent="zEIvtYioTdW-cuiAe-tP-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=1;" value="&lt;b&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;font-size: 11pt; line-height: 115%; font-family: Arial, sans-serif;&quot;&gt;Consolidar información mensual para cierre contable&lt;/span&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="360" x="70" y="3" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-6" parent="zEIvtYioTdW-cuiAe-tP-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=15;" value="&lt;p data-start=&quot;5031&quot; data-end=&quot;5275&quot;&gt;Como Contador, quiero consolidar la información mensual de avances de obra, compras, recepciones, consumos e inventario de un proyecto, para preparar una revisión contable verificable, completa y consistente antes de ejecutar el cierre mensual.&lt;/p&gt;&lt;br/&gt;&lt;p data-start=&quot;5277&quot; data-end=&quot;5594&quot;&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="130" width="430" x="10" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-7" parent="zEIvtYioTdW-cuiAe-tP-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Estimación tiempo : 10 horas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="190" x="10" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-8" parent="zEIvtYioTdW-cuiAe-tP-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Prioridad : Alta/Esencial&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="10" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-9" parent="zEIvtYioTdW-cuiAe-tP-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;Dependiente :&amp;nbsp;HU-01, HU-02, HU-05, HU-06, HU-07, HU-08, HU-09, HU-10, HU-12, HU-13, HU-14, HU-17, HU-18, HU-19, HU-21, HU-22, HU-23, HU-24, HU-25, HU-26&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="220" x="230" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-10" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="500" width="710" x="20" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-11" connectable="0" parent="zEIvtYioTdW-cuiAe-tP-10" style="group;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="500" width="710" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-12" parent="zEIvtYioTdW-cuiAe-tP-10" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.layered_rect;dx=10;outlineConnect=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;container=0;" value="" vertex="1">
+          <mxGeometry height="500" width="710" as="geometry" />
+        </mxCell>
+        <mxCell id="zEIvtYioTdW-cuiAe-tP-13" parent="zEIvtYioTdW-cuiAe-tP-10" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;container=1;fontSize=14;spacingLeft=10;" value="&lt;div&gt;&lt;p data-start=&quot;5626&quot; data-end=&quot;5806&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con una sesión válida, rol Contador y acceso al módulo contable, cuando el usuario selecciona un proyecto activo y un periodo válido, el sistema permite iniciar la consolidación.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5808&quot; data-end=&quot;5975&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un proyecto y mes válidos, cuando el Contador inicia la consolidación, el sistema reúne avances de obra, compras, recepciones, consumos e inventario del periodo.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;5977&quot; data-end=&quot;6125&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con información disponible del periodo, cuando finaliza la consolidación, el sistema presenta un resumen contable y operativo listo para revisión.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6127&quot; data-end=&quot;6289&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con avances de obra registrados, cuando el sistema consolida la información, incluye rubros ejecutados, cantidades reportadas y registros asociados al proyecto.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6291&quot; data-end=&quot;6426&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con recepciones y consumos registrados, cuando el sistema consolida la información, integra entradas, salidas y saldos de inventario.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6428&quot; data-end=&quot;6570&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con requerimientos aprobados, rechazados o pendientes, cuando el sistema consolida la información, muestra su estado para revisión contable.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6572&quot; data-end=&quot;6731&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con transacciones pendientes del mes, cuando el Contador intenta avanzar hacia el cierre, el sistema detiene el proceso y muestra los registros por resolver.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6733&quot; data-end=&quot;6942&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con operaciones móviles pendientes de sincronización, cuando existen avances, consumos o evidencias no sincronizadas, el sistema las muestra como pendientes y no considera la consolidación lista para cierre.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;6944&quot; data-end=&quot;7051&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un periodo futuro, cuando el Contador intenta consolidar información, el sistema impide la operación.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7053&quot; data-end=&quot;7201&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con un proyecto inexistente, inactivo o sin acceso autorizado, cuando el Contador intenta consolidar información, el sistema bloquea la operación.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7203&quot; data-end=&quot;7346&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con diferencias entre compras, recepciones, consumos o saldos, cuando el sistema identifica inconsistencias, las presenta como observaciones.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7348&quot; data-end=&quot;7496&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con consolidación completada y sin pendientes críticos, cuando el Contador revisa el resumen, el sistema deja la información preparada para HU-12.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7498&quot; data-end=&quot;7652&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con error de consulta o falla de integración, cuando el sistema no puede consolidar, informa la incidencia y no marca el periodo como listo para cierre.&lt;/font&gt;&lt;/p&gt;&lt;p data-start=&quot;7654&quot; data-end=&quot;7822&quot; data-is-last-node=&quot;&quot; data-is-only-node=&quot;&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;• Con la consolidación generada, cuando el sistema presenta el resumen, conserva trazabilidad de proyecto, periodo, usuario Contador y estado de preparación del cierre.&lt;/font&gt;&lt;/p&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="482.14285714285717" width="688.391304347826" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
