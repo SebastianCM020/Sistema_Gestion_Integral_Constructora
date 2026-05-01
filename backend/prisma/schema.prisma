@@ -45,6 +45,8 @@ model Usuario {
   cierresMensuales       CierreMensual[]
   planillasGeneradas     PlanillaPdf[]
   auditLogs              AuditLog[]
+  movimientosRegistrados MovimientoInventario[]    @relation("MovimientosBodeguero") // HU-03
+  proyectosResponsable   Proyecto[]                @relation("ProyectoResponsable")
 
   @@map("usuarios")
 }
@@ -62,14 +64,17 @@ model Proyecto {
   fechaInicio        DateTime  @map("fecha_inicio") @db.Date
   fechaFinPrevista   DateTime  @map("fecha_fin_prevista") @db.Date
   estado             String    @default("ACTIVO") @db.VarChar(20)
+  idResponsable      String?   @map("id_responsable") @db.Uuid
   createdAt          DateTime  @default(now()) @map("created_at") @db.Timestamptz
 
+  responsable        Usuario?  @relation("ProyectoResponsable", fields: [idResponsable], references: [id])
   asignaciones       AsignacionProyectoUsuario[]
   rubros             Rubro[]
   avances            AvanceObra[]
   requerimientos     RequerimientoCompra[]
   inventarios        InventarioProyecto[]
   cierres            CierreMensual[]
+  movimientos        MovimientoInventario[]     // HU-03
 
   @@map("proyectos")
 }
@@ -150,15 +155,19 @@ model EvidenciaFotografica {
 // ─── MÓDULO ADMINISTRATIVO — COMPRAS E INVENTARIO ──────────────────────
 
 model Material {
-  id        String    @id @default(uuid()) @db.Uuid
-  codigo    String    @unique @db.VarChar(30)
-  nombre    String    @db.VarChar(200)
-  unidad    String    @db.VarChar(20)
-  activo    Boolean   @default(true)
-  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  id          String    @id @default(uuid()) @db.Uuid
+  codigo      String    @unique @db.VarChar(30)
+  nombre      String    @db.VarChar(200)
+  categoria   String    @db.VarChar(80)              // HU-02: búsqueda/filtro por categoría
+  unidad      String    @db.VarChar(20)              // ej. "kg", "m3", "unidad"
+  descripcion String?   @db.Text
+  activo      Boolean   @default(true)
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamptz
 
   detallesRequerimiento DetalleRequerimiento[]
   inventarios           InventarioProyecto[]
+  movimientos           MovimientoInventario[]
 
   @@map("materiales")
 }
@@ -201,13 +210,36 @@ model InventarioProyecto {
   idMaterial           String   @map("id_material") @db.Uuid
   idProyecto           String   @map("id_proyecto") @db.Uuid
   cantidadDisponible   Decimal  @default(0) @map("cantidad_disponible") @db.Decimal(12, 4)
-  ultimaActualizacion  DateTime @default(now()) @map("ultima_actualizacion") @db.Timestamptz
+  ultimaActualizacion  DateTime @default(now()) @updatedAt @map("ultima_actualizacion") @db.Timestamptz
 
   material  Material  @relation(fields: [idMaterial], references: [id])
   proyecto  Proyecto  @relation(fields: [idProyecto], references: [id])
 
   @@id([idMaterial, idProyecto])
   @@map("inventario_proyecto")
+}
+
+// ─── HU-03: Movimientos de inventario (libro de entradas/salidas) ──────────
+
+model MovimientoInventario {
+  id                  String    @id @default(uuid()) @db.Uuid
+  idMaterial          String    @map("id_material") @db.Uuid
+  idProyecto          String    @map("id_proyecto") @db.Uuid
+  idUsuario           String    @map("id_usuario") @db.Uuid           // Bodeguero que registra
+  // Tipos: ENTRADA | SALIDA | AJUSTE
+  tipoMovimiento      String    @map("tipo_movimiento") @db.VarChar(20)
+  cantidad            Decimal   @db.Decimal(12, 4)
+  cantidadAnterior    Decimal   @default(0) @map("cantidad_anterior") @db.Decimal(12, 4)
+  cantidadResultante  Decimal   @default(0) @map("cantidad_resultante") @db.Decimal(12, 4)
+  observacion         String?   @db.Text
+  fechaMovimiento     DateTime  @default(now()) @map("fecha_movimiento") @db.Timestamptz
+  createdAt           DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  material  Material  @relation(fields: [idMaterial], references: [id])
+  proyecto  Proyecto  @relation(fields: [idProyecto], references: [id])
+  usuario   Usuario   @relation("MovimientosBodeguero", fields: [idUsuario], references: [id])
+
+  @@map("movimiento_inventario")
 }
 
 // ─── MÓDULO CONTABLE Y REPORTES ────────────────────────────────────────

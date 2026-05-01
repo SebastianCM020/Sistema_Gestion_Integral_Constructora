@@ -36,7 +36,7 @@ export function ProjectsFilters({ filters, managers, onChange, onReset }) {
           label="Responsable"
           value={filters.manager}
           onChange={(value) => onChange('manager', value)}
-          options={[{ value: 'all', label: 'Todos los responsables' }, ...managers.map((manager) => ({ value: manager, label: manager }))]}
+          options={[{ value: 'all', label: 'Todos los responsables' }, ...managers]}
         />
 
         <SelectField

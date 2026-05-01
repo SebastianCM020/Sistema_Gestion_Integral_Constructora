@@ -10,18 +10,20 @@ export function ProjectsMobileList({ projects, onView, onEdit, onOpenParameters,
         <article key={project.id} className="rounded-[12px] border border-[#D1D5DB] bg-white p-4 shadow-sm">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <p className="text-base font-semibold text-[#2F3A45]">{project.code} · {project.name}</p>
-              <p className="mt-1 text-sm text-gray-500">{project.contractorEntity}</p>
-              <p className="mt-1 text-sm text-[#1F4E79]">Responsable: {project.managerName}</p>
+              <p className="text-base font-semibold text-[#2F3A45]">{project?.code} · {project?.name}</p>
+              <p className="mt-1 text-sm text-gray-500">{project?.contractorEntity}</p>
+              <p className="mt-1 text-sm text-[#1F4E79]">
+                Responsable: {project?.managerName || 'Sin asignar'}
+              </p>
             </div>
-            <ProjectStatusBadge status={project.status} />
+            <ProjectStatusBadge status={project?.estado} />
           </div>
 
           <div className="mt-4 grid gap-3 rounded-[12px] border border-[#D1D5DB] bg-[#F7F9FC] p-4 sm:grid-cols-2">
-            <InfoItem label="Contrato" value={project.contractNumber || 'Sin contrato'} />
-            <InfoItem label="Presupuesto" value={formatCurrency(project.totalBudget)} />
-            <InfoItem label="Inicio" value={formatShortDate(project.startDate)} />
-            <InfoItem label="Fin prevista" value={formatShortDate(project.plannedEndDate)} />
+            <InfoItem label="Contrato" value={project?.numeroContrato || 'Sin contrato'} />
+            <InfoItem label="Presupuesto" value={formatCurrency(project?.presupuestoTotal)} />
+            <InfoItem label="Inicio" value={formatShortDate(project?.fechaInicio)} />
+            <InfoItem label="Fin prevista" value={formatShortDate(project?.fechaFinPrevista)} />
           </div>
 
           <div className="mt-4 grid gap-2 sm:grid-cols-2">

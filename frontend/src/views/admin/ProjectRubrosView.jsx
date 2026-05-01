@@ -15,6 +15,8 @@ import { RubrosMobileList } from '../../components/admin/RubrosMobileList.jsx';
 import { RubroFormModal } from '../../components/admin/RubroFormModal.jsx';
 import { RubroDetailDrawer } from '../../components/admin/RubroDetailDrawer.jsx';
 import { CsvImportModal } from '../../components/admin/CsvImportModal.jsx';
+import { bulkCreateRubros, fetchRubrosByProject } from '../../services/rubros.service.js';
+import { fetchProjects } from '../../services/projects.service.js';
 import { mockProjects } from '../../data/mockProjects.js';
 import { mockRubros } from '../../data/mockRubros.js';
 import { mockCsvImportResults } from '../../data/mockCsvImportResults.js';
@@ -40,9 +42,10 @@ export function ProjectRubrosView({
 }) {
   const PAGE_SIZE = 10;
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const [rubros, setRubros] = useState(mockRubros);
+  const [projects, setProjects] = useState([]);
+  const [rubros, setRubros] = useState([]);
   const [importResults, setImportResults] = useState(mockCsvImportResults);
-  const [selectedProjectId, setSelectedProjectId] = useState(mockProjects[0]?.id ?? '');
+  const [selectedProjectId, setSelectedProjectId] = useState('');
   const [filters, setFilters] = useState(defaultRubroFilters);
   const [currentPage, setCurrentPage] = useState(1);
   const [loadStatus, setLoadStatus] = useState('loading');
@@ -51,18 +54,35 @@ export function ProjectRubrosView({
   const [activeOverlay, setActiveOverlay] = useState(null);
 
   const modules = getModulesForUser(currentUser);
-  const isAdmin = currentUser.roleName === 'Administrador del Sistema';
-  const currentProject = mockProjects.find((project) => project.id === selectedProjectId) ?? null;
+  const isAdmin = currentUser.roleId === 'admin' || currentUser.roleName === 'Administrador del Sistema';
+  const currentProject = projects.find((project) => project.id === selectedProjectId) ?? null;
 
   useEffect(() => {
-    setLoadStatus('loading');
+    const loadInitialData = async () => {
+      setLoadStatus('loading');
+      try {
+        const projectsData = await fetchProjects();
+        setProjects(projectsData);
+        
+        if (projectsData.length > 0 && !selectedProjectId) {
+          setSelectedProjectId(projectsData[0].id);
+        }
+        
+        // Simular carga de rubros (esto debería ser una llamada a la API en el futuro)
+        setRubros(mockRubros);
+        setLoadStatus('ready');
+      } catch (error) {
+        console.error('Error loading rubros view data:', error);
+        setLoadStatus('error');
+      }
+    };
 
-    const timer = window.setTimeout(() => {
-      setLoadStatus(currentUser.adminUsersShouldFail ? 'error' : 'ready');
-    }, 700);
-
-    return () => window.clearTimeout(timer);
-  }, [currentUser.adminUsersShouldFail, retryCount]);
+    if (isAdmin) {
+      loadInitialData();
+    } else {
+      setLoadStatus('ready');
+    }
+  }, [isAdmin, retryCount]);
 
   useEffect(() => {
     if (!feedback) {
@@ -127,23 +147,49 @@ export function ProjectRubrosView({
     closeOverlay();
   };
 
-  const handleImportComplete = (result, importedRubros) => {
-    setImportResults((previousResults) => [result, ...previousResults]);
-
-    if (importedRubros.length) {
-      setRubros((previousRubros) => [...importedRubros, ...previousRubros]);
+  const handleImportComplete = async (result, importedRubros) => {
+    if (result.status === 'failed' || !importedRubros.length) {
+      setFeedback({ tone: 'error', message: 'No se encontraron rubros válidos para importar.' });
+      return;
     }
 
-    setFeedback({
-      tone: result.status === 'failed' ? 'neutral' : 'success',
-      message:
-        result.status === 'success'
-          ? 'La importación finalizó.'
-          : result.status === 'partial'
-            ? 'La importación finalizó con errores parciales.'
-            : 'No fue posible procesar el archivo.',
-    });
+    try {
+      setLoadStatus('loading');
+      await bulkCreateRubros(selectedProjectId, importedRubros);
+      
+      // Recargar rubros del proyecto tras la importación
+      const updatedRubros = await fetchRubrosByProject(selectedProjectId);
+      setRubros(updatedRubros);
+      
+      setImportResults((previousResults) => [result, ...previousResults]);
+      setFeedback({
+        tone: result.status === 'failed' ? 'neutral' : 'success',
+        message: `La importación finalizó correctamente. Se guardaron ${importedRubros.length} rubros en el proyecto.`,
+      });
+      setLoadStatus('ready');
+    } catch (error) {
+      console.error('Error in bulk import:', error);
+      setFeedback({ tone: 'error', message: 'Error al guardar los rubros en la base de datos.' });
+      setLoadStatus('ready');
+    }
   };
+
+  // Efecto para cargar rubros cuando cambia el proyecto seleccionado
+  useEffect(() => {
+    const loadProjectRubros = async () => {
+      if (!selectedProjectId) return;
+      try {
+        const data = await fetchRubrosByProject(selectedProjectId);
+        setRubros(data);
+      } catch (error) {
+        console.error('Error loading rubros for project:', selectedProjectId);
+      }
+    };
+    
+    if (loadStatus === 'ready') {
+      loadProjectRubros();
+    }
+  }, [selectedProjectId, loadStatus === 'ready']);
 
   if (!isAdmin) {
     return (
@@ -221,7 +267,7 @@ export function ProjectRubrosView({
           <AdminSectionTabs activeTab="rubros" onChange={onOpenAdminSection} />
           <RubroHeader
             currentProjectId={selectedProjectId}
-            projects={mockProjects}
+            projects={projects}
             onChangeProject={setSelectedProjectId}
             onGoHome={onGoHome}
             onGoAdmin={() => onOpenAdminSection('users')}

@@ -19,7 +19,7 @@ export function ModalShell({ title, description, children, onClose, widthClass =
             <X size={18} />
           </button>
         </div>
-        <div className="p-6">{children}</div>
+        <div className="max-h-[calc(100vh-10rem)] overflow-y-auto p-6">{children}</div>
       </div>
     </div>
   );

@@ -1,0 +1,11 @@
+Código,Descripción,Unidad,Precio Unitario,Cantidad Presupuestada
+ERR-001,Rubro con cantidad cero,m3,45.00,0
+ERR-002,Rubro con cantidad negativa,m2,12.50,-5
+ERR-003,Rubro sin cantidad,kg,10.00,
+ERR-004,Rubro con precio cero,ml,0.00,100
+ERR-005,Rubro con cantidad cero,un,100.00,0
+ERR-006,Rubro con cantidad negativa,m3,25.00,-10
+ERR-007,Rubro sin cantidad,m2,15.00,
+ERR-008,Rubro con cantidad cero,kg,8.50,0
+ERR-009,Rubro con cantidad cero,ml,12.00,0
+ERR-010,Rubro con cantidad cero,un,50.00,0
