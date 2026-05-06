@@ -75,7 +75,7 @@ router.get('/:idProyecto', requireAuth, requireProjectAccess, async (req, res) =
       where: { id: idProyecto },
       include: {
         responsable: { select: { nombre: true, apellido: true } },
-        rubros:  { select: { id: true, codigo: true, descripcion: true, unidad: true, precioUnitario: true, cantidadPresupuestada: true, cantidadEjecutada: true, idProyecto: true, updatedAt: true, createdAt: true } },
+        rubros:  { select: { id: true, codigo: true, descripcion: true, unidad: true, precioUnitario: true, cantidadPresupuestada: true, cantidadEjecutada: true, idProyecto: true } },
         asignaciones: {
           select: { idUsuario: true, fechaInicio: true, fechaFin: true, accessMode: true },
         },
