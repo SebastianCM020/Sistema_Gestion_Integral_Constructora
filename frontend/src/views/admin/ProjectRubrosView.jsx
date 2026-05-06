@@ -15,7 +15,7 @@ import { RubrosMobileList } from '../../components/admin/RubrosMobileList.jsx';
 import { RubroFormModal } from '../../components/admin/RubroFormModal.jsx';
 import { RubroDetailDrawer } from '../../components/admin/RubroDetailDrawer.jsx';
 import { CsvImportModal } from '../../components/admin/CsvImportModal.jsx';
-import { bulkCreateRubros, fetchRubrosByProject } from '../../services/rubros.service.js';
+import { bulkCreateRubros, fetchRubrosByProject, createRubro, updateRubro } from '../../services/rubros.service.js';
 import { fetchProjects } from '../../services/projects.service.js';
 import { mockProjects } from '../../data/mockProjects.js';
 import { mockRubros } from '../../data/mockRubros.js';
@@ -63,11 +63,12 @@ export function ProjectRubrosView({
         setProjects(projectsData);
         
         if (projectsData.length > 0 && !selectedProjectId) {
-          setSelectedProjectId(projectsData[0].id);
+          const firstProjectId = projectsData[0].id;
+          setSelectedProjectId(firstProjectId);
+          const initialRubros = await fetchRubrosByProject(firstProjectId);
+          setRubros(initialRubros);
         }
         
-        // Simular carga de rubros (esto debería ser una llamada a la API en el futuro)
-        setRubros(mockRubros);
         setLoadStatus('ready');
       } catch (error) {
         console.error('Error loading rubros view data:', error);
@@ -108,28 +109,44 @@ export function ProjectRubrosView({
     setActiveOverlay({ type, rubro });
   };
 
-  const closeOverlay = () => {
+  // closeOverlay con recarga opcional: cuando se cierra el modal de import
+  // disparamos un reload para garantizar que la lista esté actualizada
+  const closeOverlay = async (shouldReload = false) => {
     setActiveOverlay(null);
+    if (shouldReload && selectedProjectId) {
+      try {
+        const fresh = await fetchRubrosByProject(selectedProjectId);
+        setRubros(fresh || []);
+      } catch (e) {
+        console.error('[ProjectRubrosView] Error al recargar rubros tras cerrar modal:', e);
+      }
+    }
   };
 
-  const handleSaveRubro = (values) => {
+  const handleSaveRubro = async (values) => {
     if (!currentProject) {
       return;
     }
 
-    if (activeOverlay?.type === 'edit' && activeOverlay.rubro) {
-      setRubros((previousRubros) =>
-        previousRubros.map((rubro) =>
-          rubro.id === activeOverlay.rubro.id ? updateRubroPayload(rubro, values, currentProject) : rubro
-        )
-      );
-      setFeedback({ tone: 'success', message: 'Rubro actualizado correctamente.' });
-    } else {
-      setRubros((previousRubros) => [createRubroPayload(values, currentProject), ...previousRubros]);
-      setFeedback({ tone: 'success', message: 'Rubro creado correctamente.' });
-    }
+    try {
+      setLoadStatus('loading');
+      if (activeOverlay?.type === 'edit' && activeOverlay.rubro) {
+        await updateRubro(activeOverlay.rubro.id, values);
+        setFeedback({ tone: 'success', message: 'Rubro actualizado correctamente.' });
+      } else {
+        await createRubro(currentProject.id, values);
+        setFeedback({ tone: 'success', message: 'Rubro creado correctamente.' });
+      }
 
-    closeOverlay();
+      const updatedRubros = await fetchRubrosByProject(currentProject.id);
+      setRubros(updatedRubros);
+
+      closeOverlay();
+      setLoadStatus('ready');
+    } catch (error) {
+      setFeedback({ tone: 'error', message: 'Error al guardar el rubro en la base de datos.' });
+      setLoadStatus('ready');
+    }
   };
 
   const handleImportComplete = async (result, importedRubros) => {
@@ -139,42 +156,40 @@ export function ProjectRubrosView({
     }
 
     try {
-      setLoadStatus('loading');
+      // Guardar en el backend
       await bulkCreateRubros(selectedProjectId, importedRubros);
-      
-      // Recargar rubros del proyecto tras la importación
+
+      // Recargar rubros inmediatamente (el modal sigue abierto en este punto)
       const updatedRubros = await fetchRubrosByProject(selectedProjectId);
       setRubros(updatedRubros);
-      
-      setImportResults((previousResults) => [result, ...previousResults]);
+
+      setImportResults((prev) => [result, ...prev]);
       setFeedback({
-        tone: result.status === 'failed' ? 'neutral' : 'success',
-        message: `La importación finalizó correctamente. Se guardaron ${importedRubros.length} rubros en el proyecto.`,
+        tone: 'success',
+        message: `Importación exitosa. Se guardaron ${result.importedRows ?? importedRubros.length} rubros en el proyecto.`,
       });
-      setLoadStatus('ready');
     } catch (error) {
-      console.error('Error in bulk import:', error);
-      setFeedback({ tone: 'error', message: 'Error al guardar los rubros en la base de datos.' });
-      setLoadStatus('ready');
+      console.error('[ProjectRubrosView] Error en bulk import:', error);
+      setFeedback({ tone: 'error', message: error?.response?.data?.error || 'Error al guardar los rubros en la base de datos.' });
     }
   };
 
-  // Efecto para cargar rubros cuando cambia el proyecto seleccionado
-  useEffect(() => {
-    const loadProjectRubros = async () => {
-      if (!selectedProjectId) return;
-      try {
-        const data = await fetchRubrosByProject(selectedProjectId);
-        setRubros(data);
-      } catch (error) {
-        console.error('Error loading rubros for project:', selectedProjectId);
-      }
-    };
-    
-    if (loadStatus === 'ready') {
-      loadProjectRubros();
+  // Efecto para recargar rubros cada vez que cambia el proyecto seleccionado
+  const reloadRubrosForProject = async (projectId) => {
+    if (!projectId) return;
+    try {
+      const data = await fetchRubrosByProject(projectId);
+      setRubros(data || []);
+    } catch (error) {
+      console.error('[ProjectRubrosView] Error al cargar rubros del proyecto:', projectId, error);
     }
-  }, [selectedProjectId, loadStatus === 'ready']);
+  };
+
+  useEffect(() => {
+    if (selectedProjectId && loadStatus === 'ready') {
+      reloadRubrosForProject(selectedProjectId);
+    }
+  }, [selectedProjectId]);
 
   if (!isAdmin) {
     return (

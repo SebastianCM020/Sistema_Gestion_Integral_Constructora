@@ -1,4 +1,6 @@
 const { verifyToken } = require('../utils/jwt');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
 // ─── Roles canónicos del sistema ICARO ──────────────────────────────────────
 // Fuente única de verdad: usar estas constantes en todo middleware/controlador
@@ -28,7 +30,7 @@ const MODULE_ROLES = {
  * Middleware para validar el Bearer Token en rutas protegidas.
  * Inyecta req.user con el payload decodificado del JWT.
  */
-const requireAuth = (req, res, next) => {
+const requireAuth = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
 
@@ -40,6 +42,21 @@ const requireAuth = (req, res, next) => {
 
     const token = authHeader.split(' ')[1];
     const decodedPayload = verifyToken(token);
+
+    // Soporte para tokens legacy que decían "Administrador" en lugar de "Administrador del Sistema"
+    if (decodedPayload.rol === 'Administrador') {
+      decodedPayload.rol = ROLES.ADMIN;
+    }
+
+    // Verificar explícitamente que el usuario aún exista en la BD (soluciona pérdida de sesión al borrar BD)
+    const userExists = await prisma.usuario.findUnique({
+      where: { id: decodedPayload.id },
+      select: { id: true, activo: true }
+    });
+
+    if (!userExists || !userExists.activo) {
+      return res.status(401).json({ error: 'La cuenta no existe o está deshabilitada. Inicie sesión nuevamente.' });
+    }
 
     // Inyectar el payload en la petición para uso de siguientes middlewares/controllers
     req.user = decodedPayload;

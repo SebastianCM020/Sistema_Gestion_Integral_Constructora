@@ -4,7 +4,7 @@ import { AuthContext } from '../../store/AuthContext';
 import { getUserFromEmail, getModuleById } from '../../data/icaroData';
 
 // Modulos
-import { MobileProgressView } from '../../views/obra/MobileProgressView';
+import { RegistroAvanceView } from '../../views/obra/RegistroAvanceView';
 import { MobileEvidenceSyncView } from '../../views/obra/MobileEvidenceSyncView';
 import { MobileConsumptionView } from '../../views/obra/MobileConsumptionView';
 import { PurchaseRequestsView } from '../../views/compras/PurchaseRequestsView';
@@ -24,16 +24,12 @@ export default function ModuleRouterPage() {
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
 
-  let currentUser = getUserFromEmail(user.email, user.rol);
-  if (!currentUser) {
-    currentUser = {
-      ...getUserFromEmail('admin@icaro.dev'),
-      name: `${user.nombre} ${user.apellido}`,
-      email: user.email,
-      roleName: user.rol,
-      projectLabel: 'Administración Central',
-    };
-  }
+  let baseUser = getUserFromEmail(user.email, user.rol);
+  let currentUser = {
+    ...baseUser,
+    name: `${user.nombre} ${user.apellido}`,
+    initials: `${user.nombre[0] || ''}${user.apellido[0] || ''}`.toUpperCase(),
+  };
 
   const goHome = () => navigate('/dashboard');
   const openProfile = () => navigate('/module/profile');
@@ -51,7 +47,7 @@ export default function ModuleRouterPage() {
   };
 
   if (moduleId === 'profile') return <ProfileView {...commonProps} />;
-  if (moduleId === 'progress') return <MobileProgressView {...commonProps} />;
+  if (moduleId === 'progress') return <RegistroAvanceView />;
   if (moduleId === 'evidence') return <MobileEvidenceSyncView {...commonProps} />;
   if (moduleId === 'consumption') return <MobileConsumptionView {...commonProps} />;
   if (moduleId === 'requirements') return <PurchaseRequestsView {...commonProps} />;
