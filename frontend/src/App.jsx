@@ -7,8 +7,10 @@ import DashboardPage from './pages/dashboard/DashboardPage';
 import ModuleRouterPage from './pages/dashboard/ModuleRouterPage';
 import AdminRouterPage from './pages/dashboard/AdminRouterPage';
 import { ForcePasswordChangeModal } from './components/auth/ForcePasswordChangeModal';
+import { SyncStatusBanner } from './components/ui/SyncStatusBanner';
 import { CatalogoMaterialesView } from './views/inventario/CatalogoMaterialesView';
 import { EntradaMaterialesView }  from './views/inventario/EntradaMaterialesView';
+import { RegistroAvanceView } from './views/obra/RegistroAvanceView';
 
 // Componente para proteger las rutas privadas
 const PrivateRoute = ({ children }) => {
@@ -19,6 +21,8 @@ const PrivateRoute = ({ children }) => {
 
   return (
     <>
+      {/* Banner global de sincronización offline — visible en toda la app */}
+      <SyncStatusBanner />
       {children}
       {user?.mustChangePassword && (
         <ForcePasswordChangeModal 
@@ -26,7 +30,7 @@ const PrivateRoute = ({ children }) => {
           onComplete={(updatedUser) => {
             const updated = { ...updatedUser, mustChangePassword: false };
             localStorage.setItem('icaro_user', JSON.stringify(updated));
-            window.location.reload(); // Recargar para aplicar cambios en el AuthContext
+            window.location.reload();
           }} 
         />
       )}
@@ -67,6 +71,9 @@ export default function App() {
           <Route path="/bodega/catalogo" element={<PrivateRoute><CatalogoMaterialesView /></PrivateRoute>} />
           {/* Sprint 3 — HU-03 Entrada de Materiales (Bodeguero) */}
           <Route path="/bodega/entrada" element={<PrivateRoute><EntradaMaterialesView /></PrivateRoute>} />
+          
+          {/* Sprint 4 — Avance Físico */}
+          <Route path="/obra/avances" element={<PrivateRoute><RegistroAvanceView /></PrivateRoute>} />
           
           <Route path="*"          element={<Placeholder title="404 — Página no encontrada" />} />
         </Routes>

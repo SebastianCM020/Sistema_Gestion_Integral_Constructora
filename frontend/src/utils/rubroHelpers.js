@@ -23,23 +23,33 @@ export function getRubroStatusMeta(isActive) {
 }
 
 export function getProjectRubros(rubros, projectId) {
-  return rubros.filter((rubro) => rubro.projectId === projectId);
+  if (!projectId) return [];
+  // Acepta tanto projectId (UI) como idProyecto (backend)
+  return rubros.filter(
+    (rubro) => (rubro.projectId ?? rubro.idProyecto) === projectId
+  );
 }
 
 export function filterRubros(rubros, filters) {
-  const normalizedQuery = filters.query.trim().toLowerCase();
+  const normalizedQuery = (filters.query ?? '').trim().toLowerCase();
 
   return rubros.filter((rubro) => {
+    // Acepta campos en español (backend) o inglés (UI)
+    const code        = (rubro.code        ?? rubro.codigo      ?? '').toLowerCase();
+    const description = (rubro.description ?? rubro.descripcion ?? '').toLowerCase();
+    const unit        =  rubro.unit        ?? rubro.unidad      ?? '';
+    const isActive    =  rubro.isActive    ?? rubro.activo      ?? true;
+
     const matchesQuery =
       !normalizedQuery ||
-      rubro.code.toLowerCase().includes(normalizedQuery) ||
-      rubro.description.toLowerCase().includes(normalizedQuery);
+      code.includes(normalizedQuery) ||
+      description.includes(normalizedQuery);
 
-    const matchesUnit = filters.unit === 'all' || rubro.unit === filters.unit;
+    const matchesUnit   = filters.unit   === 'all' || unit === filters.unit;
     const matchesStatus =
       filters.status === 'all' ||
-      (filters.status === 'active' && rubro.isActive) ||
-      (filters.status === 'inactive' && !rubro.isActive);
+      (filters.status === 'active'   && isActive) ||
+      (filters.status === 'inactive' && !isActive);
 
     return matchesQuery && matchesUnit && matchesStatus;
   });
@@ -48,35 +58,34 @@ export function filterRubros(rubros, filters) {
 export function sortRubros(rubros, sortBy) {
   const nextRubros = [...rubros];
 
-  nextRubros.sort((leftRubro, rightRubro) => {
-    if (sortBy === 'code') {
-      return leftRubro.code.localeCompare(rightRubro.code, 'es');
-    }
+  nextRubros.sort((l, r) => {
+    const lCode = l.code ?? l.codigo ?? '';
+    const rCode = r.code ?? r.codigo ?? '';
+    const lDesc = l.description ?? l.descripcion ?? '';
+    const rDesc = r.description ?? r.descripcion ?? '';
+    const lPrice = l.unitPrice ?? l.precioUnitario ?? 0;
+    const rPrice = r.unitPrice ?? r.precioUnitario ?? 0;
 
-    if (sortBy === 'description') {
-      return leftRubro.description.localeCompare(rightRubro.description, 'es');
-    }
+    if (sortBy === 'code')        return lCode.localeCompare(rCode, 'es');
+    if (sortBy === 'description') return lDesc.localeCompare(rDesc, 'es');
+    if (sortBy === 'unitPrice')   return rPrice - lPrice;
 
-    if (sortBy === 'unitPrice') {
-      return rightRubro.unitPrice - leftRubro.unitPrice;
-    }
-
-    return new Date(rightRubro.updatedAt).getTime() - new Date(leftRubro.updatedAt).getTime();
+    return new Date(r.updatedAt || 0).getTime() - new Date(l.updatedAt || 0).getTime();
   });
 
   return nextRubros;
 }
 
 export function getRubroSummary(rubros, latestImportResult) {
-  const activeRubros = rubros.filter((rubro) => rubro.isActive).length;
-  const importedRubros = rubros.filter((rubro) => rubro.source === 'csv').length;
+  const activeRubros   = rubros.filter((r) => (r.isActive ?? r.activo ?? true)).length;
+  const importedRubros = rubros.filter((r) => r.source === 'csv').length;
 
   return {
-    totalRubros: rubros.length,
+    totalRubros:       rubros.length,
     activeRubros,
     importedRubros,
-    lastImportRows: latestImportResult?.importedRows ?? 0,
-    lastImportErrors: latestImportResult?.failedRows ?? 0,
+    lastImportRows:   latestImportResult?.importedRows ?? 0,
+    lastImportErrors: latestImportResult?.failedRows   ?? 0,
   };
 }
 
@@ -87,38 +96,33 @@ export function validateRubroForm(values, existingRubros, currentProjectId, curr
     errors.project = 'Seleccione un proyecto para continuar.';
   }
 
-  if (!values.code.trim()) {
+  const code = (values.code ?? '').trim();
+  if (!code) {
     errors.code = 'El código del rubro es obligatorio.';
   } else {
-    const duplicateRubro = existingRubros.find(
-      (rubro) =>
-        rubro.projectId === currentProjectId &&
-        rubro.code.toLowerCase() === values.code.trim().toLowerCase() &&
-        rubro.id !== currentRubroId
+    const dup = existingRubros.find(
+      (r) =>
+        (r.projectId ?? r.idProyecto) === currentProjectId &&
+        (r.code ?? r.codigo ?? '').toLowerCase() === code.toLowerCase() &&
+        r.id !== currentRubroId
     );
-
-    if (duplicateRubro) {
-      errors.code = 'Ya existe un rubro con este código dentro del proyecto.';
-    }
+    if (dup) errors.code = 'Ya existe un rubro con este código dentro del proyecto.';
   }
 
-  if (!values.description.trim()) {
-    errors.description = 'La descripción es obligatoria.';
-  }
+  if (!(values.description ?? '').trim()) errors.description = 'La descripción es obligatoria.';
+  if (!(values.unit         ?? '').trim()) errors.unit        = 'La unidad es obligatoria.';
 
-  if (!values.unit.trim()) {
-    errors.unit = 'La unidad es obligatoria.';
-  }
-
-  if (!values.unitPrice && values.unitPrice !== 0) {
+  const unitPrice = values.unitPrice ?? values.precioUnitario;
+  if (!unitPrice && unitPrice !== 0) {
     errors.unitPrice = 'El precio unitario es obligatorio.';
-  } else if (Number(values.unitPrice) < 0) {
+  } else if (Number(unitPrice) < 0) {
     errors.unitPrice = 'El precio unitario no puede ser negativo.';
   }
 
-  if (!values.budgetedQuantity && values.budgetedQuantity !== 0) {
+  const budgetedQty = values.budgetedQuantity ?? values.cantidadPresupuestada;
+  if (!budgetedQty && budgetedQty !== 0) {
     errors.budgetedQuantity = 'La cantidad presupuestada es obligatoria.';
-  } else if (Number(values.budgetedQuantity) <= 0) {
+  } else if (Number(budgetedQty) <= 0) {
     errors.budgetedQuantity = 'La cantidad presupuestada debe ser positiva.';
   }
 
@@ -163,7 +167,9 @@ export function updateRubroPayload(rubro, values, project) {
 }
 
 export function getRubroUnits(rubros) {
-  return Array.from(new Set(rubros.map((rubro) => rubro.unit))).sort((leftUnit, rightUnit) => leftUnit.localeCompare(rightUnit, 'es'));
+  return Array.from(
+    new Set(rubros.map((r) => r.unit ?? r.unidad ?? '').filter(Boolean))
+  ).sort((a, b) => a.localeCompare(b, 'es'));
 }
 
 export function getRubroContextLabel(project) {
@@ -176,8 +182,8 @@ export function getRubroContextLabel(project) {
 
 export function formatRubroMetrics(rubro) {
   return {
-    unitPrice: formatCurrency(rubro.unitPrice),
-    budgetedQuantity: new Intl.NumberFormat('es-CO').format(rubro.budgetedQuantity),
-    executedQuantity: new Intl.NumberFormat('es-CO').format(rubro.executedQuantity),
+    unitPrice:         formatCurrency(rubro.unitPrice        ?? rubro.precioUnitario      ?? 0),
+    budgetedQuantity:  new Intl.NumberFormat('es-CO').format(rubro.budgetedQuantity  ?? rubro.cantidadPresupuestada ?? 0),
+    executedQuantity:  new Intl.NumberFormat('es-CO').format(rubro.executedQuantity  ?? rubro.cantidadEjecutada    ?? 0),
   };
 }

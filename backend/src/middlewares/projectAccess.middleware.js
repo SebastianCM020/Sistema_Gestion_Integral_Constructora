@@ -24,8 +24,8 @@ const prisma = new PrismaClient();
  */
 const requireProjectAccess = async (req, res, next) => {
   try {
-    // El idProyecto puede venir de :idProyecto o :id según la ruta
-    const idProyecto = req.params.idProyecto || req.params.id;
+    // El idProyecto puede venir de :idProyecto, :id o req.body.idProyecto
+    const idProyecto = req.params.idProyecto || req.params.id || req.body.idProyecto;
 
     if (!idProyecto) {
       return res.status(400).json({

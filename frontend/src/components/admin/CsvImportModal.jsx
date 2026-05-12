@@ -122,11 +122,15 @@ export function CsvImportModal({ currentProject, existingRubros, onCancel, onCom
     await wait(180);
     setProgress(80);
     await wait(180);
-    setProgress(100);
-    await wait(120);
 
     const importedRubros = createImportedRubros(validRows);
-    onComplete(summary, importedRubros);
+
+    // Esperamos a que onComplete (que hace el POST al backend) se resuelva
+    // antes de marcar la importación como completada.
+    await onComplete(summary, importedRubros);
+
+    setProgress(100);
+    await wait(120);
     setProgress(null);
     setHasImported(true);
   };
@@ -158,7 +162,13 @@ export function CsvImportModal({ currentProject, existingRubros, onCancel, onCom
         <CsvImportErrorsTable errors={validationErrors} />
 
         <div className="flex flex-col-reverse gap-3 border-t border-[#D1D5DB] pt-5 sm:flex-row sm:justify-end">
-          <button type="button" onClick={onCancel} className="h-[44px] rounded-[12px] border border-[#D1D5DB] px-4 text-sm font-medium text-[#2F3A45] hover:bg-gray-50">
+          <button
+            type="button"
+            // Si ya importó, cerrar con shouldReload=true para que la vista
+            // dispare un reload final de rubros al cerrar el modal
+            onClick={() => onCancel(hasImported)}
+            className="h-[44px] rounded-[12px] border border-[#D1D5DB] px-4 text-sm font-medium text-[#2F3A45] hover:bg-gray-50"
+          >
             {hasFinishedImport ? 'Volver al listado' : 'Cancelar'}
           </button>
           {!summary ? (

@@ -17,6 +17,7 @@ router.get('/', requireAuth, async (req, res) => {
     let proyectos;
 
     if (req.user.rol === ROLES.ADMIN) {
+      console.log(`[ProyectosRouter] ADMIN ${req.user.id} solicitó todos los proyectos.`);
       // El Admin ve todos
       proyectos = await prisma.proyecto.findMany({
         orderBy: { createdAt: 'desc' },
@@ -46,6 +47,7 @@ router.get('/', requireAuth, async (req, res) => {
         },
       });
       proyectos = asignaciones.map((a) => a.proyecto);
+      console.log(`[ProyectosRouter] Residente ${req.user.id} solicitó proyectos. Asignaciones encontradas: ${asignaciones.length}`);
     }
 
     return res.status(200).json({ data: proyectos });
@@ -73,7 +75,7 @@ router.get('/:idProyecto', requireAuth, requireProjectAccess, async (req, res) =
       where: { id: idProyecto },
       include: {
         responsable: { select: { nombre: true, apellido: true } },
-        rubros:  { select: { id: true, codigo: true, descripcion: true, unidad: true, precioUnitario: true, cantidadPresupuestada: true, cantidadEjecutada: true } },
+        rubros:  { select: { id: true, codigo: true, descripcion: true, unidad: true, precioUnitario: true, cantidadPresupuestada: true, cantidadEjecutada: true, idProyecto: true } },
         asignaciones: {
           select: { idUsuario: true, fechaInicio: true, fechaFin: true, accessMode: true },
         },
@@ -127,6 +129,18 @@ router.post('/', requireAuth, async (req, res) => {
       }
     });
 
+    if (idResponsable) {
+      await prisma.asignacionProyectoUsuario.create({
+        data: {
+          idUsuario: idResponsable,
+          idProyecto: proyecto.id,
+          fechaInicio: proyecto.fechaInicio,
+          fechaFin: proyecto.fechaFinPrevista,
+          accessMode: 'READ_WRITE'
+        }
+      });
+    }
+
     return res.status(201).json({ data: proyecto });
   } catch (error) {
     console.error('[ProyectosRouter] POST /:', error);
@@ -173,6 +187,24 @@ router.put('/:id', requireAuth, async (req, res) => {
         }
       }
     });
+
+    // Crear asignación si se especificó idResponsable
+    if (idResponsable) {
+      const existeAsignacion = await prisma.asignacionProyectoUsuario.findFirst({
+        where: { idUsuario: idResponsable, idProyecto: id }
+      });
+      if (!existeAsignacion) {
+        await prisma.asignacionProyectoUsuario.create({
+          data: {
+            idUsuario: idResponsable,
+            idProyecto: id,
+            fechaInicio: proyecto.fechaInicio || new Date(),
+            fechaFin: proyecto.fechaFinPrevista || new Date('2099-12-31'),
+            accessMode: 'READ_WRITE'
+          }
+        });
+      }
+    }
 
     return res.status(200).json({ data: proyecto });
   } catch (error) {
@@ -221,6 +253,62 @@ router.post('/:idProyecto/rubros/bulk', requireAuth, requireProjectAccess, async
   } catch (error) {
     console.error('[ProyectosRouter] POST /bulk:', error);
     return res.status(500).json({ error: 'Error en la carga masiva de rubros.' });
+  }
+});
+
+/**
+ * POST /api/v1/proyectos/:idProyecto/rubros
+ * Crea un rubro individual.
+ */
+router.post('/:idProyecto/rubros', requireAuth, requireProjectAccess, async (req, res) => {
+  if (req.user.rol !== ROLES.ADMIN) {
+    return res.status(403).json({ error: 'No tiene permisos para crear rubros.' });
+  }
+  try {
+    const { idProyecto } = req.params;
+    const { codigo, descripcion, unidad, precioUnitario, cantidadPresupuestada } = req.body;
+    
+    const nuevoRubro = await prisma.rubro.create({
+      data: {
+        codigo,
+        descripcion,
+        unidad,
+        precioUnitario: parseFloat(precioUnitario),
+        cantidadPresupuestada: parseFloat(cantidadPresupuestada),
+        idProyecto,
+      }
+    });
+    return res.status(201).json({ data: nuevoRubro });
+  } catch (error) {
+    return res.status(500).json({ error: 'Error al crear el rubro.' });
+  }
+});
+
+/**
+ * PUT /api/v1/proyectos/rubros/:idRubro
+ * Actualiza un rubro individual.
+ */
+router.put('/rubros/:idRubro', requireAuth, async (req, res) => {
+  if (req.user.rol !== ROLES.ADMIN) {
+    return res.status(403).json({ error: 'No tiene permisos para editar rubros.' });
+  }
+  try {
+    const { idRubro } = req.params;
+    const { codigo, descripcion, unidad, precioUnitario, cantidadPresupuestada } = req.body;
+    
+    const rubroEditado = await prisma.rubro.update({
+      where: { id: idRubro },
+      data: {
+        codigo,
+        descripcion,
+        unidad,
+        precioUnitario: parseFloat(precioUnitario),
+        cantidadPresupuestada: parseFloat(cantidadPresupuestada),
+      }
+    });
+    return res.status(200).json({ data: rubroEditado });
+  } catch (error) {
+    return res.status(500).json({ error: 'Error al actualizar el rubro.' });
   }
 });
 

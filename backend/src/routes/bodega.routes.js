@@ -6,6 +6,7 @@
 const express  = require('express');
 const router   = express.Router();
 const { requireAuth, requireRole, ROLES } = require('../middlewares/auth.middleware');
+const { requireProjectAccess } = require('../middlewares/projectAccess.middleware');
 const bodegaController = require('../controllers/bodega.controller');
 
 // Bodeguero es quien registra movimientos; Admin puede también
@@ -26,6 +27,7 @@ const canRead  = [requireAuth, requireRole([
 router.post(
   '/proyectos/:idProyecto/movimientos',
   ...canWrite,
+  requireProjectAccess,
   bodegaController.registrarMovimiento
 );
 
@@ -37,6 +39,7 @@ router.post(
 router.get(
   '/proyectos/:idProyecto/movimientos',
   ...canRead,
+  requireProjectAccess,
   bodegaController.listarMovimientos
 );
 
@@ -47,6 +50,7 @@ router.get(
 router.get(
   '/proyectos/:idProyecto/inventario',
   ...canRead,
+  requireProjectAccess,
   bodegaController.obtenerInventario
 );
 
