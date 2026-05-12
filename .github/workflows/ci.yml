@@ -33,6 +33,8 @@ jobs:
 
     - name: 🔍 Prisma Validate Schema
       working-directory: ./backend
+      env:
+        DATABASE_URL: "postgresql://dummy:dummy@localhost:5432/dummy"
       run: npx prisma validate
 
     - name: 📦 Install Frontend Dependencies
