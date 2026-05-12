@@ -1,6 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 const { logFromRequest } = require('../services/audit.service');
+const UserService = require('../services/users.service');
 
 const prisma = new PrismaClient();
 const BCRYPT_ROUNDS = 12;
@@ -107,10 +108,11 @@ const createUser = async (req, res) => {
       });
     }
 
-    // Verificar email único
-    const existing = await prisma.usuario.findUnique({ where: { email } });
-    if (existing) {
-      return res.status(409).json({ error: 'Ya existe un usuario con ese correo electrónico.' });
+    // Verificar email único usando el servicio
+    try {
+      await UserService.validateUniqueEmail(email);
+    } catch (error) {
+      return res.status(409).json({ error: error.message });
     }
 
     // Verificar que el rol existe
@@ -163,11 +165,22 @@ const updateUser = async (req, res) => {
       return res.status(404).json({ error: 'Usuario no encontrado.' });
     }
 
-    // Verificar email único si cambió
+    // Verificar email único si cambió usando el servicio
     if (email && email !== existing.email) {
-      const conflict = await prisma.usuario.findUnique({ where: { email } });
-      if (conflict) {
-        return res.status(409).json({ error: 'El correo ya está en uso por otro usuario.' });
+      try {
+        await UserService.validateUniqueEmail(email);
+      } catch (error) {
+        return res.status(409).json({ error: error.message });
+      }
+    }
+
+    // Restricción: No permitir desactivar al último administrador activo desde el update
+    if (activo === false && existing.activo === true) {
+      const canDeactivate = await UserService.canModifyAdminStatus(id);
+      if (!canDeactivate) {
+        return res.status(403).json({ 
+          error: 'Operación denegada. No puede desactivar al único administrador activo del sistema.' 
+        });
       }
     }
 
@@ -284,6 +297,16 @@ const toggleUserStatus = async (req, res) => {
     // No permitir auto-desactivación
     if (existing.id === req.user.id && !activo) {
       return res.status(403).json({ error: 'No puede desactivar su propia cuenta.' });
+    }
+
+    // Restricción Sprint 5: No permitir desactivar al último administrador activo
+    if (!activo && existing.activo) {
+      const canDeactivate = await UserService.canModifyAdminStatus(id);
+      if (!canDeactivate) {
+        return res.status(403).json({ 
+          error: 'Operación denegada. No puede desactivar al único administrador activo del sistema.' 
+        });
+      }
     }
 
     const user = await prisma.usuario.update({

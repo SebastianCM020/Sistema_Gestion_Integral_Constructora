@@ -1,12 +1,27 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const { logFromRequest } = require('../services/audit.service');
+const storageService = require('../services/storage.service');
 
 const registrarAvanceFisico = async (req, res) => {
   const { idProyecto, idRubro, cantidadEjecutada, observaciones, fechaRegistro } = req.body;
-  const idResidente = req.user ? req.user.id : "00000000-0000-0000-0000-000000000000"; // Mock si no hay req.user
+  const idResidente = req.user ? req.user.id : "00000000-0000-0000-0000-000000000000";
+  const archivoEvidencia = req.file;
 
   try {
+    // 1. Validación de Evidencia (Obligatoria en Sprint 5)
+    if (!archivoEvidencia) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'La evidencia fotográfica es obligatoria para registrar un avance.' 
+      });
+    }
+
+    // Validar formato y tamaño usando el servicio
+    storageService.validateImage(archivoEvidencia.mimetype, archivoEvidencia.size);
+
     const resultado = await prisma.$transaction(async (tx) => {
+      // 2. Buscar rubro y verificar proyecto
       const rubro = await tx.rubro.findUnique({
         where: { id: idRubro },
         include: { proyecto: true }
@@ -21,26 +36,43 @@ const registrarAvanceFisico = async (req, res) => {
       const nuevoTotal = avanceAcumulado + parsedCantidad;
       const presupuestado = parseFloat(rubro.cantidadPresupuestada);
 
-      console.log(`[AvanceController] Intento de registro: Acumulado=${avanceAcumulado}, A agregar=${parsedCantidad}, Total=${nuevoTotal}, Presupuesto=${presupuestado}`);
-
-      // (Actividad 3) Validación de Presupuesto Central
+      // 3. Validación de Presupuesto Central
       if (nuevoTotal > presupuestado) {
-        console.error('[AvanceController] Rechazado: Supera el presupuesto.');
-        throw new Error('BUDGET_EXCEEDED: El avance supera el presupuesto. Requiere Orden de Cambio.');
+        throw new Error('BUDGET_EXCEEDED: El avance supera el presupuesto.');
       }
 
+      // 4. Guardar archivo físicamente
+      const uploadResult = await storageService.uploadFile(
+        archivoEvidencia.buffer,
+        archivoEvidencia.originalname,
+        'evidencias'
+      );
+
+      // 5. Crear el registro de Avance
       const nuevoAvance = await tx.avanceObra.create({
         data: {
           idRubro,
           idProyecto,
-          idResidente, // Requerido por esquema
-          cantidadAvance: parseFloat(cantidadEjecutada),
+          idResidente,
+          cantidadAvance: parsedCantidad,
           notas: observaciones,
           fechaRegistro: new Date(fechaRegistro || Date.now()),
-          estado: 'VALIDATED'
-        }
+          estado: 'SYNCED', // Ya está en el servidor
+          // 6. Crear la asociación de evidencia
+          evidencias: {
+            create: {
+              urlImagen: uploadResult.url,
+              storageKey: uploadResult.storageKey,
+              sizeBytes: uploadResult.size,
+              mimeType: archivoEvidencia.mimetype,
+              timestampCaptura: new Date()
+            }
+          }
+        },
+        include: { evidencias: true }
       });
 
+      // 7. Actualizar el acumulado en Rubro
       await tx.rubro.update({
         where: { id: idRubro },
         data: { cantidadEjecutada: nuevoTotal }
@@ -49,7 +81,7 @@ const registrarAvanceFisico = async (req, res) => {
       return nuevoAvance;
     });
 
-    res.status(201).json({ success: true, data: resultado, message: 'Avance registrado correctamente.' });
+    res.status(201).json({ success: true, data: resultado, message: 'Avance y evidencia registrados correctamente.' });
 
   } catch (error) {
     if (error.message.includes('BUDGET_EXCEEDED')) {

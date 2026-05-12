@@ -29,46 +29,43 @@ export const db = new Dexie(DB_NAME);
 // El campo '*'   = índice multi-valor (arrays)
 // Campos no listados también se almacenan, solo no son indexables por .where()
 
-db.version(1).stores({
-  /**
-   * Tabla: materiales_local
-   * Caché del catálogo de materiales descargado del servidor.
-   * sync_status: siempre 'synced' (catálogo es de solo lectura para bodeguero)
-   */
+db.version(2).stores({
   materiales_local: [
-    '&id',          // PK — UUID del servidor (índice único)
+    '&id',
     'codigo',
-    'categoria',    // Indexado para permitir filtros rápidos offline
+    'categoria',
     'nombre',
     'activo',
     'sync_status',
     'server_updated_at',
   ].join(', '),
 
-  /**
-   * Tabla: inventario_local
-   * Stock disponible por [material, proyecto]. Clave compuesta.
-   * sync_status: 'pending' cuando se modifica offline
-   */
   inventario_local: [
-    '[id_material+id_proyecto]', // PK compuesta
+    '[id_material+id_proyecto]',
     'id_material',
     'id_proyecto',
     'sync_status',
   ].join(', '),
 
-  /**
-   * Tabla: movimientos_inventario_local
-   * Registros creados por el bodeguero (pueden ser offline).
-   * sync_status: nace como 'pending' si no hay conexión
-   */
   movimientos_inventario_local: [
-    '&id',          // PK — UUID generado localmente
+    '&id',
     'id_material',
     'id_proyecto',
     'id_usuario',
     'tipo_movimiento',
-    'sync_status',  // Indexado para que el SyncManager filtre fácilmente
+    'sync_status',
+    'local_created_at',
+  ].join(', '),
+
+  /**
+   * Tabla: avances_local (Sprint 5)
+   * Registros de avance de obra con evidencia fotográfica local.
+   */
+  avances_local: [
+    '&id',           // UUID local
+    'idProyecto',
+    'idRubro',
+    'sync_status',   // 'pending' | 'synced' | 'error'
     'local_created_at',
   ].join(', '),
 });

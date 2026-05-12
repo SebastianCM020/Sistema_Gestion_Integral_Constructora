@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { fetchAvancesPorRubro } from '../../services/offlineSyncService';
+import storageService from '../../services/storage.service';
+import { avancesLocalService } from '../../db/avancesLocalService';
+import { Camera, Image as ImageIcon, X, CheckCircle2, AlertCircle, Clock, CloudOff } from 'lucide-react';
 
 const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
   const [cantidad, setCantidad] = useState('');
@@ -8,12 +11,19 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
   const [message, setMessage] = useState(null);
   const [historial, setHistorial] = useState([]);
   const [loadingHistorial, setLoadingHistorial] = useState(false);
+  
+  // Estados para Evidencia (Sprint 5)
+  const [evidencia, setEvidencia] = useState(null);
+  const [evidenciaPreview, setEvidenciaPreview] = useState(null);
+  const [isCompressing, setIsCompressing] = useState(false);
+  const fileInputRef = useRef(null);
 
-  // Solo resetea el formulario cuando cambia el RUBRO seleccionado (por id),
-  // no cuando el padre actualiza las cantidades del mismo rubro tras guardar.
+  // Solo resetea el formulario cuando cambia el RUBRO seleccionado (por id)
   useEffect(() => {
     setCantidad('');
     setObservaciones('');
+    setEvidencia(null);
+    setEvidenciaPreview(null);
     setMessage(null);
     setHistorial([]);
     if (rubro?.id) {
@@ -24,8 +34,16 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
   const loadHistorial = async (idRubro) => {
     try {
       setLoadingHistorial(true);
-      const data = await fetchAvancesPorRubro(idRubro);
-      setHistorial(data || []);
+      
+      // 1. Obtener avances del servidor
+      const serverData = await fetchAvancesPorRubro(idRubro);
+      
+      // 2. Obtener avances locales (pendientes/error) del rubro
+      const allLocal = await avancesLocalService.getAllLocal();
+      const localForRubro = allLocal.filter(a => a.idRubro === idRubro);
+      
+      // Combinar (locales primero)
+      setHistorial([...localForRubro, ...(serverData || [])]);
     } catch (err) {
       console.error('Error al cargar historial', err);
     } finally {
@@ -33,30 +51,68 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
     }
   };
 
-  if (!rubro) {
-    return <div className="text-white text-center p-4">Seleccione un rubro para continuar.</div>;
-  }
+  const handleCapture = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      setIsCompressing(true);
+      setMessage(null);
+      
+      // Compresión local (JPG < 5MB) - Sprint 5
+      const compressedBlob = await storageService.compressImage(file);
+      
+      setEvidencia(compressedBlob);
+      setEvidenciaPreview(URL.createObjectURL(compressedBlob));
+    } catch (err) {
+      console.error('Error al procesar imagen:', err);
+      setMessage({ type: 'error', text: 'Error al procesar la imagen. Intente con otra.' });
+    } finally {
+      setIsCompressing(false);
+    }
+  };
+
+  const removeEvidencia = () => {
+    setEvidencia(null);
+    setEvidenciaPreview(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!cantidad || parseFloat(cantidad) <= 0) return alert('Ingrese una cantidad válida mayor a 0');
     
+    // Validación Sprint 5: Evidencia obligatoria
+    if (!evidencia) {
+      return setMessage({ type: 'error', text: 'La evidencia fotográfica es obligatoria para registrar el avance.' });
+    }
+
     setIsSubmitting(true);
     setMessage(null);
-    const payload = {
-      idRubro: rubro.id,
-      idProyecto: rubro.idProyecto,
-      cantidadEjecutada: parseFloat(cantidad),
-      observaciones: observaciones,
-      fechaRegistro: new Date().toISOString()
-    };
+
+    // Preparar FormData para soportar el archivo (multipart/form-data)
+    const formData = new FormData();
+    formData.append('idRubro', rubro.id);
+    formData.append('idProyecto', rubro.idProyecto);
+    formData.append('cantidadEjecutada', parseFloat(cantidad));
+    formData.append('observaciones', observaciones);
+    formData.append('fechaRegistro', new Date().toISOString());
+    formData.append('evidencia', evidencia, 'evidencia.jpg');
 
     try {
-      const result = await onGuardar(payload);
+      // Pasamos el FormData al padre
+      const result = await onGuardar(formData);
+      
       if (result && result.success) {
-        setMessage({ type: 'success', text: result.message });
+        setMessage({ 
+          type: 'success', 
+          text: result.offline 
+            ? '📶 Guardado localmente. Se sincronizará al recuperar conexión.' 
+            : '✅ Avance registrado correctamente.' 
+        });
         setCantidad('');
         setObservaciones('');
+        removeEvidencia();
         // Recargar historial para ver el nuevo avance
         loadHistorial(rubro.id);
       } else {
@@ -90,7 +146,8 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
         </div>
 
         {message && (
-          <div className={`p-4 mb-6 rounded-[10px] font-medium text-sm ${message.type === 'error' ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-green-50 text-green-700 border border-green-200'}`}>
+          <div className={`p-4 mb-6 rounded-[10px] font-medium text-sm flex items-center gap-3 ${message.type === 'error' ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-green-50 text-green-700 border border-green-200'}`}>
+            {message.type === 'error' ? <AlertCircle size={18} /> : <CheckCircle2 size={18} />}
             {message.text}
           </div>
         )}
@@ -113,6 +170,66 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
             />
           </div>
 
+          {/* Sección de Evidencia Fotográfica (Sprint 5) */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-[#2F3A45]">
+              Evidencia Fotográfica <span className="text-red-500">*</span>
+            </label>
+            
+            <input 
+              type="file" 
+              accept="image/*" 
+              capture="environment" 
+              ref={fileInputRef}
+              onChange={handleCapture}
+              className="hidden"
+            />
+
+            {!evidenciaPreview ? (
+              <div className="grid grid-cols-2 gap-4">
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current.click()}
+                  className="flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed border-[#D1D5DB] rounded-[12px] hover:border-[#1F4E79] hover:bg-blue-50 transition-all text-gray-500 hover:text-[#1F4E79]"
+                >
+                  <Camera size={24} />
+                  <span className="text-xs font-medium">Cámara</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    fileInputRef.current.removeAttribute('capture');
+                    fileInputRef.current.click();
+                  }}
+                  className="flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed border-[#D1D5DB] rounded-[12px] hover:border-[#1F4E79] hover:bg-blue-50 transition-all text-gray-500 hover:text-[#1F4E79]"
+                >
+                  <ImageIcon size={24} />
+                  <span className="text-xs font-medium">Galería</span>
+                </button>
+              </div>
+            ) : (
+              <div className="relative group">
+                <img 
+                  src={evidenciaPreview} 
+                  alt="Vista previa" 
+                  className="w-full h-48 object-cover rounded-[12px] border border-[#D1D5DB]"
+                />
+                <button
+                  type="button"
+                  onClick={removeEvidencia}
+                  className="absolute top-2 right-2 p-1.5 bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors"
+                >
+                  <X size={16} />
+                </button>
+                {isCompressing && (
+                  <div className="absolute inset-0 bg-white/70 flex items-center justify-center rounded-[12px]">
+                    <span className="text-xs font-semibold text-[#1F4E79] animate-pulse">Procesando...</span>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
           <div className="flex flex-col gap-2">
             <label htmlFor="observaciones" className="text-sm font-medium text-[#2F3A45]">
               Observaciones (Opcional)
@@ -122,7 +239,7 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
               value={observaciones}
               onChange={(e) => setObservaciones(e.target.value)}
               className="w-full p-4 rounded-[10px] bg-white text-[#111827] text-sm border border-[#D1D5DB] focus:border-[#1F4E79] focus:ring-1 focus:ring-[#1F4E79] focus:outline-none transition-all resize-none"
-              rows="3"
+              rows="2"
               placeholder="Detalles del avance..."
             ></textarea>
           </div>
@@ -130,7 +247,7 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
           <button 
             type="submit" 
             className="w-full mt-2 h-[52px] bg-[#1F4E79] hover:bg-[#153a5c] active:bg-[#0f2a42] text-white font-medium rounded-[10px] text-base transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isCompressing}
           >
             {isSubmitting ? 'Guardando...' : 'Registrar Avance'}
           </button>
@@ -162,11 +279,31 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
                     {new Date(avance.fechaRegistro).toLocaleDateString()}
                   </span>
                 </div>
-                <div className="text-xs text-gray-600 mb-1 flex justify-between">
-                  <span>Por: {avance.residente ? `${avance.residente.nombre} ${avance.residente.apellido}` : 'Desconocido'}</span>
-                  <span className={`font-medium ${avance.estado === 'VALIDATED' ? 'text-green-600' : 'text-amber-600'}`}>
-                    {avance.estado === 'VALIDATED' ? 'Validado' : 'Pendiente'}
-                  </span>
+                <div className="text-xs text-gray-600 mb-1 flex justify-between items-center">
+                  <span>Por: {avance.residente ? `${avance.residente.nombre} ${avance.residente.apellido}` : (avance.sync_status ? 'Usted (Local)' : 'Desconocido')}</span>
+                  
+                  {/* Estados de Sincronización Sprint 5 */}
+                  <div className="flex items-center gap-1.5">
+                    {avance.sync_status === 'pending' && (
+                      <span className="flex items-center gap-1 text-amber-600 font-medium">
+                        <Clock size={12} /> Pendiente
+                      </span>
+                    )}
+                    {avance.sync_status === 'error' && (
+                      <span className="flex items-center gap-1 text-red-600 font-medium" title={avance.sync_error}>
+                        <CloudOff size={12} /> Error
+                      </span>
+                    )}
+                    {!avance.sync_status && (
+                      <span className={`flex items-center gap-1 font-medium ${avance.estado === 'VALIDATED' ? 'text-green-600' : 'text-[#1F4E79]'}`}>
+                        {avance.estado === 'VALIDATED' ? (
+                          <><CheckCircle2 size={12} /> Validado</>
+                        ) : (
+                          'Sincronizado'
+                        )}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 {avance.notas && (
                   <p className="text-sm text-gray-700 italic border-l-2 border-gray-300 pl-2 mt-2">"{avance.notas}"</p>

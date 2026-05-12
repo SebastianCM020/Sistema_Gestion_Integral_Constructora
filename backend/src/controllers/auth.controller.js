@@ -202,9 +202,20 @@ const changePassword = async (req, res) => {
   }
 };
 
+/**
+ * Cierre de sesión (Server-side)
+ * POST /api/v1/auth/logout
+ */
+const logout = async (req, res) => {
+  // En una arquitectura JWT pura, el logout es principalmente client-side.
+  // Aquí podemos registrar la salida en auditoría.
+  return res.status(200).json({ message: 'Sesión cerrada correctamente.' });
+};
+
 module.exports = {
   login,
   getMe,
   recoverPassword,
-  changePassword
+  changePassword,
+  logout
 };

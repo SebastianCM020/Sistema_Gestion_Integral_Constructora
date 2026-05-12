@@ -66,7 +66,7 @@ const requireAuth = async (req, res, next) => {
     if (error.name === 'TokenExpiredError') {
       return res.status(401).json({ error: 'La sesión ha expirado. Inicie sesión nuevamente.' });
     }
-    return res.status(403).json({ error: 'Token inválido o corrupto.' });
+    return res.status(401).json({ error: 'Token inválido, corrupto o expirado.' });
   }
 };
 
