@@ -76,6 +76,7 @@ export const RegistroAvanceView = () => {
       setRubros(listaRubros);
     } catch (err) {
       console.error('[RegistroAvanceView] Error al cargar rubros:', err);
+      setError('Error al cargar rubros de este proyecto. Verifique sus permisos.');
       // Si tenemos caché anterior, no la borramos — degradación elegante
       if (rubrosCache[idProyecto]) {
         setRubros(rubrosCache[idProyecto]);
@@ -112,18 +113,43 @@ export const RegistroAvanceView = () => {
    */
   const handleGuardar = async (payload) => {
     const result = await registrarAvanceApi(payload);
-    if (result && result.success && !result.offline) {
-      // Recarga forzada para obtener cantidadEjecutada actualizada desde BD
-      const dataActualizada = await fetchRubrosByProject(selectedProyecto).catch(() => null);
-      if (dataActualizada) {
-        const listaActualizada = dataActualizada || [];
-        setRubrosCache(prev => ({ ...prev, [selectedProyecto]: listaActualizada }));
-        setRubros(listaActualizada);
-        // Actualizar el rubro actual en memoria también
-        const rubroActualizadoBD = listaActualizada.find(r => r.id === payload.idRubro);
-        if (rubroActualizadoBD) {
-          setRubroActual({ ...rubroActualizadoBD, idProyecto: selectedProyecto });
+    
+    // Obtener datos del FormData para actualizar UI
+    const idRubro = payload instanceof FormData ? payload.get('idRubro') : payload.idRubro;
+    const cantReportada = parseFloat(payload instanceof FormData ? payload.get('cantidadEjecutada') : payload.cantidadEjecutada);
+
+    if (result && result.success) {
+      if (!result.offline) {
+        // ONLINE: Recarga forzada para obtener cantidadEjecutada actualizada desde BD
+        const dataActualizada = await fetchRubrosByProject(selectedProyecto).catch(() => null);
+        if (dataActualizada) {
+          const listaActualizada = dataActualizada || [];
+          setRubrosCache(prev => ({ ...prev, [selectedProyecto]: listaActualizada }));
+          setRubros(listaActualizada);
+          // Actualizar el rubro actual en memoria también
+          const rubroActualizadoBD = listaActualizada.find(r => r.id === idRubro);
+          if (rubroActualizadoBD) {
+            setRubroActual({ ...rubroActualizadoBD, idProyecto: selectedProyecto });
+          }
         }
+      } else {
+        // OFFLINE: Actualizamos el estado local para que la barra de progreso se mueva
+        // aunque no hayamos ido al servidor todavía.
+        setRubros(prevRubros => {
+          const nuevaLista = prevRubros.map(r => {
+            if (r.id === idRubro) {
+              return { ...r, cantidadEjecutada: (parseFloat(r.cantidadEjecutada || 0) + cantReportada) };
+            }
+            return r;
+          });
+          setRubrosCache(prev => ({ ...prev, [selectedProyecto]: nuevaLista }));
+          
+          // También actualizar rubroActual
+          const rb = nuevaLista.find(r => r.id === idRubro);
+          if (rb) setRubroActual({ ...rb, idProyecto: selectedProyecto });
+          
+          return nuevaLista;
+        });
       }
     }
     return result;

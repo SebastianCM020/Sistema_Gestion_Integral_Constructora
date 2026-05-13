@@ -1,9 +1,8 @@
-const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 const { logFromRequest } = require('../services/audit.service');
 const UserService = require('../services/users.service');
 
-const prisma = new PrismaClient();
+const prisma = require('../utils/prisma');
 const BCRYPT_ROUNDS = 12;
 
 // ─── Helper: adecuar el objeto de DB al formato esperado por el frontend ──────

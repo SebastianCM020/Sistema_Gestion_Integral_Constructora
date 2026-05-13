@@ -1,8 +1,7 @@
-const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 const { generateToken } = require('../utils/jwt');
 
-const prisma = new PrismaClient();
+const prisma = require('../utils/prisma');
 
 // Memoria volátil para rastrear intentos (ideal para MVP, en prod llevar a Redis o DB)
 const loginAttempts = new Map();

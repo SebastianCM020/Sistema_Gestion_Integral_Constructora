@@ -46,7 +46,7 @@ export function ProjectAccessAssignmentView({
   const [activeOverlay, setActiveOverlay] = useState(null);
 
   const modules = getModulesForUser(currentUser);
-  const isAdmin = currentUser.roleName === 'Administrador del Sistema';
+  const isAdmin = currentUser.roleId === 'admin' || currentUser.roleName === 'Administrador del Sistema';
   const roleOptions = useMemo(() => Array.from(new Set(mockUsers.map((user) => user.role))).sort((left, right) => left.localeCompare(right, 'es')), []);
 
   useEffect(() => {

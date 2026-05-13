@@ -3,8 +3,7 @@
 // Contiene toda la lógica de acceso a datos (Prisma) para el módulo de materiales.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('../utils/prisma');
 
 /**
  * Lista todos los materiales activos con filtro opcional por categoría y búsqueda.

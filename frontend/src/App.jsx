@@ -8,9 +8,6 @@ import ModuleRouterPage from './pages/dashboard/ModuleRouterPage';
 import AdminRouterPage from './pages/dashboard/AdminRouterPage';
 import { ForcePasswordChangeModal } from './components/auth/ForcePasswordChangeModal';
 import { SyncStatusBanner } from './components/ui/SyncStatusBanner';
-import { CatalogoMaterialesView } from './views/inventario/CatalogoMaterialesView';
-import { EntradaMaterialesView }  from './views/inventario/EntradaMaterialesView';
-import { RegistroAvanceView } from './views/obra/RegistroAvanceView';
 
 // Componente para proteger las rutas privadas
 const PrivateRoute = ({ children }) => {
@@ -67,13 +64,6 @@ export default function App() {
           <Route path="/admin" element={<Navigate to="/admin/users" replace />} />
           <Route path="/admin/:section" element={<PrivateRoute><AdminRouterPage /></PrivateRoute>} />
 
-          {/* Sprint 3 — HU-02 Catálogo de Materiales */}
-          <Route path="/bodega/catalogo" element={<PrivateRoute><CatalogoMaterialesView /></PrivateRoute>} />
-          {/* Sprint 3 — HU-03 Entrada de Materiales (Bodeguero) */}
-          <Route path="/bodega/entrada" element={<PrivateRoute><EntradaMaterialesView /></PrivateRoute>} />
-          
-          {/* Sprint 4 — Avance Físico */}
-          <Route path="/obra/avances" element={<PrivateRoute><RegistroAvanceView /></PrivateRoute>} />
           
           <Route path="*"          element={<Placeholder title="404 — Página no encontrada" />} />
         </Routes>

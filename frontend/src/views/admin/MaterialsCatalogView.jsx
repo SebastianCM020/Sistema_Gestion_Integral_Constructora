@@ -46,7 +46,7 @@ export function MaterialsCatalogView({
   const [activeOverlay, setActiveOverlay] = useState(null);
 
   const modules = getModulesForUser(currentUser);
-  const isAdmin = currentUser.roleName === 'Administrador del Sistema';
+  const isAdmin = currentUser.roleId === 'admin' || currentUser.roleName === 'Administrador del Sistema';
 
   useEffect(() => {
     setLoadStatus('loading');
