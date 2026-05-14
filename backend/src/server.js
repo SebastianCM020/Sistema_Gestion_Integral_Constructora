@@ -32,7 +32,10 @@ app.use('/api/v1/users',     require('./routes/users.routes'));     // Act. 8 �
 app.use('/api/v1/proyectos', require('./routes/proyectos.routes')); // Act. 9 — Acceso por proyecto
 app.use('/api/v1/materiales',require('./routes/materiales.routes'));// Sprint 3 — HU-02 Catálogo
 app.use('/api/v1/bodega',    require('./routes/bodega.routes'));    // Sprint 3 — HU-03 Bodega
-app.use('/api/v1/avances',   require('./routes/avances.routes'));
+app.use('/api/v1/avances',         require('./routes/avances.routes'));
+app.use('/api/v1/planillas',       require('./routes/planillas.routes'));       // Sprint 05 — HU-16, HU-18
+app.use('/api/v1/cierres-contables', require('./routes/cierresContables.routes')); // Sprint 05 — HU-17
+app.use('/api/v1/gastos',          require('./routes/gastos.routes'));           // Sprint 05 — HU-19
 // app.use('/api/v1/compras',   require('./routes/compras.routes'));
 // app.use('/api/v1/reportes',  require('./routes/reportes.routes'));
 
