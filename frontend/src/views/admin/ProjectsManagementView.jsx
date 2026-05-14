@@ -53,7 +53,7 @@ export function ProjectsManagementView({
 
   const modules = getModulesForUser(currentUser);
   // Usar roleId (ya normalizado por icaroData) en lugar de roleName (frágil a cambios de texto)
-  const isAdmin = currentUser.roleId === 'admin';
+  const isAdmin = currentUser.roleId === 'admin' || currentUser.roleName === 'Administrador del Sistema';
   const managerOptions = useMemo(() => 
     potentialResponsibles.map((u) => ({ value: u.id, label: `${u.firstName} ${u.lastName}` })), 
     [potentialResponsibles]

@@ -1,11 +1,8 @@
 const express = require('express');
 const router  = express.Router();
-const { PrismaClient } = require('@prisma/client');
-
 const { requireAuth, ROLES }     = require('../middlewares/auth.middleware');
 const { requireProjectAccess }   = require('../middlewares/projectAccess.middleware');
-
-const prisma = new PrismaClient();
+const prisma = require('../utils/prisma');
 
 /**
  * GET /api/v1/proyectos
@@ -28,21 +25,25 @@ router.get('/', requireAuth, async (req, res) => {
         }
       });
     } else {
+      const hoyInicio = new Date();
+      hoyInicio.setHours(0, 0, 0, 0);
+      const hoyFin = new Date();
+      hoyFin.setHours(23, 59, 59, 999);
+
       // Otros roles solo ven los proyectos donde tienen asignación vigente
-      const hoy = new Date();
       const asignaciones = await prisma.asignacionProyectoUsuario.findMany({
         where: {
           idUsuario:  req.user.id,
-          fechaInicio: { lte: hoy },
-          fechaFin:    { gte: hoy },
+          fechaInicio: { lte: hoyFin },
+          fechaFin:    { gte: hoyInicio },
         },
         include: {
           proyecto: {
-            select: {
-              id: true, codigo: true, nombre: true,
-              estado: true, fechaInicio: true, fechaFinPrevista: true,
-              presupuestoTotal: true,
-            },
+            include: {
+              responsable: {
+                select: { nombre: true, apellido: true }
+              }
+            }
           },
         },
       });

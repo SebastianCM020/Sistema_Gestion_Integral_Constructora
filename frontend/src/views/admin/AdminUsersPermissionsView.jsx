@@ -36,7 +36,7 @@ export function AdminUsersPermissionsView({ currentUser, onGoHome, onOpenProfile
   const [isMockMode, setIsMockMode] = useState(false);
 
   const modules = getModulesForUser(currentUser);
-  const isAdmin = currentUser.roleName === 'Administrador del Sistema';
+  const isAdmin = currentUser.roleId === 'admin' || currentUser.roleName === 'Administrador del Sistema';
 
   // ── Carga de usuarios desde API (con fallback a mock) ───────────────────────
   const loadUsers = useCallback(async () => {

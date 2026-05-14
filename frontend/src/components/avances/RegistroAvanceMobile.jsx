@@ -3,6 +3,7 @@ import { fetchAvancesPorRubro } from '../../services/offlineSyncService';
 import storageService from '../../services/storage.service';
 import { avancesLocalService } from '../../db/avancesLocalService';
 import { Camera, Image as ImageIcon, X, CheckCircle2, AlertCircle, Clock, CloudOff } from 'lucide-react';
+import CameraModal from './CameraModal';
 
 const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
   const [cantidad, setCantidad] = useState('');
@@ -16,7 +17,8 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
   const [evidencia, setEvidencia] = useState(null);
   const [evidenciaPreview, setEvidenciaPreview] = useState(null);
   const [isCompressing, setIsCompressing] = useState(false);
-  const fileInputRef = useRef(null);
+  const [showCamera, setShowCamera] = useState(false);
+  const galleryInputRef = useRef(null);
 
   // Solo resetea el formulario cuando cambia el RUBRO seleccionado (por id)
   useEffect(() => {
@@ -38,9 +40,9 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
       // 1. Obtener avances del servidor
       const serverData = await fetchAvancesPorRubro(idRubro);
       
-      // 2. Obtener avances locales (pendientes/error) del rubro
+      // 2. Obtener avances locales (pendientes/error) del rubro — OMITIR los ya sincronizados
       const allLocal = await avancesLocalService.getAllLocal();
-      const localForRubro = allLocal.filter(a => a.idRubro === idRubro);
+      const localForRubro = allLocal.filter(a => a.idRubro === idRubro && a.sync_status !== 'synced');
       
       // Combinar (locales primero)
       setHistorial([...localForRubro, ...(serverData || [])]);
@@ -72,10 +74,26 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
     }
   };
 
+  // Captura directa desde el modal de cámara (recibe un Blob)
+  const handleCameraCapture = async (blob) => {
+    try {
+      setIsCompressing(true);
+      setMessage(null);
+      const compressedBlob = await storageService.compressImage(blob);
+      setEvidencia(compressedBlob);
+      setEvidenciaPreview(URL.createObjectURL(compressedBlob));
+    } catch (err) {
+      console.error('Error al procesar captura de cámara:', err);
+      setMessage({ type: 'error', text: 'Error al procesar la foto. Intente de nuevo.' });
+    } finally {
+      setIsCompressing(false);
+    }
+  };
+
   const removeEvidencia = () => {
     setEvidencia(null);
     setEvidenciaPreview(null);
-    if (fileInputRef.current) fileInputRef.current.value = '';
+    if (galleryInputRef.current) galleryInputRef.current.value = '';
   };
 
   const handleSubmit = async (e) => {
@@ -176,11 +194,11 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
               Evidencia Fotográfica <span className="text-red-500">*</span>
             </label>
             
+            {/* Input dedicado a la GALERÍA (sin capture) */}
             <input 
               type="file" 
-              accept="image/*" 
-              capture="environment" 
-              ref={fileInputRef}
+              accept="image/*"
+              ref={galleryInputRef}
               onChange={handleCapture}
               className="hidden"
             />
@@ -189,7 +207,7 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
               <div className="grid grid-cols-2 gap-4">
                 <button
                   type="button"
-                  onClick={() => fileInputRef.current.click()}
+                  onClick={() => setShowCamera(true)}
                   className="flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed border-[#D1D5DB] rounded-[12px] hover:border-[#1F4E79] hover:bg-blue-50 transition-all text-gray-500 hover:text-[#1F4E79]"
                 >
                   <Camera size={24} />
@@ -197,10 +215,7 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
                 </button>
                 <button
                   type="button"
-                  onClick={() => {
-                    fileInputRef.current.removeAttribute('capture');
-                    fileInputRef.current.click();
-                  }}
+                  onClick={() => galleryInputRef.current.click()}
                   className="flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed border-[#D1D5DB] rounded-[12px] hover:border-[#1F4E79] hover:bg-blue-50 transition-all text-gray-500 hover:text-[#1F4E79]"
                 >
                   <ImageIcon size={24} />
@@ -313,6 +328,13 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
           </div>
         )}
       </div>
+
+      {/* Modal de Cámara nativo con getUserMedia */}
+      <CameraModal
+        isOpen={showCamera}
+        onClose={() => setShowCamera(false)}
+        onCapture={handleCameraCapture}
+      />
     </div>
   );
 };

@@ -1,6 +1,5 @@
 const { verifyToken } = require('../utils/jwt');
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('../utils/prisma');
 
 // ─── Roles canónicos del sistema ICARO ──────────────────────────────────────
 // Fuente única de verdad: usar estas constantes en todo middleware/controlador

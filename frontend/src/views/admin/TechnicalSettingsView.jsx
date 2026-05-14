@@ -64,7 +64,7 @@ export function TechnicalSettingsView({ currentUser, isRestricted = false, onGoH
   const [editingCatalogItemId, setEditingCatalogItemId] = useState(null);
 
   const modules = getModulesForUser(currentUser);
-  const isAdmin = currentUser.roleName === 'Administrador del Sistema';
+  const isAdmin = currentUser.roleId === 'admin' || currentUser.roleName === 'Administrador del Sistema';
 
   useEffect(() => {
     setLoadStatus('loading');
