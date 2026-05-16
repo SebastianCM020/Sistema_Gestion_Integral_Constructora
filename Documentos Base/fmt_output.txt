@@ -1,0 +1,1063 @@
+
+======================================================================
+ARCHIVO: SPR01 PLN-REA
+======================================================================
+  P00 style='Normal' align=CENTER (1) | [bold,sz=14] | TEXT: REGISTRO DE PLANIFICADO VS. REALIZADO — SPRINT 01
+  P01 style='Normal' align=CENTER (1) |  | TEXT: Proyecto: Sistema de Gestión Integral de Obra — ICARO CONSTRUCTORES BMGM S.A.S.
+  P02 style='Normal' align=CENTER (1) |  | TEXT: Código: PLN-REA-SPR-01 | Versión: 1.0 | Fecha: 12/05/2026
+  P03 style='Heading 1' align=None |  | TEXT: 1. Control documental
+  P05 style='Heading 1' align=None |  | TEXT: 2. Datos generales del sprint
+  P06 style='Heading 1' align=None |  | TEXT: 3. Historias/Tareas: Planificado vs. Realizado
+  P07 style='Heading 1' align=None |  | TEXT: 4. Resumen cuantitativo del sprint
+  P08 style='Heading 1' align=None |  | TEXT: 5. Análisis de desvíos significativos
+  P09 style='Normal' align=JUSTIFY (3) |  | TEXT: El Sprint 01 no registró desvíos significativos. Los 34 SP planificados fueron entregados en su tota
+  P10 style='Heading 1' align=None |  | TEXT: 6. Observaciones generales del sprint
+  P11 style='Heading 1' align=None |  | TEXT: 7. Glosario
+  --- TABLAS ---
+  [T0] 7 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Código del documento'", "(000000)'PLN-REA-SPR-01'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del documento'", "(000000)'Registro de Planificado vs. Realiza'"]
+    R02: ["[bg:D9E1F2](B)'Versión'", "(000000)'1.0'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de elaboración'", "(000000)'12/05/2026'"]
+    R04: ["[bg:D9E1F2](B)'Sprint evaluado'", "(000000)'Sprint 01 – Infraestructura Base, A'"]
+    R05: ["[bg:D9E1F2](B)'Responsable de elaboración'", "(000000)'Ivan Santiago Pulgar Leon'"]
+    R06: ["[bg:D9E1F2](B)'Estado del documento'", "(000000)'Aprobado'"]
+  [T1] 2 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Versión'", "[bg:1F3864](B,FFFFFF)'Fecha'", "[bg:1F3864](B,FFFFFF)'Responsable'", "[bg:1F3864](B,FFFFFF)'Descripción'"]
+    R01: ["(000000)'1.0'", "(000000)'12/05/2026'", "(000000)'Ivan Santiago Pulgar Leon '", "(000000)'Documento generado con datos reales'"]
+  [T2] 6 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Número del sprint'", "(000000)'Sprint 01'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del sprint'", "(000000)'Infraestructura Base, Autenticación'"]
+    R02: ["[bg:D9E1F2](B)'Fecha de inicio'", "(000000)'13/04/2026'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de cierre'", "(000000)'17/04/2026'"]
+    R04: ["[bg:D9E1F2](B)'Duración'", "(000000)'1 semana '"]
+    R05: ["[bg:D9E1F2](B)'Módulos/componentes trabajados'", "(000000)'Infraestructura (Docker/Prisma/Post'"]
+  [T3] 9 filas x 10 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,9pt,FFFFFF)'ID'", "[bg:1F3864](B,9pt,FFFFFF)'Historia / Tarea'", "[bg:1F3864](B,9pt,FFFFFF)'Tipo'", "[bg:1F3864](B,9pt,FFFFFF)'Módulo'", "[bg:1F3864](B,9pt,FFFFFF)'SP|Plan'", "[bg:1F3864](B,9pt,FFFFFF)'SP|Real'", "[bg:1F3864](B,9pt,FFFFFF)'Variación'", "[bg:1F3864](B,9pt,FFFFFF)'% Avance'", "[bg:1F3864](B,9pt,FFFFFF)'Estado'", "[bg:1F3864](B,9pt,FFFFFF)'Causa de|desvío'"]
+    R01: ["[bg:D9E1F2](9pt,000000)'AM-01'", "[bg:FFFFFF](9pt,000000)'Configurar entorno de desarrollo: D'", "[bg:D9E1F2](9pt,000000)'HT'", "[bg:FFFFFF](9pt,000000)'Infraestructura'", "[bg:D9E1F2](9pt,000000)'3'", "[bg:FFFFFF](9pt,000000)'3'", "[bg:D9E1F2](9pt,000000)'0'", "[bg:FFFFFF](9pt,000000)'100%'", "[bg:E2EFDA](9pt,000000)'Completado'", "[bg:FFFFFF](9pt,000000)'Sin desvío'"]
+    R02: ["[bg:D9E1F2](9pt,000000)'AM-02'", "[bg:FFFFFF](9pt,000000)'Diseñar e implementar el modelo de '", "[bg:D9E1F2](9pt,000000)'HT'", "[bg:FFFFFF](9pt,000000)'Base de Datos'", "[bg:D9E1F2](9pt,000000)'5'", "[bg:FFFFFF](9pt,000000)'5'", "[bg:D9E1F2](9pt,000000)'0'", "[bg:FFFFFF](9pt,000000)'100%'", "[bg:E2EFDA](9pt,000000)'Completado'", "[bg:FFFFFF](9pt,000000)'Sin desvío'"]
+    R03: ["[bg:D9E1F2](9pt,000000)'AM-03'", "[bg:FFFFFF](9pt,000000)'Implementar módulo de autenticación'", "[bg:D9E1F2](9pt,000000)'HU'", "[bg:FFFFFF](9pt,000000)'Autenticación'", "[bg:D9E1F2](9pt,000000)'5'", "[bg:FFFFFF](9pt,000000)'5'", "[bg:D9E1F2](9pt,000000)'0'", "[bg:FFFFFF](9pt,000000)'100%'", "[bg:E2EFDA](9pt,000000)'Completado'", "[bg:FFFFFF](9pt,000000)'Sin desvío'"]
+    R04: ["[bg:D9E1F2](9pt,000000)'HU-04'", "[bg:FFFFFF](9pt,000000)'CRUD de usuarios con asignación de '", "[bg:D9E1F2](9pt,000000)'HU'", "[bg:FFFFFF](9pt,000000)'Usuarios'", "[bg:D9E1F2](9pt,000000)'8'", "[bg:FFFFFF](9pt,000000)'8'", "[bg:D9E1F2](9pt,000000)'0'", "[bg:FFFFFF](9pt,000000)'100%'", "[bg:E2EFDA](9pt,000000)'Completado'", "[bg:FFFFFF](9pt,000000)'Sin desvío'"]
+    R05: ["[bg:D9E1F2](9pt,000000)'HU-05'", "[bg:FFFFFF](9pt,000000)'Control de acceso por proyecto: asi'", "[bg:D9E1F2](9pt,000000)'HU'", "[bg:FFFFFF](9pt,000000)'Proyectos'", "[bg:D9E1F2](9pt,000000)'5'", "[bg:FFFFFF](9pt,000000)'5'", "[bg:D9E1F2](9pt,000000)'0'", "[bg:FFFFFF](9pt,000000)'100%'", "[bg:E2EFDA](9pt,000000)'Completado'", "[bg:FFFFFF](9pt,000000)'Sin desvío'"]
+    R06: ["[bg:D9E1F2](9pt,000000)'HT-01'", "[bg:FFFFFF](9pt,000000)'Suite de pruebas automatizadas de s'", "[bg:D9E1F2](9pt,000000)'HT'", "[bg:FFFFFF](9pt,000000)'Seguridad'", "[bg:D9E1F2](9pt,000000)'5'", "[bg:FFFFFF](9pt,000000)'5'", "[bg:D9E1F2](9pt,000000)'0'", "[bg:FFFFFF](9pt,000000)'100%'", "[bg:E2EFDA](9pt,000000)'Completado'", "[bg:FFFFFF](9pt,000000)'Sin desvío'"]
+    R07: ["[bg:D9E1F2](9pt,000000)'HT-02'", "[bg:FFFFFF](9pt,000000)'Middleware de auditoría automática '", "[bg:D9E1F2](9pt,000000)'HT'", "[bg:FFFFFF](9pt,000000)'Auditoría'", "[bg:D9E1F2](9pt,000000)'3'", "[bg:FFFFFF](9pt,000000)'3'", "[bg:D9E1F2](9pt,000000)'0'", "[bg:FFFFFF](9pt,000000)'100%'", "[bg:E2EFDA](9pt,000000)'Completado'", "[bg:FFFFFF](9pt,000000)'Sin desvío'"]
+    R08: ["[bg:1F3864](B,9pt,FFFFFF)'TOTALES'", "[bg:1F3864]''", "[bg:1F3864]''", "[bg:1F3864]''", "[bg:D9E1F2](B,9pt,000000)'34'", "[bg:D9E1F2](B,9pt,000000)'34'", "[bg:D9E1F2](B,9pt,000000)'0'", "[bg:E2EFDA](B,9pt,000000)'100%'", "[bg:1F3864]''", "[bg:1F3864]''"]
+  [T4] 10 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Métrica'", "[bg:1F3864](B,FFFFFF)'Planificado'", "[bg:1F3864](B,FFFFFF)'Realizado'"]
+    R01: ["[bg:FFFFFF](1F3864)'Story Points totales'", "[bg:FFFFFF](000000)'34'", "[bg:FFFFFF](000000)'34'"]
+    R02: ["[bg:D9E1F2](1F3864)'N° historias de usuario (HU)'", "[bg:F2F2F2](000000)'3'", "[bg:F2F2F2](000000)'3'"]
+    R03: ["[bg:FFFFFF](1F3864)'N° historias técnicas (HT)'", "[bg:FFFFFF](000000)'4'", "[bg:FFFFFF](000000)'4'"]
+    R04: ["[bg:D9E1F2](1F3864)'N° ítems del backlog'", "[bg:F2F2F2](000000)'7'", "[bg:F2F2F2](000000)'7'"]
+    R05: ["[bg:FFFFFF](1F3864)'N° ítems completados'", "[bg:FFFFFF](000000)'—'", "[bg:FFFFFF](000000)'7 (100%)'"]
+    R06: ["[bg:D9E1F2](1F3864)'N° ítems bloqueados'", "[bg:F2F2F2](000000)'—'", "[bg:F2F2F2](000000)'0'"]
+    R07: ["[bg:FFFFFF](1F3864)'N° ítems no completados'", "[bg:FFFFFF](000000)'—'", "[bg:FFFFFF](000000)'0'"]
+    R08: ["[bg:D9E1F2](1F3864)'Velocidad real (SP / semana)'", "[bg:F2F2F2](000000)'17'", "[bg:F2F2F2](000000)'17'"]
+    R09: ["[bg:FFFFFF](1F3864)'% Cumplimiento del sprint'", "[bg:FFFFFF](000000)'100%'", "[bg:FFFFFF](000000)'100%'"]
+  [T5] 4 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Factores que influyeron positivamen'", "(000000)'Equipo alineado desde el Sprint Pla'"]
+    R01: ["[bg:D9E1F2](B)'Factores que afectaron negativament'", "(000000)'No se identificaron factores advers'"]
+    R02: ["[bg:D9E1F2](B)'Lecciones aprendidas clave'", "(000000)'1. Definir los roles canónicos como'"]
+    R03: ["[bg:D9E1F2](B)'Compromisos para el siguiente sprin'", "(000000)'Mantener la cobertura de pruebas >='"]
+  [T6] 10 filas x 2 cols | style='Grid Table 4 Accent 1'
+    R00: ["[bg:0F243E]'Sigla'", "[bg:0F243E]'Significado'"]
+    R01: ["[bg:B8CCE4]'SP'", "[bg:FFFFFF]'Story Point — unidad de estimación '"]
+    R02: ["[bg:B8CCE4]'AM'", "[bg:FFFFFF]'Actividad de Montaje — ítem técnico'"]
+    R03: ["[bg:B8CCE4]'HU'", "[bg:FFFFFF]'Historia de Usuario'"]
+    R04: ["[bg:B8CCE4]'HT'", "[bg:FFFFFF]'Historia Técnica'"]
+    R05: ["[bg:B8CCE4]'PLN-REA'", "[bg:FFFFFF]'Planificado-Realizado — prefijo del'"]
+    R06: ["[bg:B8CCE4]'SPR'", "[bg:FFFFFF]'Sprint — iteración de desarrollo en'"]
+    R07: ["[bg:B8CCE4]'% Avance'", "[bg:FFFFFF]'Porcentaje de avance real sobre el '"]
+    R08: ["[bg:B8CCE4]'CI'", "[bg:FFFFFF]'Continuous Integration — integració'"]
+    R09: ["[bg:B8CCE4]'BD'", "[bg:FFFFFF]'Base de Datos'"]
+
+======================================================================
+ARCHIVO: SPR01 INF-PRU
+======================================================================
+  P00 style='Normal' align=CENTER (1) | [bold,sz=14,col=1F3864] | TEXT: INFORME DE EJECUCION DE PRUEBAS — SPRINT 01
+  P01 style='Normal' align=CENTER (1) | [italic,sz=9,col=595959] | TEXT: Proyecto: Sistema de Gestión Integral de Obra — ICARO CONSTRUCTORES BMGM S.A.S.
+  P02 style='Normal' align=CENTER (1) | [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] | TEXT: Código: INF-PRU-SPR-01 | Versión: 1.0 | Fecha: 12/05/2026
+  P03 style='Heading 1' align=None |  | TEXT: 1. Control documental
+  P05 style='Heading 1' align=None |  | TEXT: 2. Datos generales del sprint
+  P06 style='Heading 1' align=None |  | TEXT: 3. Resumen ejecutivo de pruebas
+  P07 style='Normal' align=None | [italic,sz=9,col=595959] | TEXT: Resumen por módulo:
+  P08 style='Heading 1' align=None |  | TEXT: 4. Alcance de las pruebas del sprint
+  P09 style='Heading 1' align=None |  | TEXT: 5. Tabla de casos de prueba ejecutados
+  P10 style='Normal' align=None | [bold,col=1F3864] | TEXT: 6. Defectos encontrados
+  P11 style='Normal' align=None | [bold,col=1F3864] | TEXT: 7. Resultado de pruebas automatizadas
+  P12 style='Normal' align=None | [bold,col=1F3864] | TEXT: 8. Conclusiones y acciones derivadas
+  P14 style='Heading 1' align=None |  | TEXT: 9. Glosario
+  --- TABLAS ---
+  [T0] 7 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Código del documento'", "(000000)'INF-PRU-SPR-01'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del documento'", "(000000)'Informe de Ejecución de Pruebas – S'"]
+    R02: ["[bg:D9E1F2](B)'Versión'", "(000000)'1.0'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de elaboración'", "(000000)'12/05/2026'"]
+    R04: ["[bg:D9E1F2](B)'Sprint evaluado'", "(000000)'Sprint 01 – Infraestructura Base, A'"]
+    R05: ["[bg:D9E1F2](B)'Responsable de elaboración'", "(000000)'Ivan Santiago Pulgar Leon '"]
+    R06: ["[bg:D9E1F2](B)'Estado del documento'", "(000000)'Aprobado'"]
+  [T1] 2 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Versión'", "[bg:1F3864](B,FFFFFF)'Fecha'", "[bg:1F3864](B,FFFFFF)'Responsable'", "[bg:1F3864](B,FFFFFF)'Descripción'"]
+    R01: ["(000000)'1.0'", "(000000)'12/05/2026'", "(000000)'Ivan Santiago Pulgar Leon'", "(000000)'Documento generado con datos reales'"]
+  [T2] 6 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Número del sprint'", "(000000)'Sprint 01'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del sprint'", "(000000)'Infraestructura Base, Autenticación'"]
+    R02: ["[bg:D9E1F2](B)'Fecha de inicio'", "(000000)'13/04/2026'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de cierre'", "(000000)'17/04/2026'"]
+    R04: ["[bg:D9E1F2](B)'Duración'", "(000000)'1 semana '"]
+    R05: ["[bg:D9E1F2](B)'Módulos/componentes trabajados'", "(000000)'Infraestructura (Docker/Prisma/Post'"]
+  [T3] 2 filas x 6 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,9pt,FFFFFF)'Total|Planificados'", "[bg:1F3864](B,9pt,FFFFFF)'Total|Ejecutados'", "[bg:1F3864](B,9pt,FFFFFF)'PASS'", "[bg:1F3864](B,9pt,FFFFFF)'FAIL'", "[bg:1F3864](B,9pt,FFFFFF)'BLOQUEADO'", "[bg:1F3864](B,9pt,FFFFFF)'% Éxito'"]
+    R01: ["[bg:FFFFFF](B,12pt,000000)'15'", "[bg:FFFFFF](B,12pt,000000)'15'", "[bg:E2EFDA](B,12pt,000000)'15'", "[bg:FCE4D6](B,12pt,000000)'0'", "[bg:FFF2CC](B,12pt,000000)'0'", "[bg:E2EFDA](B,12pt,000000)'100%'"]
+  [T4] 7 filas x 6 cols | style='Table Grid'
+    R00: ["[bg:2E75B6](B,FFFFFF)'Módulo'", "[bg:2E75B6](B,FFFFFF)'Tipo de prueba'", "[bg:2E75B6](B,FFFFFF)'N° Casos'", "[bg:2E75B6](B,FFFFFF)'PASS'", "[bg:2E75B6](B,FFFFFF)'FAIL'", "[bg:2E75B6](B,FFFFFF)'% Éxito'"]
+    R01: ["[bg:F2F2F2](000000)'Autenticación'", "[bg:F2F2F2](000000)'Automatizada (Jest/Supertest)'", "[bg:F2F2F2](000000)'6'", "[bg:F2F2F2](000000)'6'", "[bg:F2F2F2](000000)'0'", "[bg:F2F2F2](000000)'100%'"]
+    R02: ["[bg:FFFFFF](000000)'Usuarios'", "[bg:FFFFFF](000000)'Automatizada (Jest/Supertest)'", "[bg:FFFFFF](000000)'6'", "[bg:FFFFFF](000000)'6'", "[bg:FFFFFF](000000)'0'", "[bg:FFFFFF](000000)'100%'"]
+    R03: ["[bg:F2F2F2](000000)'Seguridad'", "[bg:F2F2F2](000000)'Automatizada (Jest/Supertest)'", "[bg:F2F2F2](000000)'1'", "[bg:F2F2F2](000000)'1'", "[bg:F2F2F2](000000)'0'", "[bg:F2F2F2](000000)'100%'"]
+    R04: ["[bg:FFFFFF](000000)'Infraestructura'", "[bg:FFFFFF](000000)'Automatizada (Jest/Supertest)'", "[bg:FFFFFF](000000)'1'", "[bg:FFFFFF](000000)'1'", "[bg:FFFFFF](000000)'0'", "[bg:FFFFFF](000000)'100%'"]
+    R05: ["[bg:F2F2F2](000000)'Proyectos'", "[bg:F2F2F2](000000)'Automatizada (Jest/Supertest)'", "[bg:F2F2F2](000000)'2'", "[bg:F2F2F2](000000)'2'", "[bg:F2F2F2](000000)'0'", "[bg:F2F2F2](000000)'100%'"]
+    R06: ["[bg:D9E1F2](B,000000)'TOTAL'", "[bg:D9E1F2](B,000000)'—'", "[bg:D9E1F2](B,000000)'15  '", "[bg:D9E1F2](B,000000)'15'", "[bg:D9E1F2](B,000000)'0'", "[bg:D9E1F2](B,000000)'100%'"]
+  [T5] 5 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B,1F3864)'Módulos/funcionalidades probadas'", "(000000)'Autenticación JWT (login, /me, expi'"]
+    R01: ["[bg:D9E1F2](B,1F3864)'Módulos excluidos (fuera de alcance'", "(000000)'Materiales, Bodega, Avances, Compra'"]
+    R02: ["[bg:D9E1F2](B,1F3864)'Tipos de prueba ejecutados'", "(000000)'Automatizada con Jest + Supertest. '"]
+    R03: ["[bg:D9E1F2](B,1F3864)'Entorno de pruebas'", "(000000)'Local – Docker Compose (backend Nod'"]
+    R04: ["[bg:D9E1F2](B,1F3864)'Herramientas utilizadas'", "(000000)'Jest 29, Supertest 6, jsonwebtoken.'"]
+  [T6] 16 filas x 10 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,9pt,FFFFFF)'ID, CP'", "[bg:1F3864](B,9pt,FFFFFF)'Módulo'", "[bg:1F3864](B,9pt,FFFFFF)'Descripción'", "[bg:1F3864](B,9pt,FFFFFF)'Tipo'", "[bg:1F3864](B,9pt,FFFFFF)'Precondiciones'", "[bg:1F3864](B,9pt,FFFFFF)'Pasos'", "[bg:1F3864](B,9pt,FFFFFF)'Resultado|Esperado'", "[bg:1F3864](B,9pt,FFFFFF)'Resultado|Obtenido'", "[bg:1F3864](B,9pt,FFFFFF)'Estado'", "[bg:1F3864](B,9pt,FFFFFF)'Evidencia'"]
+    R01: ["[bg:F2F2F2](9pt,000000)'CP-001'", "[bg:F2F2F2](9pt,000000)'Autenticación'", "[bg:F2F2F2](9pt,000000)'Acceso a ruta protegida (/auth/me) '", "[bg:F2F2F2](9pt,000000)'Automatizada'", "[bg:F2F2F2](9pt,000000)'Servidor levantado. Sin cabecera Au'", "[bg:F2F2F2](9pt,000000)'GET /api/v1/auth/me sin cabecera Au'", '[bg:F2F2F2](9pt,000000)"HTTP 401 con campo \'error\' en body."', '[bg:F2F2F2](9pt,000000)"HTTP 401 – { error: \'Acceso Denegad"', "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'security.test.js – Test 1'"]
+    R02: ["[bg:FFFFFF](9pt,000000)'CP-002'", "[bg:FFFFFF](9pt,000000)'Autenticación'", "[bg:FFFFFF](9pt,000000)'Token con formato inválido: sin pre'", "[bg:FFFFFF](9pt,000000)'Automatizada'", "[bg:FFFFFF](9pt,000000)'Servidor levantado. Token JWT gener'", "[bg:FFFFFF](9pt,000000)'GET /api/v1/auth/me con Authorizati'", "[bg:FFFFFF](9pt,000000)'HTTP 401 con mensaje que indica for'", '[bg:FFFFFF](9pt,000000)"HTTP 401 – { error: \'...formato inv"', "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:FFFFFF](9pt,000000)'security.test.js – Test 2'"]
+    R03: ["[bg:F2F2F2](9pt,000000)'CP-003'", "[bg:F2F2F2](9pt,000000)'Seguridad'", "[bg:F2F2F2](9pt,000000)'Token firmado con secreto JWT incor'", "[bg:F2F2F2](9pt,000000)'Automatizada'", "[bg:F2F2F2](9pt,000000)'Token generado con secreto diferent'", "[bg:F2F2F2](9pt,000000)'GET /api/v1/auth/me con Bearer <tok'", '[bg:F2F2F2](9pt,000000)"HTTP 403 con mensaje \'inválido\' o \'"', '[bg:F2F2F2](9pt,000000)"HTTP 403 – { error: \'Token inválido"', "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'security.test.js – Test 3'"]
+    R04: ["[bg:FFFFFF](9pt,000000)'CP-004'", "[bg:FFFFFF](9pt,000000)'Autenticación'", "[bg:FFFFFF](9pt,000000)'Token JWT expirado (expiresIn: -1s)'", "[bg:FFFFFF](9pt,000000)'Automatizada'", "[bg:FFFFFF](9pt,000000)'Token generado con expiración -1s ('", "[bg:FFFFFF](9pt,000000)'GET /api/v1/auth/me con Bearer <tok'", '[bg:FFFFFF](9pt,000000)"HTTP 401 con mensaje que menciona \'"', '[bg:FFFFFF](9pt,000000)"HTTP 401 – { error: \'La sesión ha e"', "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:FFFFFF](9pt,000000)'security.test.js – Test 4'"]
+    R05: ["[bg:F2F2F2](9pt,000000)'CP-005'", "[bg:F2F2F2](9pt,000000)'Autenticación'", "[bg:F2F2F2](9pt,000000)'Token válido de Administrador: el m'", "[bg:F2F2F2](9pt,000000)'Automatizada'", "[bg:F2F2F2](9pt,000000)'Token Admin generado con secreto co'", "[bg:F2F2F2](9pt,000000)'GET /api/v1/auth/me con Bearer <tok'", "[bg:F2F2F2](9pt,000000)'Código distinto de 401 y 403 (200, '", "[bg:F2F2F2](9pt,000000)'HTTP 404 o 500 (usuario de prueba n'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'security.test.js – Test 5'"]
+    R06: ["[bg:FFFFFF](9pt,000000)'CP-006'", "[bg:FFFFFF](9pt,000000)'Usuarios'", "[bg:FFFFFF](9pt,000000)'GET /users sin token: ruta protegid'", "[bg:FFFFFF](9pt,000000)'Automatizada'", "[bg:FFFFFF](9pt,000000)'Servidor levantado. Sin cabecera Au'", "[bg:FFFFFF](9pt,000000)'GET /api/v1/users sin Authorization'", "[bg:FFFFFF](9pt,000000)'HTTP 401.'", "[bg:FFFFFF](9pt,000000)'HTTP 401.'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:FFFFFF](9pt,000000)'security.test.js – Test 6'"]
+    R07: ["[bg:F2F2F2](9pt,000000)'CP-007'", "[bg:F2F2F2](9pt,000000)'Usuarios'", "[bg:F2F2F2](9pt,000000)'GET /users con rol Residente: RBAC '", "[bg:F2F2F2](9pt,000000)'Automatizada'", '[bg:F2F2F2](9pt,000000)"Token con rol \'Residente\' generado."', "[bg:F2F2F2](9pt,000000)'GET /api/v1/users con Bearer <token'", '[bg:F2F2F2](9pt,000000)"HTTP 403 con mensaje \'denegado\' o \'"', '[bg:F2F2F2](9pt,000000)"HTTP 403 – { error: \'Acceso denegad"', "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'security.test.js – Test 7'"]
+    R08: ["[bg:FFFFFF](9pt,000000)'CP-008'", "[bg:FFFFFF](9pt,000000)'Usuarios'", "[bg:FFFFFF](9pt,000000)'GET /users con rol Contador: RBAC d'", "[bg:FFFFFF](9pt,000000)'Automatizada'", '[bg:FFFFFF](9pt,000000)"Token con rol \'Contador\' generado."', "[bg:FFFFFF](9pt,000000)'GET /api/v1/users con Bearer <token'", '[bg:FFFFFF](9pt,000000)"HTTP 403 con mensaje \'denegado\' o \'"', '[bg:FFFFFF](9pt,000000)"HTTP 403 – { error: \'Acceso denegad"', "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:FFFFFF](9pt,000000)'security.test.js – Test 8'"]
+    R09: ["[bg:F2F2F2](9pt,000000)'CP-009'", "[bg:F2F2F2](9pt,000000)'Usuarios'", "[bg:F2F2F2](9pt,000000)'GET /users con rol Administrador: R'", "[bg:F2F2F2](9pt,000000)'Automatizada'", '[bg:F2F2F2](9pt,000000)"Token con rol \'Administrador del Si"', "[bg:F2F2F2](9pt,000000)'GET /api/v1/users con Bearer <token'", "[bg:F2F2F2](9pt,000000)'HTTP 200 o 500 (no 403).'", "[bg:F2F2F2](9pt,000000)'HTTP 200 o 500 según disponibilidad'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'security.test.js – Test 9'"]
+    R10: ["[bg:FFFFFF](9pt,000000)'CP-010'", "[bg:FFFFFF](9pt,000000)'Usuarios'", "[bg:FFFFFF](9pt,000000)'POST /users con rol Residente: crea'", "[bg:FFFFFF](9pt,000000)'Automatizada'", '[bg:FFFFFF](9pt,000000)"Token con rol \'Residente\' generado."', "[bg:FFFFFF](9pt,000000)'POST /api/v1/users con Bearer <toke'", "[bg:FFFFFF](9pt,000000)'HTTP 403.'", "[bg:FFFFFF](9pt,000000)'HTTP 403.'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:FFFFFF](9pt,000000)'security.test.js – Test 10'"]
+    R11: ["[bg:F2F2F2](9pt,000000)'CP-011'", "[bg:F2F2F2](9pt,000000)'Usuarios'", "[bg:F2F2F2](9pt,000000)'PATCH /users/:id/role con rol Conta'", "[bg:F2F2F2](9pt,000000)'Automatizada'", '[bg:F2F2F2](9pt,000000)"Token con rol \'Contador\' generado."', "[bg:F2F2F2](9pt,000000)'PATCH /api/v1/users/any-id/role con'", "[bg:F2F2F2](9pt,000000)'HTTP 403.'", "[bg:F2F2F2](9pt,000000)'HTTP 403.'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'security.test.js – Test 11'"]
+    R12: ["[bg:FFFFFF](9pt,000000)'CP-012'", "[bg:FFFFFF](9pt,000000)'Autenticación'", "[bg:FFFFFF](9pt,000000)'POST /auth/login es ruta pública: n'", "[bg:FFFFFF](9pt,000000)'Automatizada'", "[bg:FFFFFF](9pt,000000)'Sin token. Body vacío {}.'", "[bg:FFFFFF](9pt,000000)'POST /api/v1/auth/login con body {}'", "[bg:FFFFFF](9pt,000000)'HTTP 400 (campos faltantes), NO 401'", '[bg:FFFFFF](9pt,000000)"HTTP 400 – { error: \'Campos requeri"', "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:FFFFFF](9pt,000000)'security.test.js – Test 12'"]
+    R13: ["[bg:F2F2F2](9pt,000000)'CP-013'", "[bg:F2F2F2](9pt,000000)'Infraestructura'", "[bg:F2F2F2](9pt,000000)'GET /health: endpoint de salud públ'", "[bg:F2F2F2](9pt,000000)'Automatizada'", "[bg:F2F2F2](9pt,000000)'Servidor levantado. Sin token.'", "[bg:F2F2F2](9pt,000000)'GET /health sin Authorization.'", '[bg:F2F2F2](9pt,000000)"HTTP 200 con { status: \'ok\' }."', '[bg:F2F2F2](9pt,000000)"HTTP 200 – { status: \'ok\', service:"', "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'security.test.js – Test 13'"]
+    R14: ["[bg:FFFFFF](9pt,000000)'CP-014'", "[bg:FFFFFF](9pt,000000)'Proyectos'", "[bg:FFFFFF](9pt,000000)'GET /proyectos/:id sin token: ruta '", "[bg:FFFFFF](9pt,000000)'Automatizada'", "[bg:FFFFFF](9pt,000000)'Sin cabecera Authorization.'", "[bg:FFFFFF](9pt,000000)'GET /api/v1/proyectos/proyecto-inex'", "[bg:FFFFFF](9pt,000000)'HTTP 401.'", "[bg:FFFFFF](9pt,000000)'HTTP 401.'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:FFFFFF](9pt,000000)'security.test.js – Test 14'"]
+    R15: ["[bg:F2F2F2](9pt,000000)'CP-015'", "[bg:F2F2F2](9pt,000000)'Proyectos'", "[bg:F2F2F2](9pt,000000)'GET /proyectos/:id con Residente si'", "[bg:F2F2F2](9pt,000000)'Automatizada'", "[bg:F2F2F2](9pt,000000)'Token Residente válido. Proyecto UU'", "[bg:F2F2F2](9pt,000000)'GET /api/v1/proyectos/00000000-...-'", "[bg:F2F2F2](9pt,000000)'HTTP 403 (no asignado) o 404/500 si'", "[bg:F2F2F2](9pt,000000)'HTTP 403 o 500 según disponibilidad'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'security.test.js – Test 15'"]
+  [T7] 2 filas x 5 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'ID Defecto'", "[bg:1F3864](B,FFFFFF)'CP relacionado'", "[bg:1F3864](B,FFFFFF)'Descripción'", "[bg:1F3864](B,FFFFFF)'Severidad'", "[bg:1F3864](B,FFFFFF)'Estado'"]
+    R01: ["[bg:E2EFDA](595959)'—'", "[bg:E2EFDA](595959)'—'", "[bg:E2EFDA](595959)'Sin defectos registrados en este sp'", "[bg:E2EFDA](595959)'—'", "[bg:E2EFDA](595959)'—'"]
+  [T8] 6 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Archivo de prueba'", "[bg:D9E1F2](000000)'backend/tests/security.test.js'"]
+    R01: ["[bg:FFFFFF](B)'Comando de ejecución'", "[bg:FFFFFF](000000)'npm run test:security   (o: npm tes'"]
+    R02: ["[bg:D9E1F2](B)'N° pruebas ejecutadas'", "[bg:D9E1F2](000000)'15'"]
+    R03: ["[bg:FFFFFF](B)'N° pruebas PASS'", "[bg:E2EFDA](000000)'15  (100%)'"]
+    R04: ["[bg:D9E1F2](B)'N° pruebas FAIL'", "[bg:E2EFDA](000000)'0'"]
+    R05: ["[bg:FFFFFF](B)'Salida del test runner'", "[bg:FFFFFF](000000)'Test Suites: 1 passed, 1 total|Test'"]
+  [T9] 4 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Evaluación general de calidad'", "(000000)'El Sprint 01 alcanzó el nivel de ca'"]
+    R01: ["[bg:D9E1F2](B)'Módulos con cobertura insuficiente'", "(000000)'Ninguno dentro del alcance del Spri'"]
+    R02: ["[bg:D9E1F2](B)'Acciones de mejora para el siguient'", "(000000)'1. Crear suite de pruebas para el m'"]
+    R03: ["[bg:D9E1F2](B)'Criterio de calidad mínimo para Spr'", "(000000)'Cobertura de pruebas automatizadas '"]
+  [T10] 12 filas x 2 cols | style='List Table 4 Accent 1'
+    R00: ["[bg:1F497D]'Sigla'", "[bg:1F497D]'Significado'"]
+    R01: ["[bg:B8CCE4]'CP'", "[bg:FFFFFF]'Caso de Prueba — escenario document'"]
+    R02: ["[bg:B8CCE4]'INF-PRU'", "[bg:FFFFFF]'Informe de Pruebas — prefijo del có'"]
+    R03: ["[bg:B8CCE4]'JWT'", "[bg:FFFFFF]'JSON Web Token — token de autentica'"]
+    R04: ["[bg:B8CCE4]'RBAC'", "[bg:FFFFFF]'Role-Based Access Control — mecanis'"]
+    R05: ["[bg:B8CCE4]'HTTP'", "[bg:FFFFFF]'HyperText Transfer Protocol — proto'"]
+    R06: ["[bg:B8CCE4]'API'", "[bg:FFFFFF]'Application Programming Interface —'"]
+    R07: ["[bg:B8CCE4]'BD'", "[bg:FFFFFF]'Base de Datos'"]
+    R08: ["[bg:B8CCE4]'CI'", "[bg:FFFFFF]'Continuous Integration — entorno en'"]
+    R09: ["[bg:B8CCE4]'PASS'", "[bg:FFFFFF]'Caso de prueba ejecutado con result'"]
+    R10: ["[bg:B8CCE4]'FAIL'", "[bg:FFFFFF]'Caso de prueba ejecutado con result'"]
+    R11: ["[bg:B8CCE4]'BLOQ.'", "[bg:FFFFFF]'Bloqueado — caso de prueba que no p'"]
+
+======================================================================
+ARCHIVO: SPR01 RETRO V2
+======================================================================
+  P00 style='Normal' align=CENTER (1) | [bold,sz=14,col=1F3864] | TEXT: ACTA DE RETROSPECTIVA — SPRINT 01
+  P01 style='Normal' align=CENTER (1) | [italic,sz=9,col=595959] | TEXT: Proyecto: Sistema de Gestión Integral de Obra — ICARO CONSTRUCTORES BMGM S.A.S.
+  P02 style='Normal' align=CENTER (1) | [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] | TEXT: Código: RET-SPR-01 | Versión: 2 | Fecha: 12/05/2026
+  P03 style='Heading 1' align=None |  | TEXT: 1. Control documental
+  P05 style='Heading 1' align=None |  | TEXT: 2. Datos generales del sprint
+  P06 style='Heading 1' align=None |  | TEXT: 3. Objetivo del sprint
+  P07 style='Normal' align=JUSTIFY (3) | [col=000000] | TEXT: Establecer la infraestructura técnica del proyecto (entorno Docker, base de datos PostgreSQL y ORM P
+  P08 style='Heading 1' align=None |  | TEXT: 4. Equipo Scrum
+  P09 style='Heading 1' align=None |  | TEXT: 5. Definición de "Hecho" (DoD) — Sprint 01
+  P10 style='Heading 1' align=None |  | TEXT: 6. Historias comprometidas vs. completadas
+  P11 style='Heading 1' align=None |  | TEXT: 7. Retrospectiva: análisis por categorías
+  P12 style='Heading 1' align=None |  | TEXT: 7.1 Que salió bien (MANTENER)
+  P13 style='Heading 2' align=None |  | TEXT: 7.2 Que se puede mejorar (MEJORAR)
+  P14 style='Heading 2' align=None |  | TEXT: 7.3 Acciones concretas para el siguiente sprint (IMPLEMENTAR)
+  P15 style='Heading 1' align=None |  | TEXT: 8. Métricas del sprint
+  P16 style='Heading 1' align=None |  | TEXT: 9. Impedimentos y bloqueos identificados
+  P17 style='Heading 1' align=None |  | TEXT: 10. Compromisos para el siguiente sprint (Sprint 02)
+  P18 style='Heading 1' align=None |  | TEXT: 11. Observaciones y conclusiones
+  P20 style='Heading 1' align=None |  | TEXT: 12. Documentos de soporte formalizados en V2
+  --- TABLAS ---
+  [T0] 7 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Código del documento'", "(000000)'RET-SPR-01'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del documento'", "(000000)'Acta de Retrospectiva – Sprint 01'"]
+    R02: ["[bg:D9E1F2](B)'Versión'", "(000000)'2'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de elaboración'", "(000000)'12/05/2026'"]
+    R04: ["[bg:D9E1F2](B)'Sprint evaluado'", "(000000)'Sprint 01 – Infraestructura Base, A'"]
+    R05: ["[bg:D9E1F2](B)'Responsable de elaboración'", "(000000)'Ivan Santiago Pulgar Leon'"]
+    R06: ["[bg:D9E1F2](B)'Estado del documento'", "(000000)'Aprobado'"]
+  [T1] 3 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Versión'", "[bg:1F3864](B,FFFFFF)'Fecha'", "[bg:1F3864](B,FFFFFF)'Responsable'", "[bg:1F3864](B,FFFFFF)'Descripción del cambio'"]
+    R01: ["(000000)'1.0'", "(000000)'9/05/2026'", "(000000)'Ivan Santiago Pulgar Leon'", "(000000)'Versión inicial del acta de retrosp'"]
+    R02: ["(000000)'2.0'", "(000000)'12/05/2026'", "(000000)'Ivan Santiago Pulgar Leon'", "(000000)'Corrección y actualización con dato'"]
+  [T2] 7 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Número del sprint'", "(000000)'Sprint 01'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del sprint'", "(000000)'Infraestructura Base, Autenticación'"]
+    R02: ["[bg:D9E1F2](B)'Fecha de inicio'", "(000000)'13/04/2026'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de cierre'", "(000000)'17/04/2026'"]
+    R04: ["[bg:D9E1F2](B)'Duración'", "(000000)'1 semana'"]
+    R05: ["[bg:D9E1F2](B)'Scrum Master'", "(000000)'Ivan Santiago Pulgar Leon'"]
+    R06: ["[bg:D9E1F2](B)'Módulos/componentes'", "(000000)'Infraestructura (Docker/Prisma), Au'"]
+  [T3] 4 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Rol'", "[bg:1F3864](B,FFFFFF)'Nombre'", "[bg:1F3864](B,FFFFFF)'Participación'"]
+    R01: ["[bg:D9E1F2](B,000000)'Scrum Master'", "(000000)'[Nombre del Scrum Master]'", "(000000)'Facilitó la reunión de retrospectiv'"]
+    R02: ["[bg:D9E1F2](B,000000)'Product Owner'", "(000000)'[Nombre del Product Owner]'", "(000000)'Validó criterios de aceptación y pr'"]
+    R03: ["[bg:D9E1F2](B,000000)'Equipo de desarrollo'", "(000000)'[Equipo de desarrollo ICARO]'", "(000000)'Implementó todos los ítems del back'"]
+  [T4] 7 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Criterio de Completitud'", "[bg:1F3864](B,FFFFFF)'¿Cumplido?'", "[bg:1F3864](B,FFFFFF)'Observación'"]
+    R01: ["[bg:FFFFFF](000000)'Código fuente en repositorio Git (c'", "[bg:E2EFDA](B,000000)'Si'", "''"]
+    R02: ["[bg:D9E1F2](000000)'Funcionalidad desplegada en entorno'", "[bg:E2EFDA](B,000000)'Si'", "(000000)'docker-compose up sin errores'"]
+    R03: ["[bg:FFFFFF](000000)'Criterios de aceptación de cada his'", "[bg:E2EFDA](B,000000)'Si'", "(000000)'Todos revisados'"]
+    R04: ["[bg:D9E1F2](000000)'Pruebas automatizadas ejecutadas (1'", "[bg:E2EFDA](B,000000)'Si'", "(000000)'npm run test:security'"]
+    R05: ["[bg:FFFFFF](000000)'Migraciones Prisma aplicadas correc'", "[bg:E2EFDA](B,000000)'Si'", "(000000)'2 migraciones aplicadas'"]
+    R06: ["[bg:D9E1F2](000000)'Documentación de sprint generada y '", "[bg:E2EFDA](B,000000)'Si'", "(000000)'V2.1 + 3 docs de soporte'"]
+  [T5] 8 filas x 8 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,10pt,FFFFFF)'ID'", "[bg:1F3864](B,10pt,FFFFFF)'Historia / Tarea'", "[bg:1F3864](B,10pt,FFFFFF)'Tipo'", "[bg:1F3864](B,10pt,FFFFFF)'Módulo'", "[bg:1F3864](B,10pt,FFFFFF)'SP Plan'", "[bg:1F3864](B,10pt,FFFFFF)'SP Real'", "[bg:1F3864](B,10pt,FFFFFF)'Estado'", "[bg:1F3864](B,10pt,FFFFFF)'Criterios verificados'"]
+    R01: ["[bg:F2F2F2](10pt,000000)'AM-01'", "[bg:F2F2F2](10pt,000000)'Configurar entorno de desarrollo: D'", "[bg:F2F2F2](10pt,000000)'HT'", "[bg:F2F2F2](10pt,000000)'Infraestructura'", "[bg:F2F2F2](10pt,000000)'3'", "[bg:F2F2F2](10pt,000000)'3'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:F2F2F2](10pt,000000)'Docker Compose levanta contenedores'"]
+    R02: ["[bg:FFFFFF](10pt,000000)'AM-02'", "[bg:FFFFFF](10pt,000000)'Diseñar e implementar el modelo de '", "[bg:FFFFFF](10pt,000000)'HT'", "[bg:FFFFFF](10pt,000000)'Base de Datos'", "[bg:FFFFFF](10pt,000000)'5'", "[bg:FFFFFF](10pt,000000)'5'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:FFFFFF](10pt,000000)'Modelos: Rol, Usuario, Proyecto, As'"]
+    R03: ["[bg:F2F2F2](10pt,000000)'AM-03'", "[bg:F2F2F2](10pt,000000)'Implementar módulo de autenticación'", "[bg:F2F2F2](10pt,000000)'HU'", "[bg:F2F2F2](10pt,000000)'Autenticación'", "[bg:F2F2F2](10pt,000000)'5'", "[bg:F2F2F2](10pt,000000)'5'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:F2F2F2](10pt,000000)'POST /api/v1/auth/login retorna Bea'"]
+    R04: ["[bg:FFFFFF](10pt,000000)'HU-04'", "[bg:FFFFFF](10pt,000000)'CRUD de usuarios con asignación de '", "[bg:FFFFFF](10pt,000000)'HU'", "[bg:FFFFFF](10pt,000000)'Usuarios'", "[bg:FFFFFF](10pt,000000)'8'", "[bg:FFFFFF](10pt,000000)'8'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:FFFFFF](10pt,000000)'Admin puede crear, editar, desactiv'"]
+    R05: ["[bg:F2F2F2](10pt,000000)'HU-05'", "[bg:F2F2F2](10pt,000000)'Control de acceso por proyecto: asi'", "[bg:F2F2F2](10pt,000000)'HU'", "[bg:F2F2F2](10pt,000000)'Proyectos'", "[bg:F2F2F2](10pt,000000)'5'", "[bg:F2F2F2](10pt,000000)'5'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:F2F2F2](10pt,000000)'Usuario sin asignación a proyecto r'"]
+    R06: ["[bg:FFFFFF](10pt,000000)'HT-01'", "[bg:FFFFFF](10pt,000000)'Suite de pruebas automatizadas de s'", "[bg:FFFFFF](10pt,000000)'HT'", "[bg:FFFFFF](10pt,000000)'Seguridad'", "[bg:FFFFFF](10pt,000000)'5'", "[bg:FFFFFF](10pt,000000)'5'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:FFFFFF](10pt,000000)'15/15 pruebas PASS. Cobertura: requ'"]
+    R07: ["[bg:F2F2F2](10pt,000000)'HT-02'", "[bg:F2F2F2](10pt,000000)'Middleware de auditoría automática '", "[bg:F2F2F2](10pt,000000)'HT'", "[bg:F2F2F2](10pt,000000)'Auditoría'", "[bg:F2F2F2](10pt,000000)'3'", "[bg:F2F2F2](10pt,000000)'3'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:F2F2F2](10pt,000000)'Toda acción Create/Update/Delete en'"]
+  [T6] 5 filas x 1 cols | style='Table Grid'
+    R00: ["[bg:EAF1DD](12pt,000000)'• Infraestructura dockerizada estab'"]
+    R01: ["[bg:EAF1DD](12pt,000000)'• Adopción de Prisma ORM aceleró la'"]
+    R02: ["[bg:EAF1DD](12pt,000000)'• Pruebas automatizadas implementad'"]
+    R03: ["[bg:EAF1DD](12pt,000000)'• Centralización de roles en consta'"]
+    R04: ["[bg:EAF1DD](12pt,000000)'• Middleware de auditoría (AuditLog'"]
+  [T7] 3 filas x 1 cols | style='Table Grid'
+    R00: ['[bg:FFFFCC](000000)"• La gestión de tokens legacy (\'Adm"']
+    R01: ["[bg:FFFFCC](000000)'• Las convenciones de nombrado de r'"]
+    R02: ["[bg:FFFFCC](000000)'• No se documentó el backlog formal'"]
+  [T8] 4 filas x 1 cols | style='Table Grid'
+    R00: ["[bg:FDE9D9](000000)'• Generar el backlog formal (Sprint'"]
+    R01: ["[bg:FDE9D9](000000)'• Extender las pruebas automatizada'"]
+    R02: ["[bg:FDE9D9](000000)'• Documentar el informe de pruebas '"]
+    R03: ["[bg:FDE9D9](000000)'• Revisar y cerrar el parche de tok'"]
+  [T9] 12 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Métrica'", "[bg:1F3864](B,FFFFFF)'Valor planificado'", "[bg:1F3864](B,FFFFFF)'Valor real'"]
+    R01: ["[bg:FFFFFF]'Story Points del sprint'", "[bg:FFFFFF](000000)'34 SP'", "[bg:FFFFFF](000000)'34 SP'"]
+    R02: ["[bg:D9E1F2]'N° historias de usuario (HU)'", "[bg:F2F2F2](000000)'3'", "[bg:F2F2F2](000000)'3'"]
+    R03: ["[bg:FFFFFF]'N° historias técnicas (HT)'", "[bg:FFFFFF](000000)'4'", "[bg:FFFFFF](000000)'4'"]
+    R04: ["[bg:D9E1F2]'N° ítems completados'", "[bg:F2F2F2](000000)'7'", "[bg:F2F2F2](000000)'7 (100%)'"]
+    R05: ["[bg:FFFFFF]'N° ítems bloqueados'", "[bg:FFFFFF](000000)'0'", "[bg:FFFFFF](000000)'0'"]
+    R06: ["[bg:D9E1F2]'Velocidad (SP/semana)'", "[bg:F2F2F2](000000)'17'", "[bg:F2F2F2](000000)'17'"]
+    R07: ["[bg:FFFFFF]'% Cumplimiento del backlog'", "[bg:FFFFFF](000000)'100%'", "[bg:FFFFFF](000000)'100%'"]
+    R08: ["[bg:D9E1F2]'N° pruebas automatizadas'", "[bg:F2F2F2](000000)'15'", "[bg:F2F2F2](000000)'15 (100% PASS)'"]
+    R09: ["[bg:FFFFFF]'N° migraciones Prisma aplicadas'", "[bg:FFFFFF](000000)'2'", "[bg:FFFFFF](000000)'2'"]
+    R10: ["[bg:D9E1F2]'N° defectos registrados'", "[bg:F2F2F2](000000)'0'", "[bg:F2F2F2](000000)'0'"]
+    R11: ["[bg:FFFFFF]'Calidad general del sprint'", "[bg:FFFFFF](000000)'Alta'", "[bg:FFFFFF](000000)'Alta'"]
+  [T10] 2 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'ID'", "[bg:1F3864](B,FFFFFF)'Descripción'", "[bg:1F3864](B,FFFFFF)'Impacto'", "[bg:1F3864](B,FFFFFF)'Resolución'"]
+    R01: ["[bg:E2EFDA](595959)'—'", "[bg:E2EFDA](595959)'No se registraron impedimentos ni b'", "[bg:E2EFDA](595959)'—'", "[bg:E2EFDA](595959)'—'"]
+  [T11] 5 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'N°'", "[bg:1F3864](B,FFFFFF)'Compromiso'", "[bg:1F3864](B,FFFFFF)'Responsable'"]
+    R01: ["[bg:FFFFFF](000000)'1'", "[bg:FFFFFF](000000)'Formalizar el backlog antes del Spr'", "[bg:FFFFFF](000000)'Ivan Santiago Pulgar Leon'"]
+    R02: ["[bg:D9E1F2](000000)'2'", "[bg:D9E1F2](000000)'Extender pruebas automatizadas (Jes'", "[bg:D9E1F2]'Isaac Sebastián Castro Muesmueran /'"]
+    R03: ["[bg:FFFFFF](000000)'3'", "[bg:FFFFFF](000000)'Documentar el informe de pruebas en'", "[bg:FFFFFF]'Isaac Sebastián Castro Muesmueran /'"]
+    R04: ["[bg:D9E1F2](000000)'4'", "[bg:D9E1F2](000000)'Revisar parche de tokens legacy y p'", "[bg:D9E1F2]'Isaac Sebastián Castro Muesmueran /'"]
+  [T12] 4 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Logro principal del sprint'", "(000000)'Se estableció una base técnica sóli'"]
+    R01: ["[bg:D9E1F2](B)'Estado del producto al cierre'", "(000000)'El sistema cuenta con: autenticació'"]
+    R02: ["[bg:D9E1F2](B)'Satisfacción del equipo'", "(000000)'El sprint fue completado al 100% si'"]
+    R03: ["[bg:D9E1F2](B)'Preparación para Sprint 02'", "(000000)'El equipo cierra el Sprint 01 con t'"]
+  [T13] 4 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Documento'", "[bg:1F3864](B,FFFFFF)'Código'", "[bg:1F3864](B,FFFFFF)'Propósito'", "[bg:1F3864](B,FFFFFF)'Secciones relacionadas'"]
+    R01: ["[bg:FFFFFF](B,000000)'Sprint_01_Backlog_ICARO.xlsx'", "[bg:FFFFFF](000000)'BCK-SPR-01'", "[bg:FFFFFF](000000)'Registro formal del backlog: 7 ítem'", "[bg:FFFFFF](000000)'6 (Historias),  8 (Métricas),  12 ('"]
+    R02: ["[bg:D9E1F2](B,000000)'Sprint_01_Planificado_Realizado_ICA'", "[bg:D9E1F2](000000)'PLN-REA-SPR-01'", "[bg:D9E1F2](000000)'Comparación planificado vs. realiza'", "[bg:D9E1F2](000000)'6,  8 (Métricas),  11 (Conclusiones'"]
+    R03: ["[bg:FFFFFF](B,000000)'Sprint_01_Informe_Pruebas_ICARO.doc'", "[bg:FFFFFF](000000)'INF-PRU-SPR-01'", "[bg:FFFFFF](000000)'15 casos de prueba ejecutados (100%'", "[bg:FFFFFF](000000)'5 (DoD),  7 (Categorías),  8 (Métri'"]
+
+======================================================================
+XLSX: SPR01 BACKLOG
+======================================================================
+  SHEET: Backlog Sprint 01
+    [A1][FF1F3864](B,13.0pt,FFFFFFFF)'SPRINT BACKLOG — Sprint 01: In'  [B1][00000000](11.0pt)''  [C1][00000000](11.0pt)''  [D1][00000000](11.0pt)''  [E1][00000000](11.0pt)''  [F1][00000000](11.0pt)''
+    [A2][FFD9E1F2](9.0pt)'ICARO CONSTRUCTORES BMGM S.A.S'  [B2][00000000](11.0pt)''  [C2][00000000](11.0pt)''  [D2][00000000](11.0pt)''  [E2][00000000](11.0pt)''  [F2][00000000](11.0pt)''
+    [A3][FFD9E1F2](B,9.0pt)'Proyecto:'  [B3][FFFFFFFF](9.0pt,FF000000)'ICARO CONSTRUCTORES BMGM S.A.S'  [C3][00000000](11.0pt)''  [D3][00000000](11.0pt)''  [E3][00000000](11.0pt)''  [F3][00000000](11.0pt)''
+    [A4][FFD9E1F2](B,9.0pt)'Fecha de inicio:'  [B4][FFFFFFFF](9.0pt,FF000000)'2026-04-13 00:00:00'  [C4][00000000](11.0pt)''  [D4][00000000](11.0pt)''  [E4][00000000](11.0pt)''  [F4][00000000](11.0pt)''
+    [A5][FFD9E1F2](B,9.0pt)'Objetivo:'  [B5][FFFFFFFF](9.0pt,FF000000)'Establecer la infraestructura '  [C5][00000000](11.0pt)''  [D5][00000000](11.0pt)''  [E5][00000000](11.0pt)''  [F5][00000000](11.0pt)''
+    [A6][FFD9E1F2](B,9.0pt)'Vel. estimada (SP):'  [B6][FFFFFFFF](9.0pt,FF000000)'34'  [C6][00000000](11.0pt)''  [D6][00000000](11.0pt)''  [E6][00000000](11.0pt)''  [F6][00000000](11.0pt)''
+    [A7][FF1F3864](B,9.0pt,FFFFFFFF)'ID'  [B7][FF1F3864](B,9.0pt,FFFFFFFF)'Historia / Tarea'  [C7][FF1F3864](B,9.0pt,FFFFFFFF)'Tipo'  [D7][FF1F3864](B,9.0pt,FFFFFFFF)'Módulo'  [E7][FF1F3864](B,9.0pt,FFFFFFFF)'Prioridad'  [F7][FF1F3864](B,9.0pt,FFFFFFFF)'SP Plan'
+    [A8][FFF2F2F2](9.0pt)'AM-01'  [B8][FFF2F2F2](9.0pt)'Configurar entorno de desarrol'  [C8][FFF2F2F2](9.0pt)'HT'  [D8][FFF2F2F2](9.0pt)'Infraestructura'  [E8][FFF2F2F2](9.0pt)'Alta'  [F8][FFF2F2F2](9.0pt)'3'
+    [A9][FFFFFFFF](9.0pt)'AM-02'  [B9][FFFFFFFF](9.0pt)'Diseñar e implementar el model'  [C9][FFFFFFFF](9.0pt)'HT'  [D9][FFFFFFFF](9.0pt)'Base de Datos'  [E9][FFFFFFFF](9.0pt)'Alta'  [F9][FFFFFFFF](9.0pt)'5'
+    [A10][FFF2F2F2](9.0pt)'AM-03'  [B10][FFF2F2F2](9.0pt)'Implementar módulo de autentic'  [C10][FFF2F2F2](9.0pt)'HU'  [D10][FFF2F2F2](9.0pt)'Autenticación'  [E10][FFF2F2F2](9.0pt)'Alta'  [F10][FFF2F2F2](9.0pt)'5'
+    [A11][FFFFFFFF](9.0pt)'HU-04'  [B11][FFFFFFFF](9.0pt)'CRUD de usuarios con asignació'  [C11][FFFFFFFF](9.0pt)'HU'  [D11][FFFFFFFF](9.0pt)'Usuarios'  [E11][FFFFFFFF](9.0pt)'Alta'  [F11][FFFFFFFF](9.0pt)'8'
+    [A12][FFF2F2F2](9.0pt)'HU-05'  [B12][FFF2F2F2](9.0pt)'Control de acceso por proyecto'  [C12][FFF2F2F2](9.0pt)'HU'  [D12][FFF2F2F2](9.0pt)'Proyectos'  [E12][FFF2F2F2](9.0pt)'Alta'  [F12][FFF2F2F2](9.0pt)'5'
+    [A13][FFFFFFFF](9.0pt)'HT-01'  [B13][FFFFFFFF](9.0pt)'Suite de pruebas automatizadas'  [C13][FFFFFFFF](9.0pt)'HT'  [D13][FFFFFFFF](9.0pt)'Seguridad'  [E13][FFFFFFFF](9.0pt)'Alta'  [F13][FFFFFFFF](9.0pt)'5'
+    [A14][FFF2F2F2](9.0pt)'HT-02'  [B14][FFF2F2F2](9.0pt)'Middleware de auditoría automá'  [C14][FFF2F2F2](9.0pt)'HT'  [D14][FFF2F2F2](9.0pt)'Auditoría'  [E14][FFF2F2F2](9.0pt)'Media'  [F14][FFF2F2F2](9.0pt)'3'
+    [A15][FF1F3864](B,9.0pt,FFFFFFFF)'TOTALES'  [B15][00000000](11.0pt)''  [C15][00000000](11.0pt)''  [D15][00000000](11.0pt)''  [E15][00000000](11.0pt)''  [F15][FF1F3864](B,10.0pt,FFFFFFFF)'34'
+  SHEET: Resumen Velocidad
+    [A1][FF1F3864](B,12.0pt,FFFFFFFF)'RESUMEN DE VELOCIDAD — Sprint '  [B1][00000000](11.0pt)''  [C1][00000000](11.0pt)''  [D1][00000000](11.0pt)''
+    [A2][FF2E75B6](B,9.0pt,FFFFFFFF)'Métrica'  [B2][FF2E75B6](B,9.0pt,FFFFFFFF)'Planificado'  [C2][FF2E75B6](B,9.0pt,FFFFFFFF)'Realizado'  [D2][FF2E75B6](B,9.0pt,FFFFFFFF)'Observación'
+    [A3][FFFFFFFF](B,9.0pt)'Story Points totales'  [B3][FFFFFFFF](9.0pt)'34'  [C3][FFFFFFFF](9.0pt)'34'  [D3][FFFFFFFF](9.0pt)'Sin desvío'
+    [A4][FFD9E1F2](B,9.0pt)'N° historias de usuario (HU)'  [B4][FFD9E1F2](9.0pt)'3'  [C4][FFD9E1F2](9.0pt)'3'  [D4][FFD9E1F2](9.0pt)'AM-03, HU-04, HU-05'
+    [A5][FFFFFFFF](B,9.0pt)'N° historias técnicas (HT)'  [B5][FFFFFFFF](9.0pt)'4'  [C5][FFFFFFFF](9.0pt)'4'  [D5][FFFFFFFF](9.0pt)'AM-01, AM-02, HT-01, HT-02'
+    [A6][FFD9E1F2](B,9.0pt)'N° ítems del backlog'  [B6][FFD9E1F2](9.0pt)'7'  [C6][FFD9E1F2](9.0pt)'7'  [D6][FFD9E1F2](9.0pt)'7/7 completados'
+    [A7][FFFFFFFF](B,9.0pt)'N° ítems completados'  [B7][FFFFFFFF](9.0pt)'7'  [C7][FFFFFFFF](9.0pt)'7'  [D7][FFFFFFFF](9.0pt)'100%'
+    [A8][FFD9E1F2](B,9.0pt)'N° ítems bloqueados'  [B8][FFD9E1F2](9.0pt)'0'  [C8][FFD9E1F2](9.0pt)'0'  [D8][FFD9E1F2](9.0pt)'Sin bloqueos'
+    [A9][FFFFFFFF](B,9.0pt)'N° ítems no completados'  [B9][FFFFFFFF](9.0pt)'0'  [C9][FFFFFFFF](9.0pt)'0'  [D9][FFFFFFFF](9.0pt)'Sin pendientes'
+    [A10][FFD9E1F2](B,9.0pt)'Velocidad real (SP / semana)'  [B10][FFD9E1F2](9.0pt)'17'  [C10][FFD9E1F2](9.0pt)'17'  [D10][FFD9E1F2](9.0pt)'34 SP / 1 semana'
+    [A11][FFFFFFFF](B,9.0pt)'% Cumplimiento'  [B11][FFFFFFFF](9.0pt)'100%'  [C11][FFFFFFFF](9.0pt)'100%'  [D11][FFFFFFFF](9.0pt)'Sprint exitoso'
+    [A12][FFD9E1F2](B,9.0pt)'N° pruebas automatizadas'  [B12][FFD9E1F2](9.0pt)'15'  [C12][FFD9E1F2](9.0pt)'15'  [D12][FFD9E1F2](9.0pt)'15/15 PASS'
+    [A13][FFFFFFFF](B,9.0pt)'Cobertura de pruebas de seguri'  [B13][FFFFFFFF](9.0pt)'100%'  [C13][FFFFFFFF](9.0pt)'100%'  [D13][FFFFFFFF](9.0pt)'security.test.js'
+  SHEET: Glosario
+    [A1][00000000](11.0pt)'Sigla'  [B1][00000000](11.0pt)'Significado'
+    [A2][00000000](11.0pt)'AM'  [B2][00000000](11.0pt)'Actividad de Montaje — tarea d'
+    [A3][00000000](11.0pt)'HU'  [B3][00000000](11.0pt)'Historia de Usuario — funciona'
+    [A4][00000000](11.0pt)'HT'  [B4][00000000](11.0pt)'Historia Técnica — tarea técni'
+    [A5][00000000](11.0pt)'SP'  [B5][00000000](11.0pt)'Story Point — unidad de estima'
+    [A6][00000000](11.0pt)'RBAC'  [B6][00000000](11.0pt)'Role-Based Access Control — co'
+    [A7][00000000](11.0pt)'JWT'  [B7][00000000](11.0pt)'JSON Web Token — estándar de a'
+    [A8][00000000](11.0pt)'ORM'  [B8][00000000](11.0pt)'Object-Relational Mapper — her'
+    [A9][00000000](11.0pt)'CRUD'  [B9][00000000](11.0pt)'Create, Read, Update, Delete —'
+    [A10][00000000](11.0pt)'DoD'  [B10][00000000](11.0pt)'Definition of Done — criterios'
+    [A11][00000000](11.0pt)'BD'  [B11][00000000](11.0pt)'Base de Datos'
+
+======================================================================
+ARCHIVO: SPR02 PLN-REA
+======================================================================
+  P00 style='Normal' align=CENTER (1) | [bold,sz=14,col=1F3864] | TEXT: REGISTRO DE PLANIFICADO VS. REALIZADO — SPRINT 02
+  P01 style='Normal' align=CENTER (1) | [italic,sz=9,col=595959] | TEXT: Proyecto: Sistema de Gestion Integral de Obra — ICARO CONSTRUCTORES BMGM S.A.S.
+  P02 style='Normal' align=CENTER (1) | [italic,sz=9,col=595959] | TEXT: Codigo: PLN-REA-SPR-02  |  Version: 1.0  |  Fecha: 12/05/2026
+  P03 style='Heading 1' align=None |  | TEXT: 1. Control documental
+  P04 style='Normal' align=None | [italic,sz=9,col=595959] | TEXT: Historial de versiones:
+  P05 style='Heading 1' align=None |  | TEXT: 2. Datos generales del sprint
+  P06 style='Heading 1' align=None |  | TEXT: 3. Historias/Tareas: Planificado vs. Realizado
+  P07 style='Heading 1' align=None |  | TEXT: 4. Resumen cuantitativo del sprint
+  P08 style='Heading 1' align=None |  | TEXT: 5. Analisis de desvios significativos
+  P09 style='Normal' align=None | [sz=9] [sz=9] [sz=9] | TEXT: El Sprint 02 no registro desvios significativos, los 34 SP planificados fueron entregados en su tota
+  P10 style='Heading 1' align=None |  | TEXT: 6. Observaciones generales del sprint
+  P11 style='Heading 1' align=None |  | TEXT: Glosario 
+  --- TABLAS ---
+  [T0] 7 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B,1F3864)'Código del documento'", "(000000)'PLN-REA-SPR-02'"]
+    R01: ["[bg:D9E1F2](B,1F3864)'Nombre del documento'", "(000000)'Registro de Planificado vs. Realiza'"]
+    R02: ["[bg:D9E1F2](B,1F3864)'Versión'", "(000000)'1.0'"]
+    R03: ["[bg:D9E1F2](B,1F3864)'Fecha de elaboración'", "(000000)'12/05/2026'"]
+    R04: ["[bg:D9E1F2](B,1F3864)'Sprint evaluado'", "(000000)'Sprint 02 – Gestión de Proyectos, A'"]
+    R05: ["[bg:D9E1F2](B,1F3864)'Responsable de elaboración'", "(000000)'Ivan Santiago Pulgar Leon '"]
+    R06: ["[bg:D9E1F2](B,1F3864)'Estado del documento'", "(000000)'Aprobado'"]
+  [T1] 2 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Version'", "[bg:1F3864](B,FFFFFF)'Fecha'", "[bg:1F3864](B,FFFFFF)'Responsable'", "[bg:1F3864](B,FFFFFF)'Descripcion'"]
+    R01: ["(000000)'1.0'", "(000000)'12/05/2026'", "(000000)'Ivan Santiago Pulgar Leon'", "(000000)'Documento generado con datos reales'"]
+  [T2] 6 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Numero del sprint'", "(000000)'Sprint 02'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del sprint'", "(000000)'Gestion de Proyectos, Avances de Ob'"]
+    R02: ["[bg:D9E1F2](B)'Fecha de inicio'", "(000000)'20/04/2026'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de cierre'", "(000000)'24/04/2026'"]
+    R04: ["[bg:D9E1F2](B)'Duracion'", "(000000)'1 semana'"]
+    R05: ["[bg:D9E1F2](B)'Modulos/componentes trabajados'", "(000000)'Proyectos (CRUD, responsable, asign'"]
+  [T3] 8 filas x 10 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,9pt,FFFFFF)'ID'", "[bg:1F3864](B,9pt,FFFFFF)'Historia / Tarea'", "[bg:1F3864](B,9pt,FFFFFF)'Tipo'", "[bg:1F3864](B,9pt,FFFFFF)'Modulo'", "[bg:1F3864](B,9pt,FFFFFF)'SP|Plan'", "[bg:1F3864](B,9pt,FFFFFF)'SP|Real'", "[bg:1F3864](B,9pt,FFFFFF)'Variacion'", "[bg:1F3864](B,9pt,FFFFFF)'% Avance'", "[bg:1F3864](B,9pt,FFFFFF)'Estado'", "[bg:1F3864](B,9pt,FFFFFF)'Causa de|desvio'"]
+    R01: ["[bg:D9E1F2](10pt,000000)'HU-06'", "[bg:FFFFFF](10pt,000000)'CRUD completo de proyectos con asig'", "[bg:D9E1F2](10pt,000000)'HU'", "[bg:FFFFFF](10pt,000000)'Proyectos'", "[bg:D9E1F2](10pt,000000)'8'", "[bg:FFFFFF](10pt,000000)'8'", "[bg:D9E1F2](10pt,000000)'0'", "[bg:FFFFFF](10pt,000000)'100%'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:FFFFFF](10pt,000000)'Sin desvio'"]
+    R02: ["[bg:D9E1F2](10pt,000000)'HU-07'", "[bg:FFFFFF](10pt,000000)'Registrar avance fisico de obra con'", "[bg:D9E1F2](10pt,000000)'HU'", "[bg:FFFFFF](10pt,000000)'Avances'", "[bg:D9E1F2](10pt,000000)'8'", "[bg:FFFFFF](10pt,000000)'8'", "[bg:D9E1F2](10pt,000000)'0'", "[bg:FFFFFF](10pt,000000)'100%'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:FFFFFF](10pt,000000)'Sin desvio'"]
+    R03: ["[bg:D9E1F2](10pt,000000)'HU-08'", "[bg:FFFFFF](10pt,000000)'Consultar historial de avances por '", "[bg:D9E1F2](10pt,000000)'HU'", "[bg:FFFFFF](10pt,000000)'Avances'", "[bg:D9E1F2](10pt,000000)'5'", "[bg:FFFFFF](10pt,000000)'5'", "[bg:D9E1F2](10pt,000000)'0'", "[bg:FFFFFF](10pt,000000)'100%'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:FFFFFF](10pt,000000)'Sin desvio'"]
+    R04: ["[bg:D9E1F2](10pt,000000)'HT-03'", "[bg:FFFFFF](10pt,000000)'Carga masiva de rubros desde API (P'", "[bg:D9E1F2](10pt,000000)'HT'", "[bg:FFFFFF](10pt,000000)'Proyectos'", "[bg:D9E1F2](10pt,000000)'5'", "[bg:FFFFFF](10pt,000000)'5'", "[bg:D9E1F2](10pt,000000)'0'", "[bg:FFFFFF](10pt,000000)'100%'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:FFFFFF](10pt,000000)'Sin desvio'"]
+    R05: ["[bg:D9E1F2](10pt,000000)'HT-04'", "[bg:FFFFFF](10pt,000000)'StorageService: almacenamiento loca'", "[bg:D9E1F2](10pt,000000)'HT'", "[bg:FFFFFF](10pt,000000)'Infraestructura'", "[bg:D9E1F2](10pt,000000)'5'", "[bg:FFFFFF](10pt,000000)'5'", "[bg:D9E1F2](10pt,000000)'0'", "[bg:FFFFFF](10pt,000000)'100%'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:FFFFFF](10pt,000000)'Sin desvio'"]
+    R06: ["[bg:D9E1F2](10pt,000000)'HT-05'", "[bg:FFFFFF](10pt,000000)'Integracion multer + validacion de '", "[bg:D9E1F2](10pt,000000)'HT'", "[bg:FFFFFF](10pt,000000)'Avances'", "[bg:D9E1F2](10pt,000000)'3'", "[bg:FFFFFF](10pt,000000)'3'", "[bg:D9E1F2](10pt,000000)'0'", "[bg:FFFFFF](10pt,000000)'100%'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:FFFFFF](10pt,000000)'Sin desvio'"]
+    R07: ["[bg:1F3864](B,10pt,FFFFFF)'TOTALES'", "[bg:1F3864]''", "[bg:1F3864]''", "[bg:1F3864]''", "[bg:D9E1F2](B,10pt,000000)'34'", "[bg:D9E1F2](B,10pt,000000)'34'", "[bg:D9E1F2](B,10pt,000000)'0'", "[bg:E2EFDA](B,10pt,000000)'100%'", "[bg:1F3864]''", "[bg:1F3864]''"]
+  [T4] 11 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Metrica'", "[bg:1F3864](B,FFFFFF)'Planificado'", "[bg:1F3864](B,FFFFFF)'Realizado'"]
+    R01: ["[bg:FFFFFF]'Story Points totales'", "[bg:FFFFFF](000000)'34'", "[bg:FFFFFF](000000)'34'"]
+    R02: ["[bg:D9E1F2]'N° historias de usuario (HU)'", "[bg:F2F2F2](000000)'3'", "[bg:F2F2F2](000000)'3'"]
+    R03: ["[bg:FFFFFF]'N° historias tecnicas (HT)'", "[bg:FFFFFF](000000)'3'", "[bg:FFFFFF](000000)'3'"]
+    R04: ["[bg:D9E1F2]'N° items del backlog'", "[bg:F2F2F2](000000)'6'", "[bg:F2F2F2](000000)'6'"]
+    R05: ["[bg:FFFFFF]'N° items completados'", "[bg:FFFFFF](000000)'—'", "[bg:FFFFFF](000000)'6 (100%)'"]
+    R06: ["[bg:D9E1F2]'N° items bloqueados'", "[bg:F2F2F2](000000)'—'", "[bg:F2F2F2](000000)'0'"]
+    R07: ["[bg:FFFFFF]'N° items no completados'", "[bg:FFFFFF](000000)'—'", "[bg:FFFFFF](000000)'0'"]
+    R08: ["[bg:D9E1F2]'Velocidad real (SP / semana)'", "[bg:F2F2F2](000000)'17'", "[bg:F2F2F2](000000)'17'"]
+    R09: ["[bg:FFFFFF]'% Cumplimiento del sprint'", "[bg:FFFFFF](000000)'100%'", "[bg:FFFFFF](000000)'100%'"]
+    R10: ["[bg:D9E1F2]'N° pruebas automatizadas'", "[bg:F2F2F2](000000)'17'", "[bg:F2F2F2](000000)'17 (100% PASS)'"]
+  [T5] 4 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Factores que influyeron positivamen'", "(000000)'El StorageService con patron extens'"]
+    R01: ["[bg:D9E1F2](B)'Factores que afectaron negativament'", "(000000)'El orden del pipeline de middleware'"]
+    R02: ["[bg:D9E1F2](B)'Lecciones aprendidas clave'", "(000000)'1. Definir el orden del pipeline de'"]
+    R03: ["[bg:D9E1F2](B)'Compromisos para el siguiente sprin'", "(000000)'Implementar el modulo de materiales'"]
+  [T6] 10 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Sigla'", "[bg:1F3864](B,FFFFFF)'Significado'", "[bg:1F3864](B,FFFFFF)'Contexto de uso'"]
+    R01: ["[bg:D9E1F2](B,000000)'SP'", "[bg:D9E1F2](000000)'Story Point'", "[bg:D9E1F2](000000)'Unidad de estimacion de esfuerzo'"]
+    R02: ["[bg:FFFFFF](B,000000)'HU'", "[bg:FFFFFF](000000)'Historia de Usuario'", "[bg:FFFFFF](000000)'Tipo de item del backlog'"]
+    R03: ["[bg:D9E1F2](B,000000)'HT'", "[bg:D9E1F2](000000)'Historia Tecnica'", "[bg:D9E1F2](000000)'Tarea tecnica transversal'"]
+    R04: ["[bg:FFFFFF](B,000000)'PLN-REA'", "[bg:FFFFFF](000000)'Planificado-Realizado'", "[bg:FFFFFF](000000)'Prefijo del codigo de este document'"]
+    R05: ["[bg:D9E1F2](B,000000)'SPR'", "[bg:D9E1F2](000000)'Sprint'", "[bg:D9E1F2](000000)'Iteracion de desarrollo Scrum'"]
+    R06: ["[bg:FFFFFF](B,000000)'RBAC'", "[bg:FFFFFF](000000)'Role-Based Access Control'", "[bg:FFFFFF](000000)'Control de acceso por roles'"]
+    R07: ["[bg:D9E1F2](B,000000)'API'", "[bg:D9E1F2](000000)'Application Programming Interface'", "[bg:D9E1F2](000000)'Interfaz de programacion'"]
+    R08: ["[bg:FFFFFF](B,000000)'BD'", "[bg:FFFFFF](000000)'Base de Datos'", "[bg:FFFFFF](000000)'Repositorio de datos del sistema'"]
+    R09: ["[bg:D9E1F2](B,000000)'CI'", "[bg:D9E1F2](000000)'Continuous Integration'", "[bg:D9E1F2](000000)'Integracion continua'"]
+
+======================================================================
+ARCHIVO: SPR02 INF-PRU
+======================================================================
+  P00 style='Normal' align=CENTER (1) | [bold,sz=14,col=1F3864] | TEXT: INFORME DE EJECUCION DE PRUEBAS — SPRINT 02
+  P01 style='Normal' align=CENTER (1) | [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] | TEXT: Proyecto: Sistema de Gestion Integral de Obra — ICARO CONSTRUCTORES BMGM S.A.S.
+  P02 style='Normal' align=CENTER (1) | [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] | TEXT: Codigo: INF-PRU-SPR-02  |  Version: 1.0  |  Fecha: 12/05/2026
+  P03 style='Heading 1' align=None |  | TEXT: 1. Control documental
+  P05 style='Heading 1' align=None |  | TEXT: 2. Datos generales del sprint
+  P06 style='Heading 1' align=None |  | TEXT: 3. Resumen ejecutivo de pruebas
+  P08 style='Heading 1' align=None |  | TEXT: 4. Alcance de las pruebas del sprint
+  P09 style='Heading 1' align=None |  | TEXT: 5. Tabla de casos de prueba ejecutados
+  P10 style='Heading 1' align=None |  | TEXT: 6. Defectos encontrados
+  P11 style='Heading 1' align=None |  | TEXT: 7. Resultado de pruebas automatizadas
+  P12 style='Heading 1' align=None |  | TEXT: 8. Conclusiones y acciones derivadas
+  P13 style='Normal' align=None | [bold,col=1F3864] | TEXT: Glosario 
+  --- TABLAS ---
+  [T0] 7 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Codigo del documento'", "(000000)'INF-PRU-SPR-02'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del documento'", "(000000)'Informe de Ejecucion de Pruebas – S'"]
+    R02: ["[bg:D9E1F2](B)'Version'", "(000000)'1.0'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de elaboracion'", "'12/05/2026'"]
+    R04: ["[bg:D9E1F2](B)'Sprint evaluado'", "(000000)'Sprint 02 – Gestion de Proyectos, A'"]
+    R05: ["[bg:D9E1F2](B)'Responsable de elaboracion'", "(000000)'Ivan Santiago Pulgar Leon'"]
+    R06: ["[bg:D9E1F2](B)'Estado del documento'", "(000000)'Aprobado'"]
+  [T1] 2 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Version'", "[bg:1F3864](B,FFFFFF)'Fecha'", "[bg:1F3864](B,FFFFFF)'Responsable'", "[bg:1F3864](B,FFFFFF)'Descripcion'"]
+    R01: ["(000000)'1.0'", "(000000)'12/05/2026'", "(000000)'Ivan Santiago Pulgar Leon'", "(000000)'Documento generado con datos reales'"]
+  [T2] 6 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Numero del sprint'", "(000000)'Sprint 02'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del sprint'", "(000000)'Gestion de Proyectos, Avances de Ob'"]
+    R02: ["[bg:D9E1F2](B)'Fecha de inicio'", "(000000)'20/04/2026'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de cierre'", "(000000)'24/04/2026'"]
+    R04: ["[bg:D9E1F2](B)'Duracion'", "(000000)'1 semana'"]
+    R05: ["[bg:D9E1F2](B)'Modulos/componentes trabajados'", "(000000)'Proyectos (CRUD, responsable, asign'"]
+  [T3] 2 filas x 6 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,9pt,FFFFFF)'Total|Planificados'", "[bg:1F3864](B,9pt,FFFFFF)'Total|Ejecutados'", "[bg:1F3864](B,9pt,FFFFFF)'PASS'", "[bg:1F3864](B,9pt,FFFFFF)'FAIL'", "[bg:1F3864](B,9pt,FFFFFF)'BLOQUEADO'", "[bg:1F3864](B,9pt,FFFFFF)'% Exito'"]
+    R01: ["[bg:FFFFFF](B,12pt,000000)'17'", "[bg:FFFFFF](B,12pt,000000)'17'", "[bg:E2EFDA](B,12pt,000000)'17'", "[bg:FCE4D6](B,12pt,000000)'0'", "[bg:FFF2CC](B,12pt,000000)'0'", "[bg:E2EFDA](B,12pt,000000)'100%'"]
+  [T4] 5 filas x 6 cols | style='Table Grid'
+    R00: ["[bg:2E75B6](B,FFFFFF)'Modulo'", "[bg:2E75B6](B,FFFFFF)'Tipo de prueba'", "[bg:2E75B6](B,FFFFFF)'N° Casos'", "[bg:2E75B6](B,FFFFFF)'PASS'", "[bg:2E75B6](B,FFFFFF)'FAIL'", "[bg:2E75B6](B,FFFFFF)'% Exito'"]
+    R01: ["[bg:F2F2F2](000000)'Proyectos'", "[bg:F2F2F2](000000)'Automatizada (Jest/Supertest)'", "[bg:F2F2F2](000000)'7'", "[bg:F2F2F2](000000)'7'", "[bg:F2F2F2](000000)'0'", "[bg:F2F2F2](000000)'100%'"]
+    R02: ["[bg:FFFFFF](000000)'Avances'", "[bg:FFFFFF](000000)'Automatizada (Jest/Supertest)'", "[bg:FFFFFF](000000)'7'", "[bg:FFFFFF](000000)'7'", "[bg:FFFFFF](000000)'0'", "[bg:FFFFFF](000000)'100%'"]
+    R03: ["[bg:F2F2F2](000000)'Proyectos/Rubros'", "[bg:F2F2F2](000000)'Automatizada (Jest/Supertest)'", "[bg:F2F2F2](000000)'3'", "[bg:F2F2F2](000000)'3'", "[bg:F2F2F2](000000)'0'", "[bg:F2F2F2](000000)'100%'"]
+    R04: ["[bg:D9E1F2](B,000000)'TOTAL'", "[bg:D9E1F2](B,000000)'—'", "[bg:D9E1F2](B,000000)'17'", "[bg:D9E1F2](B,000000)'17'", "[bg:D9E1F2](B,000000)'0'", "[bg:D9E1F2](B,000000)'100%'"]
+  [T5] 5 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Modulos/funcionalidades probadas'", "(000000)'CRUD de Proyectos (GET/POST, RBAC),'"]
+    R01: ["[bg:D9E1F2](B)'Modulos excluidos (fuera de alcance'", "(000000)'Materiales, Bodega, Compras, Contab'"]
+    R02: ["[bg:D9E1F2](B)'Tipos de prueba ejecutados'", "(000000)'Automatizada con Jest + Supertest. '"]
+    R03: ["[bg:D9E1F2](B)'Entorno de pruebas'", "(000000)'Local – Docker Compose (backend Nod'"]
+    R04: ["[bg:D9E1F2](B)'Herramientas utilizadas'", "(000000)'Jest 29, Supertest 6, jsonwebtoken,'"]
+  [T6] 18 filas x 9 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,9pt,FFFFFF)'ID CP'", "[bg:1F3864](B,9pt,FFFFFF)'Grupo'", "[bg:1F3864](B,9pt,FFFFFF)'Modulo'", "[bg:1F3864](B,9pt,FFFFFF)'Descripcion'", "[bg:1F3864](B,9pt,FFFFFF)'Tipo'", "[bg:1F3864](B,9pt,FFFFFF)'Resultado|Esperado'", "[bg:1F3864](B,9pt,FFFFFF)'Resultado|Obtenido'", "[bg:1F3864](B,9pt,FFFFFF)'Estado'", "[bg:1F3864](B,9pt,FFFFFF)'Evidencia'"]
+    R01: ["[bg:F2F2F2](9pt,000000)'CP-016'", "[bg:F2F2F2](9pt,000000)'Grupo 1'", "[bg:F2F2F2](9pt,000000)'Proyectos'", "[bg:F2F2F2](9pt,000000)'GET /proyectos sin token: ruta prot'", "[bg:F2F2F2](9pt,000000)'Automatizada'", '[bg:F2F2F2](9pt,000000)"HTTP 401 con campo \'error\'."', '[bg:F2F2F2](9pt,000000)"HTTP 401 – { error: \'...\' }"', "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'proyectos_avances.test.js – Test 1'"]
+    R02: ["[bg:FFFFFF](9pt,000000)'CP-017'", "[bg:FFFFFF](9pt,000000)'Grupo 1'", "[bg:FFFFFF](9pt,000000)'Proyectos'", "[bg:FFFFFF](9pt,000000)'GET /proyectos con Admin: pasa auth'", "[bg:FFFFFF](9pt,000000)'Automatizada'", "[bg:FFFFFF](9pt,000000)'HTTP 200 o 500 (no 401 ni 403).'", "[bg:FFFFFF](9pt,000000)'HTTP 200 o 500 segun disponibilidad'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:FFFFFF](9pt,000000)'proyectos_avances.test.js – Test 2'"]
+    R03: ["[bg:F2F2F2](9pt,000000)'CP-018'", "[bg:F2F2F2](9pt,000000)'Grupo 1'", "[bg:F2F2F2](9pt,000000)'Proyectos'", "[bg:F2F2F2](9pt,000000)'GET /proyectos con Residente: pasa '", "[bg:F2F2F2](9pt,000000)'Automatizada'", "[bg:F2F2F2](9pt,000000)'HTTP 200 o 500 (no 403).'", "[bg:F2F2F2](9pt,000000)'HTTP 200 o 500 segun disponibilidad'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'proyectos_avances.test.js – Test 3'"]
+    R04: ["[bg:FFFFFF](9pt,000000)'CP-019'", "[bg:FFFFFF](9pt,000000)'Grupo 1'", "[bg:FFFFFF](9pt,000000)'Proyectos'", "[bg:FFFFFF](9pt,000000)'POST /proyectos sin token: ruta pro'", "[bg:FFFFFF](9pt,000000)'Automatizada'", "[bg:FFFFFF](9pt,000000)'HTTP 401.'", "[bg:FFFFFF](9pt,000000)'HTTP 401.'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:FFFFFF](9pt,000000)'proyectos_avances.test.js – Test 4'"]
+    R05: ["[bg:F2F2F2](9pt,000000)'CP-020'", "[bg:F2F2F2](9pt,000000)'Grupo 1'", "[bg:F2F2F2](9pt,000000)'Proyectos'", "[bg:F2F2F2](9pt,000000)'POST /proyectos con Residente: RBAC'", "[bg:F2F2F2](9pt,000000)'Automatizada'", '[bg:F2F2F2](9pt,000000)"HTTP 403 con campo \'error\'."', '[bg:F2F2F2](9pt,000000)"HTTP 403 – { error: \'No tiene permi"', "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'proyectos_avances.test.js – Test 5'"]
+    R06: ["[bg:FFFFFF](9pt,000000)'CP-021'", "[bg:FFFFFF](9pt,000000)'Grupo 1'", "[bg:FFFFFF](9pt,000000)'Proyectos'", "[bg:FFFFFF](9pt,000000)'GET /proyectos/:id sin token: detal'", "[bg:FFFFFF](9pt,000000)'Automatizada'", "[bg:FFFFFF](9pt,000000)'HTTP 401.'", "[bg:FFFFFF](9pt,000000)'HTTP 401.'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:FFFFFF](9pt,000000)'proyectos_avances.test.js – Test 6'"]
+    R07: ["[bg:F2F2F2](9pt,000000)'CP-022'", "[bg:F2F2F2](9pt,000000)'Grupo 1'", "[bg:F2F2F2](9pt,000000)'Proyectos'", "[bg:F2F2F2](9pt,000000)'GET /proyectos/:id con Admin: acces'", "[bg:F2F2F2](9pt,000000)'Automatizada'", "[bg:F2F2F2](9pt,000000)'HTTP 200/404/500 (Admin no recibe 4'", "[bg:F2F2F2](9pt,000000)'HTTP 404 o 500 (proyecto no existe '", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'proyectos_avances.test.js – Test 7'"]
+    R08: ["[bg:FFFFFF](9pt,000000)'CP-023'", "[bg:FFFFFF](9pt,000000)'Grupo 2'", "[bg:FFFFFF](9pt,000000)'Avances'", "[bg:FFFFFF](9pt,000000)'POST /avances sin token: ruta prote'", "[bg:FFFFFF](9pt,000000)'Automatizada'", '[bg:FFFFFF](9pt,000000)"HTTP 401 con campo \'error\'."', "[bg:FFFFFF](9pt,000000)'HTTP 401.'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:FFFFFF](9pt,000000)'proyectos_avances.test.js – Test 8'"]
+    R09: ["[bg:F2F2F2](9pt,000000)'CP-024'", "[bg:F2F2F2](9pt,000000)'Grupo 2'", "[bg:F2F2F2](9pt,000000)'Avances'", "[bg:F2F2F2](9pt,000000)'POST /avances con Contador: RBAC de'", "[bg:F2F2F2](9pt,000000)'Automatizada'", "[bg:F2F2F2](9pt,000000)'HTTP 403.'", "[bg:F2F2F2](9pt,000000)'HTTP 403.'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'proyectos_avances.test.js – Test 9'"]
+    R10: ["[bg:FFFFFF](9pt,000000)'CP-025'", "[bg:FFFFFF](9pt,000000)'Grupo 2'", "[bg:FFFFFF](9pt,000000)'Avances'", "[bg:FFFFFF](9pt,000000)'POST /avances con Bodeguero: RBAC d'", "[bg:FFFFFF](9pt,000000)'Automatizada'", "[bg:FFFFFF](9pt,000000)'HTTP 403.'", "[bg:FFFFFF](9pt,000000)'HTTP 403.'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:FFFFFF](9pt,000000)'proyectos_avances.test.js – Test 10'"]
+    R11: ["[bg:F2F2F2](9pt,000000)'CP-026'", "[bg:F2F2F2](9pt,000000)'Grupo 2'", "[bg:F2F2F2](9pt,000000)'Avances'", "[bg:F2F2F2](9pt,000000)'POST /avances con Residente sin evi'", "[bg:F2F2F2](9pt,000000)'Automatizada'", "[bg:F2F2F2](9pt,000000)'HTTP != 200 ni 201 (avance rechazad'", "[bg:F2F2F2](9pt,000000)'HTTP 400/403/500 segun middleware a'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'proyectos_avances.test.js – Test 11'"]
+    R12: ["[bg:FFFFFF](9pt,000000)'CP-027'", "[bg:FFFFFF](9pt,000000)'Grupo 2'", "[bg:FFFFFF](9pt,000000)'Avances'", "[bg:FFFFFF](9pt,000000)'POST /avances con Admin sin evidenc'", "[bg:FFFFFF](9pt,000000)'Automatizada'", "[bg:FFFFFF](9pt,000000)'HTTP != 200 ni 201.'", "[bg:FFFFFF](9pt,000000)'HTTP 400/403/500.'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:FFFFFF](9pt,000000)'proyectos_avances.test.js – Test 12'"]
+    R13: ["[bg:F2F2F2](9pt,000000)'CP-028'", "[bg:F2F2F2](9pt,000000)'Grupo 2'", "[bg:F2F2F2](9pt,000000)'Avances'", "[bg:F2F2F2](9pt,000000)'GET /avances/rubro/:idRubro sin tok'", "[bg:F2F2F2](9pt,000000)'Automatizada'", "[bg:F2F2F2](9pt,000000)'HTTP 401.'", "[bg:F2F2F2](9pt,000000)'HTTP 401.'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'proyectos_avances.test.js – Test 13'"]
+    R14: ["[bg:FFFFFF](9pt,000000)'CP-029'", "[bg:FFFFFF](9pt,000000)'Grupo 2'", "[bg:FFFFFF](9pt,000000)'Avances'", "[bg:FFFFFF](9pt,000000)'GET /avances/rubro/:idRubro con Adm'", "[bg:FFFFFF](9pt,000000)'Automatizada'", "[bg:FFFFFF](9pt,000000)'HTTP 200 o 500 (no 401 ni 403).'", "[bg:FFFFFF](9pt,000000)'HTTP 200 o 500.'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:FFFFFF](9pt,000000)'proyectos_avances.test.js – Test 14'"]
+    R15: ["[bg:F2F2F2](9pt,000000)'CP-030'", "[bg:F2F2F2](9pt,000000)'Grupo 3'", "[bg:F2F2F2](9pt,000000)'Proyectos/Rubros'", "[bg:F2F2F2](9pt,000000)'POST /proyectos/:id/rubros/bulk sin'", "[bg:F2F2F2](9pt,000000)'Automatizada'", "[bg:F2F2F2](9pt,000000)'HTTP 401.'", "[bg:F2F2F2](9pt,000000)'HTTP 401.'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'proyectos_avances.test.js – Test 15'"]
+    R16: ["[bg:FFFFFF](9pt,000000)'CP-031'", "[bg:FFFFFF](9pt,000000)'Grupo 3'", "[bg:FFFFFF](9pt,000000)'Proyectos/Rubros'", "[bg:FFFFFF](9pt,000000)'POST rubros/bulk con Residente: sol'", "[bg:FFFFFF](9pt,000000)'Automatizada'", "[bg:FFFFFF](9pt,000000)'HTTP 403 (no 200 ni 201).'", "[bg:FFFFFF](9pt,000000)'HTTP 403 o 500.'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:FFFFFF](9pt,000000)'proyectos_avances.test.js – Test 16'"]
+    R17: ["[bg:F2F2F2](9pt,000000)'CP-032'", "[bg:F2F2F2](9pt,000000)'Grupo 3'", "[bg:F2F2F2](9pt,000000)'Proyectos/Rubros'", "[bg:F2F2F2](9pt,000000)'POST rubros/bulk con Admin: pasa RB'", "[bg:F2F2F2](9pt,000000)'Automatizada'", "[bg:F2F2F2](9pt,000000)'HTTP != 403 (Admin pasa RBAC; puede'", "[bg:F2F2F2](9pt,000000)'HTTP 200/201/400/404/500 segun disp'", "[bg:E2EFDA](9pt,000000)'PASS'", "[bg:F2F2F2](9pt,000000)'proyectos_avances.test.js – Test 17'"]
+  [T7] 2 filas x 5 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'ID Defecto'", "[bg:1F3864](B,FFFFFF)'CP relacionado'", "[bg:1F3864](B,FFFFFF)'Descripcion'", "[bg:1F3864](B,FFFFFF)'Severidad'", "[bg:1F3864](B,FFFFFF)'Estado'"]
+    R01: ["[bg:E2EFDA](595959)'—'", "[bg:E2EFDA](595959)'—'", "[bg:E2EFDA](595959)'Sin defectos registrados en este sp'", "[bg:E2EFDA](595959)'—'", "[bg:E2EFDA](595959)'—'"]
+  [T8] 6 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Archivo de prueba'", "[bg:D9E1F2](000000)'backend/tests/proyectos_avances.tes'"]
+    R01: ["[bg:FFFFFF](B)'Comando de ejecucion'", "[bg:FFFFFF](000000)'npm test -- --testPathPattern proye'"]
+    R02: ["[bg:D9E1F2](B)'N° pruebas ejecutadas'", "[bg:D9E1F2](000000)'17'"]
+    R03: ["[bg:FFFFFF](B)'N° pruebas PASS'", "[bg:E2EFDA](000000)'17  (100%)'"]
+    R04: ["[bg:D9E1F2](B)'N° pruebas FAIL'", "[bg:E2EFDA](000000)'0'"]
+    R05: ["[bg:FFFFFF](B)'Salida del test runner'", "[bg:FFFFFF](000000)'Test Suites: 1 passed, 1 total|Test'"]
+  [T9] 4 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Evaluacion general de calidad'", "(000000)'El Sprint 02 alcanzo el nivel de ca'"]
+    R01: ["[bg:D9E1F2](B)'Modulos con cobertura insuficiente'", "(000000)'Ninguno dentro del alcance del Spri'"]
+    R02: ["[bg:D9E1F2](B)'Acciones de mejora para el siguient'", "(000000)'1. Crear suite de pruebas para el m'"]
+    R03: ["[bg:D9E1F2](B)'Criterio de calidad minimo para Spr'", "(000000)'Cobertura de pruebas automatizadas '"]
+  [T10] 13 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Sigla'", "[bg:1F3864](B,FFFFFF)'Significado'", "[bg:1F3864](B,FFFFFF)'Contexto de uso'"]
+    R01: ["[bg:D9E1F2](B,000000)'CP'", "[bg:D9E1F2](000000)'Caso de Prueba'", "[bg:D9E1F2](000000)'Escenario documentado de verificaci'"]
+    R02: ["[bg:FFFFFF](B,000000)'INF-PRU'", "[bg:FFFFFF](000000)'Informe de Pruebas'", "[bg:FFFFFF](000000)'Prefijo del codigo de este document'"]
+    R03: ["[bg:D9E1F2](B,000000)'JWT'", "[bg:D9E1F2](000000)'JSON Web Token'", "[bg:D9E1F2](000000)'Token de autenticacion bajo prueba'"]
+    R04: ["[bg:FFFFFF](B,000000)'RBAC'", "[bg:FFFFFF](000000)'Role-Based Access Control'", "[bg:FFFFFF](000000)'Mecanismo de autorizacion bajo prue'"]
+    R05: ["[bg:D9E1F2](B,000000)'HTTP'", "[bg:D9E1F2](000000)'HyperText Transfer Protocol'", "[bg:D9E1F2](000000)'Protocolo de comunicacion web'"]
+    R06: ["[bg:FFFFFF](B,000000)'API'", "[bg:FFFFFF](000000)'Application Programming Interface'", "[bg:FFFFFF](000000)'Interfaz de programacion'"]
+    R07: ["[bg:D9E1F2](B,000000)'BD'", "[bg:D9E1F2](000000)'Base de Datos'", "[bg:D9E1F2](000000)'Repositorio de datos'"]
+    R08: ["[bg:FFFFFF](B,000000)'CI'", "[bg:FFFFFF](000000)'Continuous Integration'", "[bg:FFFFFF](000000)'Entorno de ejecucion de pruebas aut'"]
+    R09: ["[bg:D9E1F2](B,000000)'PASS'", "[bg:D9E1F2](000000)'Caso ejecutado con resultado exitos'", "[bg:D9E1F2](000000)'Estado de caso de prueba'"]
+    R10: ["[bg:FFFFFF](B,000000)'FAIL'", "[bg:FFFFFF](000000)'Caso ejecutado con resultado fallid'", "[bg:FFFFFF](000000)'Estado de caso de prueba'"]
+    R11: ["[bg:D9E1F2](B,000000)'BLOQ.'", "[bg:D9E1F2](000000)'Caso no ejecutado por impedimento'", "[bg:D9E1F2](000000)'Estado de caso de prueba'"]
+    R12: ["[bg:FFFFFF](B,000000)'MIME'", "[bg:FFFFFF](000000)'Multipurpose Internet Mail Extensio'", "[bg:FFFFFF](000000)'Tipo de archivo para validacion de '"]
+
+======================================================================
+ARCHIVO: SPR02 RETRO V2
+======================================================================
+  P00 style='Normal' align=CENTER (1) | [bold,sz=14] [bold,sz=14] [bold,sz=14] | TEXT: ACTA DE RETROSPECTIVA — SPRINT 02  (Versión 2.0)
+  P01 style='Normal' align=CENTER (1) | [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] | TEXT: Proyecto: Sistema de Gestión Integral de Obra — ICARO CONSTRUCTORES BMGM S.A.S.
+  P02 style='Normal' align=CENTER (1) | [italic,sz=9,col=595959] | TEXT: Código: RET-SPR-02 | versión: 2.0 | Fecha: 12/05/2026
+  P03 style='Heading 1' align=None |  | TEXT: 1. Control documental
+  P05 style='Heading 1' align=None |  | TEXT: 2. Datos generales del sprint
+  P06 style='Heading 1' align=None |  | TEXT: 3. Objetivo del sprint
+  P07 style='Normal' align=None | [col=000000] [col=000000] [col=000000] [col=000000] [col=000000] [col=000000] [col=000000] [col=000000] [col=000000] [col=000000] [col=000000] [col=000000] [col=000000] [col=000000] [col=000000] | TEXT: Implementar el módulo de Gestión de Proyectos (CRUD completo con asignación de responsable y control
+  P08 style='Heading 1' align=None |  | TEXT: 4. Equipo Scrum
+  P09 style='Heading 1' align=None |  | TEXT: 5. Definición de "Hecho" (DoD) — Sprint 02
+  P10 style='Heading 1' align=None |  | TEXT: 6. Historias comprometidas vs. completadas
+  P11 style='Heading 1' align=None |  | TEXT: 7. Verificación de compromisos del Sprint 01 (sección 7.3)
+  P12 style='Normal' align=None | [italic,sz=9,col=595959] | TEXT: Resultado: 2/4 compromisos cumplidos, 1 cumplido parcialmente, 1 pendiente para Sprint 03.
+  P13 style='Heading 1' align=None |  | TEXT: 8. Retrospectiva: análisis por categorías
+  P14 style='Heading 2' align=None |  | TEXT: 8.1 Que salió bien (MANTENER)
+  P15 style='Heading 2' align=None |  | TEXT: 8.2 Que se puede mejorar (MEJORAR)
+  P16 style='Heading 2' align=None |  | TEXT: 8.3 Acciones concretas para el siguiente sprint (IMPLEMENTAR)
+  P17 style='Heading 1' align=None |  | TEXT: 9. Métricas del sprint
+  P18 style='Heading 1' align=None |  | TEXT: 10. Impedimentos y bloqueos identificados
+  P19 style='Heading 1' align=None |  | TEXT: 11. Compromisos para el siguiente sprint (Sprint 03)
+  P20 style='Heading 1' align=None |  | TEXT: 12. Observaciones y conclusiones
+  P21 style='Heading 1' align=None |  | TEXT: 13. Documentos de soporte formalizados en V2.0
+  P22 style='Normal' align=None | [bold,col=1F3864] | TEXT: Glosario de Siglas
+  --- TABLAS ---
+  [T0] 7 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Código del documento'", "(000000)'RET-SPR-02'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del documento'", "(000000)'Acta de Retrospectiva – Sprint 02'"]
+    R02: ["[bg:D9E1F2](B)'Versión'", "(000000)'2.0'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de elaboración'", "(000000)'12/05/2026'"]
+    R04: ["[bg:D9E1F2](B)'Sprint evaluado'", "(000000)'Sprint 02 – Gestión de Proyectos, A'"]
+    R05: ["[bg:D9E1F2](B)'Responsable de elaboración'", "(000000)'Ivan Santiago Pulgar Leon'"]
+    R06: ["[bg:D9E1F2](B)'Estado del documento'", "(000000)'Aprobado'"]
+  [T1] 3 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'versión'", "[bg:1F3864](B,FFFFFF)'Fecha'", "[bg:1F3864](B,FFFFFF)'Responsable'", "[bg:1F3864](B,FFFFFF)'Descripción del cambio'"]
+    R01: ["(000000)'1.0'", "(000000)'29/04/2026'", "(000000)'Ivan Santiago Pulgar Leon'", "(000000)'versión inicial del acta de retrosp'"]
+    R02: ["(000000)'2.0'", "(000000)'12/05/2026'", "(000000)'Ivan Santiago Pulgar Leon'", "(000000)'Versión definitiva con datos reales'"]
+  [T2] 7 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B,1F3864)'Número del sprint'", "(000000)'Sprint 02'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del sprint'", "(000000)'Gestión de Proyectos, Avances de Ob'"]
+    R02: ["[bg:D9E1F2](B)'Fecha de inicio'", "(000000)'20/04/2026'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de cierre'", "(000000)'24/04/2026'"]
+    R04: ["[bg:D9E1F2](B)'Duración'", "(000000)'1 semana'"]
+    R05: ["[bg:D9E1F2](B)'Scrum Master'", "(000000)'[Nombre del Scrum Master]'"]
+    R06: ["[bg:D9E1F2](B)'Módulos/componentes'", "(000000)'Proyectos (CRUD, RBAC), Avances de '"]
+  [T3] 4 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Rol'", "[bg:1F3864](B,FFFFFF)'Nombre'", "[bg:1F3864](B,FFFFFF)'Participación'"]
+    R01: ["[bg:D9E1F2](B,000000)'Scrum Master'", "(000000)'Ivan Santiago Pulgar Leon'", "(000000)'Facilito la reunión de retrospectiv'"]
+    R02: ["[bg:D9E1F2](B,000000)'Product Owner'", "(000000)'Isaac Sebastian Castro Muesmueran'", "(000000)'Valido criterios de aceptación y pr'"]
+    R03: ["[bg:D9E1F2](B,000000)'Equipo de desarrollo'", "(000000)'Isaac Sebastian Castro Muesmueran /'", "(000000)'Implemento todos los ítems del back'"]
+  [T4] 7 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Criterio de Completitud'", "[bg:1F3864](B,FFFFFF)'¿Cumplido?'", "[bg:1F3864](B,FFFFFF)'Observación'"]
+    R01: ["[bg:FFFFFF](000000)'Código fuente en repositorio Git (c'", "[bg:E2EFDA](B,000000)'Si'", "''"]
+    R02: ["[bg:D9E1F2](000000)'Funcionalidad desplegada en entorno'", "[bg:E2EFDA](B,000000)'Si'", "(000000)'docker-compose up sin errores'"]
+    R03: ["[bg:FFFFFF](000000)'Criterios de aceptación de cada his'", "[bg:E2EFDA](B,000000)'Si'", "(000000)'Todos revisados'"]
+    R04: ["[bg:D9E1F2](000000)'Pruebas automatizadas ejecutadas (1'", "[bg:E2EFDA](B,000000)'Si'", "(000000)'npm test -- proyectos avances'"]
+    R05: ["[bg:FFFFFF](000000)'Migraciones Prisma aplicadas correc'", "[bg:E2EFDA](B,000000)'Si'", "(000000)'Sin migraciones nuevas en Sprint 02'"]
+    R06: ["[bg:D9E1F2](000000)'Documentación de sprint generada y '", "[bg:E2EFDA](B,000000)'Si'", "(000000)'V2.0 + 3 docs de soporte'"]
+  [T5] 7 filas x 8 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,10pt,FFFFFF)'ID'", "[bg:1F3864](B,10pt,FFFFFF)'Historia / Tarea'", "[bg:1F3864](B,10pt,FFFFFF)'Tipo'", "[bg:1F3864](B,10pt,FFFFFF)'Modulo'", "[bg:1F3864](B,10pt,FFFFFF)'SP Plan'", "[bg:1F3864](B,10pt,FFFFFF)'SP Real'", "[bg:1F3864](B,10pt,FFFFFF)'Estado'", "[bg:1F3864](B,10pt,FFFFFF)'Criterios verificados'"]
+    R01: ["[bg:F2F2F2](10pt,000000)'HU-06'", "[bg:F2F2F2](10pt,000000)'CRUD completo de proyectos con asig'", "[bg:F2F2F2](10pt,000000)'HU'", "[bg:F2F2F2](10pt,000000)'Proyectos'", "[bg:F2F2F2](10pt,000000)'8'", "[bg:F2F2F2](10pt,000000)'8'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:F2F2F2](10pt,000000)'Admin puede crear, editar y listar '"]
+    R02: ["[bg:FFFFFF](10pt,000000)'HU-07'", "[bg:FFFFFF](10pt,000000)'Registrar avance físico de obra con'", "[bg:FFFFFF](10pt,000000)'HU'", "[bg:FFFFFF](10pt,000000)'Avances'", "[bg:FFFFFF](10pt,000000)'8'", "[bg:FFFFFF](10pt,000000)'8'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:FFFFFF](10pt,000000)'POST /api/v1/avances requiere: toke'"]
+    R03: ["[bg:F2F2F2](10pt,000000)'HU-08'", "[bg:F2F2F2](10pt,000000)'Consultar historial de avances por '", "[bg:F2F2F2](10pt,000000)'HU'", "[bg:F2F2F2](10pt,000000)'Avances'", "[bg:F2F2F2](10pt,000000)'5'", "[bg:F2F2F2](10pt,000000)'5'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:F2F2F2](10pt,000000)'GET /api/v1/avances/rubro/:idRubro '"]
+    R04: ["[bg:FFFFFF](10pt,000000)'HT-03'", "[bg:FFFFFF](10pt,000000)'Carga masiva de rubros desde API (P'", "[bg:FFFFFF](10pt,000000)'HT'", "[bg:FFFFFF](10pt,000000)'Proyectos'", "[bg:FFFFFF](10pt,000000)'5'", "[bg:FFFFFF](10pt,000000)'5'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:FFFFFF](10pt,000000)'Solo Admin puede realizar carga mas'"]
+    R05: ["[bg:F2F2F2](10pt,000000)'HT-04'", "[bg:F2F2F2](10pt,000000)'StorageService: almacenamiento loca'", "[bg:F2F2F2](10pt,000000)'HT'", "[bg:F2F2F2](10pt,000000)'Infraestructura'", "[bg:F2F2F2](10pt,000000)'5'", "[bg:F2F2F2](10pt,000000)'5'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:F2F2F2](10pt,000000)'StorageService implementado con pat'"]
+    R06: ["[bg:FFFFFF](10pt,000000)'HT-05'", "[bg:FFFFFF](10pt,000000)'Integracion multer + validación de '", "[bg:FFFFFF](10pt,000000)'HT'", "[bg:FFFFFF](10pt,000000)'Avances'", "[bg:FFFFFF](10pt,000000)'3'", "[bg:FFFFFF](10pt,000000)'3'", "[bg:E2EFDA](10pt,000000)'Completado'", "[bg:FFFFFF](10pt,000000)'multer configurado con memoryStorag'"]
+  [T6] 5 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'N°'", "[bg:1F3864](B,FFFFFF)'Compromiso adquirido en Sprint 01'", "[bg:1F3864](B,FFFFFF)'Estado'", "[bg:1F3864](B,FFFFFF)'Evidencia de cumplimiento'"]
+    R01: ["[bg:F2F2F2](000000)'1'", "[bg:F2F2F2](000000)'Generar el backlog formal (Sprint_N'", "[bg:E2EFDA](B,000000)'Cumplida'", "[bg:F2F2F2](000000)'Sprint_02_Backlog_ICARO.xlsx genera'"]
+    R02: ["[bg:FFFFFF](000000)'2'", "[bg:FFFFFF](000000)'Extender pruebas automatizadas (Jes'", "[bg:E2EFDA](B,000000)'Cumplida'", "[bg:FFFFFF](000000)'17 casos en proyectos_avances.test.'"]
+    R03: ["[bg:F2F2F2](000000)'3'", "[bg:F2F2F2](000000)'Documentar el informe de pruebas en'", "[bg:FFF2CC](B,000000)'Parcialmente cumplida'", "[bg:F2F2F2](000000)'Informe generado durante el sprint;'"]
+    R04: ["[bg:FFFFFF](000000)'4'", "[bg:FFFFFF](000000)'Revisar parche de tokens legacy y p'", "[bg:FCE4D6](B,000000)'Pendiente'", "[bg:FFFFFF](000000)'Parche mantenido en auth.middleware'"]
+  [T7] 5 filas x 1 cols | style='Table Grid'
+    R00: ["[bg:E2EFDA](000000)'• El patrón StorageService con inte'"]
+    R01: ["[bg:E2EFDA](000000)'• La transacción atómica en Prisma.'"]
+    R02: ["[bg:E2EFDA](000000)'• Las pruebas automatizadas cubrier'"]
+    R03: ["[bg:E2EFDA](000000)'• El pipeline de middleware estruct'"]
+    R04: ["[bg:E2EFDA](000000)'• La carga masiva de rubros vía API'"]
+  [T8] 3 filas x 1 cols | style='Table Grid'
+    R00: ["[bg:FFFFCC](000000)'• El orden del pipeline de middlewa'"]
+    R01: ["[bg:FFFFCC](000000)'• La migración de tokens legacy (pa'"]
+    R02: ["[bg:FFFFCC](000000)'• No se implementaron pruebas de va'"]
+  [T9] 5 filas x 1 cols | style='Table Grid'
+    R00: ["[bg:FDE9D9](000000)'• Documentar como estándar el pipel'"]
+    R01: ["[bg:FDE9D9](000000)'• Implementar y cerrar la migración'"]
+    R02: ["[bg:FDE9D9](000000)'• Agregar pruebas automatizadas par'"]
+    R03: ["[bg:FDE9D9](000000)'• Crear suite de pruebas para los m'"]
+    R04: ["[bg:FDE9D9](000000)'• Mantener cobertura de pruebas aut'"]
+  [T10] 13 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Métrica'", "[bg:1F3864](B,FFFFFF)'Valor planificado'", "[bg:1F3864](B,FFFFFF)'Valor real'"]
+    R01: ["[bg:FFFFFF](1F3864)'Story Points del sprint'", "[bg:FFFFFF](000000)'34 SP'", "[bg:FFFFFF](000000)'34 SP'"]
+    R02: ["[bg:D9E1F2](1F3864)'N° historias de usuario (HU)'", "[bg:F2F2F2](000000)'3'", "[bg:F2F2F2](000000)'3'"]
+    R03: ["[bg:FFFFFF](1F3864)'N° historias técnicas (HT)'", "[bg:FFFFFF](000000)'3'", "[bg:FFFFFF](000000)'3'"]
+    R04: ["[bg:D9E1F2](1F3864)'N° ítems completados'", "[bg:F2F2F2](000000)'6'", "[bg:F2F2F2](000000)'6 (100%)'"]
+    R05: ["[bg:FFFFFF](1F3864)'N° ítems bloqueados'", "[bg:FFFFFF](000000)'0'", "[bg:FFFFFF](000000)'0'"]
+    R06: ["[bg:D9E1F2](1F3864)'Velocidad (SP/semana)'", "[bg:F2F2F2](000000)'17'", "[bg:F2F2F2](000000)'17'"]
+    R07: ["[bg:FFFFFF](1F3864)'% Cumplimiento del backlog'", "[bg:FFFFFF](000000)'100%'", "[bg:FFFFFF](000000)'100%'"]
+    R08: ["[bg:D9E1F2](1F3864)'N° pruebas automatizadas'", "[bg:F2F2F2](000000)'17'", "[bg:F2F2F2](000000)'17 (100% PASS)'"]
+    R09: ["[bg:FFFFFF](1F3864)'N° módulos con cobertura >= 80%'", "[bg:FFFFFF](000000)'3'", "[bg:FFFFFF](000000)'3'"]
+    R10: ["[bg:D9E1F2](1F3864)'N° defectos registrados'", "[bg:F2F2F2](000000)'0'", "[bg:F2F2F2](000000)'0'"]
+    R11: ["[bg:FFFFFF](1F3864)'N° compromisos Sprint 01 cumplidos'", "[bg:FFFFFF](000000)'4'", "[bg:FFFFFF](000000)'2 cumplidos, 1 parcial, 1 pendiente'"]
+    R12: ["[bg:D9E1F2](1F3864)'Calidad general del sprint'", "[bg:F2F2F2](000000)'Alta'", "[bg:F2F2F2](000000)'Alta'"]
+  [T11] 2 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'ID'", "[bg:1F3864](B,FFFFFF)'Descripción'", "[bg:1F3864](B,FFFFFF)'Impacto'", "[bg:1F3864](B,FFFFFF)'Resolución'"]
+    R01: ["[bg:E2EFDA](595959)'—'", "[bg:E2EFDA](595959)'No se registraron impedimentos ni b'", "[bg:E2EFDA](595959)'—'", "[bg:E2EFDA](595959)'—'"]
+  [T12] 6 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'N°'", "[bg:1F3864](B,FFFFFF)'Compromiso'", "[bg:1F3864](B,FFFFFF)'Responsable'"]
+    R01: ["[bg:FFFFFF](000000)'1'", "[bg:FFFFFF](000000)'Documentar estándar de pipeline de '", "[bg:FFFFFF](9pt,000000)'Ivan Santiago Pulgar Leon'"]
+    R02: ["[bg:D9E1F2](000000)'2'", "[bg:D9E1F2](000000)'Implementar y cerrar migración de t'", "[bg:D9E1F2](000000)'Isaac Sebastian Castro Muesmueran /'"]
+    R03: ["[bg:FFFFFF](000000)'3'", "[bg:FFFFFF](000000)'Agregar pruebas automatizadas para '", "[bg:FFFFFF](000000)'Isaac Sebastian Castro Muesmueran /'"]
+    R04: ["[bg:D9E1F2](000000)'4'", "[bg:D9E1F2](000000)'Crear suite de pruebas para módulos'", "[bg:D9E1F2](000000)'Isaac Sebastian Castro Muesmueran /'"]
+    R05: ["[bg:FFFFFF](000000)'5'", "[bg:FFFFFF](000000)'Mantener cobertura de pruebas autom'", "[bg:FFFFFF](000000)'Isaac Sebastian Castro Muesmueran /'"]
+  [T13] 4 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Logro principal del sprint'", "(000000)'Se consolido el núcleo funcional de'"]
+    R01: ["[bg:D9E1F2](B)'Estado del producto al cierre'", "(000000)'El sistema cuenta con: autenticació'"]
+    R02: ["[bg:D9E1F2](B)'Satisfacción del equipo'", "(000000)'Sprint completado al 100% sin bloqu'"]
+    R03: ["[bg:D9E1F2](B)'Preparación para Sprint 03'", "(000000)'El Sprint 03 puede iniciar con foco'"]
+  [T14] 4 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Documento'", "[bg:1F3864](B,FFFFFF)'Código'", "[bg:1F3864](B,FFFFFF)'Propósito'", "[bg:1F3864](B,FFFFFF)'Secciones relacionadas'"]
+    R01: ["[bg:FFFFFF](B,000000)'Sprint_02_Backlog_ICARO.xlsx'", "[bg:FFFFFF](000000)'BCK-SPR-02'", "[bg:FFFFFF](000000)'Registro formal del backlog: 6 ítem'", "[bg:FFFFFF](000000)'§6 (Historias), §9 (Métricas)'"]
+    R02: ["[bg:D9E1F2](B,000000)'Sprint_02_Planificado_Realizado_ICA'", "[bg:D9E1F2](000000)'PLN-REA-SPR-02'", "[bg:D9E1F2](000000)'Comparación planificado vs. realiza'", "[bg:D9E1F2](000000)'§6, §9 (Métricas), §12 (Conclusione'"]
+    R03: ["[bg:FFFFFF](B,000000)'Sprint_02_Informe_Pruebas_ICARO.doc'", "[bg:FFFFFF](000000)'INF-PRU-SPR-02'", "[bg:FFFFFF](000000)'17 casos de prueba (100% PASS), res'", "[bg:FFFFFF](000000)'§5 (DoD), §8 (Categorías), §9 (Métr'"]
+  [T15] 18 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Sigla'", "[bg:1F3864](B,FFFFFF)'Significado'", "[bg:1F3864](B,FFFFFF)'Contexto de uso'"]
+    R01: ["[bg:D9E1F2](B,000000)'RET'", "[bg:D9E1F2](000000)'Retrospectiva'", "[bg:D9E1F2](000000)'Prefijo del código de este document'"]
+    R02: ["[bg:FFFFFF](B,000000)'SPR'", "[bg:FFFFFF](000000)'Sprint'", "[bg:FFFFFF](000000)'Iteración de desarrollo'"]
+    R03: ["[bg:D9E1F2](B,000000)'DoD'", "[bg:D9E1F2](000000)'Definición of Done'", "[bg:D9E1F2](000000)'Criterios de completitud del sprint'"]
+    R04: ["[bg:FFFFFF](B,000000)'SP'", "[bg:FFFFFF](000000)'Story Point'", "[bg:FFFFFF](000000)'Unidad de estimación de esfuerzo'"]
+    R05: ["[bg:D9E1F2](B,000000)'HU'", "[bg:D9E1F2](000000)'Historia de Usuario'", "[bg:D9E1F2](000000)'Tipo de ítem del backlog'"]
+    R06: ["[bg:FFFFFF](B,000000)'HT'", "[bg:FFFFFF](000000)'Historia Técnica'", "[bg:FFFFFF](000000)'Tarea técnica transversal'"]
+    R07: ["[bg:D9E1F2](B,000000)'RBAC'", "[bg:D9E1F2](000000)'Role-Based Access Control'", "[bg:D9E1F2](000000)'Control de acceso por roles'"]
+    R08: ["[bg:FFFFFF](B,000000)'JWT'", "[bg:FFFFFF](000000)'JSON Web Token'", "[bg:FFFFFF](000000)'Mecanismo de autenticación implemen'"]
+    R09: ["[bg:D9E1F2](B,000000)'ORM'", "[bg:D9E1F2](000000)'Object-Relational Mapper'", "[bg:D9E1F2](000000)'Herramienta Prisma utilizada en el '"]
+    R10: ["[bg:FFFFFF](B,000000)'API'", "[bg:FFFFFF](000000)'Application Programming Interface'", "[bg:FFFFFF](000000)'Interfaz de programación'"]
+    R11: ["[bg:D9E1F2](B,000000)'CRUD'", "[bg:D9E1F2](000000)'Create, Read, Update, Delete'", "[bg:D9E1F2](000000)'Operaciones básicas de gestión'"]
+    R12: ["[bg:FFFFFF](B,000000)'BD'", "[bg:FFFFFF](000000)'Base de Datos'", "[bg:FFFFFF](000000)'Repositorio de datos del sistema'"]
+    R13: ["[bg:D9E1F2](B,000000)'BCK'", "[bg:D9E1F2](000000)'Backlog'", "[bg:D9E1F2](000000)'Ref. al documento Sprint_02_Backlog'"]
+    R14: ["[bg:FFFFFF](B,000000)'PLN-REA'", "[bg:FFFFFF](000000)'Planificado-Realizado'", "[bg:FFFFFF](000000)'Ref. al documento de comparación'"]
+    R15: ["[bg:D9E1F2](B,000000)'INF-PRU'", "[bg:D9E1F2](000000)'Informe de Pruebas'", "[bg:D9E1F2](000000)'Ref. al documento de pruebas'"]
+    R16: ["[bg:FFFFFF](B,000000)'Git'", "[bg:FFFFFF](000000)'Sistema de control de versiones'", "[bg:FFFFFF](000000)'Herramienta de gestión de código fu'"]
+    R17: ["[bg:D9E1F2](B,000000)'S3'", "[bg:D9E1F2](000000)'Simple Storage Service'", "[bg:D9E1F2](000000)'Servicio de almacenamiento en nube '"]
+
+======================================================================
+XLSX: SPR02 BACKLOG
+======================================================================
+  SHEET: Backlog Sprint 02
+    [A1][FF1F3864](B,13.0pt,FFFFFFFF)'SPRINT BACKLOG — Sprint 02: Ge'  [B1][00000000](11.0pt)''  [C1][00000000](11.0pt)''  [D1][00000000](11.0pt)''  [E1][00000000](11.0pt)''  [F1][00000000](11.0pt)''
+    [A2][FFD9E1F2](9.0pt,FF595959)'ICARO CONSTRUCTORES BMGM S.A.S'  [B2][00000000](11.0pt)''  [C2][00000000](11.0pt)''  [D2][00000000](11.0pt)''  [E2][00000000](11.0pt)''  [F2][00000000](11.0pt)''
+    [A3][FFD9E1F2](B,9.0pt,FF1F3864)'Proyecto:'  [B3][FFFFFFFF](9.0pt,FF000000)'ICARO CONSTRUCTORES BMGM S.A.S'  [C3][00000000](11.0pt)''  [D3][00000000](11.0pt)''  [E3][00000000](11.0pt)''  [F3][00000000](11.0pt)''
+    [A4][FFD9E1F2](B,9.0pt,FF1F3864)'Fecha de inicio:'  [B4][FFFFFFFF](9.0pt,FF000000)'2026-04-20 00:00:00'  [C4][00000000](11.0pt)''  [D4][00000000](11.0pt)''  [E4][00000000](11.0pt)''  [F4][00000000](11.0pt)''
+    [A5][FFD9E1F2](B,9.0pt,FF1F3864)'Objetivo:'  [B5][FFFFFFFF](9.0pt,FF000000)'Implementar el modulo de Gesti'  [C5][00000000](11.0pt)''  [D5][00000000](11.0pt)''  [E5][00000000](11.0pt)''  [F5][00000000](11.0pt)''
+    [A6][FFD9E1F2](B,9.0pt,FF1F3864)'Vel. estimada (SP):'  [B6][FFFFFFFF](9.0pt,FF000000)'34'  [C6][00000000](11.0pt)''  [D6][00000000](11.0pt)''  [E6][00000000](11.0pt)''  [F6][00000000](11.0pt)''
+    [A7][FF1F3864](B,9.0pt,FFFFFFFF)'ID'  [B7][FF1F3864](B,9.0pt,FFFFFFFF)'Historia / Tarea'  [C7][FF1F3864](B,9.0pt,FFFFFFFF)'Tipo'  [D7][FF1F3864](B,9.0pt,FFFFFFFF)'Modulo'  [E7][FF1F3864](B,9.0pt,FFFFFFFF)'Prioridad'  [F7][FF1F3864](B,9.0pt,FFFFFFFF)'SP Plan'
+    [A8][FFF2F2F2](9.0pt)'HU-06'  [B8][FFF2F2F2](9.0pt)'CRUD completo de proyectos con'  [C8][FFF2F2F2](9.0pt)'HU'  [D8][FFF2F2F2](9.0pt)'Proyectos'  [E8][FFF2F2F2](9.0pt)'Alta'  [F8][FFF2F2F2](9.0pt)'8'
+    [A9][FFFFFFFF](9.0pt)'HU-07'  [B9][FFFFFFFF](9.0pt)'Registrar avance fisico de obr'  [C9][FFFFFFFF](9.0pt)'HU'  [D9][FFFFFFFF](9.0pt)'Avances'  [E9][FFFFFFFF](9.0pt)'Alta'  [F9][FFFFFFFF](9.0pt)'8'
+    [A10][FFF2F2F2](9.0pt)'HU-08'  [B10][FFF2F2F2](9.0pt)'Consultar historial de avances'  [C10][FFF2F2F2](9.0pt)'HU'  [D10][FFF2F2F2](9.0pt)'Avances'  [E10][FFF2F2F2](9.0pt)'Alta'  [F10][FFF2F2F2](9.0pt)'5'
+    [A11][FFFFFFFF](9.0pt)'HT-03'  [B11][FFFFFFFF](9.0pt)'Carga masiva de rubros desde A'  [C11][FFFFFFFF](9.0pt)'HT'  [D11][FFFFFFFF](9.0pt)'Proyectos'  [E11][FFFFFFFF](9.0pt)'Alta'  [F11][FFFFFFFF](9.0pt)'5'
+    [A12][FFF2F2F2](9.0pt)'HT-04'  [B12][FFF2F2F2](9.0pt)'StorageService: almacenamiento'  [C12][FFF2F2F2](9.0pt)'HT'  [D12][FFF2F2F2](9.0pt)'Infraestructura'  [E12][FFF2F2F2](9.0pt)'Alta'  [F12][FFF2F2F2](9.0pt)'5'
+    [A13][FFFFFFFF](9.0pt)'HT-05'  [B13][FFFFFFFF](9.0pt)'Integracion multer + validacio'  [C13][FFFFFFFF](9.0pt)'HT'  [D13][FFFFFFFF](9.0pt)'Avances'  [E13][FFFFFFFF](9.0pt)'Media'  [F13][FFFFFFFF](9.0pt)'3'
+    [A14][FF1F3864](B,9.0pt,FFFFFFFF)'TOTALES'  [B14][00000000](11.0pt)''  [C14][00000000](11.0pt)''  [D14][00000000](11.0pt)''  [E14][00000000](11.0pt)''  [F14][FF1F3864](B,10.0pt,FFFFFFFF)'34'
+  SHEET: Resumen Velocidad
+    [A1][FF1F3864](B,12.0pt,FFFFFFFF)'RESUMEN DE VELOCIDAD — Sprint '  [B1][00000000](11.0pt)''  [C1][00000000](11.0pt)''  [D1][00000000](11.0pt)''
+    [A2][FF2E75B6](B,9.0pt,FFFFFFFF)'Metrica'  [B2][FF2E75B6](B,9.0pt,FFFFFFFF)'Planificado'  [C2][FF2E75B6](B,9.0pt,FFFFFFFF)'Realizado'  [D2][FF2E75B6](B,9.0pt,FFFFFFFF)'Observacion'
+    [A3][FFFFFFFF](B,9.0pt)'Story Points totales'  [B3][FFFFFFFF](9.0pt)'34'  [C3][FFFFFFFF](9.0pt)'34'  [D3][FFFFFFFF](9.0pt)'Sin desvio'
+    [A4][FFD9E1F2](B,9.0pt)'N° historias de usuario (HU)'  [B4][FFD9E1F2](9.0pt)'3'  [C4][FFD9E1F2](9.0pt)'3'  [D4][FFD9E1F2](9.0pt)'HU-06, HU-07, HU-08'
+    [A5][FFFFFFFF](B,9.0pt)'N° historias tecnicas (HT)'  [B5][FFFFFFFF](9.0pt)'3'  [C5][FFFFFFFF](9.0pt)'3'  [D5][FFFFFFFF](9.0pt)'HT-03, HT-04, HT-05'
+    [A6][FFD9E1F2](B,9.0pt)'N° items del backlog'  [B6][FFD9E1F2](9.0pt)'6'  [C6][FFD9E1F2](9.0pt)'6'  [D6][FFD9E1F2](9.0pt)'6/6 completados'
+    [A7][FFFFFFFF](B,9.0pt)'N° items completados'  [B7][FFFFFFFF](9.0pt)'6'  [C7][FFFFFFFF](9.0pt)'6'  [D7][FFFFFFFF](9.0pt)'100%'
+    [A8][FFD9E1F2](B,9.0pt)'N° items bloqueados'  [B8][FFD9E1F2](9.0pt)'0'  [C8][FFD9E1F2](9.0pt)'0'  [D8][FFD9E1F2](9.0pt)'Sin bloqueos'
+    [A9][FFFFFFFF](B,9.0pt)'N° items no completados'  [B9][FFFFFFFF](9.0pt)'0'  [C9][FFFFFFFF](9.0pt)'0'  [D9][FFFFFFFF](9.0pt)'Sin pendientes'
+    [A10][FFD9E1F2](B,9.0pt)'Velocidad real (SP / semana)'  [B10][FFD9E1F2](9.0pt)'17'  [C10][FFD9E1F2](9.0pt)'17'  [D10][FFD9E1F2](9.0pt)'34 SP / 1 semana'
+    [A11][FFFFFFFF](B,9.0pt)'% Cumplimiento'  [B11][FFFFFFFF](9.0pt)'100%'  [C11][FFFFFFFF](9.0pt)'100%'  [D11][FFFFFFFF](9.0pt)'Sprint exitoso'
+    [A12][FFD9E1F2](B,9.0pt)'N° pruebas automatizadas'  [B12][FFD9E1F2](9.0pt)'17'  [C12][FFD9E1F2](9.0pt)'17'  [D12][FFD9E1F2](9.0pt)'17/17 PASS'
+    [A13][FFFFFFFF](B,9.0pt)'Cobertura pruebas de modulo'  [B13][FFFFFFFF](9.0pt)'100%'  [C13][FFFFFFFF](9.0pt)'100%'  [D13][FFFFFFFF](9.0pt)'proyectos_avances.test.js'
+  SHEET: Glosario
+    [A1][FF1F3864](B,10.0pt,FFFFFFFF)'GLOSARIO DE SIGLAS'  [B1][00000000](11.0pt)''  [C1][00000000](11.0pt)''
+    [A2][FF2E75B6](B,9.0pt,FFFFFFFF)'Sigla'  [B2][FF2E75B6](B,9.0pt,FFFFFFFF)'Significado'  [C2][FF2E75B6](B,9.0pt,FFFFFFFF)'Contexto de uso'
+    [A3][FFD9E1F2](B,9.0pt)'HU'  [B3][FFD9E1F2](9.0pt)'Historia de Usuario'  [C3][FFD9E1F2](9.0pt)'Tipo de item del backlog orien'
+    [A4][FFFFFFFF](B,9.0pt)'HT'  [B4][FFFFFFFF](9.0pt)'Historia Tecnica'  [C4][FFFFFFFF](9.0pt)'Tarea tecnica transversal del '
+    [A5][FFD9E1F2](B,9.0pt)'SP'  [B5][FFD9E1F2](9.0pt)'Story Point'  [C5][FFD9E1F2](9.0pt)'Unidad relativa de estimacion '
+    [A6][FFFFFFFF](B,9.0pt)'RBAC'  [B6][FFFFFFFF](9.0pt)'Role-Based Access Control'  [C6][FFFFFFFF](9.0pt)'Control de acceso basado en ro'
+    [A7][FFD9E1F2](B,9.0pt)'JWT'  [B7][FFD9E1F2](9.0pt)'JSON Web Token'  [C7][FFD9E1F2](9.0pt)'Estandar de autenticacion firm'
+    [A8][FFFFFFFF](B,9.0pt)'CRUD'  [B8][FFFFFFFF](9.0pt)'Create, Read, Update, Delete'  [C8][FFFFFFFF](9.0pt)'Operaciones basicas de gestion'
+    [A9][FFD9E1F2](B,9.0pt)'API'  [B9][FFD9E1F2](9.0pt)'Application Programming Interf'  [C9][FFD9E1F2](9.0pt)'Interfaz de programacion entre'
+    [A10][FFFFFFFF](B,9.0pt)'UUID'  [B10][FFFFFFFF](9.0pt)'Universally Unique Identifier'  [C10][FFFFFFFF](9.0pt)'Identificador unico universal '
+    [A11][FFD9E1F2](B,9.0pt)'DoD'  [B11][FFD9E1F2](9.0pt)'Definition of Done'  [C11][FFD9E1F2](9.0pt)'Criterios que definen un item '
+    [A12][FFFFFFFF](B,9.0pt)'ORM'  [B12][FFFFFFFF](9.0pt)'Object-Relational Mapper'  [C12][FFFFFFFF](9.0pt)'Herramienta de mapeo objeto-re'
+    [A13][FFD9E1F2](B,9.0pt)'BD'  [B13][FFD9E1F2](9.0pt)'Base de Datos'  [C13][FFD9E1F2](9.0pt)'Repositorio estructurado de da'
+    [A14][FFFFFFFF](B,9.0pt)'S3'  [B14][FFFFFFFF](9.0pt)'Simple Storage Service'  [C14][FFFFFFFF](9.0pt)'Servicio de almacenamiento en '
+    [A15][FFD9E1F2](B,9.0pt)'BCK'  [B15][FFD9E1F2](9.0pt)'Backlog'  [C15][FFD9E1F2](9.0pt)'Prefijo del codigo documental '
+    [A16][FFFFFFFF](B,9.0pt)'SPR'  [B16][FFFFFFFF](9.0pt)'Sprint'  [C16][FFFFFFFF](9.0pt)'Iteracion de desarrollo en met'
+
+======================================================================
+ARCHIVO: SPR03 PLN-REA
+======================================================================
+  P00 style='Normal' align=CENTER (1) | [bold,sz=14,col=1F3864] | TEXT: REGISTRO DE PLANIFICADO VS. REALIZADO — SPRINT 03
+  P01 style='Normal' align=CENTER (1) | [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] | TEXT: Proyecto: Sistema de Gestión Integral de Obra — ICARO CONSTRUCTORES BMGM S.A.S.
+  P02 style='Normal' align=CENTER (1) | [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] | TEXT: Código: PLN-REA-SPR-03 | Versión: 1.0 | Fecha: 26/05/2026
+  P03 style='Heading 1' align=None |  | TEXT: 1. Control documental
+  P05 style='Heading 1' align=None |  | TEXT: 2. Datos generales del sprint
+  P06 style='Heading 1' align=None |  | TEXT: 3. Historias/Tareas: Planificado vs. Realizado
+  P07 style='Heading 1' align=None |  | TEXT: 4. Resumen cuantitativo del sprint
+  P08 style='Heading 1' align=None |  | TEXT: 5. Análisis de desvíos significativos
+  P09 style='Normal' align=None |  | TEXT: El Sprint 03 no registro desvíos significativos. Los 32 SP planificados fueron entregados en su tota
+  P10 style='Heading 1' align=None |  | TEXT: 6. Observaciones generales del sprint
+  P11 style='Heading 1' align=None |  | TEXT: Glosario de Siglas
+  --- TABLAS ---
+  [T0] 7 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Código del documento'", "(000000)'PLN-REA-SPR-03'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del documento'", "(000000)'Registro de Planificado vs. Realiza'"]
+    R02: ["[bg:D9E1F2](B)'Versión'", "(000000)'1.0'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de elaboración'", "(000000)'12/05/2026'"]
+    R04: ["[bg:D9E1F2](B)'Sprint evaluado'", "(000000)'Sprint 03 – Catalogo de Materiales,'"]
+    R05: ["[bg:D9E1F2](B)'Responsable de elaboración'", "(000000)'Ivan Santiago Pulgar Leon '"]
+    R06: ["[bg:D9E1F2](B)'Estado del documento'", "(000000)'Aprobado'"]
+  [T1] 2 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Versión'", "[bg:1F3864](B,FFFFFF)'Fecha'", "[bg:1F3864](B,FFFFFF)'Responsable'", "[bg:1F3864](B,FFFFFF)'Descripción'"]
+    R01: ["(000000)'1.0'", "(000000)'12/05/2026'", "(000000)'Ivan Santiago Pulgar Leon'", "(000000)'Documento generado con datos reales'"]
+  [T2] 6 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Número del sprint'", "(000000)'Sprint 03'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del sprint'", "(000000)'Catálogo de Materiales, Gestión de '"]
+    R02: ["[bg:D9E1F2](B)'Fecha de inicio'", "(000000)'27/04/2026'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de cierre'", "(000000)'01/05/2026'"]
+    R04: ["[bg:D9E1F2](B)'Duración'", "(000000)'1 semana '"]
+    R05: ["[bg:D9E1F2](B)'Módulos/componentes trabajados'", "(000000)'Materiales (catalogo CRUD, filtros,'"]
+  [T3] 8 filas x 10 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'ID'", "[bg:1F3864](B,FFFFFF)'Historia / Tarea'", "[bg:1F3864](B,FFFFFF)'Tipo'", "[bg:1F3864](B,FFFFFF)'Modulo'", "[bg:1F3864](B,FFFFFF)'SP|Plan'", "[bg:1F3864](B,FFFFFF)'SP|Real'", "[bg:1F3864](B,FFFFFF)'Variación'", "[bg:1F3864](B,FFFFFF)'% Avance'", "[bg:1F3864](B,FFFFFF)'Estado'", "[bg:1F3864](B,FFFFFF)'Causa de|desvío'"]
+    R01: ["[bg:D9E1F2](000000)'HU-09'", "[bg:FFFFFF](000000)'CRUD completo del catálogo de mater'", "[bg:D9E1F2](000000)'HU'", "[bg:FFFFFF](000000)'Materiales'", "[bg:D9E1F2](000000)'8'", "[bg:FFFFFF](000000)'8'", "[bg:D9E1F2](000000)'0'", "[bg:FFFFFF](000000)'100%'", "[bg:E2EFDA](000000)'Completado'", "[bg:FFFFFF](000000)'Sin desvío'"]
+    R02: ["[bg:D9E1F2](000000)'HU-10'", "[bg:FFFFFF](000000)'Registro de movimientos de inventar'", "[bg:D9E1F2](000000)'HU'", "[bg:FFFFFF](000000)'Bodega'", "[bg:D9E1F2](000000)'8'", "[bg:FFFFFF](000000)'8'", "[bg:D9E1F2](000000)'0'", "[bg:FFFFFF](000000)'100%'", "[bg:E2EFDA](000000)'Completado'", "[bg:FFFFFF](000000)'Sin desvío'"]
+    R03: ["[bg:D9E1F2](000000)'HU-11'", "[bg:FFFFFF](000000)'Consultar historial de movimientos '", "[bg:D9E1F2](000000)'HU'", "[bg:FFFFFF](000000)'Bodega'", "[bg:D9E1F2](000000)'5'", "[bg:FFFFFF](000000)'5'", "[bg:D9E1F2](000000)'0'", "[bg:FFFFFF](000000)'100%'", "[bg:E2EFDA](000000)'Completado'", "[bg:FFFFFF](000000)'Sin desvío'"]
+    R04: ["[bg:D9E1F2](000000)'HT-06'", '[bg:FFFFFF](000000)"Migración de tokens legacy: \'Admini"', "[bg:D9E1F2](000000)'HT'", "[bg:FFFFFF](000000)'Autenticación'", "[bg:D9E1F2](000000)'3'", "[bg:FFFFFF](000000)'3'", "[bg:D9E1F2](000000)'0'", "[bg:FFFFFF](000000)'100%'", "[bg:E2EFDA](000000)'Completado'", "[bg:FFFFFF](000000)'Sin desvío'"]
+    R05: ["[bg:D9E1F2](000000)'HT-07'", "[bg:FFFFFF](000000)'Estándar documentado de pipeline de'", "[bg:D9E1F2](000000)'HT'", "[bg:FFFFFF](000000)'Infraestructura'", "[bg:D9E1F2](000000)'3'", "[bg:FFFFFF](000000)'3'", "[bg:D9E1F2](000000)'0'", "[bg:FFFFFF](000000)'100%'", "[bg:E2EFDA](000000)'Completado'", "[bg:FFFFFF](000000)'Sin desvío'"]
+    R06: ["[bg:D9E1F2](000000)'HT-08'", "[bg:FFFFFF](000000)'Suite de pruebas automatizadas: mat'", "[bg:D9E1F2](000000)'HT'", "[bg:FFFFFF](000000)'Calidad'", "[bg:D9E1F2](000000)'5'", "[bg:FFFFFF](000000)'5'", "[bg:D9E1F2](000000)'0'", "[bg:FFFFFF](000000)'100%'", "[bg:E2EFDA](000000)'Completado'", "[bg:FFFFFF](000000)'Sin desvío'"]
+    R07: ["[bg:1F3864](B,FFFFFF)'TOTALES'", "[bg:1F3864]''", "[bg:1F3864]''", "[bg:1F3864]''", "[bg:D9E1F2](B,000000)'32'", "[bg:D9E1F2](B,000000)'32'", "[bg:D9E1F2](B,000000)'0'", "[bg:E2EFDA](B,000000)'100%'", "[bg:1F3864]''", "[bg:1F3864]''"]
+  [T4] 12 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Métrica'", "[bg:1F3864](B,FFFFFF)'Planificado'", "[bg:1F3864](B,FFFFFF)'Realizado'"]
+    R01: ["[bg:FFFFFF]'Story Points totales'", "[bg:FFFFFF](000000)'32'", "[bg:FFFFFF](000000)'32'"]
+    R02: ["[bg:D9E1F2]'N° historias de usuario (HU)'", "[bg:F2F2F2](000000)'3'", "[bg:F2F2F2](000000)'3'"]
+    R03: ["[bg:FFFFFF]'N° historias técnicas (HT)'", "[bg:FFFFFF](000000)'3'", "[bg:FFFFFF](000000)'3'"]
+    R04: ["[bg:D9E1F2]'N° ítems del backlog'", "[bg:F2F2F2](000000)'6'", "[bg:F2F2F2](000000)'6'"]
+    R05: ["[bg:FFFFFF]'N° ítems completados'", "[bg:FFFFFF](000000)'—'", "[bg:FFFFFF](000000)'6 (100%)'"]
+    R06: ["[bg:D9E1F2]'N° ítems bloqueados'", "[bg:F2F2F2](000000)'—'", "[bg:F2F2F2](000000)'0'"]
+    R07: ["[bg:FFFFFF]'N° ítems no completados'", "[bg:FFFFFF](000000)'—'", "[bg:FFFFFF](000000)'0'"]
+    R08: ["[bg:D9E1F2]'Velocidad real (SP / semana)'", "[bg:F2F2F2](000000)'16'", "[bg:F2F2F2](000000)'16'"]
+    R09: ["[bg:FFFFFF]'% Cumplimiento del sprint'", "[bg:FFFFFF](000000)'100%'", "[bg:FFFFFF](000000)'100%'"]
+    R10: ["[bg:D9E1F2]'N° pruebas automatizadas'", "[bg:F2F2F2](000000)'18'", "[bg:F2F2F2](000000)'18 (100% PASS)'"]
+    R11: ["[bg:FFFFFF]'Compromisos Sprint 02 §8.3 cerrados'", "[bg:FFFFFF](000000)'5/5'", "[bg:FFFFFF](000000)'5/5 (100%)'"]
+  [T5] 4 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Factores que influyeron positivamen'", "(000000)'La separación de capas (service vs '"]
+    R01: ["[bg:D9E1F2](B)'Factores que afectaron negativament'", "(000000)'El endpoint de reactivación de mate'"]
+    R02: ["[bg:D9E1F2](B)'Lecciones aprendidas clave'", "(000000)'1. Las pruebas unitarias directas s'"]
+    R03: ["[bg:D9E1F2](B)'Compromisos para el siguiente sprin'", "(000000)'Implementar el módulo de Requerimie'"]
+  [T6] 11 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Sigla'", "[bg:1F3864](B,FFFFFF)'Significado'", "[bg:1F3864](B,FFFFFF)'Contexto de uso'"]
+    R01: ["[bg:D9E1F2](B,000000)'SP'", "[bg:D9E1F2](000000)'Story Point'", "[bg:D9E1F2](000000)'Unidad de estimación de esfuerzo'"]
+    R02: ["[bg:FFFFFF](B,000000)'HU'", "[bg:FFFFFF](000000)'Historia de Usuario'", "[bg:FFFFFF](000000)'Tipo de ítem del backlog'"]
+    R03: ["[bg:D9E1F2](B,000000)'HT'", "[bg:D9E1F2](000000)'Historia técnica'", "[bg:D9E1F2](000000)'Tarea técnica transversal'"]
+    R04: ["[bg:FFFFFF](B,000000)'PLN-REA'", "[bg:FFFFFF](000000)'Planificado-Realizado'", "[bg:FFFFFF](000000)'Prefijo del Código de este document'"]
+    R05: ["[bg:D9E1F2](B,000000)'SPR'", "[bg:D9E1F2](000000)'Sprint'", "[bg:D9E1F2](000000)'Iteración de desarrollo Scrum'"]
+    R06: ["[bg:FFFFFF](B,000000)'RBAC'", "[bg:FFFFFF](000000)'Role-Based Access Control'", "[bg:FFFFFF](000000)'Control de acceso por roles'"]
+    R07: ["[bg:D9E1F2](B,000000)'API'", "[bg:D9E1F2](000000)'Application Programming Interface'", "[bg:D9E1F2](000000)'Interfaz de programación'"]
+    R08: ["[bg:FFFFFF](B,000000)'BD'", "[bg:FFFFFF](000000)'Base de Datos'", "[bg:FFFFFF](000000)'Repositorio de datos del sistema'"]
+    R09: ["[bg:D9E1F2](B,000000)'CI'", "[bg:D9E1F2](000000)'Continuous Integration'", "[bg:D9E1F2](000000)'Integracion continua'"]
+    R10: ["[bg:FFFFFF](B,000000)'UPSERT'", "[bg:FFFFFF](000000)'Update or Insert'", "[bg:FFFFFF](000000)'Operación atómica de creación o act'"]
+
+======================================================================
+ARCHIVO: SPR03 INF-PRU
+======================================================================
+  P00 style='Normal' align=CENTER (1) | [bold,sz=14,col=1F3864] | TEXT: INFORME DE EJECUCION DE PRUEBAS — SPRINT 03
+  P01 style='Normal' align=CENTER (1) | [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] | TEXT: Proyecto: Sistema de Gestion Integral de Obra — ICARO CONSTRUCTORES BMGM S.A.S.
+  P02 style='Normal' align=CENTER (1) | [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] | TEXT: Codigo: INF-PRU-SPR-03  |  Version: 1.0  |  Fecha: 26/05/2026
+  P03 style='Heading 2' align=None |  | TEXT: 1. Control documental
+  P05 style='Heading 1' align=None |  | TEXT: 2. Datos generales del sprint
+  P06 style='Heading 1' align=None |  | TEXT: 3. Resumen ejecutivo de pruebas
+  P08 style='Heading 1' align=None |  | TEXT: 4. Alcance de las pruebas del sprint
+  P09 style='Heading 1' align=None |  | TEXT: 5. Tabla de casos de prueba ejecutados
+  P10 style='Heading 1' align=None |  | TEXT: 6. Defectos encontrados
+  P11 style='Heading 1' align=None |  | TEXT: 7. Resultado de pruebas automatizadas
+  P12 style='Heading 1' align=None |  | TEXT: 8. Conclusiones y acciones derivadas
+  P13 style='Heading 1' align=None |  | TEXT: Glosario de Siglas
+  --- TABLAS ---
+  [T0] 7 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Código del documento'", "(000000)'INF-PRU-SPR-03'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del documento'", "(000000)'Informe de Ejecución de Pruebas – S'"]
+    R02: ["[bg:D9E1F2](B)'Versión'", "(000000)'1.0'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de elaboración'", "(000000)'13/05/2026'"]
+    R04: ["[bg:D9E1F2](B)'Sprint evaluado'", "(000000)'Sprint 03 – Catalogo de Materiales,'"]
+    R05: ["[bg:D9E1F2](B)'Responsable de elaboración'", "(000000)'Ivan Santiago Pulgar Leon '"]
+    R06: ["[bg:D9E1F2](B)'Estado del documento'", "(000000)'Aprobado'"]
+  [T1] 2 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Versión'", "[bg:1F3864](B,FFFFFF)'Fecha'", "[bg:1F3864](B,FFFFFF)'Responsable'", "[bg:1F3864](B,FFFFFF)'Descripción'"]
+    R01: ["(000000)'1.0'", "(000000)'13/05/2026'", "(000000)'Ivan Santiago Pulgar Leon '", "(000000)'Documento generado con datos reales'"]
+  [T2] 6 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Numero del sprint'", "(000000)'Sprint 03'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del sprint'", "(000000)'Catálogo de Materiales, Gestión de '"]
+    R02: ["[bg:D9E1F2](B)'Fecha de inicio'", "(000000)'27/04/2026'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de cierre'", "(000000)'01/05/2026'"]
+    R04: ["[bg:D9E1F2](B)'Duración'", "(000000)'1 semana '"]
+    R05: ["[bg:D9E1F2](B)'Módulos/componentes trabajados'", "(000000)'Materiales (catalogo CRUD, filtros,'"]
+  [T3] 2 filas x 6 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Total|Planificados'", "[bg:1F3864](B,FFFFFF)'Total|Ejecutados'", "[bg:1F3864](B,FFFFFF)'PASS'", "[bg:1F3864](B,FFFFFF)'FAIL'", "[bg:1F3864](B,FFFFFF)'BLOQUEADO'", "[bg:1F3864](B,FFFFFF)'% Éxito'"]
+    R01: ["[bg:FFFFFF](B,000000)'18'", "[bg:FFFFFF](B,000000)'18'", "[bg:E2EFDA](B,000000)'18'", "[bg:FCE4D6](B,000000)'0'", "[bg:FFF2CC](B,000000)'0'", "[bg:E2EFDA](B,000000)'100%'"]
+  [T4] 5 filas x 6 cols | style='Table Grid'
+    R00: ["[bg:2E75B6](B,FFFFFF)'Modulo'", "[bg:2E75B6](B,FFFFFF)'Tipo de prueba'", "[bg:2E75B6](B,FFFFFF)'N° Casos'", "[bg:2E75B6](B,FFFFFF)'PASS'", "[bg:2E75B6](B,FFFFFF)'FAIL'", "[bg:2E75B6](B,FFFFFF)'% Exito'"]
+    R01: ["[bg:F2F2F2](000000)'Materiales'", "[bg:F2F2F2](000000)'Automatizada (Jest/Supertest)'", "[bg:F2F2F2](000000)'8'", "[bg:F2F2F2](000000)'8'", "[bg:F2F2F2](000000)'0'", "[bg:F2F2F2](000000)'100%'"]
+    R02: ["[bg:FFFFFF](000000)'Bodega'", "[bg:FFFFFF](000000)'Automatizada (Jest/Supertest)'", "[bg:FFFFFF](000000)'6'", "[bg:FFFFFF](000000)'6'", "[bg:FFFFFF](000000)'0'", "[bg:FFFFFF](000000)'100%'"]
+    R03: ["[bg:F2F2F2](000000)'StorageService'", "[bg:F2F2F2](000000)'Unitaria (Jest directo)'", "[bg:F2F2F2](000000)'4'", "[bg:F2F2F2](000000)'4'", "[bg:F2F2F2](000000)'0'", "[bg:F2F2F2](000000)'100%'"]
+    R04: ["[bg:D9E1F2](B,000000)'TOTAL'", "[bg:D9E1F2](B,000000)'—'", "[bg:D9E1F2](B,000000)'18'", "[bg:D9E1F2](B,000000)'18'", "[bg:D9E1F2](B,000000)'0'", "[bg:D9E1F2](B,000000)'100%'"]
+  [T5] 5 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Módulos/funcionalidades probadas'", "(000000)'CRUD del catálogo de materiales (GE'"]
+    R01: ["[bg:D9E1F2](B)'Módulos excluidos (fuera de alcance'", "(000000)'Compras, Contabilidad, Reportes, mó'"]
+    R02: ["[bg:D9E1F2](B)'Tipos de prueba ejecutados'", "(000000)'Automatizada de integración de API '"]
+    R03: ["[bg:D9E1F2](B)'Entorno de pruebas'", "(000000)'Local – Docker Compose (backend Nod'"]
+    R04: ["[bg:D9E1F2](B)'Herramientas utilizadas'", "(000000)'Jest 29, Supertest 6, jsonwebtoken.'"]
+  [T6] 19 filas x 9 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'ID CP'", "[bg:1F3864](B,FFFFFF)'Grupo'", "[bg:1F3864](B,FFFFFF)'Modulo'", "[bg:1F3864](B,FFFFFF)'Descripción'", "[bg:1F3864](B,FFFFFF)'Tipo'", "[bg:1F3864](B,FFFFFF)'Resultado|Esperado'", "[bg:1F3864](B,FFFFFF)'Resultado|Obtenido'", "[bg:1F3864](B,FFFFFF)'Estado'", "[bg:1F3864](B,FFFFFF)'Evidencia'"]
+    R01: ["[bg:F2F2F2](000000)'CP-033'", "[bg:F2F2F2](000000)'Grupo 1'", "[bg:F2F2F2](000000)'Materiales'", "[bg:F2F2F2](000000)'GET /materiales sin token: ruta pro'", "[bg:F2F2F2](000000)'Automatizada'", '[bg:F2F2F2](000000)"HTTP 401 con campo \'error\'."', '[bg:F2F2F2](000000)"HTTP 401 – { error: \'Acceso Denegad"', "[bg:E2EFDA](000000)'PASS'", "[bg:F2F2F2](000000)'materiales_bodega.test.js – Test 1'"]
+    R02: ["[bg:FFFFFF](000000)'CP-034'", "[bg:FFFFFF](000000)'Grupo 1'", "[bg:FFFFFF](000000)'Materiales'", "[bg:FFFFFF](000000)'GET /materiales con Admin: pasa aut'", "[bg:FFFFFF](000000)'Automatizada'", "[bg:FFFFFF](000000)'HTTP 200 o 500 (no 401 ni 403).'", "[bg:FFFFFF](000000)'HTTP 200 o 500 según disponibilidad'", "[bg:E2EFDA](000000)'PASS'", "[bg:FFFFFF](000000)'materiales_bodega.test.js – Test 2'"]
+    R03: ["[bg:F2F2F2](000000)'CP-035'", "[bg:F2F2F2](000000)'Grupo 1'", "[bg:F2F2F2](000000)'Materiales'", "[bg:F2F2F2](000000)'GET /materiales con Bodeguero: pasa'", "[bg:F2F2F2](000000)'Automatizada'", "[bg:F2F2F2](000000)'HTTP 200 o 500 (no 403).'", "[bg:F2F2F2](000000)'HTTP 200 o 500 según disponibilidad'", "[bg:E2EFDA](000000)'PASS'", "[bg:F2F2F2](000000)'materiales_bodega.test.js – Test 3'"]
+    R04: ["[bg:FFFFFF](000000)'CP-036'", "[bg:FFFFFF](000000)'Grupo 1'", "[bg:FFFFFF](000000)'Materiales'", "[bg:FFFFFF](000000)'POST /materiales sin token: ruta de'", "[bg:FFFFFF](000000)'Automatizada'", "[bg:FFFFFF](000000)'HTTP 401.'", "[bg:FFFFFF](000000)'HTTP 401.'", "[bg:E2EFDA](000000)'PASS'", "[bg:FFFFFF](000000)'materiales_bodega.test.js – Test 4'"]
+    R05: ["[bg:F2F2F2](000000)'CP-037'", "[bg:F2F2F2](000000)'Grupo 1'", "[bg:F2F2F2](000000)'Materiales'", "[bg:F2F2F2](000000)'POST /materiales con Residente: RBA'", "[bg:F2F2F2](000000)'Automatizada'", '[bg:F2F2F2](000000)"HTTP 403 con campo \'error\'."', '[bg:F2F2F2](000000)"HTTP 403 – { error: \'Acceso denegad"', "[bg:E2EFDA](000000)'PASS'", "[bg:F2F2F2](000000)'materiales_bodega.test.js – Test 5'"]
+    R06: ["[bg:FFFFFF](000000)'CP-038'", "[bg:FFFFFF](000000)'Grupo 1'", "[bg:FFFFFF](000000)'Materiales'", "[bg:FFFFFF](000000)'POST /materiales con Admin sin camp'", "[bg:FFFFFF](000000)'Automatizada'", "[bg:FFFFFF](000000)'HTTP 400 (si BD disponible) o 500 ('", '[bg:FFFFFF](000000)"HTTP 400 – { error: \'Los campos cód"', "[bg:E2EFDA](000000)'PASS'", "[bg:FFFFFF](000000)'materiales_bodega.test.js – Test 6'"]
+    R07: ["[bg:F2F2F2](000000)'CP-039'", "[bg:F2F2F2](000000)'Grupo 1'", "[bg:F2F2F2](000000)'Materiales'", "[bg:F2F2F2](000000)'GET /materiales/categorías con Admi'", "[bg:F2F2F2](000000)'Automatizada'", "[bg:F2F2F2](000000)'HTTP 200 o 500 (no 401 ni 403).'", "[bg:F2F2F2](000000)'HTTP 200 o 500 según disponibilidad'", "[bg:E2EFDA](000000)'PASS'", "[bg:F2F2F2](000000)'materiales_bodega.test.js – Test 7'"]
+    R08: ["[bg:FFFFFF](000000)'CP-040'", "[bg:FFFFFF](000000)'Grupo 1'", "[bg:FFFFFF](000000)'Materiales'", "[bg:FFFFFF](000000)'DELETE /materiales/:id con Contador'", "[bg:FFFFFF](000000)'Automatizada'", "[bg:FFFFFF](000000)'HTTP 403.'", "[bg:FFFFFF](000000)'HTTP 403.'", "[bg:E2EFDA](000000)'PASS'", "[bg:FFFFFF](000000)'materiales_bodega.test.js – Test 8'"]
+    R09: ["[bg:F2F2F2](000000)'CP-041'", "[bg:F2F2F2](000000)'Grupo 2'", "[bg:F2F2F2](000000)'Bodega'", "[bg:F2F2F2](000000)'POST /bodega/.../movimientos sin to'", "[bg:F2F2F2](000000)'Automatizada'", '[bg:F2F2F2](000000)"HTTP 401 con campo \'error\'."', "[bg:F2F2F2](000000)'HTTP 401.'", "[bg:E2EFDA](000000)'PASS'", "[bg:F2F2F2](000000)'materiales_bodega.test.js – Test 9'"]
+    R10: ["[bg:FFFFFF](000000)'CP-042'", "[bg:FFFFFF](000000)'Grupo 2'", "[bg:FFFFFF](000000)'Bodega'", "[bg:FFFFFF](000000)'POST .../movimientos con Residente:'", "[bg:FFFFFF](000000)'Automatizada'", "[bg:FFFFFF](000000)'HTTP 403.'", "[bg:FFFFFF](000000)'HTTP 403.'", "[bg:E2EFDA](000000)'PASS'", "[bg:FFFFFF](000000)'materiales_bodega.test.js – Test 10'"]
+    R11: ["[bg:F2F2F2](000000)'CP-043'", "[bg:F2F2F2](000000)'Grupo 2'", "[bg:F2F2F2](000000)'Bodega'", "[bg:F2F2F2](000000)'POST .../movimientos con Admin sin '", "[bg:F2F2F2](000000)'Automatizada'", "[bg:F2F2F2](000000)'HTTP 400 (campos faltantes) o 500 ('", '[bg:F2F2F2](000000)"HTTP 400 – { error: \'Los campos idM"', "[bg:E2EFDA](000000)'PASS'", "[bg:F2F2F2](000000)'materiales_bodega.test.js – Test 11'"]
+    R12: ["[bg:FFFFFF](000000)'CP-044'", "[bg:FFFFFF](000000)'Grupo 2'", "[bg:FFFFFF](000000)'Bodega'", "[bg:FFFFFF](000000)'GET /bodega/.../movimientos sin tok'", "[bg:FFFFFF](000000)'Automatizada'", "[bg:FFFFFF](000000)'HTTP 401.'", "[bg:FFFFFF](000000)'HTTP 401.'", "[bg:E2EFDA](000000)'PASS'", "[bg:FFFFFF](000000)'materiales_bodega.test.js – Test 12'"]
+    R13: ["[bg:F2F2F2](000000)'CP-045'", "[bg:F2F2F2](000000)'Grupo 2'", "[bg:F2F2F2](000000)'Bodega'", "[bg:F2F2F2](000000)'GET .../movimientos con Admin: pasa'", "[bg:F2F2F2](000000)'Automatizada'", "[bg:F2F2F2](000000)'HTTP 200 o 500 (no 401 ni 403).'", "[bg:F2F2F2](000000)'HTTP 200 o 500 según disponibilidad'", "[bg:E2EFDA](000000)'PASS'", "[bg:F2F2F2](000000)'materiales_bodega.test.js – Test 13'"]
+    R14: ["[bg:FFFFFF](000000)'CP-046'", "[bg:FFFFFF](000000)'Grupo 2'", "[bg:FFFFFF](000000)'Bodega'", "[bg:FFFFFF](000000)'GET .../inventario con Admin: pasa '", "[bg:FFFFFF](000000)'Automatizada'", "[bg:FFFFFF](000000)'HTTP 200 o 500 (no 401 ni 403).'", "[bg:FFFFFF](000000)'HTTP 200 o 500 según disponibilidad'", "[bg:E2EFDA](000000)'PASS'", "[bg:FFFFFF](000000)'materiales_bodega.test.js – Test 14'"]
+    R15: ["[bg:F2F2F2](000000)'CP-047'", "[bg:F2F2F2](000000)'Grupo 3'", "[bg:F2F2F2](000000)'StorageService'", "[bg:F2F2F2](000000)'validateImage rechaza tipo MIME no '", "[bg:F2F2F2](000000)'Unitaria'", '[bg:F2F2F2](000000)"Lanza Error: \'Formato de imagen no "', "[bg:F2F2F2](000000)'Error lanzado con mensaje esperado.'", "[bg:E2EFDA](000000)'PASS'", "[bg:F2F2F2](000000)'materiales_bodega.test.js – Test 15'"]
+    R16: ["[bg:FFFFFF](000000)'CP-048'", "[bg:FFFFFF](000000)'Grupo 3'", "[bg:FFFFFF](000000)'StorageService'", "[bg:FFFFFF](000000)'validateImage rechaza archivos que '", "[bg:FFFFFF](000000)'Unitaria'", '[bg:FFFFFF](000000)"Lanza Error: \'El archivo excede el "', "[bg:FFFFFF](000000)'Error lanzado con mensaje esperado.'", "[bg:E2EFDA](000000)'PASS'", "[bg:FFFFFF](000000)'materiales_bodega.test.js – Test 16'"]
+    R17: ["[bg:F2F2F2](000000)'CP-049'", "[bg:F2F2F2](000000)'Grupo 3'", "[bg:F2F2F2](000000)'StorageService'", "[bg:F2F2F2](000000)'validateImage acepta imagen JPEG va'", "[bg:F2F2F2](000000)'Unitaria'", "[bg:F2F2F2](000000)'No lanza excepción, retorna true.'", "[bg:F2F2F2](000000)'Sin excepción. función retorna true'", "[bg:E2EFDA](000000)'PASS'", "[bg:F2F2F2](000000)'materiales_bodega.test.js – Test 17'"]
+    R18: ["[bg:FFFFFF](000000)'CP-050'", "[bg:FFFFFF](000000)'Grupo 3'", "[bg:FFFFFF](000000)'StorageService'", "[bg:FFFFFF](000000)'validateImage acepta imagen PNG val'", "[bg:FFFFFF](000000)'Unitaria'", "[bg:FFFFFF](000000)'No lanza excepción, retorna true.'", "[bg:FFFFFF](000000)'Sin excepción. función retorna true'", "[bg:E2EFDA](000000)'PASS'", "[bg:FFFFFF](000000)'materiales_bodega.test.js – Test 18'"]
+  [T7] 2 filas x 5 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'ID Defecto'", "[bg:1F3864](B,FFFFFF)'CP relacionado'", "[bg:1F3864](B,FFFFFF)'Descripción'", "[bg:1F3864](B,FFFFFF)'Severidad'", "[bg:1F3864](B,FFFFFF)'Estado'"]
+    R01: ["[bg:E2EFDA](595959)'—'", "[bg:E2EFDA](595959)'—'", "[bg:E2EFDA](595959)'Sin defectos registrados en este sp'", "[bg:E2EFDA](595959)'—'", "[bg:E2EFDA](595959)'—'"]
+  [T8] 7 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Archivo de prueba'", "[bg:D9E1F2](000000)'backend/tests/materiales_bodega.tes'"]
+    R01: ["[bg:FFFFFF](B)'Comando de ejecución'", "[bg:FFFFFF](000000)'npm test -- --testPathPattern mater'"]
+    R02: ["[bg:D9E1F2](B)'N° pruebas ejecutadas'", "[bg:D9E1F2](000000)'18'"]
+    R03: ["[bg:FFFFFF](B)'N° pruebas PASS'", "[bg:E2EFDA](000000)'18  (100%)'"]
+    R04: ["[bg:D9E1F2](B)'N° pruebas FAIL'", "[bg:E2EFDA](000000)'0'"]
+    R05: ["[bg:FFFFFF](B)'Distribución por grupo'", "[bg:FFFFFF](000000)'Grupo 1 (Materiales): 8 pruebas / G'"]
+    R06: ["[bg:D9E1F2](B)'Salida del test runner'", "[bg:D9E1F2](000000)'Test Suites: 1 passed, 1 total|Test'"]
+  [T9] 4 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Evaluación general de calidad'", "(000000)'El Sprint 03 alcanzo el nivel de ca'"]
+    R01: ["[bg:D9E1F2](B)'Módulos con cobertura insuficiente'", "(000000)'Las pruebas de integración de bodeg'"]
+    R02: ["[bg:D9E1F2](B)'Acciones de mejora para el siguient'", "(000000)'1. Implementar pruebas de integraci'"]
+    R03: ["[bg:D9E1F2](B)'Criterio de calidad mínimo para Spr'", "(000000)'Cobertura de pruebas automatizadas '"]
+  [T10] 14 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Sigla'", "[bg:1F3864](B,FFFFFF)'Significado'", "[bg:1F3864](B,FFFFFF)'Contexto de uso'"]
+    R01: ["[bg:D9E1F2](B,000000)'CP'", "[bg:D9E1F2](000000)'Caso de Prueba'", "[bg:D9E1F2](000000)'Escenario documentado de verificaci'"]
+    R02: ["[bg:FFFFFF](B,000000)'INF-PRU'", "[bg:FFFFFF](000000)'Informe de Pruebas'", "[bg:FFFFFF](000000)'Prefijo del código de este document'"]
+    R03: ["[bg:D9E1F2](B,000000)'JWT'", "[bg:D9E1F2](000000)'JSON Web Token'", "[bg:D9E1F2](000000)'Token de autenticación bajo prueba'"]
+    R04: ["[bg:FFFFFF](B,000000)'RBAC'", "[bg:FFFFFF](000000)'Role-Based Access Control'", "[bg:FFFFFF](000000)'Mecanismo de autorización bajo prue'"]
+    R05: ["[bg:D9E1F2](B,000000)'HTTP'", "[bg:D9E1F2](000000)'HyperText Transfer Protocol'", "[bg:D9E1F2](000000)'Protocolo de comunicación web'"]
+    R06: ["[bg:FFFFFF](B,000000)'API'", "[bg:FFFFFF](000000)'Application Programming Interface'", "[bg:FFFFFF](000000)'Interfaz de programación'"]
+    R07: ["[bg:D9E1F2](B,000000)'BD'", "[bg:D9E1F2](000000)'Base de Datos'", "[bg:D9E1F2](000000)'Repositorio de datos'"]
+    R08: ["[bg:FFFFFF](B,000000)'CI'", "[bg:FFFFFF](000000)'Continuous Integration'", "[bg:FFFFFF](000000)'Entorno de ejecución de pruebas aut'"]
+    R09: ["[bg:D9E1F2](B,000000)'PASS'", "[bg:D9E1F2](000000)'Caso ejecutado con resultado exitos'", "[bg:D9E1F2](000000)'Estado de caso de prueba'"]
+    R10: ["[bg:FFFFFF](B,000000)'FAIL'", "[bg:FFFFFF](000000)'Caso ejecutado con resultado fallid'", "[bg:FFFFFF](000000)'Estado de caso de prueba'"]
+    R11: ["[bg:D9E1F2](B,000000)'BLOQ.'", "[bg:D9E1F2](000000)'Caso no ejecutado por impedimento'", "[bg:D9E1F2](000000)'Estado de caso de prueba'"]
+    R12: ["[bg:FFFFFF](B,000000)'MIME'", "[bg:FFFFFF](000000)'Multipurpose Internet Mail Extensio'", "[bg:FFFFFF](000000)'Tipo de archivo verificado en prueb'"]
+    R13: ["[bg:D9E1F2](B,000000)'UPSERT'", "[bg:D9E1F2](000000)'Update or Insert'", "[bg:D9E1F2](000000)'Operación atómica probada en el ser'"]
+
+======================================================================
+ARCHIVO: SPR03 RETRO V2
+======================================================================
+  P00 style='Normal' align=CENTER (1) | [bold,sz=14,col=1F3864] | TEXT: ACTA DE RETROSPECTIVA — SPRINT 03  
+  P01 style='Normal' align=CENTER (1) | [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] | TEXT: Proyecto: Sistema de Gestión Integral de Obra — ICARO CONSTRUCTORES BMGM S.A.S.
+  P02 style='Normal' align=CENTER (1) | [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] [italic,sz=9,col=595959] | TEXT: Código: RET-SPR-03 | Versión: 2.0 | Fecha: 26/05/2026
+  P03 style='Heading 1' align=None |  | TEXT: 1. Control documental
+  P05 style='Heading 1' align=None |  | TEXT: 2. Datos generales del sprint
+  P06 style='Heading 1' align=None |  | TEXT: 3. Objetivo del sprint
+  P07 style='Normal' align=None |  | TEXT: Implementar el catálogo de materiales e insumos con CRUD completo (búsqueda por categorías, filtros,
+  P08 style='Heading 1' align=None |  | TEXT: 4. Equipo Scrum
+  P09 style='Heading 1' align=None |  | TEXT: 5. Definición de "Hecho" (DoD) — Sprint 03
+  P10 style='Heading 1' align=None |  | TEXT: 6. Historias comprometidas vs. completadas
+  P11 style='Heading 1' align=None |  | TEXT: 7. Verificación de compromisos del Sprint 02 (sección 8.3)
+  P12 style='Heading 1' align=None |  | TEXT: 8. Retrospectiva: análisis por categorías
+  P13 style='Heading 2' align=None |  | TEXT: 8.1 Que salió bien (MANTENER)
+  P14 style='Heading 2' align=None |  | TEXT: 8.2 Que se puede mejorar (MEJORAR)
+  P15 style='Heading 2' align=None |  | TEXT: 8.3 Acciones concretas para el siguiente sprint (IMPLEMENTAR)
+  P16 style='Heading 1' align=None |  | TEXT: 9. Métricas del sprint
+  P17 style='Heading 1' align=None |  | TEXT: 10. Impedimentos y bloqueos identificados
+  P18 style='Heading 1' align=None |  | TEXT: 11. Compromisos para el siguiente sprint (Sprint 04)
+  P19 style='Heading 1' align=None |  | TEXT: 12. Observaciones y conclusiones
+  P20 style='Heading 1' align=None |  | TEXT: 13. Documentos de soporte formalizados en V2.0
+  P21 style='Heading 1' align=None |  | TEXT: Glosario de Siglas
+  --- TABLAS ---
+  [T0] 7 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Código del documento'", "(000000)'RET-SPR-03'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del documento'", "(000000)'Acta de Retrospectiva – Sprint 03'"]
+    R02: ["[bg:D9E1F2](B)'Versión'", "(000000)'2.0'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de elaboración'", "(000000)'13/05/2026'"]
+    R04: ["[bg:D9E1F2](B)'Sprint evaluado'", "(000000)'Sprint 03 – Catalogo de Materiales,'"]
+    R05: ["[bg:D9E1F2](B)'Responsable de elaboración'", "(000000)'Ivan Santiago Pulgar Leon '"]
+    R06: ["[bg:D9E1F2](B)'Estado del documento'", "(000000)'Aprobado'"]
+  [T1] 3 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Version'", "[bg:1F3864](B,FFFFFF)'Fecha'", "[bg:1F3864](B,FFFFFF)'Responsable'", "[bg:1F3864](B,FFFFFF)'Descripción del cambio'"]
+    R01: ["(000000)'1.0'", "(000000)'09/05/2026'", "(000000)'Ivan Santiago Pulgar Leon '", "(000000)'Versión inicial del acta de retrosp'"]
+    R02: ["(000000)'2.0'", "(000000)'13/05/2026'", "(000000)'Ivan Santiago Pulgar Leon'", "(000000)'Versión definitiva con datos reales'"]
+  [T2] 7 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Numero del sprint'", "(000000)'Sprint 03'"]
+    R01: ["[bg:D9E1F2](B)'Nombre del sprint'", "(000000)'Catalogo de Materiales, Gestión de '"]
+    R02: ["[bg:D9E1F2](B)'Fecha de inicio'", "(000000)'27/04/2026'"]
+    R03: ["[bg:D9E1F2](B)'Fecha de cierre'", "(000000)'01/05/2026'"]
+    R04: ["[bg:D9E1F2](B)'Duración'", "(000000)'1 semana '"]
+    R05: ["[bg:D9E1F2](B)'Scrum Master'", "(000000)'Ivan Santiago Pulgar Leon'"]
+    R06: ["[bg:D9E1F2](B)'Módulos/componentes'", "(000000)'Materiales (CRUD, filtros, soft-del'"]
+  [T3] 4 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Rol'", "[bg:1F3864](B,FFFFFF)'Nombre'", "[bg:1F3864](B,FFFFFF)'Participación'"]
+    R01: ["[bg:D9E1F2](B,000000)'Scrum Master'", "(000000)'Ivan Santiago Pulgar Leon'", "(000000)'Facilito la reunión de retrospectiv'"]
+    R02: ["[bg:D9E1F2](B,000000)'Product Owner'", "(000000)'Ivan Santiago Pulgar Leon'", "(000000)'Valido criterios de aceptación de m'"]
+    R03: ["[bg:D9E1F2](B,000000)'Equipo de desarrollo'", "(000000)'[Equipo de desarrollo ICARO]'", "(000000)'Implemento los 6 ítems del backlog '"]
+  [T4] 8 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Criterio de Completitud'", "[bg:1F3864](B,FFFFFF)'Cumplido'", "[bg:1F3864](B,FFFFFF)'Observación'"]
+    R01: ["[bg:FFFFFF](000000)'Código fuente en repositorio Git (c'", "[bg:E2EFDA](B,000000)'Si'", "''"]
+    R02: ["[bg:D9E1F2](000000)'Funcionalidad desplegada en entorno'", "[bg:E2EFDA](B,000000)'Si'", "(000000)'docker-compose up sin errores'"]
+    R03: ["[bg:FFFFFF](000000)'Criterios de aceptación de cada his'", "[bg:E2EFDA](B,000000)'Si'", "(000000)'Todos revisados al cierre'"]
+    R04: ["[bg:D9E1F2](000000)'Pruebas automatizadas ejecutadas (1'", "[bg:E2EFDA](B,000000)'Si'", "(000000)'npm test -- materiales_bodega'"]
+    R05: ["[bg:FFFFFF](000000)'Migraciones Prisma aplicadas correc'", "[bg:E2EFDA](B,000000)'Si'", "(000000)'Sin cambios de esquema en Sprint 03'"]
+    R06: ["[bg:D9E1F2](000000)'Deuda técnica HT-06 cerrada formalm'", "[bg:E2EFDA](B,000000)'Si'", "(000000)'Tokens legacy documentados y verifi'"]
+    R07: ["[bg:FFFFFF](000000)'Documentación de sprint generada y '", "[bg:E2EFDA](B,000000)'Si'", "(000000)'V2.0 + 3 documentos de soporte'"]
+  [T5] 7 filas x 8 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'ID'", "[bg:1F3864](B,FFFFFF)'Historia / Tarea'", "[bg:1F3864](B,FFFFFF)'Tipo'", "[bg:1F3864](B,FFFFFF)'Modulo'", "[bg:1F3864](B,FFFFFF)'SP Plan'", "[bg:1F3864](B,FFFFFF)'SP Real'", "[bg:1F3864](B,FFFFFF)'Estado'", "[bg:1F3864](B,FFFFFF)'Criterios de aceptación verificados'"]
+    R01: ["[bg:F2F2F2](000000)'HU-09'", "[bg:F2F2F2](000000)'CRUD completo del catálogo de mater'", "[bg:F2F2F2](000000)'HU'", "[bg:F2F2F2](000000)'Materiales'", "[bg:F2F2F2](000000)'8'", "[bg:F2F2F2](000000)'8'", "[bg:E2EFDA](000000)'Completado'", "[bg:F2F2F2](000000)'Admin puede crear, editar, listar y'"]
+    R02: ["[bg:FFFFFF](000000)'HU-10'", "[bg:FFFFFF](000000)'Registro de movimientos de inventar'", "[bg:FFFFFF](000000)'HU'", "[bg:FFFFFF](000000)'Bodega'", "[bg:FFFFFF](000000)'8'", "[bg:FFFFFF](000000)'8'", "[bg:E2EFDA](000000)'Completado'", "[bg:FFFFFF](000000)'Solo Bodeguero y Admin pueden regis'"]
+    R03: ["[bg:F2F2F2](000000)'HU-11'", "[bg:F2F2F2](000000)'Consultar historial de movimientos '", "[bg:F2F2F2](000000)'HU'", "[bg:F2F2F2](000000)'Bodega'", "[bg:F2F2F2](000000)'5'", "[bg:F2F2F2](000000)'5'", "[bg:E2EFDA](000000)'Completado'", "[bg:F2F2F2](000000)'GET /api/v1/bodega/proyectos/:id/mo'"]
+    R04: ["[bg:FFFFFF](000000)'HT-06'", '[bg:FFFFFF](000000)"Migración de tokens legacy: \'Admini"', "[bg:FFFFFF](000000)'HT'", "[bg:FFFFFF](000000)'Autenticación'", "[bg:FFFFFF](000000)'3'", "[bg:FFFFFF](000000)'3'", "[bg:E2EFDA](000000)'Completado'", "[bg:FFFFFF](000000)'El parche en auth.middleware.js que'"]
+    R05: ["[bg:F2F2F2](000000)'HT-07'", "[bg:F2F2F2](000000)'Estándar documentado de pipeline de'", "[bg:F2F2F2](000000)'HT'", "[bg:F2F2F2](000000)'Infraestructura'", "[bg:F2F2F2](000000)'3'", "[bg:F2F2F2](000000)'3'", "[bg:E2EFDA](000000)'Completado'", "[bg:F2F2F2](000000)'Pipeline estándar documentado: requ'"]
+    R06: ["[bg:FFFFFF](000000)'HT-08'", "[bg:FFFFFF](000000)'Suite de pruebas automatizadas: mat'", "[bg:FFFFFF](000000)'HT'", "[bg:FFFFFF](000000)'Calidad'", "[bg:FFFFFF](000000)'5'", "[bg:FFFFFF](000000)'5'", "[bg:E2EFDA](000000)'Completado'", "[bg:FFFFFF](000000)'18 casos de prueba automatizados en'"]
+  [T6] 6 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'N°'", "[bg:1F3864](B,FFFFFF)'Compromiso adquirido en Sprint 02 s'", "[bg:1F3864](B,FFFFFF)'Estado'", "[bg:1F3864](B,FFFFFF)'Evidencia de cumplimiento'"]
+    R01: ["[bg:F2F2F2](000000)'1'", "[bg:F2F2F2](000000)'Documentar como estándar el pipelin'", "[bg:E2EFDA](B,000000)'Cumplida'", "[bg:F2F2F2](000000)'HT-07 completado. Pipeline document'"]
+    R02: ["[bg:FFFFFF](000000)'2'", "[bg:FFFFFF](000000)'Implementar y cerrar la migración d'", "[bg:E2EFDA](B,000000)'Cumplida'", "[bg:FFFFFF](000000)'HT-06 completado. El parche en auth'"]
+    R03: ["[bg:F2F2F2](000000)'3'", "[bg:F2F2F2](000000)'Agregar pruebas automatizadas para '", "[bg:E2EFDA](B,000000)'Cumplida'", "[bg:F2F2F2](000000)'HT-08 completado. 4 pruebas unitari'"]
+    R04: ["[bg:FFFFFF](000000)'4'", "[bg:FFFFFF](000000)'Crear suite de pruebas automatizada'", "[bg:E2EFDA](B,000000)'Cumplida'", "[bg:FFFFFF](000000)'HT-08 completado. 14 pruebas de int'"]
+    R05: ["[bg:F2F2F2](000000)'5'", "[bg:F2F2F2](000000)'Mantener cobertura de pruebas autom'", "[bg:E2EFDA](B,000000)'Cumplida'", "[bg:F2F2F2](000000)'18/18 pruebas PASS (100%) en materi'"]
+  [T7] 5 filas x 1 cols | style='Table Grid'
+    R00: ["[bg:E2EFDA](000000)'• La separación de capas (service v'"]
+    R01: ["[bg:E2EFDA](000000)'• La transacción atómica Prisma.$tr'"]
+    R02: ["[bg:E2EFDA](000000)'• La validación de stock insuficien'"]
+    R03: ["[bg:E2EFDA](000000)'• El cierre formal de la deuda técn'"]
+    R04: ["[bg:E2EFDA](000000)'• El estándar de pipeline de middle'"]
+  [T8] 3 filas x 1 cols | style='Table Grid'
+    R00: ["[bg:FFF2CC](000000)'• El endpoint de reactivación de ma'"]
+    R01: ["[bg:FFF2CC](000000)'• Las pruebas de integración de bod'"]
+    R02: ["[bg:FFF2CC](000000)'• La paginación en listarMovimiento'"]
+  [T9] 5 filas x 1 cols | style='Table Grid'
+    R00: ["[bg:FCE4D6](000000)'• Implementar endpoint de reactivac'"]
+    R01: ["[bg:FCE4D6](000000)'• Configurar Docker Compose en el e'"]
+    R02: ["[bg:FCE4D6](000000)'• Agregar pruebas automatizadas que'"]
+    R03: ["[bg:FCE4D6](000000)'• Implementar el módulo de Requerim'"]
+    R04: ["[bg:FCE4D6](000000)'• Mantener cobertura de pruebas aut'"]
+  [T10] 14 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Metrica'", "[bg:1F3864](B,FFFFFF)'Valor planificado'", "[bg:1F3864](B,FFFFFF)'Valor real'"]
+    R01: ["[bg:FFFFFF]'Story Points del sprint'", "[bg:FFFFFF](000000)'32 SP'", "[bg:FFFFFF](000000)'32 SP'"]
+    R02: ["[bg:D9E1F2]'N° historias de usuario (HU)'", "[bg:F2F2F2](000000)'3'", "[bg:F2F2F2](000000)'3'"]
+    R03: ["[bg:FFFFFF]'N° historias técnicas (HT)'", "[bg:FFFFFF](000000)'3'", "[bg:FFFFFF](000000)'3'"]
+    R04: ["[bg:D9E1F2]'N° ítems completados'", "[bg:F2F2F2](000000)'6'", "[bg:F2F2F2](000000)'6 (100%)'"]
+    R05: ["[bg:FFFFFF]'N° ítems bloqueados'", "[bg:FFFFFF](000000)'0'", "[bg:FFFFFF](000000)'0'"]
+    R06: ["[bg:D9E1F2]'Velocidad (SP/semana)'", "[bg:F2F2F2](000000)'16'", "[bg:F2F2F2](000000)'16'"]
+    R07: ["[bg:FFFFFF]'% Cumplimiento del backlog'", "[bg:FFFFFF](000000)'100%'", "[bg:FFFFFF](000000)'100%'"]
+    R08: ["[bg:D9E1F2]'N° pruebas automatizadas'", "[bg:F2F2F2](000000)'18'", "[bg:F2F2F2](000000)'18 (100% PASS)'"]
+    R09: ["[bg:FFFFFF]'N° pruebas unitarias (unit tests)'", "[bg:FFFFFF](000000)'4'", "[bg:FFFFFF](000000)'4 (Grupo 3)'"]
+    R10: ["[bg:D9E1F2]'N° módulos con cobertura mayor 80%'", "[bg:F2F2F2](000000)'3'", "[bg:F2F2F2](000000)'3 (Materiales, Bodega, StorageServi'"]
+    R11: ["[bg:FFFFFF]'N° defectos registrados'", "[bg:FFFFFF](000000)'0'", "[bg:FFFFFF](000000)'0'"]
+    R12: ["[bg:D9E1F2]'Compromisos Sprint 02 §8.3 cumplido'", "[bg:F2F2F2](000000)'5/5'", "[bg:F2F2F2](000000)'5/5 (100%)'"]
+    R13: ["[bg:FFFFFF]'Deudas técnicas cerradas'", "[bg:FFFFFF](000000)'1'", "[bg:FFFFFF](000000)'1 (HT-06 tokens legacy)'"]
+  [T11] 2 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'ID'", "[bg:1F3864](B,FFFFFF)'Descripción'", "[bg:1F3864](B,FFFFFF)'Impacto'", "[bg:1F3864](B,FFFFFF)'Resolución'"]
+    R01: ["[bg:E2EFDA](595959)'—'", "[bg:E2EFDA](595959)'No se registraron impedimentos ni b'", "[bg:E2EFDA](595959)'—'", "[bg:E2EFDA](595959)'—'"]
+  [T12] 6 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'N°'", "[bg:1F3864](B,FFFFFF)'Compromiso'", "[bg:1F3864](B,FFFFFF)'Responsable'"]
+    R01: ["[bg:FFFFFF](000000)'1'", "[bg:FFFFFF](000000)'Implementar endpoint de reactivació'", "[bg:FFFFFF](000000)'Isaac Sebastian Castro Muesmueran /'"]
+    R02: ["[bg:D9E1F2](000000)'2'", "[bg:D9E1F2](000000)'Configurar Docker Compose en CI par'", "[bg:D9E1F2](000000)'Ivan Santiago Pulgar Leon'"]
+    R03: ["[bg:FFFFFF](000000)'3'", "[bg:FFFFFF](000000)'Agregar pruebas automatizadas que v'", "[bg:FFFFFF](000000)'Isaac Sebastian Castro Muesmueran /'"]
+    R04: ["[bg:D9E1F2](000000)'4'", "[bg:D9E1F2](000000)'Implementar el módulo de Requerimie'", "[bg:D9E1F2](000000)'Isaac Sebastian Castro Muesmueran /'"]
+    R05: ["[bg:FFFFFF](000000)'5'", "[bg:FFFFFF](000000)'Mantener cobertura de pruebas autom'", "[bg:FFFFFF](000000)'Isaac Sebastian Castro Muesmueran /'"]
+  [T13] 4 filas x 2 cols | style='Table Grid'
+    R00: ["[bg:D9E1F2](B)'Logro principal del sprint'", "(000000)'Se implementaron los módulos de Mat'"]
+    R01: ["[bg:D9E1F2](B)'Estado del producto al cierre'", "(000000)'El sistema cuenta con: autenticació'"]
+    R02: ["[bg:D9E1F2](B)'Satisfacción del equipo'", "(000000)'Sprint completado al 100% sin bloqu'"]
+    R03: ["[bg:D9E1F2](B)'Preparación para Sprint 04'", "(000000)'El Sprint 04 puede iniciar con foco'"]
+  [T14] 4 filas x 4 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Documento'", "[bg:1F3864](B,FFFFFF)'Código'", "[bg:1F3864](B,FFFFFF)'Propósito'", "[bg:1F3864](B,FFFFFF)'Secciones relacionadas'"]
+    R01: ["[bg:FFFFFF](B,000000)'Sprint_03_Backlog_ICARO.xlsx'", "[bg:FFFFFF](000000)'BCK-SPR-03'", "[bg:FFFFFF](000000)'Registro formal del backlog: 6 ítem'", "[bg:FFFFFF](000000)'Sección 6 (Historias), Sección 9 (M'"]
+    R02: ["[bg:D9E1F2](B,000000)'Sprint_03_Planificado_Realizado_ICA'", "[bg:D9E1F2](000000)'PLN-REA-SPR-03'", "[bg:D9E1F2](000000)'Comparación planificado vs. realiza'", "[bg:D9E1F2](000000)'Secciones 6, 9 (Métricas), 12 (Conc'"]
+    R03: ["[bg:FFFFFF](B,000000)'Sprint_03_Informe_Pruebas_ICARO.doc'", "[bg:FFFFFF](000000)'INF-PRU-SPR-03'", "[bg:FFFFFF](000000)'18 casos de prueba CP-033 a CP-050 '", "[bg:FFFFFF](000000)'Sección 5 (DoD), Sección 8 (Categor'"]
+  [T15] 19 filas x 3 cols | style='Table Grid'
+    R00: ["[bg:1F3864](B,FFFFFF)'Sigla'", "[bg:1F3864](B,FFFFFF)'Significado'", "[bg:1F3864](B,FFFFFF)'Contexto de uso'"]
+    R01: ["[bg:D9E1F2](B,000000)'RET'", "[bg:D9E1F2](000000)'Retrospectiva'", "[bg:D9E1F2](000000)'Prefijo del código de este document'"]
+    R02: ["[bg:FFFFFF](B,000000)'SPR'", "[bg:FFFFFF](000000)'Sprint'", "[bg:FFFFFF](000000)'Iteracion de desarrollo'"]
+    R03: ["[bg:D9E1F2](B,000000)'DoD'", "[bg:D9E1F2](000000)'Definition of Done'", "[bg:D9E1F2](000000)'Criterios de completitud del sprint'"]
+    R04: ["[bg:FFFFFF](B,000000)'SP'", "[bg:FFFFFF](000000)'Story Point'", "[bg:FFFFFF](000000)'Unidad de estimación de esfuerzo'"]
+    R05: ["[bg:D9E1F2](B,000000)'HU'", "[bg:D9E1F2](000000)'Historia de Usuario'", "[bg:D9E1F2](000000)'Tipo de ítem del backlog'"]
+    R06: ["[bg:FFFFFF](B,000000)'HT'", "[bg:FFFFFF](000000)'Historia técnica'", "[bg:FFFFFF](000000)'Tarea técnica transversal'"]
+    R07: ["[bg:D9E1F2](B,000000)'RBAC'", "[bg:D9E1F2](000000)'Role-Based Access Control'", "[bg:D9E1F2](000000)'Control de acceso por roles'"]
+    R08: ["[bg:FFFFFF](B,000000)'JWT'", "[bg:FFFFFF](000000)'JSON Web Token'", "[bg:FFFFFF](000000)'Mecanismo de autenticación implemen'"]
+    R09: ["[bg:D9E1F2](B,000000)'ORM'", "[bg:D9E1F2](000000)'Object-Relational Mapper'", "[bg:D9E1F2](000000)'Herramienta Prisma utilizada en el '"]
+    R10: ["[bg:FFFFFF](B,000000)'API'", "[bg:FFFFFF](000000)'Application Programming Interface'", "[bg:FFFFFF](000000)'Interfaz de programación'"]
+    R11: ["[bg:D9E1F2](B,000000)'CRUD'", "[bg:D9E1F2](000000)'Create, Read, Update, Delete'", "[bg:D9E1F2](000000)'Operaciones básicas de gestión'"]
+    R12: ["[bg:FFFFFF](B,000000)'BD'", "[bg:FFFFFF](000000)'Base de Datos'", "[bg:FFFFFF](000000)'Repositorio de datos del sistema'"]
+    R13: ["[bg:D9E1F2](B,000000)'BCK'", "[bg:D9E1F2](000000)'Backlog'", "[bg:D9E1F2](000000)'Ref. al documento Sprint_03_Backlog'"]
+    R14: ["[bg:FFFFFF](B,000000)'PLN-REA'", "[bg:FFFFFF](000000)'Planificado-Realizado'", "[bg:FFFFFF](000000)'Ref. al documento de comparación'"]
+    R15: ["[bg:D9E1F2](B,000000)'INF-PRU'", "[bg:D9E1F2](000000)'Informe de Pruebas'", "[bg:D9E1F2](000000)'Ref. al documento de pruebas'"]
+    R16: ["[bg:FFFFFF](B,000000)'MIME'", "[bg:FFFFFF](000000)'Multipurpose Internet Mail Extensio'", "[bg:FFFFFF](000000)'Tipo de archivo para validación de '"]
+    R17: ["[bg:D9E1F2](B,000000)'UPSERT'", "[bg:D9E1F2](000000)'Update or Insert'", "[bg:D9E1F2](000000)'operación atómica de creación o act'"]
+    R18: ["[bg:FFFFFF](B,000000)'Git'", "[bg:FFFFFF](000000)'Sistema de control de versiones'", "[bg:FFFFFF](000000)'Herramienta de gestión de código fu'"]
+
+======================================================================
+XLSX: SPR03 BACKLOG
+======================================================================
+  SHEET: Backlog Sprint 03
+    [A1][FF1F3864](B,13.0pt,FFFFFFFF)'SPRINT BACKLOG — Sprint 03: Ca'  [B1][00000000](11.0pt)''  [C1][00000000](11.0pt)''  [D1][00000000](11.0pt)''  [E1][00000000](11.0pt)''  [F1][00000000](11.0pt)''
+    [A2][FFD9E1F2](9.0pt,FF595959)'ICARO CONSTRUCTORES BMGM S.A.S'  [B2][00000000](11.0pt)''  [C2][00000000](11.0pt)''  [D2][00000000](11.0pt)''  [E2][00000000](11.0pt)''  [F2][00000000](11.0pt)''
+    [A3][FFD9E1F2](B,9.0pt,FF1F3864)'Proyecto:'  [B3][FFFFFFFF](9.0pt,FF000000)'ICARO CONSTRUCTORES BMGM S.A.S'  [C3][00000000](11.0pt)''  [D3][00000000](11.0pt)''  [E3][00000000](11.0pt)''  [F3][00000000](11.0pt)''
+    [A4][FFD9E1F2](B,9.0pt,FF1F3864)'Fecha de inicio:'  [B4][FFFFFFFF](9.0pt,FF000000)'2026-04-27 00:00:00'  [C4][00000000](11.0pt)''  [D4][00000000](11.0pt)''  [E4][00000000](11.0pt)''  [F4][00000000](11.0pt)''
+    [A5][FFD9E1F2](B,9.0pt,FF1F3864)'Objetivo:'  [B5][FFFFFFFF](9.0pt,FF000000)'Implementar el catalogo de mat'  [C5][00000000](11.0pt)''  [D5][00000000](11.0pt)''  [E5][00000000](11.0pt)''  [F5][00000000](11.0pt)''
+    [A6][FFD9E1F2](B,9.0pt,FF1F3864)'Vel. estimada (SP):'  [B6][FFFFFFFF](9.0pt,FF000000)'32'  [C6][00000000](11.0pt)''  [D6][00000000](11.0pt)''  [E6][00000000](11.0pt)''  [F6][00000000](11.0pt)''
+    [A7][FF1F3864](B,9.0pt,FFFFFFFF)'ID'  [B7][FF1F3864](B,9.0pt,FFFFFFFF)'Historia / Tarea'  [C7][FF1F3864](B,9.0pt,FFFFFFFF)'Tipo'  [D7][FF1F3864](B,9.0pt,FFFFFFFF)'Modulo'  [E7][FF1F3864](B,9.0pt,FFFFFFFF)'Prioridad'  [F7][FF1F3864](B,9.0pt,FFFFFFFF)'SP Plan'
+    [A8][FFF2F2F2](9.0pt)'HU-09'  [B8][FFF2F2F2](9.0pt)'CRUD completo del catalogo de '  [C8][FFF2F2F2](9.0pt)'HU'  [D8][FFF2F2F2](9.0pt)'Materiales'  [E8][FFF2F2F2](9.0pt)'Alta'  [F8][FFF2F2F2](9.0pt)'8'
+    [A9][FFFFFFFF](9.0pt)'HU-10'  [B9][FFFFFFFF](9.0pt)'Registro de movimientos de inv'  [C9][FFFFFFFF](9.0pt)'HU'  [D9][FFFFFFFF](9.0pt)'Bodega'  [E9][FFFFFFFF](9.0pt)'Alta'  [F9][FFFFFFFF](9.0pt)'8'
+    [A10][FFF2F2F2](9.0pt)'HU-11'  [B10][FFF2F2F2](9.0pt)'Consultar historial de movimie'  [C10][FFF2F2F2](9.0pt)'HU'  [D10][FFF2F2F2](9.0pt)'Bodega'  [E10][FFF2F2F2](9.0pt)'Alta'  [F10][FFF2F2F2](9.0pt)'5'
+    [A11][FFFFFFFF](9.0pt)'HT-06'  [B11][FFFFFFFF](9.0pt)"Migracion de tokens legacy: 'A"  [C11][FFFFFFFF](9.0pt)'HT'  [D11][FFFFFFFF](9.0pt)'Autenticacion'  [E11][FFFFFFFF](9.0pt)'Alta'  [F11][FFFFFFFF](9.0pt)'3'
+    [A12][FFF2F2F2](9.0pt)'HT-07'  [B12][FFF2F2F2](9.0pt)'Estandar documentado de pipeli'  [C12][FFF2F2F2](9.0pt)'HT'  [D12][FFF2F2F2](9.0pt)'Infraestructura'  [E12][FFF2F2F2](9.0pt)'Alta'  [F12][FFF2F2F2](9.0pt)'3'
+    [A13][FFFFFFFF](9.0pt)'HT-08'  [B13][FFFFFFFF](9.0pt)'Suite de pruebas automatizadas'  [C13][FFFFFFFF](9.0pt)'HT'  [D13][FFFFFFFF](9.0pt)'Calidad'  [E13][FFFFFFFF](9.0pt)'Alta'  [F13][FFFFFFFF](9.0pt)'5'
+    [A14][FF1F3864](B,9.0pt,FFFFFFFF)'TOTALES'  [B14][00000000](11.0pt)''  [C14][00000000](11.0pt)''  [D14][00000000](11.0pt)''  [E14][00000000](11.0pt)''  [F14][FF1F3864](B,10.0pt,FFFFFFFF)'32'
+  SHEET: Resumen Velocidad
+    [A1][FF1F3864](B,12.0pt,FFFFFFFF)'RESUMEN DE VELOCIDAD — Sprint '  [B1][00000000](11.0pt)''  [C1][00000000](11.0pt)''  [D1][00000000](11.0pt)''
+    [A2][FF2E75B6](B,9.0pt,FFFFFFFF)'Metrica'  [B2][FF2E75B6](B,9.0pt,FFFFFFFF)'Planificado'  [C2][FF2E75B6](B,9.0pt,FFFFFFFF)'Realizado'  [D2][FF2E75B6](B,9.0pt,FFFFFFFF)'Observacion'
+    [A3][FFFFFFFF](B,9.0pt)'Story Points totales'  [B3][FFFFFFFF](9.0pt)'32'  [C3][FFFFFFFF](9.0pt)'32'  [D3][FFFFFFFF](9.0pt)'Sin desvio'
+    [A4][FFD9E1F2](B,9.0pt)'N° historias de usuario (HU)'  [B4][FFD9E1F2](9.0pt)'3'  [C4][FFD9E1F2](9.0pt)'3'  [D4][FFD9E1F2](9.0pt)'HU-09, HU-10, HU-11'
+    [A5][FFFFFFFF](B,9.0pt)'N° historias tecnicas (HT)'  [B5][FFFFFFFF](9.0pt)'3'  [C5][FFFFFFFF](9.0pt)'3'  [D5][FFFFFFFF](9.0pt)'HT-06, HT-07, HT-08'
+    [A6][FFD9E1F2](B,9.0pt)'N° items del backlog'  [B6][FFD9E1F2](9.0pt)'6'  [C6][FFD9E1F2](9.0pt)'6'  [D6][FFD9E1F2](9.0pt)'6/6 completados'
+    [A7][FFFFFFFF](B,9.0pt)'N° items completados'  [B7][FFFFFFFF](9.0pt)'6'  [C7][FFFFFFFF](9.0pt)'6'  [D7][FFFFFFFF](9.0pt)'100%'
+    [A8][FFD9E1F2](B,9.0pt)'N° items bloqueados'  [B8][FFD9E1F2](9.0pt)'0'  [C8][FFD9E1F2](9.0pt)'0'  [D8][FFD9E1F2](9.0pt)'Sin bloqueos'
+    [A9][FFFFFFFF](B,9.0pt)'N° items no completados'  [B9][FFFFFFFF](9.0pt)'0'  [C9][FFFFFFFF](9.0pt)'0'  [D9][FFFFFFFF](9.0pt)'Sin pendientes'
+    [A10][FFD9E1F2](B,9.0pt)'Velocidad real (SP / semana)'  [B10][FFD9E1F2](9.0pt)'16'  [C10][FFD9E1F2](9.0pt)'16'  [D10][FFD9E1F2](9.0pt)'32 SP / 1 semana'
+    [A11][FFFFFFFF](B,9.0pt)'% Cumplimiento'  [B11][FFFFFFFF](9.0pt)'100%'  [C11][FFFFFFFF](9.0pt)'100%'  [D11][FFFFFFFF](9.0pt)'Sprint exitoso'
+    [A12][FFD9E1F2](B,9.0pt)'N° pruebas automatizadas'  [B12][FFD9E1F2](9.0pt)'18'  [C12][FFD9E1F2](9.0pt)'18'  [D12][FFD9E1F2](9.0pt)'materiales_bodega.test.js'
+    [A13][FFFFFFFF](B,9.0pt)'Cobertura de pruebas de modulo'  [B13][FFFFFFFF](9.0pt)'100%'  [C13][FFFFFFFF](9.0pt)'100%'  [D13][FFFFFFFF](9.0pt)'Grupos 1, 2 y 3 PASS'
+    [A14][FFD9E1F2](B,9.0pt)'Compromisos Sprint 02 §8.3 cum'  [B14][FFD9E1F2](9.0pt)'5/5'  [C14][FFD9E1F2](9.0pt)'5/5'  [D14][FFD9E1F2](9.0pt)'Todos los compromisos cumplido'
+  SHEET: Glosario
+    [A1][FF1F3864](B,10.0pt,FFFFFFFF)'GLOSARIO DE SIGLAS'  [B1][00000000](11.0pt)''  [C1][00000000](11.0pt)''
+    [A2][FF2E75B6](B,9.0pt,FFFFFFFF)'Sigla'  [B2][FF2E75B6](B,9.0pt,FFFFFFFF)'Significado'  [C2][FF2E75B6](B,9.0pt,FFFFFFFF)'Contexto de uso'
+    [A3][FFD9E1F2](B,9.0pt)'HU'  [B3][FFD9E1F2](9.0pt)'Historia de Usuario'  [C3][FFD9E1F2](9.0pt)'Tipo de item del backlog orien'
+    [A4][FFFFFFFF](B,9.0pt)'HT'  [B4][FFFFFFFF](9.0pt)'Historia Tecnica'  [C4][FFFFFFFF](9.0pt)'Tarea tecnica transversal del '
+    [A5][FFD9E1F2](B,9.0pt)'SP'  [B5][FFD9E1F2](9.0pt)'Story Point'  [C5][FFD9E1F2](9.0pt)'Unidad relativa de estimacion '
+    [A6][FFFFFFFF](B,9.0pt)'RBAC'  [B6][FFFFFFFF](9.0pt)'Role-Based Access Control'  [C6][FFFFFFFF](9.0pt)'Control de acceso basado en ro'
+    [A7][FFD9E1F2](B,9.0pt)'JWT'  [B7][FFD9E1F2](9.0pt)'JSON Web Token'  [C7][FFD9E1F2](9.0pt)'Estandar de autenticacion firm'
+    [A8][FFFFFFFF](B,9.0pt)'CRUD'  [B8][FFFFFFFF](9.0pt)'Create, Read, Update, Delete'  [C8][FFFFFFFF](9.0pt)'Operaciones basicas de gestion'
+    [A9][FFD9E1F2](B,9.0pt)'API'  [B9][FFD9E1F2](9.0pt)'Application Programming Interf'  [C9][FFD9E1F2](9.0pt)'Interfaz de programacion entre'
+    [A10][FFFFFFFF](B,9.0pt)'UUID'  [B10][FFFFFFFF](9.0pt)'Universally Unique Identifier'  [C10][FFFFFFFF](9.0pt)'Identificador unico universal '
+    [A11][FFD9E1F2](B,9.0pt)'DoD'  [B11][FFD9E1F2](9.0pt)'Definition of Done'  [C11][FFD9E1F2](9.0pt)'Criterios que definen un item '
+    [A12][FFFFFFFF](B,9.0pt)'ORM'  [B12][FFFFFFFF](9.0pt)'Object-Relational Mapper'  [C12][FFFFFFFF](9.0pt)'Herramienta de mapeo objeto-re'
+    [A13][FFD9E1F2](B,9.0pt)'BD'  [B13][FFD9E1F2](9.0pt)'Base de Datos'  [C13][FFD9E1F2](9.0pt)'Repositorio estructurado de da'
+    [A14][FFFFFFFF](B,9.0pt)'MIME'  [B14][FFFFFFFF](9.0pt)'Multipurpose Internet Mail Ext'  [C14][FFFFFFFF](9.0pt)'Tipo de archivo para validacio'
+    [A15][FFD9E1F2](B,9.0pt)'BCK'  [B15][FFD9E1F2](9.0pt)'Backlog'  [C15][FFD9E1F2](9.0pt)'Prefijo del codigo documental '
+    [A16][FFFFFFFF](B,9.0pt)'SPR'  [B16][FFFFFFFF](9.0pt)'Sprint'  [C16][FFFFFFFF](9.0pt)'Iteracion de desarrollo en met'
+    [A17][FFD9E1F2](B,9.0pt)'UPSERT'  [B17][FFD9E1F2](9.0pt)'Update or Insert'  [C17][FFD9E1F2](9.0pt)'Operacion que crea si no exist'
