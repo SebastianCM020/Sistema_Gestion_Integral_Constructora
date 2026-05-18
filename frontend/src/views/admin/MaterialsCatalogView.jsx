@@ -15,18 +15,16 @@ import { MaterialsMobileList } from '../../components/admin/MaterialsMobileList.
 import { MaterialFormModal } from '../../components/admin/MaterialFormModal.jsx';
 import { MaterialDetailDrawer } from '../../components/admin/MaterialDetailDrawer.jsx';
 import { MaterialStatusModal } from '../../components/admin/MaterialStatusModal.jsx';
-import { mockMaterials } from '../../data/mockMaterials.js';
+// Sprint 6: Se elimina el mock — ahora se consume la API real
+import { fetchMateriales, crearMaterial, actualizarMaterial, eliminarMaterial } from '../../services/materiales.service.js';
 import { getModulesForUser } from '../../data/icaroData.js';
 import {
-  createMaterialPayload,
   defaultMaterialFilters,
   filterMaterials,
   finalizeMaterialSummary,
   getMaterialSummary,
   getMaterialUnits,
   sortMaterials,
-  updateMaterialPayload,
-  updateMaterialStatusPayload,
 } from '../../utils/materialHelpers.js';
 
 export function MaterialsCatalogView({
@@ -38,7 +36,7 @@ export function MaterialsCatalogView({
   onOpenAdminSection,
 }) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const [materials, setMaterials] = useState(mockMaterials);
+  const [materials, setMaterials] = useState([]);
   const [filters, setFilters] = useState(defaultMaterialFilters);
   const [loadStatus, setLoadStatus] = useState('loading');
   const [retryCount, setRetryCount] = useState(0);
@@ -48,15 +46,27 @@ export function MaterialsCatalogView({
   const modules = getModulesForUser(currentUser);
   const isAdmin = currentUser.roleId === 'admin' || currentUser.roleName === 'Administrador del Sistema';
 
+  // Sprint 6: Carga desde API real con soloActivos=false para que Admin vea inactivos
   useEffect(() => {
-    setLoadStatus('loading');
+    if (!isAdmin) {
+      setLoadStatus('ready');
+      return;
+    }
 
-    const timer = window.setTimeout(() => {
-      setLoadStatus(currentUser.adminUsersShouldFail ? 'error' : 'ready');
-    }, 700);
+    const loadMaterials = async () => {
+      setLoadStatus('loading');
+      try {
+        const result = await fetchMateriales({ soloActivos: false, isOnline: true });
+        setMaterials(Array.isArray(result.data) ? result.data : []);
+        setLoadStatus('ready');
+      } catch (error) {
+        console.error('[MaterialsCatalogView] Error cargando materiales:', error);
+        setLoadStatus('error');
+      }
+    };
 
-    return () => window.clearTimeout(timer);
-  }, [currentUser.adminUsersShouldFail, retryCount]);
+    loadMaterials();
+  }, [isAdmin, retryCount]);
 
   useEffect(() => {
     if (!feedback) {
@@ -83,36 +93,64 @@ export function MaterialsCatalogView({
     setFilters((previousFilters) => ({ ...previousFilters, [field]: value }));
   };
 
-  const handleSaveMaterial = (values) => {
-    if (activeOverlay?.type === 'edit' && activeOverlay.material) {
-      setMaterials((previousMaterials) =>
-        previousMaterials.map((material) =>
-          material.id === activeOverlay.material.id ? updateMaterialPayload(material, values) : material
-        )
-      );
-      setFeedback({ tone: 'success', message: 'Material actualizado correctamente.' });
-    } else {
-      setMaterials((previousMaterials) => [createMaterialPayload(values), ...previousMaterials]);
-      setFeedback({ tone: 'success', message: 'Material creado correctamente.' });
+  // Sprint 6: Crear / Editar material con API real
+  const handleSaveMaterial = async (values) => {
+    try {
+      if (activeOverlay?.type === 'edit' && activeOverlay.material) {
+        const result = await actualizarMaterial(activeOverlay.material.id, {
+          nombre:      values.nombre     ?? values.name,
+          categoria:   values.categoria  ?? values.category,
+          unidad:      values.unidad     ?? values.unit,
+          descripcion: values.descripcion ?? values.description,
+        });
+        setMaterials((prev) =>
+          prev.map((m) => (m.id === result.data.id ? result.data : m))
+        );
+        setFeedback({ tone: 'success', message: 'Material actualizado correctamente.' });
+      } else {
+        const result = await crearMaterial({
+          codigo:      values.codigo     ?? values.code,
+          nombre:      values.nombre     ?? values.name,
+          categoria:   values.categoria  ?? values.category,
+          unidad:      values.unidad     ?? values.unit,
+          descripcion: values.descripcion ?? values.description,
+        });
+        setMaterials((prev) => [result.data, ...prev]);
+        setFeedback({ tone: 'success', message: 'Material creado correctamente.' });
+      }
+      closeOverlay();
+    } catch (error) {
+      const msg = error.response?.data?.error || 'Error al guardar el material.';
+      setFeedback({ tone: 'error', message: msg });
     }
-
-    closeOverlay();
   };
 
-  const handleConfirmStatus = () => {
+  // Sprint 6: Activar / Desactivar material con API real (soft-delete o reactivación)
+  const handleConfirmStatus = async () => {
     if (!activeOverlay?.material) {
       return;
     }
 
-    const nextIsActive = !activeOverlay.material.isActive;
+    const material = activeOverlay.material;
+    // Si está activo → desactivar (soft-delete); si está inactivo → reactivar (PUT activo:true)
+    const nextActivo = !material.activo;
 
-    setMaterials((previousMaterials) =>
-      previousMaterials.map((material) =>
-        material.id === activeOverlay.material.id ? updateMaterialStatusPayload(material, nextIsActive) : material
-      )
-    );
-    setFeedback({ tone: 'success', message: 'La vigencia del material fue actualizada.' });
-    closeOverlay();
+    try {
+      if (nextActivo) {
+        // Reactivar: PUT con { activo: true }
+        const result = await actualizarMaterial(material.id, { activo: true });
+        setMaterials((prev) => prev.map((m) => (m.id === material.id ? { ...m, activo: result.data.activo } : m)));
+      } else {
+        // Soft-delete: DELETE endpoint
+        await eliminarMaterial(material.id);
+        setMaterials((prev) => prev.map((m) => (m.id === material.id ? { ...m, activo: false } : m)));
+      }
+      setFeedback({ tone: 'success', message: `Material ${nextActivo ? 'activado' : 'desactivado'} correctamente.` });
+      closeOverlay();
+    } catch (error) {
+      const msg = error.response?.data?.error || 'Error al cambiar el estado del material.';
+      setFeedback({ tone: 'error', message: msg });
+    }
   };
 
   if (!isAdmin) {

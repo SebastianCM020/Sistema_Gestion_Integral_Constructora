@@ -54,6 +54,17 @@ const requireProjectAccess = async (req, res, next) => {
       return next();
     }
 
+    // Sprint 6 CA: Si el proyecto está INACTIVO, bloquear nuevas transacciones
+    // operativas (POST, PUT, PATCH, DELETE). Solo GET está permitido para consulta histórica.
+    const esEscritura = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method);
+    if (esEscritura && proyecto.estado !== 'ACTIVO') {
+      return res.status(422).json({
+        error: `El proyecto "${proyecto.nombre}" se encuentra en estado "${proyecto.estado}". ` +
+               'No se pueden registrar nuevas transacciones operativas en proyectos inactivos.',
+        codigo: 'PROYECTO_INACTIVO',
+      });
+    }
+
     // Buscar la asignación del usuario al proyecto
     const asignacion = await prisma.asignacionProyectoUsuario.findFirst({
       where: {

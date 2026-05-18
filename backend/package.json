@@ -26,6 +26,9 @@
     "uuid": "^11.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.5",
+    "babel-jest": "^30.4.1",
     "jest": "^30.3.0",
     "nodemon": "^3.1.0",
     "prisma": "^5.13.0",
@@ -37,6 +40,12 @@
   "jest": {
     "testEnvironment": "node",
     "testTimeout": 15000,
-    "verbose": true
+    "verbose": true,
+    "transformIgnorePatterns": [
+      "node_modules/(?!(uuid)/)"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
   }
 }
