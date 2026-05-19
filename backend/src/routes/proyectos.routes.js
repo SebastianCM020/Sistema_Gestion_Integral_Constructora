@@ -215,6 +215,61 @@ router.put('/:id', requireAuth, async (req, res) => {
 });
 
 /**
+ * PATCH /api/v1/proyectos/:id/estado
+ * Cambia el estado de un proyecto (ACTIVO / INACTIVO / SUSPENDIDO).
+ * Sprint 6 CA: Si el proyecto pasa a INACTIVO, las nuevas transacciones
+ * operativas quedan bloqueadas a nivel de API; el historial se conserva intacto.
+ *
+ * Solo Admin.
+ */
+router.patch('/:id/estado', requireAuth, async (req, res) => {
+  if (req.user.rol !== ROLES.ADMIN) {
+    return res.status(403).json({ error: 'No tiene permisos para cambiar el estado del proyecto.' });
+  }
+
+  const ESTADOS_VALIDOS = ['ACTIVO', 'INACTIVO', 'SUSPENDIDO', 'FINALIZADO'];
+  const { estado } = req.body;
+
+  if (!estado || !ESTADOS_VALIDOS.includes(estado.toUpperCase())) {
+    return res.status(400).json({
+      error: `Estado inválido. Los valores permitidos son: ${ESTADOS_VALIDOS.join(', ')}.`,
+    });
+  }
+
+  try {
+    const { id } = req.params;
+
+    const proyecto = await prisma.proyecto.findUnique({
+      where: { id },
+      select: { id: true, nombre: true, estado: true },
+    });
+
+    if (!proyecto) {
+      return res.status(404).json({ error: 'Proyecto no encontrado.' });
+    }
+
+    const nuevoEstado = estado.toUpperCase();
+
+    const actualizado = await prisma.proyecto.update({
+      where: { id },
+      data:  { estado: nuevoEstado },
+      select: {
+        id: true, codigo: true, nombre: true, estado: true, updatedAt: true,
+      },
+    });
+
+    const mensaje = nuevoEstado === 'INACTIVO'
+      ? `Proyecto "${proyecto.nombre}" desactivado. Las nuevas transacciones operativas han sido bloqueadas.`
+      : `Estado del proyecto "${proyecto.nombre}" actualizado a ${nuevoEstado}.`;
+
+    return res.status(200).json({ message: mensaje, data: actualizado });
+  } catch (error) {
+    console.error('[ProyectosRouter] PATCH /:id/estado:', error);
+    return res.status(500).json({ error: 'Error al cambiar el estado del proyecto.' });
+  }
+});
+
+/**
  * POST /api/v1/proyectos/:idProyecto/rubros/bulk
  * Carga masiva de rubros para un proyecto específico.
  */

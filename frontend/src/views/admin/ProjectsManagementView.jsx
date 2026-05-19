@@ -16,7 +16,7 @@ import { ProjectFormModal } from '../../components/admin/ProjectFormModal.jsx';
 import { ProjectStatusModal } from '../../components/admin/ProjectStatusModal.jsx';
 import { ProjectParametersPanel } from '../../components/admin/ProjectParametersPanel.jsx';
 import { ProjectDetailDrawer } from '../../components/admin/ProjectDetailDrawer.jsx';
-import { fetchProjects, createProject, updateProject } from '../../services/projects.service.js';
+import { fetchProjects, createProject, updateProject, patchProjectStatus } from '../../services/projects.service.js';
 import { getUsers } from '../../services/usersApi.js';
 import { mockProjectParameters } from '../../data/mockProjectParameters.js';
 import {
@@ -133,21 +133,23 @@ export function ProjectsManagementView({
     }
 
     try {
-      // Persistir el cambio de estado en el backend
-      const updated = await updateProject(targetProject.id, {
-        ...targetProject,
-        status: status,
-      });
+      // Sprint 6: Usar PATCH /estado (endpoint dedicado) que bloquea
+      // transacciones operativas si el proyecto pasa a INACTIVO.
+      const updated = await patchProjectStatus(targetProject.id, status);
 
       setProjects((previousProjects) =>
         previousProjects.map((project) => (project.id === updated.id ? updated : project))
       );
       
-      setFeedback({ tone: 'success', message: `El estado del proyecto se actualizó a "${status.toUpperCase()}".` });
+      const warningMsg = status.toUpperCase() === 'INACTIVO'
+        ? ` Las nuevas transacciones han sido bloqueadas para este proyecto.`
+        : '';
+      setFeedback({ tone: 'success', message: `Estado actualizado a "${status.toUpperCase()}".${warningMsg}` });
       closeOverlay();
     } catch (error) {
       console.error('Error updating project status:', error);
-      setFeedback({ tone: 'error', message: 'No se pudo actualizar el estado en el servidor.' });
+      const msg = error.response?.data?.error || 'No se pudo actualizar el estado en el servidor.';
+      setFeedback({ tone: 'error', message: msg });
     }
   };
 

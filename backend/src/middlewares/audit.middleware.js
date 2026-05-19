@@ -26,6 +26,7 @@ const inferTabla = (path) => {
     auth:       'usuarios',
     materiales: 'materiales',          // Sprint 3 — HU-02
     bodega:     'movimiento_inventario',// Sprint 3 — HU-03
+    compras:    'requerimiento_compra', // Sprint 6 — HU-06
   };
   return tableMap[segment] || segment;
 };

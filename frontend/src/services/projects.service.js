@@ -123,3 +123,30 @@ export const updateProject = async (id, projectData) => {
     throw error;
   }
 };
+
+// ── PATCH /proyectos/:id/estado ──────────────────────────────────────────────
+/**
+ * Cambia el estado de un proyecto (ACTIVO / INACTIVO / SUSPENDIDO / FINALIZADO).
+ * Sprint 6: Si el proyecto queda INACTIVO, el backend bloquea nuevas transacciones.
+ *
+ * @param {string} id     - UUID del proyecto
+ * @param {string} estado - Nuevo estado (mayúsculas)
+ * @returns {Promise<object>}
+ */
+export const patchProjectStatus = async (id, estado) => {
+  try {
+    const { data } = await api.patch(`/proyectos/${id}/estado`, { estado: estado.toUpperCase() });
+    return normalize(data.data);
+  } catch (error) {
+    if (isMockMode(error)) {
+      mockStore = mockStore.map((p) =>
+        p.id === id
+          ? { ...p, status: estado.toLowerCase(), estado: estado.toUpperCase(), updatedAt: new Date().toISOString() }
+          : p
+      );
+      return normalize(mockStore.find((p) => p.id === id));
+    }
+    throw error;
+  }
+};
+
