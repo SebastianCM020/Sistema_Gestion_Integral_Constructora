@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, PauseCircle, Pencil, PlayCircle } from 'lucide-react';
+import { Eye, CirclePause, Pencil, CirclePlay } from 'lucide-react';
 import { formatMaterialDate } from '../../utils/materialHelpers.js';
 import { MaterialStatusBadge } from './MaterialStatusBadge.jsx';
 import { UnitBadge } from './UnitBadge.jsx';
@@ -27,7 +27,7 @@ export function MaterialsMobileList({ materials, onView, onEdit, onToggleStatus 
           <div className="mt-4 grid gap-2 sm:grid-cols-3">
             <ActionButton icon={Eye} label="Detalle" onClick={() => onView(material)} />
             <ActionButton icon={Pencil} label="Editar" onClick={() => onEdit(material)} />
-            <ActionButton icon={material.isActive ? PauseCircle : PlayCircle} label={material.isActive ? 'Desactivar' : 'Activar'} onClick={() => onToggleStatus(material)} />
+            <ActionButton icon={material.isActive ? CirclePause : CirclePlay} label={material.isActive ? 'Desactivar' : 'Activar'} onClick={() => onToggleStatus(material)} />
           </div>
         </article>
       ))}

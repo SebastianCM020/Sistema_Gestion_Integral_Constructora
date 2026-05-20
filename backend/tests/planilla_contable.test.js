@@ -22,7 +22,7 @@ process.env.NODE_ENV      = 'test';
 process.env.JWT_SECRET    = 'secreto_para_pruebas_icaro_2025';
 process.env.JWT_EXPIRES_IN = '8h';
 process.env.DATABASE_URL  = process.env.DATABASE_URL
-  || 'postgresql://icaro_user:icaro_secret@localhost:5432/Icaro_System';
+  || 'postgresql://icaro_user:icaro_secret@localhost:5433/Icaro_System';
 
 const request = require('supertest');
 const jwt     = require('jsonwebtoken');

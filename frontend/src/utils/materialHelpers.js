@@ -11,6 +11,7 @@ export const defaultMaterialFilters = {
 export const defaultMaterialFormValues = {
   code: '',
   name: '',
+  category: 'General',
   unit: '',
   isActive: true,
   observations: '',
@@ -101,8 +102,9 @@ export function getMaterialUnits(materials) {
 
 export function validateMaterialForm(values, materials, currentMaterialId = null) {
   const errors = {};
-  const normalizedCode = values.code.trim().toLowerCase();
-  const normalizedName = values.name.trim().toLowerCase();
+  const normalizedCode = (values.code || '').trim().toLowerCase();
+  const normalizedName = (values.name || '').trim().toLowerCase();
+  const normalizedCategory = (values.category || '').trim().toLowerCase();
 
   if (!normalizedCode) {
     errors.code = 'El código del material es obligatorio.';
@@ -128,7 +130,11 @@ export function validateMaterialForm(values, materials, currentMaterialId = null
     }
   }
 
-  if (!values.unit.trim()) {
+  if (!normalizedCategory) {
+    errors.category = 'La categoría es obligatoria.';
+  }
+
+  if (!values.unit || !values.unit.trim()) {
     errors.unit = 'Seleccione una unidad para continuar.';
   }
 

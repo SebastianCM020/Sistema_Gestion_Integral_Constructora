@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Building2, LogOut, Menu } from 'lucide-react';
 import { RoleBadge } from './RoleBadge.jsx';
 import { UserMenu } from './UserMenu.jsx';
+import { NotificationMailbox } from './NotificationMailbox.jsx';
 
 export function AppHeader({
   currentUser,
@@ -40,18 +41,20 @@ export function AppHeader({
           </button>
         </div>
 
-        <div className="hidden xl:block">
-          <RoleBadge roleName={currentUser.roleName} />
-        </div>
-
         <div className="flex items-center gap-3">
+          <div className="hidden md:flex items-center">
+            <RoleBadge roleName={currentUser.roleName} />
+          </div>
+
+          <NotificationMailbox currentUser={currentUser} />
+
           <button
             type="button"
             onClick={() => onLogout({ expired: false })}
-            className="hidden h-[44px] items-center gap-2 rounded-[12px] border border-[#DC2626]/20 bg-[#F7F9FC] px-4 text-sm font-medium text-[#DC2626] transition-colors hover:bg-[#DC2626]/5 md:inline-flex"
+            className="hidden h-[38px] items-center gap-2 rounded-[10px] border border-[#DC2626]/20 bg-[#DC2626]/5 px-3 text-xs font-semibold uppercase tracking-wider text-[#DC2626] transition-all duration-200 hover:bg-[#DC2626]/10 hover:border-[#DC2626]/30 md:inline-flex"
           >
-            <LogOut size={18} />
-            Cerrar sesión
+            <LogOut size={14} className="opacity-80" />
+            <span>Salir</span>
           </button>
 
           <UserMenu

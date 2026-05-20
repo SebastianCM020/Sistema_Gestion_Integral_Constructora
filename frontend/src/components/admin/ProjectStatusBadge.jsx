@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertTriangle, CircleCheckBig, FolderLock } from 'lucide-react';
+import { AlertTriangle, CircleCheckBig, FolderLock, Ban } from 'lucide-react';
 import { getProjectStatusMeta } from '../../utils/projectHelpers.js';
 
 const toneClasses = {
@@ -12,6 +12,7 @@ const iconByStatus = {
   active: CircleCheckBig,
   suspended: AlertTriangle,
   closed: FolderLock,
+  inactive: Ban,
 };
 
 export function ProjectStatusBadge({ status }) {

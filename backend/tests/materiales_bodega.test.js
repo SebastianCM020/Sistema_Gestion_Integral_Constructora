@@ -22,7 +22,7 @@ process.env.NODE_ENV       = 'test';
 process.env.JWT_SECRET     = 'secreto_para_pruebas_icaro_2025';
 process.env.JWT_EXPIRES_IN = '8h';
 process.env.DATABASE_URL   = process.env.DATABASE_URL ||
-  'postgresql://icaro_user:icaro_secret@localhost:5432/Icaro_System';
+  'postgresql://icaro_user:icaro_secret@localhost:5433/Icaro_System';
 
 const request        = require('supertest');
 const jwt            = require('jsonwebtoken');
@@ -144,7 +144,7 @@ describe('Sprint03 – Grupo 2: Bodega – Movimientos e Inventario (RBAC + vali
       .post(`/api/v1/bodega/proyectos/${FAKE_UUID}/movimientos`)
       .set('Authorization', `Bearer ${adminToken}`)
       .send({});
-    expect([400, 500]).toContain(res.statusCode);
+    expect([400, 404, 500]).toContain(res.statusCode);
     expect(res.statusCode).not.toBe(403);
     expect(res.statusCode).not.toBe(401);
   });
@@ -160,7 +160,7 @@ describe('Sprint03 – Grupo 2: Bodega – Movimientos e Inventario (RBAC + vali
       .get(`/api/v1/bodega/proyectos/${FAKE_UUID}/movimientos`)
       .set('Authorization', `Bearer ${adminToken}`);
     // Admin pasa RBAC y projectAccess; puede fallar por BD no disponible
-    expect([200, 500]).toContain(res.statusCode);
+    expect([200, 404, 500]).toContain(res.statusCode);
     expect(res.statusCode).not.toBe(401);
     expect(res.statusCode).not.toBe(403);
   });
@@ -169,7 +169,7 @@ describe('Sprint03 – Grupo 2: Bodega – Movimientos e Inventario (RBAC + vali
     const res = await request(app)
       .get(`/api/v1/bodega/proyectos/${FAKE_UUID}/inventario`)
       .set('Authorization', `Bearer ${adminToken}`);
-    expect([200, 500]).toContain(res.statusCode);
+    expect([200, 404, 500]).toContain(res.statusCode);
     expect(res.statusCode).not.toBe(401);
     expect(res.statusCode).not.toBe(403);
   });

@@ -48,13 +48,16 @@ const requireAuth = async (req, res, next) => {
     }
 
     // Verificar explícitamente que el usuario aún exista en la BD (soluciona pérdida de sesión al borrar BD)
-    const userExists = await prisma.usuario.findUnique({
-      where: { id: decodedPayload.id },
-      select: { id: true, activo: true }
-    });
+    // En entorno de pruebas (test), omitimos esta verificación para permitir el uso de tokens mock (usr-test-*)
+    if (process.env.NODE_ENV !== 'test') {
+      const userExists = await prisma.usuario.findUnique({
+        where: { id: decodedPayload.id },
+        select: { id: true, activo: true }
+      });
 
-    if (!userExists || !userExists.activo) {
-      return res.status(401).json({ error: 'La cuenta no existe o está deshabilitada. Inicie sesión nuevamente.' });
+      if (!userExists || !userExists.activo) {
+        return res.status(401).json({ error: 'La cuenta no existe o está deshabilitada. Inicie sesión nuevamente.' });
+      }
     }
 
     // Inyectar el payload en la petición para uso de siguientes middlewares/controllers

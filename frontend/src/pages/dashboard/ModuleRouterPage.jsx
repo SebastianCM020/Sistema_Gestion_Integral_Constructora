@@ -52,10 +52,8 @@ export default function ModuleRouterPage() {
   if (moduleId === 'progress') return <RegistroAvanceView />;
   if (moduleId === 'evidence') return <MobileEvidenceSyncView {...commonProps} />;
   if (moduleId === 'consumption') return <MobileConsumptionView {...commonProps} />;
-  if (moduleId === 'requirements') return <PurchaseRequestsView {...commonProps} />;
-  if (moduleId === 'requerimientos') return <RequerimientosView {...commonProps} />; // Sprint 6
-  if (moduleId === 'review') return <RequestReviewView {...commonProps} />;
-  if (moduleId === 'bandeja-gerencial') return <BandejaGerencialView {...commonProps} />; // Sprint 6
+  if (moduleId === 'requirements') return <RequerimientosView {...commonProps} />;
+  if (moduleId === 'review') return <BandejaGerencialView {...commonProps} />;
   if (moduleId === 'inventory') return <InventoryReceptionView {...commonProps} />;
   if (moduleId === 'inventory-movements') return <InventoryMovementsView {...commonProps} />;
   if (moduleId === 'payroll') return <BillingDocumentsView {...commonProps} />;

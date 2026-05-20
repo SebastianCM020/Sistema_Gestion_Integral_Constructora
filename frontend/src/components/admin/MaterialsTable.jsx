@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, PauseCircle, Pencil, PlayCircle } from 'lucide-react';
+import { Eye, CirclePause, Pencil, CirclePlay } from 'lucide-react';
 import { formatMaterialDate } from '../../utils/materialHelpers.js';
 import { MaterialStatusBadge } from './MaterialStatusBadge.jsx';
 import { UnitBadge } from './UnitBadge.jsx';
@@ -31,10 +31,10 @@ export function MaterialsTable({ materials, onView, onEdit, onToggleStatus }) {
                 <td className="px-5 py-4"><MaterialStatusBadge isActive={material.isActive} /></td>
                 <td className="px-5 py-4">{formatMaterialDate(material.updatedAt)}</td>
                 <td className="px-5 py-4">
-                  <div className="grid gap-2 xl:grid-cols-[repeat(3,minmax(0,1fr))]">
+                  <div className="flex flex-wrap items-center gap-2">
                     <ActionButton icon={Eye} label="Ver detalle" onClick={() => onView(material)} />
                     <ActionButton icon={Pencil} label="Editar" onClick={() => onEdit(material)} />
-                    <ActionButton icon={material.isActive ? PauseCircle : PlayCircle} label={material.isActive ? 'Desactivar' : 'Activar'} onClick={() => onToggleStatus(material)} />
+                    <ActionButton icon={material.isActive ? CirclePause : CirclePlay} label={material.isActive ? 'Desactivar' : 'Activar'} onClick={() => onToggleStatus(material)} />
                   </div>
                 </td>
               </tr>

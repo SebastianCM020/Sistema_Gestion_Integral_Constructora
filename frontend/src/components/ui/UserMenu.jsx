@@ -7,17 +7,17 @@ export function UserMenu({ currentUser, isOpen, onToggle, onGoHome, onOpenProfil
       <button
         type="button"
         onClick={onToggle}
-        className="flex h-[44px] items-center gap-3 rounded-[12px] border border-[#D1D5DB] bg-white px-3 text-left hover:bg-gray-50 transition-colors"
+        className="flex h-[38px] items-center gap-2.5 rounded-[10px] border border-[#D1D5DB] bg-white px-2.5 text-left hover:bg-[#F7F9FC] transition-all duration-200"
         aria-expanded={isOpen}
       >
         <div className="hidden sm:block">
-          <p className="text-sm font-semibold text-[#2F3A45] leading-tight">{currentUser.name}</p>
-          <p className="text-xs text-gray-500 leading-tight">{currentUser.roleName}</p>
+          <p className="text-xs font-semibold text-[#2F3A45] leading-tight">{currentUser.name}</p>
+          <p className="text-[10px] text-gray-500 leading-tight">{currentUser.roleName}</p>
         </div>
-        <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#1F4E79]/15 bg-[#DCEAF7] text-sm font-bold text-[#1F4E79]">
+        <div className="flex h-7 w-7 items-center justify-center rounded-full border border-[#1F4E79]/15 bg-[#DCEAF7] text-[11px] font-bold text-[#1F4E79]">
           {currentUser.initials}
         </div>
-        <ChevronDown size={16} className="text-gray-500" />
+        <ChevronDown size={14} className="text-gray-500" />
       </button>
 
       {isOpen ? (

@@ -135,6 +135,7 @@ export const updateRubro = async (rubroId, rubroData) => {
     unidad:               (rubroData.unit         ?? rubroData.unidad       ?? '').trim(),
     precioUnitario:       Number(rubroData.unitPrice       ?? rubroData.precioUnitario ?? 0),
     cantidadPresupuestada: Number(rubroData.budgetedQuantity ?? rubroData.cantidadPresupuestada ?? 0),
+    activo:               rubroData.isActive ?? rubroData.activo,
   };
   try {
     const { data } = await api.put(`/proyectos/rubros/${rubroId}`, payload);
@@ -142,7 +143,7 @@ export const updateRubro = async (rubroId, rubroData) => {
   } catch (error) {
     if (isMockMode(error)) {
       mockStore = mockStore.map((r) =>
-        r.id === rubroId ? { ...r, ...payload, updatedAt: new Date().toISOString() } : r
+        r.id === rubroId ? { ...r, ...payload, isActive: payload.activo, updatedAt: new Date().toISOString() } : r
       );
       return normalize(mockStore.find((r) => r.id === rubroId));
     }

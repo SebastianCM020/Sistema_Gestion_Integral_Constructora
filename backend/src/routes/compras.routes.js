@@ -20,12 +20,12 @@ const comprasController = require('../controllers/compras.controller');
 // ── Grupos de roles ────────────────────────────────────────────────────────────
 /** Roles que pueden leer requerimientos */
 const canRead = [requireAuth, requireRole([
-  ROLES.ADMIN, ROLES.RESIDENTE, ROLES.PRESIDENTE, ROLES.CONTADOR, ROLES.BODEGUERO,
+  ROLES.ADMIN, ROLES.RESIDENTE, ROLES.PRESIDENTE, ROLES.CONTADOR, ROLES.BODEGUERO, ROLES.AUXILIAR,
 ])];
 
 /** Roles que pueden crear requerimientos */
 const canCreate = [requireAuth, requireRole([
-  ROLES.ADMIN, ROLES.RESIDENTE, ROLES.PRESIDENTE,
+  ROLES.ADMIN, ROLES.RESIDENTE,
 ])];
 
 /** Roles que pueden aprobar o rechazar requerimientos (gerencial) */
@@ -43,6 +43,7 @@ const canApprove = [requireAuth, requireRole([
  * que Express trate "bandeja-gerencial" como un UUID de proyecto.
  */
 router.get('/bandeja-gerencial', ...canApprove, comprasController.bandejaGerencial);
+router.get('/notificaciones', requireAuth, comprasController.obtenerNotificaciones);
 
 // ── Requerimientos por Proyecto ───────────────────────────────────────────────
 /**

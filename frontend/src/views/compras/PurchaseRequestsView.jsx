@@ -17,9 +17,9 @@ import { PurchaseRequestSuccessState } from '../../components/compras/PurchaseRe
 import { RequestDetailTable } from '../../components/compras/RequestDetailTable.jsx';
 import { RequestLineFormModal } from '../../components/compras/RequestLineFormModal.jsx';
 import { RequestSummaryCards } from '../../components/compras/RequestSummaryCards.jsx';
-import { getAssignedProjectsForUser } from '../../data/mockAssignedProjects.js';
-import { mockCatalogMaterials } from '../../data/mockCatalogMaterials.js';
-import { getPurchaseRequestsForUser } from '../../data/mockPurchaseRequests.js';
+import { fetchProjects } from '../../services/projects.service.js';
+import { fetchMateriales } from '../../services/materiales.service.js';
+import { fetchRequerimientos, crearRequerimiento } from '../../services/compras.service.js';
 import { getModulesForUser } from '../../data/icaroData.js';
 import {
   clearPurchaseRequestDraft,
@@ -39,44 +39,139 @@ import {
   validatePurchaseRequestDraft,
 } from '../../utils/purchaseRequestHelpers.js';
 
+const normalizeRequerimiento = (req) => {
+  let feStatus = 'in-review';
+  if (req.estado === 'APROBADO') feStatus = 'approved';
+  else if (req.estado === 'RECHAZADO') feStatus = 'rejected';
+  else if (req.estado === 'RECIBIDO') feStatus = 'received';
+
+  return {
+    id: req.id,
+    projectId: req.idProyecto,
+    projectCode: req.proyecto?.codigo || '',
+    projectName: req.proyecto?.nombre || '',
+    requesterId: req.solicitante?.id || '',
+    requesterName: req.solicitante ? `${req.solicitante.nombre} ${req.solicitante.apellido || ''}`.trim() : 'Desconocido',
+    requesterRole: 'Residente',
+    justification: req.justificacion || '',
+    status: feStatus,
+    rejectionComment: req.comentarioRechazo || '',
+    requestedAt: req.fechaSolicitud || req.createdAt || new Date().toISOString(),
+    updatedAt: req.fechaSolicitud || req.createdAt || new Date().toISOString(),
+    detail: (req.detalles || []).map((d) => ({
+      materialId: d.idMaterial,
+      materialCode: d.material?.codigo || '',
+      materialName: d.material?.nombre || '',
+      unit: d.material?.unidad || '',
+      requestedQuantity: Number(d.cantidadSolicitada || 0),
+    })),
+  };
+};
+
 export function PurchaseRequestsView({ currentUser, isRestricted = false, onGoHome, onOpenProfile, onLogout, onOpenModule }) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [loadStatus, setLoadStatus] = useState('loading');
   const [retryCount, setRetryCount] = useState(0);
-  const [projects] = useState(() => getAssignedProjectsForUser(currentUser.email));
-  const [currentProjectId, setCurrentProjectId] = useState(projects[0]?.id ?? '');
-  const [draft, setDraft] = useState(() => ({ ...defaultPurchaseRequestDraft, projectId: projects[0]?.id ?? '', detail: [] }));
+  const [projects, setProjects] = useState([]);
+  const [materials, setMaterials] = useState([]);
+  const [currentProjectId, setCurrentProjectId] = useState('');
+  const [draft, setDraft] = useState(() => ({ ...defaultPurchaseRequestDraft, projectId: '', detail: [] }));
   const [filters, setFilters] = useState(defaultPurchaseRequestFilters);
-  const [requests, setRequests] = useState(() => getPurchaseRequestsForUser(currentUser, getAssignedProjectsForUser(currentUser.email).map((project) => project.id)));
+  const [requests, setRequests] = useState([]);
   const [errors, setErrors] = useState({});
   const [feedback, setFeedback] = useState(null);
+  const [toastFeedback, setToastFeedback] = useState(null);
   const [activeOverlay, setActiveOverlay] = useState(null);
 
   const modules = getModulesForUser(currentUser);
   const accessibleProjectIds = useMemo(() => projects.map((project) => project.id), [projects]);
   const currentProject = useMemo(() => getSelectedProject(projects, currentProjectId), [projects, currentProjectId]);
-  const isAuthorizedRole = ['Residente', 'Auxiliar de Contabilidad'].includes(currentUser.roleName);
-  const availableCatalog = useMemo(() => getAvailableCatalogMaterials(mockCatalogMaterials, currentProjectId), [currentProjectId]);
+
+  const isAuthorizedRole = [
+    'Administrador del Sistema',
+    'Presidente / Gerente',
+    'Contador',
+    'Auxiliar de Contabilidad',
+    'Residente',
+    'Bodeguero'
+  ].includes(currentUser.roleName);
+
+  const canCreateRequests = [
+    'Administrador del Sistema',
+    'Residente'
+  ].includes(currentUser.roleName);
+
+  const availableCatalog = useMemo(() => getAvailableCatalogMaterials(materials, currentProjectId), [materials, currentProjectId]);
   const visibleRequests = useMemo(() => sortPurchaseRequests(filterPurchaseRequests(requests.filter((request) => accessibleProjectIds.includes(request.projectId)), filters), filters.sortBy), [accessibleProjectIds, filters, requests]);
   const requestSummary = useMemo(() => getPurchaseRequestSummary(requests.filter((request) => accessibleProjectIds.includes(request.projectId))), [accessibleProjectIds, requests]);
   const draftSummary = useMemo(() => getDraftSummary(draft.detail), [draft.detail]);
   const hasDraft = hasDraftChanges(draft);
 
   useEffect(() => {
-    setLoadStatus('loading');
+    let active = true;
+    const loadInitialData = async () => {
+      setLoadStatus('loading');
+      try {
+        const [projectsData, materialsResult] = await Promise.all([
+          fetchProjects(),
+          fetchMateriales({ soloActivos: true })
+        ]);
 
-    const timer = window.setTimeout(() => {
-      setLoadStatus(currentUser.requirementsShouldFail ? 'error' : 'ready');
-    }, 650);
+        if (!active) return;
 
-    return () => window.clearTimeout(timer);
-  }, [currentUser.requirementsShouldFail, retryCount]);
+        setProjects(projectsData);
+        setMaterials(materialsResult.data || []);
+
+        if (projectsData.length > 0) {
+          const firstProjId = projectsData[0].id;
+          setCurrentProjectId(firstProjId);
+          setDraft((prev) => ({ ...prev, projectId: firstProjId }));
+
+          const reqsResult = await fetchRequerimientos(firstProjId);
+          if (!active) return;
+          setRequests((reqsResult.data || []).map(normalizeRequerimiento));
+        }
+
+        setLoadStatus('ready');
+      } catch (error) {
+        console.error('[PurchaseRequestsView] Error loading data:', error);
+        if (active) setLoadStatus('error');
+      }
+    };
+
+    loadInitialData();
+    return () => { active = false; };
+  }, [retryCount]);
+
+  useEffect(() => {
+    if (!currentProjectId || loadStatus === 'loading') return;
+
+    let active = true;
+    const loadRequestsForProject = async () => {
+      try {
+        const reqsResult = await fetchRequerimientos(currentProjectId);
+        if (!active) return;
+        setRequests((reqsResult.data || []).map(normalizeRequerimiento));
+      } catch (error) {
+        console.error('[PurchaseRequestsView] Error loading requirements for project:', error);
+      }
+    };
+
+    loadRequestsForProject();
+    return () => { active = false; };
+  }, [currentProjectId, loadStatus]);
 
   useEffect(() => {
     if (!draft.projectId && currentProjectId) {
       setDraft((currentDraft) => ({ ...currentDraft, projectId: currentProjectId }));
     }
   }, [currentProjectId, draft.projectId]);
+
+  useEffect(() => {
+    if (!toastFeedback) return;
+    const timer = setTimeout(() => setToastFeedback(null), 3200);
+    return () => clearTimeout(timer);
+  }, [toastFeedback]);
 
   const resetDraft = (nextProjectId = currentProjectId) => {
     setDraft(clearPurchaseRequestDraft(nextProjectId));
@@ -98,7 +193,7 @@ export function PurchaseRequestsView({ currentUser, isRestricted = false, onGoHo
     resetDraft(nextProjectId);
   };
 
-  const handleSaveRequest = () => {
+  const handleSaveRequest = async () => {
     const validationErrors = validatePurchaseRequestDraft(draft);
 
     if (Object.keys(validationErrors).length) {
@@ -111,15 +206,27 @@ export function PurchaseRequestsView({ currentUser, isRestricted = false, onGoHo
       return;
     }
 
-    const nextRequest = createPurchaseRequestPayload({
-      draft,
-      project: currentProject,
-      currentUser,
-    });
+    try {
+      const backendPayload = {
+        justificacion: draft.justification.trim(),
+        detalles: draft.detail.map((line) => ({
+          idMaterial: line.materialId,
+          cantidadSolicitada: Number(line.requestedQuantity),
+        })),
+      };
 
-    setRequests((currentRequests) => [nextRequest, ...currentRequests]);
-    setFeedback({ type: 'success', request: nextRequest });
-    resetDraft(currentProjectId);
+      const result = await crearRequerimiento(currentProjectId, backendPayload);
+      const normalizedReq = normalizeRequerimiento(result.data);
+
+      setRequests((currentRequests) => [normalizedReq, ...currentRequests]);
+      setFeedback({ type: 'success', request: normalizedReq });
+      setToastFeedback({ tone: 'success', message: 'Requerimiento guardado exitosamente.' });
+      resetDraft(currentProjectId);
+    } catch (error) {
+      console.error('[PurchaseRequestsView] Error saving request:', error);
+      const errMsg = error.response?.data?.error || 'Error al guardar el requerimiento de compra en el servidor.';
+      setToastFeedback({ tone: 'error', message: errMsg });
+    }
   };
 
   const handleSaveLine = (material, quantity) => {
@@ -218,7 +325,13 @@ export function PurchaseRequestsView({ currentUser, isRestricted = false, onGoHo
         />
 
         <main className="min-w-0 space-y-6">
-          <PurchaseRequestHeader currentProject={currentProject} hasMultipleProjects={projects.length > 1} onGoHome={onGoHome} onCreateNew={() => resetDraft(currentProjectId)} />
+          <PurchaseRequestHeader
+            currentProject={currentProject}
+            hasMultipleProjects={projects.length > 1}
+            onGoHome={onGoHome}
+            onCreateNew={() => resetDraft(currentProjectId)}
+            canCreate={canCreateRequests}
+          />
 
           {loadStatus === 'loading' ? <PurchaseRequestLoadingState /> : null}
 
@@ -248,55 +361,79 @@ export function PurchaseRequestsView({ currentUser, isRestricted = false, onGoHo
                 <>
                   <RequestSummaryCards summary={requestSummary} />
 
-                  <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
-                    <div className="space-y-5">
-                      <PurchaseRequestForm
-                        projects={projects}
-                        currentProjectId={currentProjectId}
-                        draft={draft}
-                        errors={errors}
-                        detailSummary={draftSummary}
-                        hasMultipleProjects={projects.length > 1}
-                        onProjectChange={handleProjectChange}
-                        onJustificationChange={(justification) => {
-                          setDraft((currentDraft) => ({ ...currentDraft, justification }));
-                          setErrors((currentErrors) => ({ ...currentErrors, justification: undefined }));
-                        }}
-                        onOpenLineModal={() => setActiveOverlay({ type: 'line-form' })}
-                        onSubmit={handleSaveRequest}
-                        onCancelDraft={() => setActiveOverlay({ type: 'cancel-draft', nextProjectId: null })}
-                      />
-
-                      {noCatalogForProject ? (
-                        <EmptyRequestState
-                          title="No hay materiales disponibles en el catálogo"
-                          description="Cambie de proyecto o vuelva al panel principal. El sistema no permitirá agregar líneas hasta tener materiales activos para el proyecto seleccionado."
-                          actionLabel={projects.length > 1 ? 'Cambiar proyecto' : 'Volver al panel principal'}
-                          onAction={projects.length > 1 ? () => setActiveOverlay({ type: 'cancel-draft', nextProjectId: projects.find((project) => project.id !== currentProjectId)?.id ?? null }) : onGoHome}
+                  {canCreateRequests ? (
+                    <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+                      <div className="space-y-5">
+                        <PurchaseRequestForm
+                          projects={projects}
+                          currentProjectId={currentProjectId}
+                          draft={draft}
+                          errors={errors}
+                          detailSummary={draftSummary}
+                          hasMultipleProjects={projects.length > 1}
+                          onProjectChange={handleProjectChange}
+                          onJustificationChange={(justification) => {
+                            setDraft((currentDraft) => ({ ...currentDraft, justification }));
+                            setErrors((currentErrors) => ({ ...currentErrors, justification: undefined }));
+                          }}
+                          onOpenLineModal={() => setActiveOverlay({ type: 'line-form' })}
+                          onSubmit={handleSaveRequest}
+                          onCancelDraft={() => setActiveOverlay({ type: 'cancel-draft', nextProjectId: null })}
                         />
-                      ) : null}
 
-                      {draft.detail.length ? (
-                        <section className="space-y-3">
-                          <SectionHeader title="Detalle del requerimiento" description="Revise materiales, cantidades y acciones antes de guardar el requerimiento." />
-                          <RequestDetailTable
-                            lines={draft.detail}
-                            editable
-                            onEdit={(line) => setActiveOverlay({ type: 'line-form', line })}
-                            onDelete={(line) => setActiveOverlay({ type: 'delete-line', line })}
+                        {noCatalogForProject ? (
+                          <EmptyRequestState
+                            title="No hay materiales disponibles en el catálogo"
+                            description="Cambie de proyecto o vuelva al panel principal. El sistema no permitirá agregar líneas hasta tener materiales activos para el proyecto seleccionado."
+                            actionLabel={projects.length > 1 ? 'Cambiar proyecto' : 'Volver al panel principal'}
+                            onAction={projects.length > 1 ? () => setActiveOverlay({ type: 'cancel-draft', nextProjectId: projects.find((project) => project.id !== currentProjectId)?.id ?? null }) : onGoHome}
                           />
-                        </section>
-                      ) : (
-                        <EmptyRequestState
-                          title="El requerimiento aún no tiene líneas de detalle"
-                          description="Agregue al menos un material desde el catálogo para completar el requerimiento actual."
-                          actionLabel={noCatalogForProject ? undefined : 'Agregar material'}
-                          onAction={noCatalogForProject ? undefined : () => setActiveOverlay({ type: 'line-form' })}
-                        />
-                      )}
-                    </div>
+                        ) : null}
 
-                    <div className="space-y-5">
+                        {draft.detail.length ? (
+                          <section className="space-y-3">
+                            <SectionHeader title="Detalle del requerimiento" description="Revise materiales, cantidades y acciones antes de guardar el requerimiento." />
+                            <RequestDetailTable
+                              lines={draft.detail}
+                              editable
+                              onEdit={(line) => setActiveOverlay({ type: 'line-form', line })}
+                              onDelete={(line) => setActiveOverlay({ type: 'delete-line', line })}
+                            />
+                          </section>
+                        ) : (
+                          <EmptyRequestState
+                            title="El requerimiento aún no tiene líneas de detalle"
+                            description="Agregue al menos un material desde el catálogo para completar el requerimiento actual."
+                            actionLabel={noCatalogForProject ? undefined : 'Agregar material'}
+                            onAction={noCatalogForProject ? undefined : () => setActiveOverlay({ type: 'line-form' })}
+                          />
+                        )}
+                      </div>
+
+                      <div className="space-y-5">
+                        <PurchaseRequestFilters
+                          filters={filters}
+                          onChange={(field, value) => setFilters((currentFilters) => ({ ...currentFilters, [field]: value }))}
+                          onReset={() => setFilters(defaultPurchaseRequestFilters)}
+                        />
+
+                        <section className="space-y-3">
+                          <SectionHeader title="Requerimientos recientes" description="Consulte solicitudes del proyecto actual o del usuario autorizado sin perder el contexto del formulario." />
+                          {visibleRequests.length ? (
+                            <PurchaseRequestsTable requests={visibleRequests} onOpenDetail={(request) => setActiveOverlay({ type: 'detail', request })} />
+                          ) : (
+                            <EmptyRequestState
+                              title="No hay requerimientos para los filtros actuales"
+                              description="Ajuste los filtros o cree un requerimiento nuevo para comenzar el flujo de compras."
+                              actionLabel="Nuevo requerimiento"
+                              onAction={() => resetDraft(currentProjectId)}
+                            />
+                          )}
+                        </section>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="max-w-4xl mx-auto space-y-5">
                       <PurchaseRequestFilters
                         filters={filters}
                         onChange={(field, value) => setFilters((currentFilters) => ({ ...currentFilters, [field]: value }))}
@@ -304,20 +441,18 @@ export function PurchaseRequestsView({ currentUser, isRestricted = false, onGoHo
                       />
 
                       <section className="space-y-3">
-                        <SectionHeader title="Requerimientos recientes" description="Consulte solicitudes del proyecto actual o del usuario autorizado sin perder el contexto del formulario." />
+                        <SectionHeader title="Requerimientos del proyecto" description="Consulte solicitudes de compras asociadas al proyecto seleccionado." />
                         {visibleRequests.length ? (
                           <PurchaseRequestsTable requests={visibleRequests} onOpenDetail={(request) => setActiveOverlay({ type: 'detail', request })} />
                         ) : (
                           <EmptyRequestState
-                            title="No hay requerimientos para los filtros actuales"
-                            description="Ajuste los filtros o cree un requerimiento nuevo para comenzar el flujo de compras."
-                            actionLabel="Nuevo requerimiento"
-                            onAction={() => resetDraft(currentProjectId)}
+                            title="No hay requerimientos en este proyecto"
+                            description="No se han registrado requerimientos de compra para el proyecto seleccionado."
                           />
                         )}
                       </section>
                     </div>
-                  </div>
+                  )}
                 </>
               )}
             </>
@@ -357,6 +492,19 @@ export function PurchaseRequestsView({ currentUser, isRestricted = false, onGoHo
 
       {activeOverlay?.type === 'detail' ? (
         <PurchaseRequestDetailDrawer request={activeOverlay.request} onClose={() => setActiveOverlay(null)} />
+      ) : null}
+
+      {toastFeedback ? (
+        <div className={`fixed bottom-6 right-6 z-[9999] rounded-[12px] border px-5 py-4 text-sm font-semibold shadow-xl max-w-md ${
+          toastFeedback.tone === 'success'
+            ? 'border-[#16A34A]/20 bg-[#15803D] text-white'
+            : 'border-[#DC2626]/20 bg-[#B91C1C] text-white'
+        }`}>
+          <div className="flex items-center gap-3">
+            <div className={`h-2.5 w-2.5 rounded-full ${toastFeedback.tone === 'success' ? 'bg-[#4ADE80]' : 'bg-[#FCA5A5]'}`} />
+            <span>{toastFeedback.message}</span>
+          </div>
+        </div>
       ) : null}
     </div>
   );

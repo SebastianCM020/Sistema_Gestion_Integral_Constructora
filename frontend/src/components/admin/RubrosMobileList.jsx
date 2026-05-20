@@ -1,9 +1,9 @@
 import React from 'react';
-import { Eye, Pencil } from 'lucide-react';
+import { Eye, Pencil, CirclePause, CirclePlay } from 'lucide-react';
 import { formatRubroMetrics } from '../../utils/rubroHelpers.js';
 import { RubroStatusBadge } from './RubroStatusBadge.jsx';
 
-export function RubrosMobileList({ rubros, onView, onEdit }) {
+export function RubrosMobileList({ rubros, onView, onEdit, onToggleStatus }) {
   return (
     <div className="space-y-4 lg:hidden">
       {rubros.map((rubro) => {
@@ -26,9 +26,10 @@ export function RubrosMobileList({ rubros, onView, onEdit }) {
               <InfoItem label="Cantidad ejecutada" value={metrics.executedQuantity} />
             </div>
 
-            <div className="mt-4 grid gap-2 sm:grid-cols-2">
+            <div className="mt-4 grid gap-2 sm:grid-cols-3">
               <ActionButton icon={Eye} label="Ver detalle" onClick={() => onView(rubro)} />
               <ActionButton icon={Pencil} label="Editar rubro" onClick={() => onEdit(rubro)} />
+              <ActionButton icon={rubro.isActive ? CirclePause : CirclePlay} label={rubro.isActive ? 'Desactivar' : 'Activar'} onClick={() => onToggleStatus(rubro)} />
             </div>
           </article>
         );
