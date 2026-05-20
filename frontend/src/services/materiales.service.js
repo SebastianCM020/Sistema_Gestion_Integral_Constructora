@@ -14,6 +14,19 @@ import {
 } from '../db/materialesLocalService';
 
 /**
+ * Normaliza un material del backend al formato que espera la UI de React.
+ */
+const normalize = (m) => ({
+  ...m,
+  code: m.codigo,
+  name: m.nombre,
+  category: m.categoria,
+  unit: m.unidad,
+  observations: m.descripcion || '',
+  isActive: m.activo,
+});
+
+/**
  * Obtiene la lista de materiales.
  * Cuando hay conexión: descarga del servidor y actualiza caché.
  * Cuando no hay conexión: retorna lo que hay en IndexedDB.
@@ -23,17 +36,19 @@ import {
  * @param {string}  [params.busqueda]
  * @param {boolean} [params.isOnline=true]
  */
-export const fetchMateriales = async ({ categoria, busqueda, isOnline = true } = {}) => {
+export const fetchMateriales = async ({ categoria, busqueda, soloActivos, isOnline = true } = {}) => {
   if (isOnline) {
     try {
       const params = {};
       if (categoria) params.categoria = categoria;
       if (busqueda)  params.busqueda  = busqueda;
+      if (soloActivos !== undefined) params.soloActivos = soloActivos;
 
       const { data } = await api.get('/materiales', { params });
+      const normalizedData = data.data.map(normalize);
       // Actualizar caché local con los datos frescos del servidor
       await sincronizarMaterialesDesdeServidor(data.data);
-      return { data: data.data, total: data.total, fromCache: false };
+      return { data: normalizedData, total: data.total, fromCache: false };
     } catch (error) {
       console.warn('[materiales] Falló el API, usando caché local:', error.message);
       // Si el API falla, caer al caché como fallback
@@ -47,7 +62,7 @@ export const fetchMateriales = async ({ categoria, busqueda, isOnline = true } =
   }
 
   const data = await listarMaterialesOffline({ categoria, busqueda });
-  return { data, total: data.length, fromCache: true, cacheVacia: false };
+  return { data: data.map(normalize), total: data.length, fromCache: true, cacheVacia: false };
 };
 
 /**
@@ -72,7 +87,7 @@ export const fetchCategorias = async (isOnline = true) => {
  */
 export const crearMaterial = async (datos) => {
   const { data } = await api.post('/materiales', datos);
-  return data;
+  return { data: normalize(data.data) };
 };
 
 /**
@@ -82,7 +97,7 @@ export const crearMaterial = async (datos) => {
  */
 export const actualizarMaterial = async (id, datos) => {
   const { data } = await api.put(`/materiales/${id}`, datos);
-  return data;
+  return { data: normalize(data.data) };
 };
 
 /**
@@ -91,5 +106,5 @@ export const actualizarMaterial = async (id, datos) => {
  */
 export const eliminarMaterial = async (id) => {
   const { data } = await api.delete(`/materiales/${id}`);
-  return data;
+  return { data: normalize(data.data) };
 };

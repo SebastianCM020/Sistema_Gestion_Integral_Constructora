@@ -7,6 +7,8 @@
 
 const comprasService       = require('../services/compras.service');
 const { obtenerBandejaGerencial } = require('../services/notification.service');
+const prisma = require('../utils/prisma');
+const { ROLES } = require('../middlewares/auth.middleware');
 
 /**
  * POST /api/v1/compras/proyectos/:idProyecto/requerimientos
@@ -141,6 +143,67 @@ const bandejaGerencial = async (req, res) => {
   }
 };
 
+/**
+ * GET /api/v1/compras/notificaciones
+ * Obtiene notificaciones de requerimientos (para Gerente: creados; para Residente: aprobados/rechazados).
+ */
+const obtenerNotificaciones = async (req, res) => {
+  try {
+    const rol = req.user.rol;
+    const userId = req.user.id;
+
+    if (rol === ROLES.ADMIN || rol === ROLES.PRESIDENTE) {
+      // Para administradores y gerentes: requerimientos en revisión
+      const pendientes = await prisma.requerimientoCompra.findMany({
+        where: { estado: 'EN_REVISION' },
+        include: {
+          proyecto: { select: { nombre: true, codigo: true } },
+          solicitante: { select: { nombre: true, apellido: true } }
+        },
+        orderBy: { fechaSolicitud: 'desc' },
+        take: 10
+      });
+      const notifications = pendientes.map(r => ({
+        id: r.id,
+        tipo: 'CREADO',
+        titulo: 'Nuevo requerimiento',
+        mensaje: `${r.solicitante.nombre} solicitó compra para ${r.proyecto.codigo}`,
+        fecha: r.fechaSolicitud,
+        requerimiento: r
+      }));
+      return res.status(200).json({ data: notifications });
+    } else if (rol === ROLES.RESIDENTE || rol === ROLES.AUXILIAR) {
+      // Para residentes y auxiliares: sus requerimientos que fueron aprobados o rechazados recientemente
+      const recientes = await prisma.requerimientoCompra.findMany({
+        where: {
+          idSolicitante: userId,
+          estado: { in: ['APROBADO', 'RECHAZADO'] }
+        },
+        include: {
+          proyecto: { select: { nombre: true, codigo: true } },
+          aprobador: { select: { nombre: true, apellido: true } }
+        },
+        orderBy: { fechaAprobacion: 'desc' },
+        take: 10
+      });
+      const notifications = recientes.map(r => ({
+        id: r.id,
+        tipo: r.estado,
+        titulo: r.estado === 'APROBADO' ? 'Requerimiento Aprobado' : 'Requerimiento Rechazado',
+        mensaje: `Tu solicitud para ${r.proyecto.codigo} fue ${r.estado.toLowerCase()}`,
+        fecha: r.fechaAprobacion || r.createdAt,
+        requerimiento: r
+      }));
+      return res.status(200).json({ data: notifications });
+    } else {
+      return res.status(200).json({ data: [] });
+    }
+  } catch (error) {
+    console.error('[compras] obtenerNotificaciones:', error.message);
+    return res.status(500).json({ error: 'Error al obtener notificaciones.' });
+  }
+};
+
 module.exports = {
   crearRequerimiento,
   listarRequerimientos,
@@ -148,4 +211,5 @@ module.exports = {
   aprobarRequerimiento,
   rechazarRequerimiento,
   bandejaGerencial,
+  obtenerNotificaciones,
 };

@@ -97,12 +97,18 @@ export function formatDateTime(dateValue) {
 }
 
 export function getProjectStatusMeta(status) {
-  if (status === 'suspended') {
+  const normalized = (status || '').toLowerCase();
+
+  if (normalized === 'suspended' || normalized === 'suspendido') {
     return { value: 'suspended', label: 'Suspendido', tone: 'warning' };
   }
 
-  if (status === 'closed') {
-    return { value: 'closed', label: 'Cerrado', tone: 'danger' };
+  if (normalized === 'closed' || normalized === 'finalizado') {
+    return { value: 'closed', label: 'Finalizado', tone: 'danger' };
+  }
+
+  if (normalized === 'inactive' || normalized === 'inactivo') {
+    return { value: 'inactive', label: 'Inactivo', tone: 'danger' };
   }
 
   return { value: 'active', label: 'Activo', tone: 'success' };

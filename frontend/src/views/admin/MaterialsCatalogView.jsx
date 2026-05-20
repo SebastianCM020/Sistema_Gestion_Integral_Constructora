@@ -56,6 +56,9 @@ export function MaterialsCatalogView({
     const loadMaterials = async () => {
       setLoadStatus('loading');
       try {
+        if (currentUser.adminUsersShouldFail) {
+          throw new Error('Simulated load error for adminerror user');
+        }
         const result = await fetchMateriales({ soloActivos: false, isOnline: true });
         setMaterials(Array.isArray(result.data) ? result.data : []);
         setLoadStatus('ready');
@@ -66,7 +69,7 @@ export function MaterialsCatalogView({
     };
 
     loadMaterials();
-  }, [isAdmin, retryCount]);
+  }, [isAdmin, retryCount, currentUser.adminUsersShouldFail]);
 
   useEffect(() => {
     if (!feedback) {
@@ -101,7 +104,7 @@ export function MaterialsCatalogView({
           nombre:      values.nombre     ?? values.name,
           categoria:   values.categoria  ?? values.category,
           unidad:      values.unidad     ?? values.unit,
-          descripcion: values.descripcion ?? values.description,
+          descripcion: values.descripcion ?? values.description ?? values.observations,
         });
         setMaterials((prev) =>
           prev.map((m) => (m.id === result.data.id ? result.data : m))
@@ -113,7 +116,7 @@ export function MaterialsCatalogView({
           nombre:      values.nombre     ?? values.name,
           categoria:   values.categoria  ?? values.category,
           unidad:      values.unidad     ?? values.unit,
-          descripcion: values.descripcion ?? values.description,
+          descripcion: values.descripcion ?? values.description ?? values.observations,
         });
         setMaterials((prev) => [result.data, ...prev]);
         setFeedback({ tone: 'success', message: 'Material creado correctamente.' });
@@ -132,18 +135,15 @@ export function MaterialsCatalogView({
     }
 
     const material = activeOverlay.material;
-    // Si está activo → desactivar (soft-delete); si está inactivo → reactivar (PUT activo:true)
-    const nextActivo = !material.activo;
+    const nextActivo = !material.isActive;
 
     try {
       if (nextActivo) {
-        // Reactivar: PUT con { activo: true }
         const result = await actualizarMaterial(material.id, { activo: true });
-        setMaterials((prev) => prev.map((m) => (m.id === material.id ? { ...m, activo: result.data.activo } : m)));
+        setMaterials((prev) => prev.map((m) => (m.id === material.id ? { ...m, isActive: result.data.isActive } : m)));
       } else {
-        // Soft-delete: DELETE endpoint
         await eliminarMaterial(material.id);
-        setMaterials((prev) => prev.map((m) => (m.id === material.id ? { ...m, activo: false } : m)));
+        setMaterials((prev) => prev.map((m) => (m.id === material.id ? { ...m, isActive: false } : m)));
       }
       setFeedback({ tone: 'success', message: `Material ${nextActivo ? 'activado' : 'desactivado'} correctamente.` });
       closeOverlay();
@@ -230,8 +230,17 @@ export function MaterialsCatalogView({
           <MaterialHeader onGoHome={onGoHome} onGoAdmin={() => onOpenAdminSection('users')} onCreate={() => openOverlay('create')} />
 
           {feedback ? (
-            <div className="rounded-[12px] border border-[#16A34A]/20 bg-[#16A34A]/10 px-4 py-3 text-sm font-medium text-[#166534] shadow-sm">
-              {feedback.message}
+            <div className={`fixed bottom-6 right-6 z-[9999] rounded-[12px] border px-5 py-4 text-sm font-semibold shadow-xl max-w-md ${
+              feedback.tone === 'success'
+                ? 'border-[#16A34A]/20 bg-[#15803D] text-white'
+                : feedback.tone === 'error'
+                ? 'border-[#DC2626]/20 bg-[#B91C1C] text-white'
+                : 'border-[#D1D5DB] bg-white text-[#2F3A45]'
+            }`}>
+              <div className="flex items-center gap-3">
+                <div className={`h-2.5 w-2.5 rounded-full ${feedback.tone === 'success' ? 'bg-[#4ADE80]' : 'bg-[#FCA5A5]'}`} />
+                <span>{feedback.message}</span>
+              </div>
             </div>
           ) : null}
 

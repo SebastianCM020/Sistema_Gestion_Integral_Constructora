@@ -61,13 +61,20 @@ export function ProjectRubrosView({
     const loadInitialData = async () => {
       setLoadStatus('loading');
       try {
+        if (currentUser.adminUsersShouldFail) {
+          throw new Error('Simulated load error for adminerror user');
+        }
         const projectsData = await fetchProjects();
         setProjects(projectsData);
         
-        if (projectsData.length > 0 && !selectedProjectId) {
-          const firstProjectId = projectsData[0].id;
-          setSelectedProjectId(firstProjectId);
-          const initialRubros = await fetchRubrosByProject(firstProjectId);
+        let projectIdToLoad = selectedProjectId;
+        if (projectsData.length > 0 && !projectIdToLoad) {
+          projectIdToLoad = projectsData[0].id;
+          setSelectedProjectId(projectIdToLoad);
+        }
+        
+        if (projectIdToLoad) {
+          const initialRubros = await fetchRubrosByProject(projectIdToLoad);
           setRubros(initialRubros);
         }
         
@@ -83,7 +90,7 @@ export function ProjectRubrosView({
     } else {
       setLoadStatus('ready');
     }
-  }, [isAdmin, retryCount]);
+  }, [isAdmin, retryCount, currentUser.adminUsersShouldFail]);
 
   useEffect(() => {
     if (!feedback) {
@@ -164,6 +171,23 @@ export function ProjectRubrosView({
     }
   };
 
+  const handleToggleStatus = async (rubro) => {
+    try {
+      setLoadStatus('loading');
+      const nextActive = !rubro.isActive;
+      await updateRubro(rubro.id, { ...rubro, isActive: nextActive });
+      
+      const updatedRubros = await fetchRubrosByProject(currentProject.id);
+      setRubros(updatedRubros);
+      
+      setFeedback({ tone: 'success', message: `Rubro ${nextActive ? 'activado' : 'desactivado'} correctamente.` });
+      setLoadStatus('ready');
+    } catch (error) {
+      setFeedback({ tone: 'error', message: 'Error al cambiar el estado del rubro.' });
+      setLoadStatus('ready');
+    }
+  };
+
   const handleImportComplete = async (result, importedRubros) => {
     if (result.status === 'failed' || !importedRubros.length) {
       setFeedback({ tone: 'error', message: 'No se encontraron rubros válidos para importar.' });
@@ -193,10 +217,14 @@ export function ProjectRubrosView({
   const reloadRubrosForProject = async (projectId) => {
     if (!projectId) return;
     try {
+      if (currentUser.adminUsersShouldFail) {
+        throw new Error('Simulated load error for adminerror user');
+      }
       const data = await fetchRubrosByProject(projectId);
       setRubros(data || []);
     } catch (error) {
       console.error('[ProjectRubrosView] Error al cargar rubros del proyecto:', projectId, error);
+      setLoadStatus('error');
     }
   };
 
@@ -204,7 +232,7 @@ export function ProjectRubrosView({
     if (selectedProjectId && loadStatus === 'ready') {
       reloadRubrosForProject(selectedProjectId);
     }
-  }, [selectedProjectId]);
+  }, [selectedProjectId, currentUser.adminUsersShouldFail]);
 
   if (!isAdmin) {
     return (
@@ -291,8 +319,17 @@ export function ProjectRubrosView({
           />
 
           {feedback ? (
-            <div className={`rounded-[12px] border px-4 py-3 text-sm font-medium shadow-sm ${feedback.tone === 'success' ? 'border-[#16A34A]/20 bg-[#16A34A]/10 text-[#166534]' : feedback.tone === 'neutral' ? 'border-[#D1D5DB] bg-white text-[#2F3A45]' : 'border-[#D1D5DB] bg-white text-[#2F3A45]'}`}>
-              {feedback.message}
+            <div className={`fixed bottom-6 right-6 z-[9999] rounded-[12px] border px-5 py-4 text-sm font-semibold shadow-xl max-w-md ${
+              feedback.tone === 'success'
+                ? 'border-[#16A34A]/20 bg-[#15803D] text-white'
+                : feedback.tone === 'error'
+                ? 'border-[#DC2626]/20 bg-[#B91C1C] text-white'
+                : 'border-[#D1D5DB] bg-white text-[#2F3A45]'
+            }`}>
+              <div className="flex items-center gap-3">
+                <div className={`h-2.5 w-2.5 rounded-full ${feedback.tone === 'success' ? 'bg-[#4ADE80]' : 'bg-[#FCA5A5]'}`} />
+                <span>{feedback.message}</span>
+              </div>
             </div>
           ) : null}
 
@@ -326,8 +363,8 @@ export function ProjectRubrosView({
                   />
                 ) : (
                   <>
-                    <RubrosTable rubros={paginatedRubros} onView={(rubro) => openOverlay('detail', rubro)} onEdit={(rubro) => openOverlay('edit', rubro)} />
-                    <RubrosMobileList rubros={paginatedRubros} onView={(rubro) => openOverlay('detail', rubro)} onEdit={(rubro) => openOverlay('edit', rubro)} />
+                    <RubrosTable rubros={paginatedRubros} onView={(rubro) => openOverlay('detail', rubro)} onEdit={(rubro) => openOverlay('edit', rubro)} onToggleStatus={handleToggleStatus} />
+                    <RubrosMobileList rubros={paginatedRubros} onView={(rubro) => openOverlay('detail', rubro)} onEdit={(rubro) => openOverlay('edit', rubro)} onToggleStatus={handleToggleStatus} />
 
                     {visibleRubros.length > PAGE_SIZE ? (
                       <PaginationControls

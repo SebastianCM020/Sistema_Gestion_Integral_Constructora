@@ -9,6 +9,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
   Plus, Trash2, ClipboardList, AlertCircle, CheckCircle2,
   ChevronDown, Loader2, Package, ShieldAlert,
@@ -18,7 +19,7 @@ import { SidebarNavigation } from '../../components/ui/SidebarNavigation.jsx';
 import { getModulesForUser } from '../../data/icaroData.js';
 import { fetchMateriales } from '../../services/materiales.service.js';
 import { crearRequerimiento, fetchRequerimientos } from '../../services/compras.service.js';
-import { fetchProjectDetail } from '../../services/projects.service.js';
+import { fetchProjectDetail, fetchProjects } from '../../services/projects.service.js';
 
 // ── Estado inicial del formulario ─────────────────────────────────────────────
 const DETALLE_VACIO = { idMaterial: '', cantidadSolicitada: '' };
@@ -40,33 +41,43 @@ export function RequerimientosView({
   idProyecto, // Puede venir del router o props
 }) {
   const modules   = getModulesForUser(currentUser);
+  const [searchParams] = useSearchParams();
+  const queryProjectId = searchParams.get('idProyecto');
+
   const [mobileNavOpen, setMobileNavOpen]     = useState(false);
   const [materiales, setMateriales]           = useState([]);
+  const [projects, setProjects]               = useState([]);
   const [requerimientos, setRequerimientos]   = useState([]);
   const [proyecto, setProyecto]               = useState(null);
   const [loadStatus, setLoadStatus]           = useState('loading');
   const [submitting, setSubmitting]           = useState(false);
   const [feedback, setFeedback]               = useState(null);
-  const [form, setForm]                       = useState({ ...FORM_INICIAL, idProyecto: idProyecto || '' });
+  const [form, setForm]                       = useState({ ...FORM_INICIAL, idProyecto: idProyecto || queryProjectId || '' });
   const [errors, setErrors]                   = useState({});
   const [showForm, setShowForm]               = useState(false);
+  const canCreateRequests = ['Residente', 'Administrador del Sistema'].includes(currentUser.roleName);
 
   // ── Cargar datos iniciales ─────────────────────────────────────────────────
   useEffect(() => {
     const load = async () => {
       setLoadStatus('loading');
       try {
-        const [matResult] = await Promise.all([
+        const [matResult, projectsResult] = await Promise.all([
           // Solo materiales activos para el selector de creación
           fetchMateriales({ soloActivos: true, isOnline: true }),
+          fetchProjects(),
         ]);
         setMateriales(Array.isArray(matResult.data) ? matResult.data : []);
+        
+        const projectList = Array.isArray(projectsResult) ? projectsResult : [];
+        setProjects(projectList);
 
-        // Si hay proyecto inyectado, cargar su detalle y requerimientos
-        if (idProyecto) {
+        const activeProjId = idProyecto || queryProjectId || (projectList.length > 0 ? projectList[0].id : '');
+        if (activeProjId) {
+          setForm((prev) => ({ ...prev, idProyecto: activeProjId }));
           const [proyectoData, reqData] = await Promise.all([
-            fetchProjectDetail(idProyecto),
-            fetchRequerimientos(idProyecto),
+            fetchProjectDetail(activeProjId),
+            fetchRequerimientos(activeProjId),
           ]);
           setProyecto(proyectoData);
           setRequerimientos(Array.isArray(reqData.data) ? reqData.data : []);
@@ -79,7 +90,22 @@ export function RequerimientosView({
       }
     };
     load();
-  }, [idProyecto]);
+  }, [idProyecto, queryProjectId]);
+
+  const handleProjectChange = async (projectId) => {
+    setForm((prev) => ({ ...prev, idProyecto: projectId }));
+    setErrors({});
+    try {
+      const [proyectoData, reqData] = await Promise.all([
+        fetchProjectDetail(projectId),
+        fetchRequerimientos(projectId),
+      ]);
+      setProyecto(proyectoData);
+      setRequerimientos(Array.isArray(reqData.data) ? reqData.data : []);
+    } catch (err) {
+      console.error('[RequerimientosView] Error changing project:', err);
+    }
+  };
 
   // Auto-limpiar feedback
   useEffect(() => {
@@ -185,7 +211,13 @@ export function RequerimientosView({
   };
 
   // ── Helpers de display ─────────────────────────────────────────────────────
-  const proyectoInactivo = proyecto && proyecto.status !== 'activo' && proyecto.estado !== 'ACTIVO';
+  const statusLower = (proyecto?.status || '').toLowerCase();
+  const estadoLower = (proyecto?.estado || '').toLowerCase();
+  const proyectoInactivo = proyecto && 
+    statusLower !== 'active' && 
+    statusLower !== 'activo' && 
+    estadoLower !== 'active' && 
+    estadoLower !== 'activo';
 
   const badgeEstado = (estado) => {
     const map = {
@@ -236,7 +268,7 @@ export function RequerimientosView({
                 Cree y gestione solicitudes de materiales para los proyectos activos.
               </p>
             </div>
-            {!proyectoInactivo && (
+            {canCreateRequests && !proyectoInactivo && proyecto && (
               <button
                 id="btn-nuevo-requerimiento"
                 onClick={() => setShowForm(true)}
@@ -247,6 +279,31 @@ export function RequerimientosView({
               </button>
             )}
           </div>
+
+          {/* Selector de Proyecto */}
+          {projects.length > 0 && (
+            <div className="flex items-center gap-3 rounded-[12px] border border-[#E5E7EB] bg-white p-4 shadow-sm">
+              <label htmlFor="select-proyecto-req" className="text-sm font-medium text-[#2F3A45] shrink-0">
+                Proyecto:
+              </label>
+              <div className="relative flex-1 max-w-md">
+                <select
+                  id="select-proyecto-req"
+                  value={form.idProyecto}
+                  onChange={(e) => handleProjectChange(e.target.value)}
+                  className="w-full appearance-none rounded-[8px] border border-[#D1D5DB] bg-white py-2  pl-3 pr-8 text-sm text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#1F4E79]/40"
+                >
+                  <option value="">— Seleccione un proyecto —</option>
+                  {projects.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.code || p.codigo} – {p.name || p.nombre}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown size={14} className="pointer-events-none absolute right-2.5 top-2.5 text-gray-400" />
+              </div>
+            </div>
+          )}
 
           {/* Alerta de proyecto inactivo */}
           {proyectoInactivo && (

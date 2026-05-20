@@ -135,7 +135,16 @@ export const updateProject = async (id, projectData) => {
  */
 export const patchProjectStatus = async (id, estado) => {
   try {
-    const { data } = await api.patch(`/proyectos/${id}/estado`, { estado: estado.toUpperCase() });
+    // Mapear estado del frontend (inglés) a backend (español)
+    const estadoMap = {
+      active: 'ACTIVO',
+      inactive: 'INACTIVO',
+      suspended: 'SUSPENDIDO',
+      closed: 'FINALIZADO'
+    };
+    const backendState = estadoMap[estado.toLowerCase()] || estado.toUpperCase();
+    
+    const { data } = await api.patch(`/proyectos/${id}/estado`, { estado: backendState });
     return normalize(data.data);
   } catch (error) {
     if (isMockMode(error)) {

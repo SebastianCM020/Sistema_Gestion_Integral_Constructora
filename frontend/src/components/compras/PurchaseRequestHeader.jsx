@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowLeft, ClipboardList } from 'lucide-react';
 
-export function PurchaseRequestHeader({ currentProject, hasMultipleProjects, onGoHome, onCreateNew }) {
+export function PurchaseRequestHeader({ currentProject, hasMultipleProjects, onGoHome, onCreateNew, canCreate = true }) {
   return (
     <section className="rounded-[12px] border border-[#D1D5DB] bg-white p-5 shadow-sm">
       <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
@@ -27,9 +27,11 @@ export function PurchaseRequestHeader({ currentProject, hasMultipleProjects, onG
             <ArrowLeft size={16} />
             Volver al panel
           </button>
-          <button type="button" onClick={onCreateNew} className="inline-flex h-[44px] items-center justify-center rounded-[12px] bg-[#1F4E79] px-4 text-sm font-medium text-white hover:bg-[#153a5c]">
-            Nuevo requerimiento
-          </button>
+          {canCreate && (
+            <button type="button" onClick={onCreateNew} className="inline-flex h-[44px] items-center justify-center rounded-[12px] bg-[#1F4E79] px-4 text-sm font-medium text-white hover:bg-[#153a5c]">
+              Nuevo requerimiento
+            </button>
+          )}
         </div>
       </div>
     </section>

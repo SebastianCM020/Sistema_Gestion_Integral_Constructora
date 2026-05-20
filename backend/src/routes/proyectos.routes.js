@@ -13,8 +13,13 @@ router.get('/', requireAuth, async (req, res) => {
   try {
     let proyectos;
 
-    if (req.user.rol === ROLES.ADMIN) {
-      console.log(`[ProyectosRouter] ADMIN ${req.user.id} solicitó todos los proyectos.`);
+    if (
+      req.user.rol === ROLES.ADMIN ||
+      req.user.rol === ROLES.PRESIDENTE ||
+      req.user.rol === ROLES.CONTADOR ||
+      req.user.rol === ROLES.AUXILIAR
+    ) {
+      console.log(`[ProyectosRouter] Admin/Management/Accounting role (${req.user.rol}) ${req.user.id} requested all projects.`);
       // El Admin ve todos
       proyectos = await prisma.proyecto.findMany({
         orderBy: { createdAt: 'desc' },
@@ -30,25 +35,30 @@ router.get('/', requireAuth, async (req, res) => {
       const hoyFin = new Date();
       hoyFin.setHours(23, 59, 59, 999);
 
-      // Otros roles solo ven los proyectos donde tienen asignación vigente
-      const asignaciones = await prisma.asignacionProyectoUsuario.findMany({
-        where: {
-          idUsuario:  req.user.id,
-          fechaInicio: { lte: hoyFin },
-          fechaFin:    { gte: hoyInicio },
-        },
-        include: {
-          proyecto: {
-            include: {
-              responsable: {
-                select: { nombre: true, apellido: true }
-              }
-            }
+      const isUuid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(req.user.id);
+      let asignaciones = [];
+      if (isUuid) {
+        asignaciones = await prisma.asignacionProyectoUsuario.findMany({
+          where: {
+            idUsuario:  req.user.id,
+            fechaInicio: { lte: hoyFin },
+            fechaFin:    { gte: hoyInicio },
           },
-        },
-      });
-      proyectos = asignaciones.map((a) => a.proyecto);
-      console.log(`[ProyectosRouter] Residente ${req.user.id} solicitó proyectos. Asignaciones encontradas: ${asignaciones.length}`);
+          include: {
+            proyecto: {
+              include: {
+                responsable: {
+                  select: { nombre: true, apellido: true }
+                }
+              }
+            },
+          },
+        });
+      } else {
+        console.log(`[ProyectosRouter] Non-UUID user ID detected: ${req.user.id}. Skipping DB assignment lookup.`);
+      }
+      proyectos = asignaciones.map((a) => a.proyecto).filter(Boolean);
+      console.log(`[ProyectosRouter] Residente/Bodeguero ${req.user.id} requested projects. Assignments found: ${asignaciones.length}`);
     }
 
     return res.status(200).json({ data: proyectos });
@@ -76,7 +86,7 @@ router.get('/:idProyecto', requireAuth, requireProjectAccess, async (req, res) =
       where: { id: idProyecto },
       include: {
         responsable: { select: { nombre: true, apellido: true } },
-        rubros:  { select: { id: true, codigo: true, descripcion: true, unidad: true, precioUnitario: true, cantidadPresupuestada: true, cantidadEjecutada: true, idProyecto: true } },
+        rubros:  { select: { id: true, codigo: true, descripcion: true, unidad: true, precioUnitario: true, cantidadPresupuestada: true, cantidadEjecutada: true, idProyecto: true, activo: true } },
         asignaciones: {
           select: { idUsuario: true, fechaInicio: true, fechaFin: true, accessMode: true },
         },
@@ -253,8 +263,8 @@ router.patch('/:id/estado', requireAuth, async (req, res) => {
     const actualizado = await prisma.proyecto.update({
       where: { id },
       data:  { estado: nuevoEstado },
-      select: {
-        id: true, codigo: true, nombre: true, estado: true, updatedAt: true,
+      include: {
+        responsable: { select: { nombre: true, apellido: true } },
       },
     });
 
@@ -350,7 +360,7 @@ router.put('/rubros/:idRubro', requireAuth, async (req, res) => {
   }
   try {
     const { idRubro } = req.params;
-    const { codigo, descripcion, unidad, precioUnitario, cantidadPresupuestada } = req.body;
+    const { codigo, descripcion, unidad, precioUnitario, cantidadPresupuestada, activo } = req.body;
     
     const rubroEditado = await prisma.rubro.update({
       where: { id: idRubro },
@@ -360,6 +370,7 @@ router.put('/rubros/:idRubro', requireAuth, async (req, res) => {
         unidad,
         precioUnitario: parseFloat(precioUnitario),
         cantidadPresupuestada: parseFloat(cantidadPresupuestada),
+        ...(activo !== undefined && { activo }),
       }
     });
     return res.status(200).json({ data: rubroEditado });

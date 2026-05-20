@@ -242,8 +242,17 @@ export function ProjectAccessAssignmentView({
           </section>
 
           {feedback ? (
-            <div className={`rounded-[12px] border px-4 py-3 text-sm font-medium shadow-sm ${feedback.tone === 'success' ? 'border-[#16A34A]/20 bg-[#16A34A]/10 text-[#166534]' : 'border-[#D1D5DB] bg-white text-[#2F3A45]'}`}>
-              {feedback.message}
+            <div className={`fixed bottom-6 right-6 z-[9999] rounded-[12px] border px-5 py-4 text-sm font-semibold shadow-xl max-w-md ${
+              feedback.tone === 'success'
+                ? 'border-[#16A34A]/20 bg-[#15803D] text-white'
+                : feedback.tone === 'error'
+                ? 'border-[#DC2626]/20 bg-[#B91C1C] text-white'
+                : 'border-[#D1D5DB] bg-white text-[#2F3A45]'
+            }`}>
+              <div className="flex items-center gap-3">
+                <div className={`h-2.5 w-2.5 rounded-full ${feedback.tone === 'success' ? 'bg-[#4ADE80]' : 'bg-[#FCA5A5]'}`} />
+                <span>{feedback.message}</span>
+              </div>
             </div>
           ) : null}
 

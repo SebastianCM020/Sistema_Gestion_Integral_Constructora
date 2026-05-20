@@ -9,6 +9,7 @@ export function MaterialFormModal({ material, materials, onCancel, onSave }) {
       ? {
           code: material.code,
           name: material.name,
+          category: material.category,
           unit: material.unit,
           isActive: material.isActive,
           observations: material.observations ?? '',
@@ -47,7 +48,8 @@ export function MaterialFormModal({ material, materials, onCancel, onSave }) {
           <Field id="material-name" label="Nombre" value={values.name} error={errors.name} onChange={(value) => handleChange('name', value)} placeholder="Nombre del material" />
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-3">
+          <Field id="material-category" label="Categoría" value={values.category} error={errors.category} onChange={(value) => handleChange('category', value)} placeholder="Ej. Aceros, Agregados" />
           <SelectField id="material-unit" label="Unidad" value={values.unit} error={errors.unit} onChange={(value) => handleChange('unit', value)} options={materialUnitOptions.map((unit) => ({ value: unit, label: unit }))} />
           <SelectField id="material-status" label="Estado" value={String(values.isActive)} onChange={(value) => handleChange('isActive', value === 'true')} options={[{ value: 'true', label: 'Vigente' }, { value: 'false', label: 'Inactivo' }]} />
         </div>

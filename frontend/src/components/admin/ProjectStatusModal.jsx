@@ -32,8 +32,9 @@ export function ProjectStatusModal({ project, onCancel, onSave }) {
               className="mt-3 h-[44px] w-full rounded-[12px] border border-[#D1D5DB] px-3 text-sm focus:border-[#1F4E79] focus:outline-none focus:ring-1 focus:ring-[#1F4E79]"
             >
               <option value="active">Activo</option>
+              <option value="inactive">Inactivo</option>
               <option value="suspended">Suspendido</option>
-              <option value="closed">Cerrado</option>
+              <option value="closed">Finalizado</option>
             </select>
           </div>
         </div>

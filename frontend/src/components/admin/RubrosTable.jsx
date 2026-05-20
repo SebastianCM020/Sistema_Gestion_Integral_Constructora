@@ -1,9 +1,9 @@
 import React from 'react';
-import { Eye, Pencil } from 'lucide-react';
+import { Eye, Pencil, CirclePause, CirclePlay } from 'lucide-react';
 import { formatRubroMetrics } from '../../utils/rubroHelpers.js';
 import { RubroStatusBadge } from './RubroStatusBadge.jsx';
 
-export function RubrosTable({ rubros, onView, onEdit }) {
+export function RubrosTable({ rubros, onView, onEdit, onToggleStatus }) {
   return (
     <div className="hidden overflow-hidden rounded-[12px] border border-[#D1D5DB] bg-white shadow-sm lg:block">
       <div className="overflow-x-auto">
@@ -35,9 +35,10 @@ export function RubrosTable({ rubros, onView, onEdit }) {
                   <td className="px-5 py-4">{metrics.executedQuantity}</td>
                   <td className="px-5 py-4"><RubroStatusBadge isActive={rubro.isActive} /></td>
                   <td className="px-5 py-4">
-                    <div className="grid gap-2 xl:grid-cols-[repeat(2,minmax(0,1fr))]">
+                    <div className="flex flex-wrap items-center gap-2">
                       <ActionButton icon={Eye} label="Ver detalle" onClick={() => onView(rubro)} />
                       <ActionButton icon={Pencil} label="Editar" onClick={() => onEdit(rubro)} />
+                      <ActionButton icon={rubro.isActive ? CirclePause : CirclePlay} label={rubro.isActive ? 'Desactivar' : 'Activar'} onClick={() => onToggleStatus(rubro)} />
                     </div>
                   </td>
                 </tr>

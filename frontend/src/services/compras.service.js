@@ -95,3 +95,13 @@ export const fetchBandejaGerencial = async ({ limit = 50, offset = 0 } = {}) => 
   });
   return data;
 };
+
+/**
+ * Obtiene las notificaciones del usuario de compras.
+ *
+ * @returns {Promise<{data: Array}>}
+ */
+export const fetchNotificaciones = async () => {
+  const { data } = await api.get('/compras/notificaciones');
+  return data;
+};

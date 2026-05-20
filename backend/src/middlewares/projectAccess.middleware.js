@@ -47,9 +47,14 @@ const requireProjectAccess = async (req, res, next) => {
       return res.status(404).json({ error: 'Proyecto no encontrado.' });
     }
 
-    // El Administrador tiene acceso irrestricto a todos los proyectos
+    // El Administrador, Presidente / Gerente, Contador y Auxiliar tienen acceso irrestricto a todos los proyectos
     const { ROLES } = require('./auth.middleware');
-    if (req.user.rol === ROLES.ADMIN) {
+    if (
+      req.user.rol === ROLES.ADMIN ||
+      req.user.rol === ROLES.PRESIDENTE ||
+      req.user.rol === ROLES.CONTADOR ||
+      req.user.rol === ROLES.AUXILIAR
+    ) {
       req.proyecto = proyecto;
       return next();
     }

@@ -163,7 +163,7 @@ const roleCatalog = {
     label: 'Administrador del Sistema',
     orientation: 'Administre usuarios, permisos, parámetros y trazabilidad del sistema.',
     projectLabel: 'Portafolio corporativo de ICARO',
-    moduleIds: ['administration', 'projects', 'rubros', 'catalog', 'audit', 'reports', 'system-validations', 'technical-settings'],
+    moduleIds: ['administration', 'projects', 'rubros', 'catalog', 'audit', 'reports', 'system-validations', 'technical-settings', 'requirements'],
     quickActions: [
       { id: 'qa-admin-users', label: 'Administrar usuarios', description: 'Revise altas, bajas y permisos operativos.', icon: UserCog, actionType: 'module', moduleId: 'administration' },
       { id: 'qa-admin-project-access', label: 'Asignar acceso a proyectos', description: 'Controle vigencia y modo de acceso por usuario y proyecto.', icon: ShieldCheck, actionType: 'admin-view', adminSection: 'project-access' },
@@ -172,6 +172,7 @@ const roleCatalog = {
       { id: 'qa-admin-catalog', label: 'Abrir catálogo y materiales', description: 'Administre referencias, unidades y vigencia del catálogo base.', icon: Boxes, actionType: 'admin-view', adminSection: 'materials' },
       { id: 'qa-admin-technical-settings', label: 'Abrir configuración técnica', description: 'Revise parametros globales, catalogos auxiliares y ajustes administrativos.', icon: SlidersHorizontal, actionType: 'module', moduleId: 'technical-settings' },
       { id: 'qa-admin-audit', label: 'Revisar auditoría', description: 'Consulte eventos recientes y trazabilidad crítica.', icon: ShieldCheck, actionType: 'module', moduleId: 'audit' },
+      { id: 'qa-admin-requirements', label: 'Requerimientos de compra', description: 'Consulte o cree requerimientos de compra del proyecto.', icon: ClipboardList, actionType: 'module', moduleId: 'requirements' },
       { id: 'qa-admin-system-validations', label: 'Abrir validaciones', description: 'Revise estados de sesion, permisos y errores controlados.', icon: ShieldAlert, actionType: 'module', moduleId: 'system-validations' },
       { id: 'qa-admin-profile', label: 'Abrir perfil', description: 'Verifique su sesión y datos de acceso.', icon: LayoutDashboard, actionType: 'profile' },
     ],
@@ -189,11 +190,12 @@ const roleCatalog = {
     label: 'Presidente / Gerente',
     orientation: 'Revise alertas ejecutivas, aprobaciones y resultados del periodo.',
     projectLabel: 'Resumen corporativo y obras priorizadas',
-    moduleIds: ['review', 'reports', 'payroll', 'accounting'],
+    moduleIds: ['review', 'reports', 'payroll', 'accounting', 'requirements'],
     quickActions: [
       { id: 'qa-exec-review', label: 'Revisar requerimientos', description: 'Valide solicitudes críticas antes de aprobar.', icon: ClipboardCheck, actionType: 'module', moduleId: 'review' },
       { id: 'qa-exec-reports', label: 'Abrir tableros', description: 'Consulte indicadores ejecutivos del periodo.', icon: BarChart3, actionType: 'module', moduleId: 'reports' },
       { id: 'qa-exec-payroll', label: 'Consultar planillas', description: 'Revise documentos listos para validación o descarga.', icon: FileSpreadsheet, actionType: 'module', moduleId: 'payroll' },
+      { id: 'qa-exec-requirements', label: 'Requerimientos de compra', description: 'Consulte o cree requerimientos de compra del proyecto.', icon: ClipboardList, actionType: 'module', moduleId: 'requirements' },
       { id: 'qa-exec-profile', label: 'Ir a mi perfil', description: 'Consulte sesión y accesos vigentes.', icon: LayoutDashboard, actionType: 'profile' },
     ],
     pendingItems: [
