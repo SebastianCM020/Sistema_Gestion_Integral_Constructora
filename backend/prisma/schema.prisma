@@ -47,6 +47,10 @@ model Usuario {
   auditLogs              AuditLog[]
   movimientosRegistrados MovimientoInventario[]    @relation("MovimientosBodeguero") // HU-03
   proyectosResponsable   Proyecto[]                @relation("ProyectoResponsable")
+  // Sprint 7
+  ordenesCambioSolicitadas OrdenCambio[]          @relation("OrdenCambioSolicitante")
+  ordenesCambioAprobadas   OrdenCambio[]          @relation("OrdenCambioAprobador")
+  notificaciones           NotificacionSistema[]
 
   @@map("usuarios")
 }
@@ -75,6 +79,7 @@ model Proyecto {
   inventarios        InventarioProyecto[]
   cierres            CierreMensual[]
   movimientos        MovimientoInventario[]     // HU-03
+  ordenesCambio      OrdenCambio[]              // Sprint 7
 
   @@map("proyectos")
 }
@@ -110,6 +115,7 @@ model Rubro {
 
   proyecto   Proyecto    @relation(fields: [idProyecto], references: [id])
   avances    AvanceObra[]
+  ordenesCambio OrdenCambio[]  // Sprint 7
 
   @@map("rubros")
 }
@@ -295,4 +301,47 @@ model AuditLog {
   usuario  Usuario? @relation(fields: [idUsuario], references: [id], onDelete: SetNull)
 
   @@map("audit_log")
+}
+
+// ── SPRINT 7: ÓRDENES DE CAMBIO ──
+
+model OrdenCambio {
+  id                   String    @id @default(uuid()) @db.Uuid
+  idProyecto           String    @map("id_proyecto") @db.Uuid
+  idRubro              String    @map("id_rubro") @db.Uuid
+  idSolicitante        String    @map("id_solicitante") @db.Uuid
+  idAprobador          String?   @map("id_aprobador") @db.Uuid
+  // Estados: PENDIENTE | APROBADA | RECHAZADA
+  estado               String    @default("PENDIENTE") @db.VarChar(20)
+  motivo               String    @db.Text
+  cantidadAdicional    Decimal   @map("cantidad_adicional") @db.Decimal(12, 4)
+  comentarioAprobador  String?   @map("comentario_aprobador") @db.Text
+  fechaSolicitud       DateTime  @default(now()) @map("fecha_solicitud") @db.Timestamptz
+  fechaResolucion      DateTime? @map("fecha_resolucion") @db.Timestamptz
+  createdAt            DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  proyecto    Proyecto  @relation(fields: [idProyecto], references: [id])
+  rubro       Rubro     @relation(fields: [idRubro], references: [id])
+  solicitante Usuario   @relation("OrdenCambioSolicitante", fields: [idSolicitante], references: [id])
+  aprobador   Usuario?  @relation("OrdenCambioAprobador", fields: [idAprobador], references: [id])
+
+  @@map("ordenes_cambio")
+}
+
+// ── SPRINT 7: NOTIFICACIONES INTERNAS ──
+
+model NotificacionSistema {
+  id               String    @id @default(uuid()) @db.Uuid
+  idUsuarioDest    String    @map("id_usuario_dest") @db.Uuid
+  tipo             String    @db.VarChar(40)   // REQUERIMIENTO_CREADO | APROBADO | RECHAZADO | ORDEN_CAMBIO
+  titulo           String    @db.VarChar(200)
+  mensaje          String    @db.Text
+  idReferencia     String?   @map("id_referencia") @db.Uuid
+  tablaReferencia  String?   @map("tabla_referencia") @db.VarChar(60)
+  leida            Boolean   @default(false)
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  usuarioDest  Usuario @relation(fields: [idUsuarioDest], references: [id], onDelete: Cascade)
+
+  @@map("notificaciones_sistema")
 }

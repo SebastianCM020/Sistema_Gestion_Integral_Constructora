@@ -1,6 +1,7 @@
 const prisma = require('../utils/prisma');
 const { logFromRequest } = require('../services/audit.service');
 const storageService = require('../services/storage.service');
+const { validarExcedentePorOrdenCambio } = require('../services/ordenCambio.service'); // Sprint 7
 
 const registrarAvanceFisico = async (req, res) => {
   const { idProyecto, idRubro, cantidadEjecutada, observaciones, fechaRegistro } = req.body;
@@ -35,9 +36,14 @@ const registrarAvanceFisico = async (req, res) => {
       const nuevoTotal = avanceAcumulado + parsedCantidad;
       const presupuestado = parseFloat(rubro.cantidadPresupuestada);
 
-      // 3. Validación de Presupuesto Central
+      // 3. Validación de Presupuesto con soporte de Órdenes de Cambio (Sprint 7)
       if (nuevoTotal > presupuestado) {
-        throw new Error('BUDGET_EXCEEDED: El avance supera el presupuesto.');
+        // Consultar si existe una Orden de Cambio APROBADA que cubra el excedente
+        const validacion = await validarExcedentePorOrdenCambio(idRubro, parsedCantidad);
+        if (!validacion.permitido) {
+          throw new Error(`BUDGET_EXCEEDED:${validacion.mensaje || 'El avance supera el presupuesto y no hay orden de cambio aprobada.'}`);
+        }
+        // Con OC aprobada: continuar con el registro
       }
 
       // 4. Guardar archivo físicamente
@@ -84,10 +90,12 @@ const registrarAvanceFisico = async (req, res) => {
 
   } catch (error) {
     if (error.message.includes('BUDGET_EXCEEDED')) {
+      const detalle = error.message.split('BUDGET_EXCEEDED:')[1] || '';
       return res.status(403).json({ 
         success: false, 
-        code: 'REQUIRES_CHANGE_ORDER',
-        message: 'El avance reportado supera el presupuesto establecido para este rubro. Se requiere generar una Orden de Cambio.' 
+        code:    'REQUIRES_CHANGE_ORDER',
+        message: detalle.trim() ||
+                 'El avance reportado supera el presupuesto establecido para este rubro. Se requiere una Orden de Cambio aprobada.',
       });
     }
     if (error.message.includes('VALIDATION_ERROR')) {
@@ -105,7 +113,8 @@ const getAvancesPorRubro = async (req, res) => {
       where: { idRubro },
       orderBy: { fechaRegistro: 'desc' },
       include: {
-        residente: { select: { nombre: true, apellido: true } }
+        residente: { select: { nombre: true, apellido: true } },
+        evidencias: true
       }
     });
     res.status(200).json({ success: true, data: avances });

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { fetchAvancesPorRubro } from '../../services/offlineSyncService';
 import storageService from '../../services/storage.service';
 import { avancesLocalService } from '../../db/avancesLocalService';
-import { Camera, Image as ImageIcon, X, CheckCircle2, AlertCircle, Clock, CloudOff } from 'lucide-react';
+import { Camera, Image as ImageIcon, X, CheckCircle2, AlertCircle, Clock, CloudOff, ArrowLeftRight } from 'lucide-react';
 import CameraModal from './CameraModal';
 
 const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
@@ -18,6 +18,7 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
   const [evidenciaPreview, setEvidenciaPreview] = useState(null);
   const [isCompressing, setIsCompressing] = useState(false);
   const [showCamera, setShowCamera] = useState(false);
+  const [selectedEvidencia, setSelectedEvidencia] = useState(null); // Para ver imagen en pantalla completa
   const galleryInputRef = useRef(null);
 
   // Solo resetea el formulario cuando cambia el RUBRO seleccionado (por id)
@@ -134,7 +135,11 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
         // Recargar historial para ver el nuevo avance
         loadHistorial(rubro.id);
       } else {
-         setMessage({ type: 'error', text: result?.message || 'Error desconocido' });
+         setMessage({
+           type: 'error',
+           text: result?.message || 'Error desconocido',
+           requiresChangeOrder: result?.code === 'REQUIRES_CHANGE_ORDER'
+         });
       }
     } catch (error) {
        setMessage({ type: 'error', text: error.message });
@@ -164,9 +169,23 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
         </div>
 
         {message && (
-          <div className={`p-4 mb-6 rounded-[10px] font-medium text-sm flex items-center gap-3 ${message.type === 'error' ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-green-50 text-green-700 border border-green-200'}`}>
-            {message.type === 'error' ? <AlertCircle size={18} /> : <CheckCircle2 size={18} />}
-            {message.text}
+          <div className={`p-4 mb-6 rounded-[10px] font-medium text-sm flex flex-col gap-3 ${message.type === 'error' ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-green-50 text-green-700 border border-green-200'}`}>
+            <div className="flex items-center gap-3">
+              {message.type === 'error' ? <AlertCircle size={18} className="shrink-0" /> : <CheckCircle2 size={18} className="shrink-0" />}
+              <span>{message.text}</span>
+            </div>
+            {message.requiresChangeOrder && (
+              <button
+                type="button"
+                onClick={() => {
+                  window.location.href = `/module/change-orders?idProyecto=${rubro.idProyecto}&idRubro=${rubro.id}`;
+                }}
+                className="mt-1 self-start inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-600 text-white rounded-[6px] text-xs font-semibold hover:bg-red-700 transition-colors"
+              >
+                <ArrowLeftRight size={12} />
+                Solicitar Orden de Cambio
+              </button>
+            )}
           </div>
         )}
 
@@ -290,9 +309,22 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
               <div key={avance.id} className="p-3 border border-gray-200 rounded-[8px] hover:bg-gray-50 transition-colors">
                 <div className="flex justify-between items-start mb-1">
                   <span className="font-semibold text-[#1F4E79]">+{parseFloat(avance.cantidadAvance).toFixed(2)} {rubro.unidad}</span>
-                  <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                    {new Date(avance.fechaRegistro).toLocaleDateString()}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {avance.evidencias && avance.evidencias.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => setSelectedEvidencia(avance.evidencias[0].urlImagen)}
+                        className="text-xs text-[#1F4E79] hover:bg-blue-50 px-2 py-1.5 border border-[#1F4E79] rounded-[6px] flex items-center gap-1 transition-colors"
+                        title="Ver evidencia"
+                      >
+                        <ImageIcon size={13} />
+                        <span>Ver evidencia</span>
+                      </button>
+                    )}
+                    <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                      {new Date(avance.fechaRegistro).toLocaleDateString()}
+                    </span>
+                  </div>
                 </div>
                 <div className="text-xs text-gray-600 mb-1 flex justify-between items-center">
                   <span>Por: {avance.residente ? `${avance.residente.nombre} ${avance.residente.apellido}` : (avance.sync_status ? 'Usted (Local)' : 'Desconocido')}</span>
@@ -335,6 +367,23 @@ const RegistroAvanceMobile = ({ rubro, onGuardar }) => {
         onClose={() => setShowCamera(false)}
         onCapture={handleCameraCapture}
       />
+
+      {/* Modal para ver evidencia a pantalla completa */}
+      {selectedEvidencia && (
+        <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center p-4">
+          <button
+            onClick={() => setSelectedEvidencia(null)}
+            className="absolute top-4 right-4 text-white hover:text-gray-300 p-2"
+          >
+            <X size={32} />
+          </button>
+          <img
+            src={selectedEvidencia}
+            alt="Evidencia"
+            className="max-w-full max-h-full object-contain"
+          />
+        </div>
+      )}
     </div>
   );
 };

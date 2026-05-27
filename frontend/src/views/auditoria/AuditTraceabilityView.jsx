@@ -1,117 +1,262 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { ShieldAlert } from 'lucide-react';
-import { AppHeader } from '../../components/ui/AppHeader.jsx';
-import { SidebarNavigation } from '../../components/ui/SidebarNavigation.jsx';
-import { SectionHeader } from '../../components/ui/SectionHeader.jsx';
-import { AuditTraceabilityHeader } from '../../components/auditoria/AuditTraceabilityHeader.jsx';
-import { AuditFiltersBar } from '../../components/auditoria/AuditFiltersBar.jsx';
-import { AuditAdvancedFiltersPanel } from '../../components/auditoria/AuditAdvancedFiltersPanel.jsx';
-import { AuditSuccessState } from '../../components/auditoria/AuditSuccessState.jsx';
-import { AuditSummaryCards } from '../../components/auditoria/AuditSummaryCards.jsx';
-import { AuditEventsTable } from '../../components/auditoria/AuditEventsTable.jsx';
-import { AuditTimelineList } from '../../components/auditoria/AuditTimelineList.jsx';
-import { AuditEventDetailDrawer } from '../../components/auditoria/AuditEventDetailDrawer.jsx';
-import { AuditEmptyState } from '../../components/auditoria/AuditEmptyState.jsx';
-import { AuditLoadingState } from '../../components/auditoria/AuditLoadingState.jsx';
-import { AuditErrorState } from '../../components/auditoria/AuditErrorState.jsx';
-import { CriticalAuditEventModal } from '../../components/auditoria/CriticalAuditEventModal.jsx';
-import { AuditNoResultsModal } from '../../components/auditoria/AuditNoResultsModal.jsx';
-import { getModulesForUser } from '../../data/icaroData.js';
-import { getAssignedProjectsForUser } from '../../data/mockAssignedProjects.js';
-import { getAuditEvents } from '../../data/mockAuditEvents.js';
-import { getAuditComparisonByEventId } from '../../data/mockAuditComparisons.js';
-import { buildAuditSummaryCards, buildAuditFilterSummary, buildAuditResultsLabel, formatAuditModuleLabel, getAuditOperationMeta, getAuditSeverityMeta } from '../../utils/auditHelpers.js';
-import { applyAuditFilters, buildAuditEntityTypeOptions, buildAuditModuleOptions, buildAuditOperationOptions, buildAuditProjectOptions, buildAuditSeverityOptions, buildAuditUserOptions, getDefaultAuditFilters, getFirstCriticalAuditEvent } from '../../utils/auditFilterHelpers.js';
+// ─────────────────────────────────────────────────────────────────────────────
+// AuditTraceabilityView.jsx — Trazabilidad y Auditoría
+//
+// DATOS REALES: Conectado al endpoint GET /api/v1/audit-logs del backend.
+// El audit_log es inmutable y registra toda acción CUD del sistema
+// (requerimientos, aprobaciones, órdenes de cambio, etc.).
+//
+// RBAC: Solo Administrador del Sistema.
+// ─────────────────────────────────────────────────────────────────────────────
 
-function getOptionLabel(options, id, fallbackLabel) {
-  return options.find((option) => option.id === id)?.label ?? fallbackLabel;
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  ShieldAlert, RefreshCw, Search, Filter, X, Clock,
+  CheckCircle2, XCircle, Database, AlertCircle, Loader2,
+  ChevronDown, ChevronUp, Eye, User, Server,
+} from 'lucide-react';
+import { AppHeader }         from '../../components/ui/AppHeader.jsx';
+import { SidebarNavigation } from '../../components/ui/SidebarNavigation.jsx';
+import { getModulesForUser } from '../../data/icaroData.js';
+import { fetchAuditLogs }    from '../../services/audit.service.js';
+
+// ── Constantes ───────────────────────────────────────────────────────────────
+
+const PAGE_SIZE = 30;
+
+const TABLA_LABELS = {
+  requerimiento_compra:   'Requerimiento de Compra',
+  usuarios:               'Usuarios',
+  proyectos:              'Proyectos',
+  movimiento_inventario:  'Inventario / Bodega',
+  avance_obra:            'Avance de Obra',
+  ordenes_cambio:         'Órdenes de Cambio',
+  notificaciones_sistema: 'Notificaciones',
+};
+
+const OP_CONFIG = {
+  INSERT: { label: 'Creación',  bg: 'bg-emerald-100', text: 'text-emerald-800', border: 'border-emerald-200' },
+  UPDATE: { label: 'Edición',   bg: 'bg-blue-100',    text: 'text-blue-800',    border: 'border-blue-200'   },
+  DELETE: { label: 'Eliminación', bg: 'bg-red-100',   text: 'text-red-800',     border: 'border-red-200'    },
+};
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+const formatDate = (iso) => {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleDateString('es-CO', {
+    day: '2-digit', month: 'short', year: 'numeric',
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+  });
+};
+
+const tablaLabel = (tabla) => TABLA_LABELS[tabla] || tabla;
+
+// ── Sub-componentes ──────────────────────────────────────────────────────────
+
+function OperacionBadge({ operacion }) {
+  const cfg = OP_CONFIG[operacion] || OP_CONFIG.UPDATE;
+  return (
+    <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${cfg.bg} ${cfg.text} ${cfg.border}`}>
+      {cfg.label}
+    </span>
+  );
 }
 
-export function AuditTraceabilityView({ currentUser, isRestricted = false, onGoHome, onOpenProfile, onLogout, onOpenModule }) {
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const [loadStatus, setLoadStatus] = useState('loading');
-  const [retryCount, setRetryCount] = useState(0);
-  const [events, setEvents] = useState([]);
-  const [filters, setFilters] = useState(() => getDefaultAuditFilters());
-  const [isAdvancedFiltersOpen, setIsAdvancedFiltersOpen] = useState(false);
-  const [activeDetailEventId, setActiveDetailEventId] = useState(null);
-  const [activeModal, setActiveModal] = useState(null);
+/** Fila expandible con datos antes/después */
+function AuditRow({ log }) {
+  const [expanded, setExpanded] = useState(false);
 
-  const modules = getModulesForUser(currentUser);
-  const isAuthorizedRole = currentUser.roleName === 'Administrador del Sistema';
-  const assignedProjects = useMemo(() => getAssignedProjectsForUser(currentUser.email), [currentUser.email]);
+  return (
+    <>
+      <tr
+        className="border-b border-[#F3F4F6] hover:bg-[#F9FAFB] transition-colors cursor-pointer"
+        onClick={() => setExpanded((v) => !v)}
+      >
+        <td className="px-4 py-3 text-xs text-gray-400 font-mono">{log.id}</td>
+        <td className="px-4 py-3 text-xs text-gray-500">{formatDate(log.timestamp)}</td>
+        <td className="px-4 py-3">
+          <OperacionBadge operacion={log.operacion} />
+        </td>
+        <td className="px-4 py-3 text-sm text-[#374151]">{tablaLabel(log.tabla)}</td>
+        <td className="px-4 py-3">
+          {log.userName ? (
+            <div>
+              <p className="text-sm font-medium text-[#111827]">{log.userName}</p>
+              <p className="text-xs text-gray-400">{log.userEmail}</p>
+            </div>
+          ) : (
+            <span className="text-xs italic text-gray-400">Sistema</span>
+          )}
+        </td>
+        <td className="hidden px-4 py-3 text-xs text-gray-400 lg:table-cell font-mono truncate max-w-[120px]">
+          {log.ipOrigen || '—'}
+        </td>
+        <td className="px-4 py-3">
+          <button
+            className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+            title={expanded ? 'Ocultar detalle' : 'Ver detalle'}
+          >
+            {expanded ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+          </button>
+        </td>
+      </tr>
 
-  useEffect(() => {
-    setLoadStatus('loading');
-
-    const timer = window.setTimeout(() => {
-      if (currentUser.adminUsersShouldFail) {
-        setLoadStatus('error');
-        return;
-      }
-
-      setEvents(getAuditEvents());
-      setLoadStatus('ready');
-    }, 650);
-
-    return () => window.clearTimeout(timer);
-  }, [currentUser.adminUsersShouldFail, retryCount]);
-
-  const projectOptions = useMemo(() => buildAuditProjectOptions(assignedProjects, events), [assignedProjects, events]);
-  const userOptions = useMemo(() => buildAuditUserOptions(events), [events]);
-  const moduleOptions = useMemo(() => buildAuditModuleOptions(events), [events]);
-  const operationOptions = useMemo(() => buildAuditOperationOptions(events), [events]);
-  const severityOptions = useMemo(() => buildAuditSeverityOptions(events), [events]);
-  const entityTypeOptions = useMemo(() => buildAuditEntityTypeOptions(events), [events]);
-  const filteredEvents = useMemo(() => applyAuditFilters(events, filters), [events, filters]);
-  const summaryCards = useMemo(() => buildAuditSummaryCards(filteredEvents), [filteredEvents]);
-  const criticalEvent = useMemo(() => getFirstCriticalAuditEvent(filteredEvents), [filteredEvents]);
-  const selectedEvent = useMemo(() => events.find((event) => event.id === activeDetailEventId) ?? null, [events, activeDetailEventId]);
-  const selectedComparison = useMemo(() => (selectedEvent ? getAuditComparisonByEventId(selectedEvent.id) : null), [selectedEvent]);
-  const filterSummary = useMemo(
-    () =>
-      buildAuditFilterSummary(filters, {
-        userLabel: getOptionLabel(userOptions, filters.userId, 'todos los usuarios'),
-        projectLabel: getOptionLabel(projectOptions, filters.projectId, 'todos los proyectos'),
-        moduleLabel: getOptionLabel(moduleOptions, filters.moduleId, 'todos los modulos'),
-        operationLabel: getOptionLabel(operationOptions, filters.operationType, 'todas las operaciones'),
-        severityLabel: getOptionLabel(severityOptions, filters.severity, 'todas las severidades'),
-      }),
-    [filters, moduleOptions, operationOptions, projectOptions, severityOptions, userOptions]
+      {expanded && (
+        <tr className="bg-[#F9FAFB]">
+          <td colSpan="7" className="px-6 py-4">
+            <div className="grid gap-4 sm:grid-cols-2">
+              {/* Datos antes */}
+              <div>
+                <p className="mb-1.5 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                  Estado anterior (datos_antes)
+                </p>
+                <pre className="overflow-auto rounded-lg bg-gray-100 p-3 text-xs text-gray-600 max-h-48">
+                  {log.datosAntes
+                    ? JSON.stringify(log.datosAntes, null, 2)
+                    : 'null (operación de creación)'}
+                </pre>
+              </div>
+              {/* Datos después */}
+              <div>
+                <p className="mb-1.5 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                  Estado nuevo (datos_despues)
+                </p>
+                <pre className="overflow-auto rounded-lg bg-gray-100 p-3 text-xs text-gray-600 max-h-48">
+                  {log.datosDespues
+                    ? JSON.stringify(log.datosDespues, null, 2)
+                    : 'null (operación de eliminación)'}
+                </pre>
+              </div>
+            </div>
+            {log.idRegistro && (
+              <p className="mt-3 text-xs text-gray-400">
+                <span className="font-semibold">UUID del registro:</span>{' '}
+                <span className="font-mono">{log.idRegistro}</span>
+              </p>
+            )}
+          </td>
+        </tr>
+      )}
+    </>
   );
-  const resultsLabel = useMemo(() => buildAuditResultsLabel(filteredEvents.length, events.length), [filteredEvents.length, events.length]);
-  const hasNoResults = loadStatus === 'ready' && events.length > 0 && filteredEvents.length === 0;
-  const isEmpty = loadStatus === 'ready' && events.length === 0;
+}
 
-  useEffect(() => {
-    if (activeDetailEventId && !filteredEvents.some((event) => event.id === activeDetailEventId)) {
-      setActiveDetailEventId(null);
+// ── Componente principal ─────────────────────────────────────────────────────
+
+export function AuditTraceabilityView({
+  currentUser,
+  isRestricted = false,
+  onGoHome,
+  onOpenProfile,
+  onLogout,
+  onOpenModule,
+}) {
+  const modules          = getModulesForUser(currentUser);
+  const isAuthorizedRole = currentUser.roleName === 'Administrador del Sistema';
+
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  // ── Filtros ─────────────────────────────────────────────────────────────
+  const [busqueda,   setBusqueda]   = useState('');
+  const [filtTabla,  setFiltTabla]  = useState('');
+  const [filtOp,     setFiltOp]     = useState('');
+  const [filtDesde,  setFiltDesde]  = useState('');
+  const [filtHasta,  setFiltHasta]  = useState('');
+
+  // ── Datos ────────────────────────────────────────────────────────────────
+  const [logs,       setLogs]       = useState([]);
+  const [total,      setTotal]      = useState(0);
+  const [page,       setPage]       = useState(0);
+  const [loadStatus, setLoadStatus] = useState('loading');
+
+  // ── Carga ────────────────────────────────────────────────────────────────
+
+  const cargar = useCallback(async () => {
+    if (!isAuthorizedRole || isRestricted) { setLoadStatus('forbidden'); return; }
+    setLoadStatus('loading');
+    try {
+      const result = await fetchAuditLogs({
+        limit:  PAGE_SIZE,
+        offset: page * PAGE_SIZE,
+        tabla:      filtTabla   || undefined,
+        operacion:  filtOp      || undefined,
+        desde:      filtDesde   || undefined,
+        hasta:      filtHasta   || undefined,
+      });
+      setLogs(Array.isArray(result.data) ? result.data : []);
+      setTotal(result.total || 0);
+      setLoadStatus('ready');
+    } catch (err) {
+      console.error('[AuditTraceability] Error cargando logs:', err);
+      setLoadStatus('error');
     }
-  }, [activeDetailEventId, filteredEvents]);
+  }, [isAuthorizedRole, isRestricted, page, filtTabla, filtOp, filtDesde, filtHasta]);
 
-  const updateFilters = (patch) => {
-    setFilters((currentFilters) => ({ ...currentFilters, ...patch }));
-  };
+  useEffect(() => { cargar(); }, [cargar]);
 
-  const resetFilters = () => {
-    setFilters(getDefaultAuditFilters());
-  };
+  // ── Filtrado local por búsqueda de texto ─────────────────────────────────
+  const logsFiltrados = useMemo(() => {
+    if (!busqueda.trim()) return logs;
+    const q = busqueda.toLowerCase();
+    return logs.filter((l) =>
+      l.tabla?.toLowerCase().includes(q) ||
+      l.userName?.toLowerCase().includes(q) ||
+      l.userEmail?.toLowerCase().includes(q) ||
+      l.idRegistro?.toLowerCase().includes(q) ||
+      l.ipOrigen?.toLowerCase().includes(q) ||
+      JSON.stringify(l.datosDespues || {}).toLowerCase().includes(q)
+    );
+  }, [logs, busqueda]);
+
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+  // Stats rápidas del bloque actual
+  const stats = useMemo(() => ({
+    insert: logs.filter((l) => l.operacion === 'INSERT').length,
+    update: logs.filter((l) => l.operacion === 'UPDATE').length,
+    delete: logs.filter((l) => l.operacion === 'DELETE').length,
+  }), [logs]);
+
+  // ── Acceso denegado ──────────────────────────────────────────────────────
 
   if (!isAuthorizedRole || isRestricted) {
     return (
       <div className="min-h-screen bg-[#F7F9FC] font-sans text-[#111827]">
-        <AppHeader currentUser={currentUser} currentAreaLabel="Auditoria y trazabilidad" onGoHome={onGoHome} onOpenProfile={onOpenProfile} onLogout={onLogout} onOpenNavigation={() => setMobileNavOpen(true)} />
+        <AppHeader
+          currentUser={currentUser}
+          currentAreaLabel="Auditoría y Trazabilidad"
+          onGoHome={onGoHome}
+          onOpenProfile={onOpenProfile}
+          onLogout={onLogout}
+          onOpenNavigation={() => setMobileNavOpen(true)}
+        />
         <div className="mx-auto grid max-w-[1440px] gap-6 px-4 py-6 lg:grid-cols-[300px_minmax(0,1fr)] md:px-6">
-          <SidebarNavigation modules={modules} activeItemId="dashboard" isOpen={mobileNavOpen} currentUser={currentUser} onClose={() => setMobileNavOpen(false)} onGoHome={onGoHome} onOpenModule={onOpenModule} onOpenProfile={onOpenProfile} onLogout={onLogout} />
+          <SidebarNavigation
+            modules={modules}
+            activeItemId="audit"
+            isOpen={mobileNavOpen}
+            currentUser={currentUser}
+            onClose={() => setMobileNavOpen(false)}
+            onGoHome={onGoHome}
+            onOpenModule={onOpenModule}
+            onOpenProfile={onOpenProfile}
+            onLogout={onLogout}
+          />
           <main>
             <section className="rounded-[12px] border border-[#DC2626]/15 bg-white p-8 shadow-sm">
-              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#DC2626]/10 text-[#DC2626]"><ShieldAlert size={28} /></div>
-              <h1 className="text-2xl font-semibold text-[#2F3A45]">No tiene acceso a esta seccion</h1>
-              <p className="mt-2 max-w-2xl text-sm text-gray-600">La consulta de auditoria y trazabilidad esta reservada para perfiles administrativos autorizados. Vuelva al panel principal para continuar sin perder contexto.</p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <button type="button" onClick={onGoHome} className="inline-flex h-[44px] items-center justify-center rounded-[12px] bg-[#1F4E79] px-4 text-sm font-medium text-white hover:bg-[#153a5c]">Volver al panel principal</button>
-                <button type="button" onClick={onOpenProfile} className="inline-flex h-[44px] items-center justify-center rounded-[12px] border border-[#D1D5DB] px-4 text-sm font-medium text-[#2F3A45] hover:bg-[#F7F9FC]">Abrir mi perfil</button>
+              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#DC2626]/10 text-[#DC2626]">
+                <ShieldAlert size={28} />
               </div>
+              <h1 className="text-2xl font-semibold text-[#2F3A45]">Acceso restringido</h1>
+              <p className="mt-2 max-w-2xl text-sm text-gray-600">
+                La consulta de auditoría y trazabilidad está reservada para el Administrador del Sistema.
+              </p>
+              <button
+                onClick={onGoHome}
+                className="mt-6 inline-flex h-[44px] items-center justify-center rounded-[12px] bg-[#1F4E79] px-4 text-sm font-medium text-white hover:bg-[#153a5c]"
+              >
+                Volver al panel principal
+              </button>
             </section>
           </main>
         </div>
@@ -119,99 +264,261 @@ export function AuditTraceabilityView({ currentUser, isRestricted = false, onGoH
     );
   }
 
+  // ── Render principal ─────────────────────────────────────────────────────
+
   return (
     <div className="min-h-screen bg-[#F7F9FC] font-sans text-[#111827]">
-      <AppHeader currentUser={currentUser} currentAreaLabel="Auditoria y trazabilidad" onGoHome={onGoHome} onOpenProfile={onOpenProfile} onLogout={onLogout} onOpenNavigation={() => setMobileNavOpen(true)} />
+      <AppHeader
+        currentUser={currentUser}
+        currentAreaLabel="Auditoría y Trazabilidad"
+        onGoHome={onGoHome}
+        onOpenProfile={onOpenProfile}
+        onLogout={onLogout}
+        onOpenNavigation={() => setMobileNavOpen(true)}
+      />
+
       <div className="mx-auto grid max-w-[1440px] gap-6 px-4 py-6 lg:grid-cols-[300px_minmax(0,1fr)] md:px-6">
-        <SidebarNavigation modules={modules} activeItemId="audit" isOpen={mobileNavOpen} currentUser={currentUser} onClose={() => setMobileNavOpen(false)} onGoHome={onGoHome} onOpenModule={onOpenModule} onOpenProfile={onOpenProfile} onLogout={onLogout} />
+        <SidebarNavigation
+          modules={modules}
+          activeItemId="audit"
+          isOpen={mobileNavOpen}
+          currentUser={currentUser}
+          onClose={() => setMobileNavOpen(false)}
+          onGoHome={onGoHome}
+          onOpenModule={onOpenModule}
+          onOpenProfile={onOpenProfile}
+          onLogout={onLogout}
+        />
 
-        <main className="min-w-0 space-y-6">
-          <AuditTraceabilityHeader filterSummary={filterSummary} resultsLabel={resultsLabel} dateFrom={filters.dateFrom} dateTo={filters.dateTo} onGoHome={onGoHome} />
+        <main className="min-w-0 space-y-5">
 
-          {loadStatus === 'loading' ? <AuditLoadingState /> : null}
-          {loadStatus === 'error' ? <AuditErrorState title="No fue posible cargar la bitacora" description="Reintente para consultar eventos, trazabilidad y comparaciones de cambios del sistema." onRetry={() => setRetryCount((currentValue) => currentValue + 1)} onGoHome={onGoHome} /> : null}
+          {/* ── Encabezado ─────────────────────────────────────────────── */}
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h1 className="flex items-center gap-2 text-xl font-bold text-[#111827]">
+                <Database size={22} className="text-[#1F4E79]" />
+                Trazabilidad y Auditoría
+              </h1>
+              <p className="mt-0.5 text-sm text-gray-500">
+                Registro inmutable de acciones CUD · {total.toLocaleString('es-CO')} eventos en total
+              </p>
+            </div>
+            <button
+              id="btn-refrescar-audit"
+              onClick={() => { setPage(0); cargar(); }}
+              className="inline-flex items-center gap-2 self-start rounded-lg border border-[#E5E7EB] bg-white px-3 py-2 text-sm font-medium text-[#374151] shadow-sm hover:bg-[#F9FAFB] sm:self-auto"
+            >
+              <RefreshCw size={15} />
+              Actualizar
+            </button>
+          </div>
 
-          {loadStatus === 'ready' ? (
-            <>
-              <AuditFiltersBar
-                filters={filters}
-                userOptions={userOptions}
-                projectOptions={projectOptions}
-                moduleOptions={moduleOptions}
-                operationOptions={operationOptions}
-                onChange={updateFilters}
-                onClearFilters={resetFilters}
-                onToggleAdvanced={() => setIsAdvancedFiltersOpen((currentValue) => !currentValue)}
-                isAdvancedOpen={isAdvancedFiltersOpen}
-              />
+          {/* ── Stats rápidas ───────────────────────────────────────────── */}
+          {loadStatus === 'ready' && (
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { label: 'Creaciones', value: stats.insert, icon: CheckCircle2, color: 'emerald' },
+                { label: 'Modificaciones', value: stats.update, icon: Clock, color: 'blue' },
+                { label: 'Eliminaciones', value: stats.delete, icon: XCircle, color: 'red' },
+              ].map(({ label, value, icon: Icon, color }) => {
+                const c = { emerald: 'bg-emerald-50 border-emerald-200 text-emerald-700', blue: 'bg-blue-50 border-blue-200 text-blue-700', red: 'bg-red-50 border-red-200 text-red-700' };
+                return (
+                  <div key={label} className={`flex items-center gap-3 rounded-xl border p-4 ${c[color]}`}>
+                    <Icon size={20} />
+                    <div>
+                      <p className="text-2xl font-bold leading-none">{value}</p>
+                      <p className="mt-0.5 text-xs font-medium opacity-80">{label} (pág.)</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
 
-              {isAdvancedFiltersOpen ? <AuditAdvancedFiltersPanel filters={filters} severityOptions={severityOptions} entityTypeOptions={entityTypeOptions} onChange={updateFilters} onClose={() => setIsAdvancedFiltersOpen(false)} /> : null}
+          {/* ── Filtros ─────────────────────────────────────────────────── */}
+          <div className="rounded-xl border border-[#E5E7EB] bg-white p-4 shadow-sm">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400">
+              <Filter size={12} className="mr-1 inline" /> Filtros
+            </p>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 
-              {isEmpty ? (
-                <AuditEmptyState title="No hay eventos de auditoria disponibles" description="La bitacora no contiene registros para el alcance administrativo actual." primaryActionLabel="Volver al panel" onPrimaryAction={onGoHome} />
-              ) : (
-                <>
-                  <AuditSuccessState visibleCount={filteredEvents.length} totalCount={events.length} criticalCount={filteredEvents.filter((event) => event.isCritical || event.severity === 'critical').length} onOpenCriticalEvent={criticalEvent ? () => setActiveModal('critical') : null} />
+              {/* Búsqueda local */}
+              <div className="relative sm:col-span-2 lg:col-span-1">
+                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  id="audit-busqueda"
+                  value={busqueda}
+                  onChange={(e) => setBusqueda(e.target.value)}
+                  placeholder="Buscar en esta página..."
+                  className="w-full rounded-lg border border-[#D1D5DB] pl-9 pr-3 py-2 text-sm text-[#111827] placeholder-gray-400 focus:border-[#1F4E79] focus:outline-none focus:ring-2 focus:ring-[#1F4E79]/20"
+                />
+              </div>
 
-                  {hasNoResults ? (
-                    <AuditEmptyState
-                      title="No se encontraron eventos para los filtros aplicados"
-                      description="Ajuste el rango de fechas, el usuario, el proyecto o la referencia consultada para continuar con la trazabilidad."
-                      primaryActionLabel="Limpiar filtros"
-                      onPrimaryAction={resetFilters}
-                      secondaryActionLabel="Ver explicacion"
-                      onSecondaryAction={() => setActiveModal('no-results')}
-                    />
-                  ) : (
-                    <>
-                      <AuditSummaryCards cards={summaryCards} />
+              {/* Filtro por tabla */}
+              <select
+                id="audit-filtro-tabla"
+                value={filtTabla}
+                onChange={(e) => { setFiltTabla(e.target.value); setPage(0); }}
+                className="rounded-lg border border-[#D1D5DB] px-3 py-2 text-sm text-[#374151] focus:border-[#1F4E79] focus:outline-none"
+              >
+                <option value="">Todas las tablas</option>
+                {Object.entries(TABLA_LABELS).map(([val, lbl]) => (
+                  <option key={val} value={val}>{lbl}</option>
+                ))}
+              </select>
 
-                      <section className="space-y-3 rounded-[12px] border border-[#D1D5DB] bg-white p-6 shadow-sm">
-                        <SectionHeader title="Eventos registrados" description="Consulte actor, proyecto, modulo, operacion, referencia y severidad sin perder el contexto activo." />
-                        <AuditEventsTable events={filteredEvents} onOpenDetail={(eventId) => setActiveDetailEventId(eventId)} />
-                      </section>
+              {/* Filtro por operación */}
+              <select
+                id="audit-filtro-operacion"
+                value={filtOp}
+                onChange={(e) => { setFiltOp(e.target.value); setPage(0); }}
+                className="rounded-lg border border-[#D1D5DB] px-3 py-2 text-sm text-[#374151] focus:border-[#1F4E79] focus:outline-none"
+              >
+                <option value="">Todas las operaciones</option>
+                <option value="INSERT">Creación (INSERT)</option>
+                <option value="UPDATE">Edición (UPDATE)</option>
+                <option value="DELETE">Eliminación (DELETE)</option>
+              </select>
 
-                      <section className="space-y-3 rounded-[12px] border border-[#D1D5DB] bg-white p-6 shadow-sm">
-                        <SectionHeader title="Timeline de trazabilidad" description="Siga la secuencia cronologica de acciones por usuario, proyecto o transaccion dentro del filtro actual." />
-                        <AuditTimelineList
-                          events={filteredEvents.slice(0, 8)}
-                          onOpenDetail={(eventId) => setActiveDetailEventId(eventId)}
-                          onFilterUser={(userId) => updateFilters({ userId })}
-                          onFilterProject={(projectId) => updateFilters({ projectId: projectId ?? 'system' })}
-                        />
-                      </section>
-                    </>
+              {/* Rango de fechas */}
+              <div className="flex gap-2 sm:col-span-2 lg:col-span-1">
+                <input
+                  id="audit-desde"
+                  type="date"
+                  value={filtDesde}
+                  onChange={(e) => { setFiltDesde(e.target.value); setPage(0); }}
+                  className="flex-1 min-w-0 rounded-lg border border-[#D1D5DB] px-2 py-2 text-xs text-[#374151] focus:border-[#1F4E79] focus:outline-none"
+                  title="Desde"
+                />
+                <input
+                  id="audit-hasta"
+                  type="date"
+                  value={filtHasta}
+                  onChange={(e) => { setFiltHasta(e.target.value); setPage(0); }}
+                  className="flex-1 min-w-0 rounded-lg border border-[#D1D5DB] px-2 py-2 text-xs text-[#374151] focus:border-[#1F4E79] focus:outline-none"
+                  title="Hasta"
+                />
+              </div>
+            </div>
+
+            {/* Botón limpiar filtros */}
+            {(filtTabla || filtOp || filtDesde || filtHasta || busqueda) && (
+              <button
+                onClick={() => { setFiltTabla(''); setFiltOp(''); setFiltDesde(''); setFiltHasta(''); setBusqueda(''); setPage(0); }}
+                className="mt-3 inline-flex items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-500 hover:bg-gray-50"
+              >
+                <X size={12} /> Limpiar filtros
+              </button>
+            )}
+          </div>
+
+          {/* ── Tabla de logs ─────────────────────────────────────────────── */}
+          <div className="overflow-hidden rounded-2xl border border-[#E5E7EB] bg-white shadow-sm">
+
+            {loadStatus === 'loading' && (
+              <div className="flex items-center justify-center py-20">
+                <Loader2 size={28} className="animate-spin text-[#1F4E79]" />
+              </div>
+            )}
+
+            {loadStatus === 'error' && (
+              <div className="flex flex-col items-center justify-center py-16 text-center">
+                <AlertCircle size={32} className="mb-3 text-red-400" />
+                <p className="font-semibold text-[#2F3A45]">Error al cargar el registro de auditoría</p>
+                <p className="mt-1 text-sm text-gray-400">
+                  Verifique que el backend esté activo y que la tabla <code className="font-mono">audit_log</code> exista.
+                </p>
+                <button
+                  onClick={cargar}
+                  className="mt-4 inline-flex items-center gap-2 rounded-lg border border-[#E5E7EB] px-4 py-2 text-sm text-gray-600 hover:bg-gray-50"
+                >
+                  <RefreshCw size={14} /> Reintentar
+                </button>
+              </div>
+            )}
+
+            {loadStatus === 'ready' && logsFiltrados.length === 0 && (
+              <div className="flex flex-col items-center justify-center py-20 text-center">
+                <Database size={36} className="mb-3 text-gray-200" />
+                <p className="font-semibold text-[#2F3A45]">Sin registros de auditoría</p>
+                <p className="mt-1 text-sm text-gray-400">
+                  {filtTabla || filtOp || filtDesde || filtHasta
+                    ? 'Ajuste los filtros para ver más resultados.'
+                    : 'Aún no hay eventos registrados en la bitácora.'}
+                </p>
+              </div>
+            )}
+
+            {loadStatus === 'ready' && logsFiltrados.length > 0 && (
+              <>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-[#F3F4F6] bg-[#F9FAFB]">
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500">#ID</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500">Fecha y hora</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500">Operación</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500">Tabla / Módulo</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500">Usuario</th>
+                        <th className="hidden px-4 py-3 text-left text-xs font-semibold text-gray-500 lg:table-cell">IP origen</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500">Detalle</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {logsFiltrados.map((log) => (
+                        <AuditRow key={log.id} log={log} />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Paginación */}
+                <div className="flex items-center justify-between border-t border-[#F3F4F6] px-4 py-3">
+                  <p className="text-xs text-gray-400">
+                    Mostrando {logsFiltrados.length} de {total.toLocaleString('es-CO')} eventos
+                    {busqueda && ` (filtrados en página: ${logsFiltrados.length})`}
+                  </p>
+                  {totalPages > 1 && (
+                    <div className="flex gap-1">
+                      <button
+                        onClick={() => setPage((p) => Math.max(0, p - 1))}
+                        disabled={page === 0}
+                        className="rounded-lg border border-[#E5E7EB] px-2.5 py-1.5 text-xs text-gray-500 hover:bg-gray-50 disabled:opacity-40"
+                      >
+                        ‹ Anterior
+                      </button>
+                      <span className="flex items-center px-2 text-xs text-gray-400">
+                        Pág. {page + 1} / {totalPages}
+                      </span>
+                      <button
+                        onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+                        disabled={page >= totalPages - 1}
+                        className="rounded-lg border border-[#E5E7EB] px-2.5 py-1.5 text-xs text-gray-500 hover:bg-gray-50 disabled:opacity-40"
+                      >
+                        Siguiente ›
+                      </button>
+                    </div>
                   )}
-                </>
-              )}
-            </>
-          ) : null}
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* ── Info sobre el registro ──────────────────────────────────── */}
+          <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800">
+            <p className="font-semibold mb-1 flex items-center gap-2">
+              <Server size={14} /> ¿Dónde se almacenan estos registros?
+            </p>
+            <p className="text-xs leading-relaxed">
+              Cada acción CUD (creación, edición, eliminación) del sistema se persiste automáticamente en la tabla{' '}
+              <code className="font-mono font-semibold">audit_log</code> de PostgreSQL. Es inmutable por diseño:
+              ningún rol puede modificar ni eliminar estas entradas. Los registros incluyen: tabla afectada,
+              operación, ID del registro, usuario responsable, snapshot JSON del estado anterior/posterior e IP de origen.
+            </p>
+          </div>
+
         </main>
       </div>
-
-      {selectedEvent ? (
-        <AuditEventDetailDrawer
-          event={selectedEvent}
-          comparison={selectedComparison}
-          onClose={() => setActiveDetailEventId(null)}
-          onFilterUser={(userId) => {
-            updateFilters({ userId });
-            setActiveDetailEventId(null);
-          }}
-          onFilterProject={(projectId) => {
-            updateFilters({ projectId: projectId ?? 'system' });
-            setActiveDetailEventId(null);
-          }}
-        />
-      ) : null}
-      {activeModal === 'critical' && criticalEvent ? <CriticalAuditEventModal event={criticalEvent} onClose={() => setActiveModal(null)} onViewDetail={() => {
-        setActiveModal(null);
-        setActiveDetailEventId(criticalEvent.id);
-      }} /> : null}
-      {activeModal === 'no-results' ? <AuditNoResultsModal onClose={() => setActiveModal(null)} onClearFilters={() => {
-        setActiveModal(null);
-        resetFilters();
-      }} /> : null}
     </div>
   );
 }

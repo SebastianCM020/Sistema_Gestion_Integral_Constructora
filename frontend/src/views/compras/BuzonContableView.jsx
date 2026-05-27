@@ -1,13 +1,13 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// BandejaGerencialView.jsx - Sprint 7
+// BuzonContableView.jsx - Sprint 7
 //
 // Mejoras sobre Sprint 6:
 //   - Paginación real (limit/offset) con contador total
-//   - Badge de estado para todos los estados (no solo EN_REVISION)
-//   - Vista de historial (aprobados/rechazados) desde el mismo componente
+//   - Badge de estado para todos los estados (no solo REVISION_CONTABLE)
+//   - Vista de historial (validados/rechazados) desde el mismo componente
 //   - Drawer lateral con detalle expandido del requerimiento
 //   - Indicador de notificaciones no leídas en header
-//   - UX mejorada: feedback toast, confirmación de aprobación, animaciones
+//   - UX mejorada: feedback toast, confirmación de validación, animaciones
 //
 // RBAC: Solo Presidente/Gerente y Administrador del Sistema.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -23,22 +23,23 @@ import { AppHeader }         from '../../components/ui/AppHeader.jsx';
 import { SidebarNavigation } from '../../components/ui/SidebarNavigation.jsx';
 import { getModulesForUser } from '../../data/icaroData.js';
 import {
-  fetchBandejaGerencial,
+  fetchBandejaContable,
   fetchRequerimientos,
-  aprobarRequerimiento,
+  validarContabilidadReq,
   rechazarRequerimiento,
 } from '../../services/compras.service.js';
 
 // ── Constantes ───────────────────────────────────────────────────────────────
 
-const ROLES_PERMITIDOS  = ['Presidente / Gerente', 'Administrador del Sistema'];
+const ROLES_PERMITIDOS  = ['Contador', 'Administrador del Sistema'];
 const ESTADOS_TABS = [
-  { id: 'EN_REVISION', label: 'Pendientes',  icon: Clock,        color: 'amber'  },
+  { id: 'REVISION_CONTABLE', label: 'Pendientes',  icon: Clock,        color: 'amber'  },
   { id: 'APROBADO',    label: 'Aprobados',   icon: CheckCircle2, color: 'emerald' },
   { id: 'RECHAZADO',   label: 'Rechazados',  icon: XCircle,      color: 'red'    },
 ];
 
 const ESTADO_CONFIG = {
+  REVISION_CONTABLE: { label: 'Revisión Contable', bg: 'bg-amber-100',   text: 'text-amber-800',   border: 'border-amber-200'  },
   EN_REVISION: { label: 'En Revisión', bg: 'bg-amber-100',   text: 'text-amber-800',   border: 'border-amber-200'  },
   APROBADO:    { label: 'Aprobado',    bg: 'bg-emerald-100', text: 'text-emerald-800', border: 'border-emerald-200' },
   RECHAZADO:   { label: 'Rechazado',   bg: 'bg-red-100',     text: 'text-red-800',     border: 'border-red-200'    },
@@ -65,7 +66,7 @@ const formatCantidad = (n) =>
  * Badge de estado semántico.
  */
 function EstadoBadge({ estado }) {
-  const cfg = ESTADO_CONFIG[estado] || ESTADO_CONFIG.EN_REVISION;
+  const cfg = ESTADO_CONFIG[estado] || ESTADO_CONFIG.REVISION_CONTABLE;
   return (
     <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold border ${cfg.bg} ${cfg.text} ${cfg.border}`}>
       {cfg.label}
@@ -97,13 +98,13 @@ function StatCard({ label, value, icon: Icon, color }) {
 /**
  * Drawer lateral con el detalle completo del requerimiento.
  */
-function RequerimientoDrawer({ req, onClose, onAprobar, onRechazar, procesando }) {
+function RequerimientoDrawer({ req, onClose, onValidar, onRechazar, procesando }) {
   const [comentario, setComentario] = useState('');
-  const [confirmAprobar, setConfirmAprobar] = useState(false);
+  const [confirmValidar, setConfirmValidar] = useState(false);
 
   if (!req) return null;
 
-  const esPendiente = req.estado === 'EN_REVISION';
+  const esPendiente = req.estado === 'REVISION_CONTABLE';
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
@@ -233,48 +234,48 @@ function RequerimientoDrawer({ req, onClose, onAprobar, onRechazar, procesando }
             )}
           </section>
 
-          {/* Sección de acciones (solo si EN_REVISION) */}
+          {/* Sección de acciones (solo si REVISION_CONTABLE) */}
           {esPendiente && (
             <section className="space-y-4 border-t border-gray-100 pt-4">
               <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">
                 Acción gerencial
               </p>
 
-              {/* Confirmar aprobación */}
-              {confirmAprobar ? (
+              {/* Confirmar validación */}
+              {confirmValidar ? (
                 <div className="space-y-3 rounded-lg border border-emerald-200 bg-emerald-50 p-3">
                   <p className="text-sm text-emerald-700 font-medium">
-                    ¿Confirmar aprobación de este requerimiento?
+                    ¿Confirmar validación de este requerimiento?
                   </p>
                   <div className="flex gap-2">
                     <button
-                      onClick={() => setConfirmAprobar(false)}
+                      onClick={() => setConfirmValidar(false)}
                       className="flex-1 rounded-lg border border-gray-200 py-2 text-xs font-medium text-gray-600 hover:bg-gray-50"
                     >
                       Cancelar
                     </button>
                     <button
                       id={`btn-confirmar-aprobacion-${req.id}`}
-                      onClick={() => { setConfirmAprobar(false); onAprobar(req.id); }}
+                      onClick={() => { setConfirmValidar(false); onValidar(req.id); }}
                       disabled={procesando === req.id}
                       className="flex-1 rounded-lg bg-emerald-600 py-2 text-xs font-medium text-white hover:bg-emerald-700 disabled:opacity-50 flex items-center justify-center gap-1.5"
                     >
                       {procesando === req.id
                         ? <Loader2 size={13} className="animate-spin" />
                         : <CheckCircle2 size={13} />}
-                      Sí, Aprobar
+                      Sí, Validar
                     </button>
                   </div>
                 </div>
               ) : (
                 <button
-                  id={`btn-aprobar-drawer-${req.id}`}
-                  onClick={() => setConfirmAprobar(true)}
+                  id={`btn-validar-drawer-${req.id}`}
+                  onClick={() => setConfirmValidar(true)}
                   disabled={procesando === req.id}
                   className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50 transition-colors"
                 >
                   <CheckCircle2 size={16} />
-                  Aprobar Requerimiento
+                  Validar Requerimiento
                 </button>
               )}
 
@@ -314,7 +315,7 @@ function RequerimientoDrawer({ req, onClose, onAprobar, onRechazar, procesando }
 /**
  * Fila de la tabla de requerimientos.
  */
-function RequerimientoRow({ req, onVerDetalle, onAprobarRapido, onRechazarRapido, procesando }) {
+function RequerimientoRow({ req, onVerDetalle, onValidarRapido, onRechazarRapido, procesando }) {
   return (
     <tr
       className="group cursor-pointer border-b border-[#F3F4F6] hover:bg-[#F9FAFB] transition-colors"
@@ -346,7 +347,7 @@ function RequerimientoRow({ req, onVerDetalle, onAprobarRapido, onRechazarRapido
         <p className="text-xs text-gray-400">{formatDate(req.fechaSolicitud)}</p>
       </td>
       <td className="px-4 py-3">
-        {req.estado === 'EN_REVISION' ? (
+        {req.estado === 'REVISION_CONTABLE' ? (
           <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
             <button
               id={`btn-rechazar-row-${req.id}`}
@@ -358,10 +359,10 @@ function RequerimientoRow({ req, onVerDetalle, onAprobarRapido, onRechazarRapido
               <XCircle size={17} />
             </button>
             <button
-              id={`btn-aprobar-row-${req.id}`}
+              id={`btn-validar-row-${req.id}`}
               onClick={() => onVerDetalle(req)}
               disabled={procesando === req.id}
-              title="Ver y Aprobar"
+              title="Ver y Validar"
               className="rounded-lg p-1.5 text-emerald-500 hover:bg-emerald-50 hover:text-emerald-700 disabled:opacity-40"
             >
               <CheckSquare size={17} />
@@ -383,7 +384,7 @@ function RequerimientoRow({ req, onVerDetalle, onAprobarRapido, onRechazarRapido
 
 // ── Componente principal ─────────────────────────────────────────────────────
 
-export function BandejaGerencialView({
+export function BuzonContableView({
   currentUser,
   onGoHome,
   onOpenProfile,
@@ -396,13 +397,13 @@ export function BandejaGerencialView({
 
   // Estado de UI
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const [tabActiva,     setTabActiva]     = useState('EN_REVISION');
+  const [tabActiva,     setTabActiva]     = useState('REVISION_CONTABLE');
   const [page,          setPage]          = useState(0);
 
   // Estado de datos
   const [requerimientos, setRequerimientos] = useState([]);
   const [total,          setTotal]          = useState(0);
-  const [stats,          setStats]          = useState({ pendientes: 0, aprobados: 0, rechazados: 0 });
+  const [stats,          setStats]          = useState({ pendientes: 0, validados: 0, rechazados: 0 });
   const [loadStatus,     setLoadStatus]     = useState('loading');
 
   // Estado de acciones
@@ -420,13 +421,13 @@ export function BandejaGerencialView({
     if (!tieneAcceso) return;
     try {
       const [rPend, rApro, rRech] = await Promise.all([
-        fetchBandejaGerencial({ limit: 1, offset: 0, estado: 'EN_REVISION' }),
-        fetchBandejaGerencial({ limit: 1, offset: 0, estado: 'APROBADO' }),
-        fetchBandejaGerencial({ limit: 1, offset: 0, estado: 'RECHAZADO' }),
+        fetchBandejaContable({ limit: 1, offset: 0, estado: 'REVISION_CONTABLE' }),
+        fetchBandejaContable({ limit: 1, offset: 0, estado: 'APROBADO' }),
+        fetchBandejaContable({ limit: 1, offset: 0, estado: 'RECHAZADO' }),
       ]);
       setStats({
         pendientes: rPend.total ?? 0,
-        aprobados: rApro.total ?? 0,
+        validados: rApro.total ?? 0,
         rechazados: rRech.total ?? 0,
       });
     } catch { /* silencioso */ }
@@ -436,7 +437,7 @@ export function BandejaGerencialView({
     if (!tieneAcceso) { setLoadStatus('forbidden'); return; }
     setLoadStatus('loading');
     try {
-      const result = await fetchBandejaGerencial({
+      const result = await fetchBandejaContable({
         limit: PAGE_SIZE,
         offset: page * PAGE_SIZE,
         estado: tabActiva,
@@ -445,8 +446,9 @@ export function BandejaGerencialView({
       setTotal(result.total || 0);
       setLoadStatus('ready');
     } catch (err) {
-      console.error('[BandejaGerencial] Error cargando tab:', err);
+      console.error('[BuzonContable] Error cargando tab:', err);
       setLoadStatus('error');
+      setFeedback({ tone: 'error', message: err.response?.data?.error || err.message || 'Error al cargar la bandeja' });
     }
   }, [tieneAcceso, tabActiva, page]);
 
@@ -462,16 +464,16 @@ export function BandejaGerencialView({
 
   // ── Acciones ───────────────────────────────────────────────────────────────
 
-  const handleAprobar = useCallback(async (id) => {
+  const handleValidar = useCallback(async (id) => {
     setProcesando(id);
     try {
-      await aprobarRequerimiento(id);
+      await validarContabilidadReq(id);
       setDrawerReq(null);
-      setFeedback({ tone: 'success', message: 'Requerimiento aprobado. Se ha notificado al bodeguero y al solicitante.' });
-      // Recargar desde servidor para que las tabs Aprobados/Rechazados reflejen datos reales
+      setFeedback({ tone: 'success', message: 'Requerimiento validado. Se ha notificado al gerente.' });
+      // Recargar desde servidor para que las tabs reflejen datos reales
       await Promise.all([cargarTab(), cargarStats()]);
     } catch (err) {
-      setFeedback({ tone: 'error', message: err.response?.data?.error || 'Error al aprobar el requerimiento.' });
+      setFeedback({ tone: 'error', message: err.response?.data?.error || 'Error al validar el requerimiento.' });
     } finally {
       setProcesando(null);
     }
@@ -489,7 +491,7 @@ export function BandejaGerencialView({
       setRechazoRapido(null);
       setComentario('');
       setFeedback({ tone: 'success', message: 'Requerimiento rechazado. Se ha notificado al solicitante.' });
-      // Recargar desde servidor para que las tabs Aprobados/Rechazados reflejen datos reales
+      // Recargar desde servidor para que las tabs reflejen datos reales
       await Promise.all([cargarTab(), cargarStats()]);
     } catch (err) {
       setFeedback({ tone: 'error', message: err.response?.data?.error || 'Error al rechazar el requerimiento.' });
@@ -506,7 +508,7 @@ export function BandejaGerencialView({
     <div className="min-h-screen bg-[#F7F9FC] font-sans text-[#111827]">
       <AppHeader
         currentUser={currentUser}
-        currentAreaLabel="Bandeja Gerencial"
+        currentAreaLabel="Validación Contable"
         onGoHome={onGoHome}
         onOpenProfile={onOpenProfile}
         onLogout={onLogout}
@@ -516,7 +518,7 @@ export function BandejaGerencialView({
       <div className="mx-auto grid max-w-[1440px] gap-6 px-4 py-6 lg:grid-cols-[300px_minmax(0,1fr)] md:px-6">
         <SidebarNavigation
           modules={modules}
-          activeItemId="review"
+          activeItemId="accounting-review"
           isOpen={mobileNavOpen}
           currentUser={currentUser}
           onClose={() => setMobileNavOpen(false)}
@@ -528,12 +530,25 @@ export function BandejaGerencialView({
 
         <main className="min-w-0">
 
+          {/* ✨ Toast de feedback global ✨ */}
+          {feedback && (
+            <div
+              className={`fixed bottom-6 right-6 z-[9999] flex items-center gap-3 rounded-[12px] border px-5 py-4 text-sm font-semibold shadow-xl max-w-md
+                ${feedback.tone === 'success'
+                  ? 'border-[#16A34A]/20 bg-[#15803D] text-white'
+                  : 'border-[#DC2626]/20 bg-[#B91C1C] text-white'}`}
+            >
+              <div className={`h-2.5 w-2.5 shrink-0 rounded-full ${feedback.tone === 'success' ? 'bg-[#4ADE80]' : 'bg-[#FCA5A5]'}`} />
+              <span className="min-w-0 flex-1 break-words">{feedback.message}</span>
+            </div>
+          )}
+
           {/* ── Encabezado ────────────────────────────────────────────── */}
-          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mb-5">
             <div>
               <h1 className="flex items-center gap-2 text-xl font-bold text-[#111827]">
                 <ClipboardList size={22} className="text-[#1F4E79]" />
-                Bandeja de Revisión Gerencial
+                Requerimientos
               </h1>
               <p className="mt-0.5 text-sm text-gray-500">
                 Gestión de requerimientos de compra
@@ -549,26 +564,13 @@ export function BandejaGerencialView({
             </button>
           </div>
 
-          {/* ✨ Toast de feedback global ✨ */}
-          {feedback && (
-            <div
-              className={`fixed bottom-6 right-6 z-[9999] flex items-center gap-3 rounded-[12px] border px-5 py-4 text-sm font-semibold shadow-xl max-w-md
-                ${feedback.tone === 'success'
-                  ? 'border-[#16A34A]/20 bg-[#15803D] text-white'
-                  : 'border-[#DC2626]/20 bg-[#B91C1C] text-white'}`}
-            >
-              <div className={`h-2.5 w-2.5 shrink-0 rounded-full ${feedback.tone === 'success' ? 'bg-[#4ADE80]' : 'bg-[#FCA5A5]'}`} />
-              <span className="min-w-0 flex-1 break-words">{feedback.message}</span>
-            </div>
-          )}
-
           {/* ── Acceso denegado ───────────────────────────────────────── */}
           {!tieneAcceso && (
             <div className="flex flex-col items-center justify-center rounded-2xl border border-red-200 bg-red-50 p-10 text-center">
               <ShieldAlert size={36} className="mb-3 text-red-400" />
               <p className="font-semibold text-red-700">Acceso restringido</p>
               <p className="mt-1 text-sm text-red-500">
-                Solo Presidente / Gerente y Administrador del Sistema pueden acceder a esta sección.
+                Solo Contador y Administrador del Sistema pueden acceder a esta sección.
               </p>
             </div>
           )}
@@ -578,7 +580,7 @@ export function BandejaGerencialView({
               {/* ── Stats cards ─────────────────────────────────────────── */}
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-3">
                 <StatCard label="Pendientes"  value={stats.pendientes}  icon={Clock}        color="amber"   />
-                <StatCard label="Aprobados"   value={stats.aprobados}   icon={CheckCircle2} color="emerald" />
+                <StatCard label="Aprobados"   value={stats.validados}   icon={CheckCircle2} color="emerald" />
                 <StatCard label="Rechazados"  value={stats.rechazados}  icon={XCircle}      color="red"     />
               </div>
 
@@ -614,7 +616,7 @@ export function BandejaGerencialView({
                     >
                       <Icon size={13} />
                       {tab.label}
-                      {tab.id === 'EN_REVISION' && stats.pendientes > 0 && (
+                      {tab.id === 'REVISION_CONTABLE' && stats.pendientes > 0 && (
                         <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold
                           ${activa ? 'bg-white/20' : 'bg-amber-100 text-amber-700'}`}>
                           {stats.pendientes}
@@ -650,12 +652,12 @@ export function BandejaGerencialView({
                   <div className="flex flex-col items-center justify-center py-20 text-center">
                     <ClipboardList size={36} className="mb-3 text-gray-200" />
                     <p className="font-semibold text-[#2F3A45]">
-                      {tabActiva === 'EN_REVISION'
+                      {tabActiva === 'REVISION_CONTABLE'
                         ? 'Sin requerimientos pendientes'
                         : `Sin requerimientos ${tabActiva.toLowerCase()}s`}
                     </p>
                     <p className="mt-1 text-sm text-gray-400">
-                      {tabActiva === 'EN_REVISION'
+                      {tabActiva === 'REVISION_CONTABLE'
                         ? 'Todos los requerimientos han sido gestionados.'
                         : 'El historial estará disponible próximamente.'}
                     </p>
@@ -684,7 +686,7 @@ export function BandejaGerencialView({
                                 req={req}
                                 procesando={procesando}
                                 onVerDetalle={setDrawerReq}
-                                onAprobarRapido={(id) => handleAprobar(id)}
+                                onValidarRapido={(id) => handleValidar(id)}
                                 onRechazarRapido={(r) => { setRechazoRapido(r); setComentario(''); }}
                               />
                               {req.estado === 'RECHAZADO' && req.comentarioRechazo && (
@@ -738,7 +740,7 @@ export function BandejaGerencialView({
           req={drawerReq}
           procesando={procesando}
           onClose={() => setDrawerReq(null)}
-          onAprobar={handleAprobar}
+          onValidar={handleValidar}
           onRechazar={handleRechazar}
         />
       )}

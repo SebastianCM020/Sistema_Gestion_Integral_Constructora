@@ -89,9 +89,11 @@ export const rechazarRequerimiento = async (id, comentarioRechazo) => {
  * @param {number} [opciones.offset=0]
  * @returns {Promise<{data: Array, total: number}>}
  */
-export const fetchBandejaGerencial = async ({ limit = 50, offset = 0 } = {}) => {
+export const fetchBandejaGerencial = async ({ limit = 50, offset = 0, estado } = {}) => {
+  const params = { limit, offset };
+  if (estado) params.estado = estado;
   const { data } = await api.get('/compras/bandeja-gerencial', {
-    params: { limit, offset },
+    params,
   });
   return data;
 };
@@ -103,5 +105,35 @@ export const fetchBandejaGerencial = async ({ limit = 50, offset = 0 } = {}) => 
  */
 export const fetchNotificaciones = async () => {
   const { data } = await api.get('/compras/notificaciones');
+  return data;
+};
+
+/**
+ * Obtiene la bandeja contable: requerimientos pendientes REVISION_CONTABLE.
+ * Solo accesible por Admin y Contador.
+ *
+ * @param {object} [opciones]
+ * @param {number} [opciones.limit=50]
+ * @param {number} [opciones.offset=0]
+ * @param {string} [opciones.estado]
+ * @returns {Promise<{data: Array, total: number}>}
+ */
+export const fetchBandejaContable = async ({ limit = 50, offset = 0, estado } = {}) => {
+  const params = { limit, offset };
+  if (estado) params.estado = estado;
+  const { data } = await api.get('/compras/bandeja-contable', {
+    params,
+  });
+  return data;
+};
+
+/**
+ * Valida un requerimiento REVISION_CONTABLE (solo Contador/Admin).
+ *
+ * @param {string} id
+ * @returns {Promise<{message: string, requerimiento: object}>}
+ */
+export const validarContabilidadReq = async (id) => {
+  const { data } = await api.put(`/compras/requerimientos/${id}/validar-contabilidad`);
   return data;
 };

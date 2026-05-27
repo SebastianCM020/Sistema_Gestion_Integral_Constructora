@@ -100,12 +100,16 @@ export function MaterialsCatalogView({
   const handleSaveMaterial = async (values) => {
     try {
       if (activeOverlay?.type === 'edit' && activeOverlay.material) {
-        const result = await actualizarMaterial(activeOverlay.material.id, {
+        // Incluir 'activo' si el usuario cambió el estado desde el formulario de edición
+        const payload = {
           nombre:      values.nombre     ?? values.name,
           categoria:   values.categoria  ?? values.category,
           unidad:      values.unidad     ?? values.unit,
           descripcion: values.descripcion ?? values.description ?? values.observations,
-        });
+          activo:      typeof values.isActive === 'boolean' ? values.isActive : undefined,
+        };
+        const result = await actualizarMaterial(activeOverlay.material.id, payload);
+        // Reemplazar el material completo con los datos normalizados del servidor
         setMaterials((prev) =>
           prev.map((m) => (m.id === result.data.id ? result.data : m))
         );
@@ -123,8 +127,10 @@ export function MaterialsCatalogView({
       }
       closeOverlay();
     } catch (error) {
-      const msg = error.response?.data?.error || 'Error al guardar el material.';
-      setFeedback({ tone: 'error', message: msg });
+      const status = error.response?.status;
+      const msg    = error.response?.data?.error || 'Error al guardar el material.';
+      const code   = status ? `[HTTP ${status}]` : '[Error]';
+      setFeedback({ tone: 'error', message: `${code} ${msg}` });
     }
   };
 
@@ -148,8 +154,10 @@ export function MaterialsCatalogView({
       setFeedback({ tone: 'success', message: `Material ${nextActivo ? 'activado' : 'desactivado'} correctamente.` });
       closeOverlay();
     } catch (error) {
-      const msg = error.response?.data?.error || 'Error al cambiar el estado del material.';
-      setFeedback({ tone: 'error', message: msg });
+      const status = error.response?.status;
+      const msg    = error.response?.data?.error || 'Error al cambiar el estado del material.';
+      const code   = status ? `[HTTP ${status}]` : '[Error]';
+      setFeedback({ tone: 'error', message: `${code} ${msg}` });
     }
   };
 

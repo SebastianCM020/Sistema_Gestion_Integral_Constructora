@@ -11,7 +11,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 const prisma = require('../utils/prisma');
-const { emitirRequerimientoCreado } = require('./notification.service');
+const { emitirRequerimientoCreado, emitirDecisionRequerimiento } = require('./notification.service'); // Sprint 7
 
 /**
  * Valida y crea un nuevo RequerimientoCompra en estado EN_REVISION.
@@ -75,7 +75,12 @@ const crearRequerimiento = async ({ idProyecto, idSolicitante, justificacion, de
     throw err;
   }
 
-  if (proyecto.estado !== 'ACTIVO') {
+  // Normalización: aceptar cualquier variante de "activo" sin importar mayúsculas.
+  // La BD puede contener 'active', 'ACTIVE', 'activo' o 'ACTIVO'.
+  const ESTADOS_ACTIVOS = new Set(['active', 'activo']);
+  const estadoNormalizado = (proyecto.estado || '').trim().toLowerCase();
+
+  if (!ESTADOS_ACTIVOS.has(estadoNormalizado)) {
     const err = new Error(
       `No se pueden crear requerimientos para el proyecto "${proyecto.nombre}" ` +
       `porque se encuentra en estado "${proyecto.estado}". Solo proyectos ACTIVOS aceptan nuevas transacciones.`
@@ -125,7 +130,7 @@ const crearRequerimiento = async ({ idProyecto, idSolicitante, justificacion, de
         idProyecto,
         idSolicitante,
         justificacion:  justificacion.trim(),
-        estado:         'EN_REVISION', // Estado inicial fijo — CA Sprint 6
+        estado:         'REVISION_CONTABLE', // Estado inicial - pasa por contabilidad antes de gerencia
         detalles: {
           create: detalles.map((d) => ({
             idMaterial:        d.idMaterial,
@@ -168,6 +173,11 @@ const crearRequerimiento = async ({ idProyecto, idSolicitante, justificacion, de
  * @returns {Promise<RequerimientoCompra[]>}
  */
 const listarRequerimientos = async (idProyecto, { estado } = {}) => {
+  const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+  if (!idProyecto || !uuidRegex.test(idProyecto)) {
+    return [];
+  }
+
   const where = { idProyecto };
   if (estado) where.estado = estado;
 
@@ -229,7 +239,7 @@ const aprobarRequerimiento = async (idRequerimiento, idAprobador) => {
     throw err;
   }
 
-  return prisma.requerimientoCompra.update({
+  const actualizado = await prisma.requerimientoCompra.update({
     where: { id: idRequerimiento },
     data: {
       estado:          'APROBADO',
@@ -241,6 +251,17 @@ const aprobarRequerimiento = async (idRequerimiento, idAprobador) => {
       aprobador:   { select: { id: true, nombre: true, apellido: true } },
     },
   });
+
+  // Sprint 7: Notificar al solicitante (fire-and-forget)
+  emitirDecisionRequerimiento({
+    idRequerimiento,
+    idSolicitante:   req.idSolicitante,
+    idAprobador,
+    decision:        'APROBADO',
+    codigoProyecto:  actualizado.proyecto?.codigo || idRequerimiento,
+  });
+
+  return actualizado;
 };
 
 /**
@@ -270,7 +291,7 @@ const rechazarRequerimiento = async (idRequerimiento, idAprobador, comentarioRec
     throw err;
   }
 
-  return prisma.requerimientoCompra.update({
+  const actualizado = await prisma.requerimientoCompra.update({
     where: { id: idRequerimiento },
     data: {
       estado:             'RECHAZADO',
@@ -283,12 +304,58 @@ const rechazarRequerimiento = async (idRequerimiento, idAprobador, comentarioRec
       aprobador:   { select: { id: true, nombre: true, apellido: true } },
     },
   });
+
+  // Sprint 7: Notificar al solicitante (fire-and-forget)
+  emitirDecisionRequerimiento({
+    idRequerimiento,
+    idSolicitante:    req.idSolicitante,
+    idAprobador,
+    decision:         'RECHAZADO',
+    comentarioRechazo: comentarioRechazo.trim(),
+    codigoProyecto:   actualizado.proyecto?.codigo || idRequerimiento,
+  });
+
+  return actualizado;
+};
+
+/**
+ * Aprueba un requerimiento desde contabilidad para pasarlo a revisión gerencial.
+ *
+ * @param {string} idRequerimiento
+ * @param {string} idContador
+ * @returns {Promise<RequerimientoCompra>}
+ */
+const validarRequerimientoContable = async (idRequerimiento, idContador) => {
+  const req = await prisma.requerimientoCompra.findUnique({ where: { id: idRequerimiento } });
+  if (!req) {
+    const err = new Error('Requerimiento no encontrado.');
+    err.status = 404;
+    throw err;
+  }
+  if (req.estado !== 'REVISION_CONTABLE') {
+    const err = new Error(`Solo se pueden validar requerimientos en estado REVISION_CONTABLE. Estado actual: "${req.estado}".`);
+    err.status = 409;
+    throw err;
+  }
+
+  const actualizado = await prisma.requerimientoCompra.update({
+    where: { id: idRequerimiento },
+    data: {
+      estado: 'EN_REVISION',
+    },
+    include: {
+      proyecto: { select: { id: true, codigo: true, nombre: true } },
+    },
+  });
+
+  return actualizado;
 };
 
 module.exports = {
   crearRequerimiento,
   listarRequerimientos,
   obtenerRequerimiento,
+  validarRequerimientoContable,
   aprobarRequerimiento,
   rechazarRequerimiento,
 };

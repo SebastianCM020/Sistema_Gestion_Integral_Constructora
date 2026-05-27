@@ -5,7 +5,10 @@ const { registrarAvanceFisico, getAvancesPorRubro } = require('../controllers/av
 const { requireAuth, requireRole, ROLES } = require('../middlewares/auth.middleware');
 const { requireProjectAccess } = require('../middlewares/projectAccess.middleware');
 const multer = require('multer');
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ 
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 } // Límite de 5MB para evidencias
+});
 
 router.post(
   '/', 

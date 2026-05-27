@@ -33,6 +33,11 @@ const canApprove = [requireAuth, requireRole([
   ROLES.ADMIN, ROLES.PRESIDENTE,
 ])];
 
+/** Roles que pueden validar requerimientos desde contabilidad */
+const canReviewAccounting = [requireAuth, requireRole([
+  ROLES.ADMIN, ROLES.CONTADOR,
+])];
+
 // ── Bandeja Gerencial ─────────────────────────────────────────────────────────
 /**
  * GET /api/v1/compras/bandeja-gerencial
@@ -43,6 +48,7 @@ const canApprove = [requireAuth, requireRole([
  * que Express trate "bandeja-gerencial" como un UUID de proyecto.
  */
 router.get('/bandeja-gerencial', ...canApprove, comprasController.bandejaGerencial);
+router.get('/bandeja-contable', ...canReviewAccounting, comprasController.bandejaContable);
 router.get('/notificaciones', requireAuth, comprasController.obtenerNotificaciones);
 
 // ── Requerimientos por Proyecto ───────────────────────────────────────────────
@@ -90,5 +96,12 @@ router.put('/requerimientos/:id/aprobar', ...canApprove, comprasController.aprob
  * RBAC: Admin y Presidente/Gerente.
  */
 router.put('/requerimientos/:id/rechazar', ...canApprove, comprasController.rechazarRequerimiento);
+
+/**
+ * PUT /api/v1/compras/requerimientos/:id/validar-contabilidad
+ * Valida un requerimiento REVISION_CONTABLE.
+ * RBAC: Admin y Contador.
+ */
+router.put('/requerimientos/:id/validar-contabilidad', ...canReviewAccounting, comprasController.validarContabilidad);
 
 module.exports = router;

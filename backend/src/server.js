@@ -9,10 +9,16 @@ const app  = express();
 const PORT = process.env.PORT || 3001;
 
 // ── Middlewares globales ────────────────────────────────────────────────────
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy: false, // Permite cargar recursos locales/estáticos sin restricciones de CORS en Helmet
+}));
 app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
 app.use(morgan('dev'));
 app.use(express.json());
+// Servir archivos estáticos de la carpeta de uploads
+const path = require('path');
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 // Auditoría automática de acciones CUD en todas las rutas /api/v1
 app.use('/api/v1', auditMiddleware);
 
@@ -37,11 +43,19 @@ app.use('/api/v1/planillas',       require('./routes/planillas.routes'));       
 app.use('/api/v1/cierres-contables', require('./routes/cierresContables.routes')); // Sprint 05 — HU-17
 app.use('/api/v1/gastos',          require('./routes/gastos.routes'));           // Sprint 05 — HU-19
 app.use('/api/v1/compras',   require('./routes/compras.routes'));    // Sprint 6 — HU-06 Requerimientos
+app.use('/api/v1/ordenes-cambio', require('./routes/ordenesCambio.routes')); // Sprint 7 - Órdenes de Cambio
+app.use('/api/v1/audit-logs', require('./routes/audit.routes'));    // Sprint 7 — Trazabilidad y Auditoría
 // app.use('/api/v1/reportes',  require('./routes/reportes.routes'));
 
 // ── Manejador de errores global ─────────────────────────────────────────────
 app.use((err, _req, res, _next) => {
   console.error(err.stack);
+  if (err.code === 'LIMIT_FILE_SIZE') {
+    return res.status(400).json({
+      success: false,
+      message: 'La evidencia fotográfica excede el tamaño máximo permitido de 5 MB.'
+    });
+  }
   res.status(err.status || 500).json({
     error  : err.message || 'Error interno del servidor',
     details: process.env.NODE_ENV === 'development' ? err.stack : undefined,

@@ -1,7 +1,7 @@
 import { avancesLocalService } from '../db/avancesLocalService';
 import { openDB } from 'idb';
 
-const API_BASE   = 'http://localhost:3001/api/v1';
+const API_BASE   = '/api/v1';
 
 const DB_NAME    = 'icaro_offline_db';
 const STORE_NAME = 'sync_queue';

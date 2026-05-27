@@ -129,8 +129,9 @@ const bandejaGerencial = async (req, res) => {
   try {
     const limit  = parseInt(req.query.limit  || '50', 10);
     const offset = parseInt(req.query.offset || '0',  10);
+    const estado = req.query.estado || 'EN_REVISION';
 
-    const resultado = await obtenerBandejaGerencial({ limit, offset });
+    const resultado = await obtenerBandejaGerencial({ limit, offset, estado });
     return res.status(200).json({
       data:   resultado.requerimientos,
       total:  resultado.total,
@@ -140,6 +141,47 @@ const bandejaGerencial = async (req, res) => {
   } catch (error) {
     console.error('[compras] bandejaGerencial:', error.message);
     return res.status(500).json({ error: 'Error al obtener la bandeja gerencial.' });
+  }
+};
+
+/**
+ * GET /api/v1/compras/bandeja-contable
+ * Retorna los requerimientos REVISION_CONTABLE para la bandeja contable.
+ */
+const bandejaContable = async (req, res) => {
+  try {
+    const limit  = parseInt(req.query.limit  || '50', 10);
+    const offset = parseInt(req.query.offset || '0',  10);
+    const estado = req.query.estado || 'REVISION_CONTABLE';
+
+    const [requerimientos, total] = await Promise.all([
+      prisma.requerimientoCompra.findMany({
+        where: { estado },
+        include: {
+          proyecto:    { select: { id: true, codigo: true, nombre: true } },
+          solicitante: { select: { id: true, nombre: true, apellido: true, email: true } },
+          detalles: {
+            include: {
+              material: { select: { id: true, codigo: true, nombre: true, unidad: true } },
+            },
+          },
+        },
+        orderBy: { fechaSolicitud: 'desc' },
+        take:    limit,
+        skip:    offset,
+      }),
+      prisma.requerimientoCompra.count({ where: { estado } }),
+    ]);
+
+    return res.status(200).json({
+      data:   requerimientos,
+      total:  total,
+      limit:  limit,
+      offset: offset,
+    });
+  } catch (error) {
+    console.error('[compras] bandejaContable:', error.message);
+    return res.status(500).json({ error: 'Error al obtener la bandeja contable.' });
   }
 };
 
@@ -164,6 +206,26 @@ const obtenerNotificaciones = async (req, res) => {
         take: 10
       });
       const notifications = pendientes.map(r => ({
+        id: r.id,
+        tipo: 'CREADO',
+        titulo: 'Nuevo requerimiento',
+        mensaje: `${r.solicitante.nombre} solicitó compra para ${r.proyecto.codigo}`,
+        fecha: r.fechaSolicitud,
+        requerimiento: r
+      }));
+      return res.status(200).json({ data: notifications });
+    } else if (rol === ROLES.CONTADOR) {
+      // Para contadores: requerimientos pendientes de revisión contable
+      const pendientesContables = await prisma.requerimientoCompra.findMany({
+        where: { estado: 'REVISION_CONTABLE' },
+        include: {
+          proyecto: { select: { nombre: true, codigo: true } },
+          solicitante: { select: { nombre: true, apellido: true } }
+        },
+        orderBy: { fechaSolicitud: 'desc' },
+        take: 10
+      });
+      const notifications = pendientesContables.map(r => ({
         id: r.id,
         tipo: 'CREADO',
         titulo: 'Nuevo requerimiento',
@@ -204,6 +266,25 @@ const obtenerNotificaciones = async (req, res) => {
   }
 };
 
+/**
+ * PUT /api/v1/compras/requerimientos/:id/validar-contabilidad
+ * Validación por el contador para pasar a revisión gerencial.
+ */
+const validarContabilidad = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const idContador = req.user.id;
+    const actualizado = await comprasService.validarRequerimientoContable(id, idContador);
+    return res.json({ mensaje: 'Requerimiento validado por contabilidad.', requerimiento: actualizado });
+  } catch (error) {
+    if (error.status) {
+      return res.status(error.status).json({ error: error.message });
+    }
+    console.error('[compras] validarContabilidad:', error.message);
+    return res.status(500).json({ error: 'Error interno al validar por contabilidad.' });
+  }
+};
+
 module.exports = {
   crearRequerimiento,
   listarRequerimientos,
@@ -211,5 +292,7 @@ module.exports = {
   aprobarRequerimiento,
   rechazarRequerimiento,
   bandejaGerencial,
+  bandejaContable,
   obtenerNotificaciones,
+  validarContabilidad,
 };

@@ -11,6 +11,8 @@ import { PurchaseRequestsView } from '../../views/compras/PurchaseRequestsView';
 import { RequestReviewView } from '../../views/compras/RequestReviewView';
 import { RequerimientosView } from '../../views/compras/RequerimientosView';    // Sprint 6
 import { BandejaGerencialView } from '../../views/compras/BandejaGerencialView'; // Sprint 6
+import { BuzonContableView } from '../../views/compras/BuzonContableView';
+import { OrdenesCambioView } from '../../views/obra/OrdenesCambioView';
 import { InventoryReceptionView } from '../../views/inventario/InventoryReceptionView';
 import { InventoryMovementsView } from '../../views/inventario/InventoryMovementsView';
 import { BillingDocumentsView } from '../../views/contabilidad/BillingDocumentsView';
@@ -54,6 +56,8 @@ export default function ModuleRouterPage() {
   if (moduleId === 'consumption') return <MobileConsumptionView {...commonProps} />;
   if (moduleId === 'requirements') return <RequerimientosView {...commonProps} />;
   if (moduleId === 'review') return <BandejaGerencialView {...commonProps} />;
+  if (moduleId === 'accounting-review') return <BuzonContableView {...commonProps} />;
+  if (moduleId === 'change-orders') return <OrdenesCambioView {...commonProps} />;
   if (moduleId === 'inventory') return <InventoryReceptionView {...commonProps} />;
   if (moduleId === 'inventory-movements') return <InventoryMovementsView {...commonProps} />;
   if (moduleId === 'payroll') return <BillingDocumentsView {...commonProps} />;

@@ -72,7 +72,7 @@ export function RequerimientosView({
         const projectList = Array.isArray(projectsResult) ? projectsResult : [];
         setProjects(projectList);
 
-        const activeProjId = idProyecto || queryProjectId || (projectList.length > 0 ? projectList[0].id : '');
+        const activeProjId = idProyecto || queryProjectId || '';
         if (activeProjId) {
           setForm((prev) => ({ ...prev, idProyecto: activeProjId }));
           const [proyectoData, reqData] = await Promise.all([
@@ -81,6 +81,9 @@ export function RequerimientosView({
           ]);
           setProyecto(proyectoData);
           setRequerimientos(Array.isArray(reqData.data) ? reqData.data : []);
+        } else {
+          setProyecto(null);
+          setRequerimientos([]);
         }
 
         setLoadStatus('ready');
@@ -95,6 +98,12 @@ export function RequerimientosView({
   const handleProjectChange = async (projectId) => {
     setForm((prev) => ({ ...prev, idProyecto: projectId }));
     setErrors({});
+    if (!projectId) {
+      setProyecto(null);
+      setRequerimientos([]);
+      return;
+    }
+    setLoadStatus('loading');
     try {
       const [proyectoData, reqData] = await Promise.all([
         fetchProjectDetail(projectId),
@@ -102,8 +111,10 @@ export function RequerimientosView({
       ]);
       setProyecto(proyectoData);
       setRequerimientos(Array.isArray(reqData.data) ? reqData.data : []);
+      setLoadStatus('ready');
     } catch (err) {
       console.error('[RequerimientosView] Error changing project:', err);
+      setLoadStatus('error');
     }
   };
 
@@ -203,8 +214,10 @@ export function RequerimientosView({
         message: 'Requerimiento creado en estado EN REVISIÓN. Los gerentes han sido notificados.',
       });
     } catch (err) {
-      const msg = err.response?.data?.error || 'Error al crear el requerimiento.';
-      setFeedback({ tone: 'error', message: msg });
+      const status = err.response?.status;
+      const msg    = err.response?.data?.error || 'Error al crear el requerimiento.';
+      const code   = status ? `[HTTP ${status}]` : '[Error]';
+      setFeedback({ tone: 'error', message: `${code} ${msg}` });
     } finally {
       setSubmitting(false);
     }
@@ -319,17 +332,17 @@ export function RequerimientosView({
             </div>
           )}
 
-          {/* Feedback global */}
+          {/* Feedback global como toast en la parte inferior */}
           {feedback && (
             <div
-              className={`flex items-center gap-2 rounded-[10px] border px-4 py-3 text-sm font-medium ${
+              className={`fixed bottom-6 right-6 z-[9999] flex items-center gap-3 rounded-[12px] border px-5 py-4 text-sm font-semibold shadow-xl max-w-md ${
                 feedback.tone === 'success'
-                  ? 'border-green-200 bg-green-50 text-green-800'
-                  : 'border-red-200 bg-red-50 text-red-800'
+                  ? 'border-[#16A34A]/20 bg-[#15803D] text-white'
+                  : 'border-[#DC2626]/20 bg-[#B91C1C] text-white'
               }`}
             >
-              {feedback.tone === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
-              {feedback.message}
+              <div className={`h-2.5 w-2.5 shrink-0 rounded-full ${feedback.tone === 'success' ? 'bg-[#4ADE80]' : 'bg-[#FCA5A5]'}`} />
+              <span className="min-w-0 flex-1 break-words">{feedback.message}</span>
             </div>
           )}
 
@@ -495,7 +508,17 @@ export function RequerimientosView({
             </div>
           )}
 
-          {loadStatus === 'ready' && requerimientos.length === 0 && (
+          {loadStatus === 'ready' && !form.idProyecto && (
+            <div className="flex flex-col items-center justify-center rounded-[16px] border border-dashed border-[#D1D5DB] bg-white py-16 text-center">
+              <Package size={36} className="mb-3 text-gray-300" />
+              <p className="font-medium text-[#2F3A45]">Seleccione un proyecto</p>
+              <p className="mt-1 text-sm text-gray-500">
+                Seleccione un proyecto de la lista superior para visualizar sus requerimientos de compra.
+              </p>
+            </div>
+          )}
+
+          {loadStatus === 'ready' && form.idProyecto && requerimientos.length === 0 && (
             <div className="flex flex-col items-center justify-center rounded-[16px] border border-dashed border-[#D1D5DB] bg-white py-16 text-center">
               <Package size={36} className="mb-3 text-gray-300" />
               <p className="font-medium text-[#2F3A45]">No hay requerimientos registrados</p>
@@ -521,21 +544,30 @@ export function RequerimientosView({
                 </thead>
                 <tbody className="divide-y divide-[#F3F4F6]">
                   {requerimientos.map((req) => (
-                    <tr key={req.id} className="hover:bg-[#F9FAFB] transition-colors">
-                      <td className="px-4 py-3 font-medium text-[#111827]">
-                        {req.proyecto?.nombre || '—'}
-                      </td>
-                      <td className="px-4 py-3 text-gray-600">
-                        {req.solicitante ? `${req.solicitante.nombre} ${req.solicitante.apellido}` : '—'}
-                      </td>
-                      <td className="px-4 py-3 text-center text-gray-600">
-                        {req.detalles?.length ?? 0}
-                      </td>
-                      <td className="px-4 py-3">{badgeEstado(req.estado)}</td>
-                      <td className="px-4 py-3 text-gray-500">
-                        {new Date(req.fechaSolicitud).toLocaleDateString('es-CO')}
-                      </td>
-                    </tr>
+                    <React.Fragment key={req.id}>
+                      <tr className="hover:bg-[#F9FAFB] transition-colors">
+                        <td className="px-4 py-3 font-medium text-[#111827]">
+                          {req.proyecto?.nombre || '—'}
+                        </td>
+                        <td className="px-4 py-3 text-gray-600">
+                          {req.solicitante ? `${req.solicitante.nombre} ${req.solicitante.apellido}` : '—'}
+                        </td>
+                        <td className="px-4 py-3 text-center text-gray-600">
+                          {req.detalles?.length ?? 0}
+                        </td>
+                        <td className="px-4 py-3">{badgeEstado(req.estado)}</td>
+                        <td className="px-4 py-3 text-gray-500">
+                          {new Date(req.fechaSolicitud).toLocaleDateString('es-CO')}
+                        </td>
+                      </tr>
+                      {req.estado === 'RECHAZADO' && req.comentarioRechazo && (
+                        <tr className="bg-red-50/50 border-t-0">
+                          <td colSpan="5" className="px-4 py-2 text-sm text-red-700 pb-3">
+                            <span className="font-semibold">Motivo de rechazo:</span> {req.comentarioRechazo}
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
                   ))}
                 </tbody>
               </table>

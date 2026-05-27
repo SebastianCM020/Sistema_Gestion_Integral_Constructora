@@ -108,10 +108,10 @@ notificationService.on('requerimiento:creado', async (payload) => {
  * @param {number} [opciones.offset=0]   - Paginación
  * @returns {Promise<object>}
  */
-const obtenerBandejaGerencial = async ({ limit = 50, offset = 0 } = {}) => {
+const obtenerBandejaGerencial = async ({ limit = 50, offset = 0, estado = 'EN_REVISION' } = {}) => {
   const [requerimientos, total] = await Promise.all([
     prisma.requerimientoCompra.findMany({
-      where: { estado: 'EN_REVISION' },
+      where: { estado },
       include: {
         proyecto:    { select: { id: true, codigo: true, nombre: true } },
         solicitante: { select: { id: true, nombre: true, apellido: true, email: true } },
@@ -125,14 +125,102 @@ const obtenerBandejaGerencial = async ({ limit = 50, offset = 0 } = {}) => {
       take:    limit,
       skip:    offset,
     }),
-    prisma.requerimientoCompra.count({ where: { estado: 'EN_REVISION' } }),
+    prisma.requerimientoCompra.count({ where: { estado } }),
   ]);
 
   return { requerimientos, total, limit, offset };
 };
 
+// ── Sprint 7: Notificaciones de decisión (Aprobado / Rechazado) ─────────────
+
+/**
+ * @typedef {Object} DecisionPayload
+ * @property {string} idRequerimiento
+ * @property {string} idSolicitante
+ * @property {string} idAprobador
+ * @property {string} decision           - 'APROBADO' | 'RECHAZADO'
+ * @property {string} [comentarioRechazo]
+ * @property {string} codigoProyecto
+ */
+
+/**
+ * Emite el evento de decisión sobre un requerimiento.
+ * Se llama desde compras.service.js después de aprobar/rechazar.
+ *
+ * @param {DecisionPayload} payload
+ */
+const emitirDecisionRequerimiento = (payload) => {
+  notificationService.emit('requerimiento:decision', payload);
+};
+
+/**
+ * Handler interno: persiste la notificación para el solicitante en la tabla
+ * notificaciones_sistema y escribe en audit_log.
+ *
+ * CA Actividad 2: "rechazo exige comentario, cambia a Rechazado y notifica al solicitante".
+ */
+notificationService.on('requerimiento:decision', async (payload) => {
+  try {
+    const {
+      idRequerimiento,
+      idSolicitante,
+      idAprobador,
+      decision,
+      comentarioRechazo,
+      codigoProyecto,
+    } = payload;
+
+    const titulo  = decision === 'APROBADO'
+      ? 'Requerimiento Aprobado ✓'
+      : 'Requerimiento Rechazado';
+
+    const mensaje = decision === 'APROBADO'
+      ? `Tu requerimiento de compra para el proyecto ${codigoProyecto} fue APROBADO. Los materiales serán gestionados por bodega.`
+      : `Tu requerimiento de compra para ${codigoProyecto} fue RECHAZADO. Motivo: ${comentarioRechazo || 'Sin comentario registrado.'}`;
+
+    // 1. Persistir en notificaciones_sistema para el solicitante
+    await prisma.notificacionSistema.create({
+      data: {
+        idUsuarioDest:   idSolicitante,
+        tipo:            decision,
+        titulo,
+        mensaje,
+        idReferencia:    idRequerimiento,
+        tablaReferencia: 'requerimiento_compra',
+      },
+    });
+
+    // 2. Registrar en audit_log para trazabilidad E2E (CA Actividad 5)
+    await prisma.auditLog.create({
+      data: {
+        tabla:        'requerimiento_compra',
+        operacion:    'UPDATE',
+        idRegistro:   idRequerimiento,
+        idUsuario:    idAprobador,
+        datosAntes:   { estado: 'EN_REVISION' },
+        datosDespues: {
+          evento:            `REQUERIMIENTO_${decision}`,
+          decision,
+          comentarioRechazo: comentarioRechazo || null,
+          notificadoA:       idSolicitante,
+          timestampAlerta:   new Date().toISOString(),
+        },
+        ipOrigen: 'sistema-interno',
+      },
+    });
+
+    console.info(
+      `[NotificationService] Notificación de decisión (${decision}) enviada al solicitante ${idSolicitante} ` +
+      `para requerimiento ${idRequerimiento}.`
+    );
+  } catch (err) {
+    console.error('[NotificationService] Error al procesar evento requerimiento:decision:', err.message);
+  }
+});
+
 module.exports = {
   notificationService,
   emitirRequerimientoCreado,
+  emitirDecisionRequerimiento,
   obtenerBandejaGerencial,
 };

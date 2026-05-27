@@ -296,13 +296,12 @@ router.post('/:idProyecto/rubros/bulk', requireAuth, requireProjectAccess, async
       return res.status(400).json({ error: 'No se enviaron rubros para procesar.' });
     }
 
-    // Mapear al formato de la DB
     const data = rubros.map((r) => ({
-      codigo:               r.code || r.codigo,
-      descripcion:          r.description || r.descripcion,
-      unidad:               r.unit || r.unidad,
-      precioUnitario:       parseFloat(r.unitPrice || r.precioUnitario),
-      cantidadPresupuestada: parseFloat(r.budgetedQuantity || r.cantidadPresupuestada),
+      codigo:               r.code ?? r.codigo,
+      descripcion:          r.description ?? r.descripcion,
+      unidad:               r.unit ?? r.unidad,
+      precioUnitario:       parseFloat(r.unitPrice ?? r.precioUnitario ?? 0),
+      cantidadPresupuestada: parseFloat(r.budgetedQuantity ?? r.cantidadPresupuestada ?? 0),
       idProyecto:           idProyecto,
     }));
 
@@ -346,6 +345,7 @@ router.post('/:idProyecto/rubros', requireAuth, requireProjectAccess, async (req
     });
     return res.status(201).json({ data: nuevoRubro });
   } catch (error) {
+    console.error('[proyectos.routes.js] POST rubro error:', error);
     return res.status(500).json({ error: 'Error al crear el rubro.' });
   }
 });
@@ -375,6 +375,7 @@ router.put('/rubros/:idRubro', requireAuth, async (req, res) => {
     });
     return res.status(200).json({ data: rubroEditado });
   } catch (error) {
+    console.error('[proyectos.routes.js] PUT rubro error:', error);
     return res.status(500).json({ error: 'Error al actualizar el rubro.' });
   }
 });
