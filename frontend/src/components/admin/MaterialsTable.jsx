@@ -4,7 +4,7 @@ import { formatMaterialDate } from '../../utils/materialHelpers.js';
 import { MaterialStatusBadge } from './MaterialStatusBadge.jsx';
 import { UnitBadge } from './UnitBadge.jsx';
 
-export function MaterialsTable({ materials, onView, onEdit, onToggleStatus }) {
+export function MaterialsTable({ materials, onView, onEdit, onToggleStatus, readOnly = false }) {
   return (
     <div className="hidden overflow-hidden rounded-[12px] border border-[#D1D5DB] bg-white shadow-sm lg:block">
       <div className="overflow-x-auto">
@@ -33,8 +33,16 @@ export function MaterialsTable({ materials, onView, onEdit, onToggleStatus }) {
                 <td className="px-5 py-4">
                   <div className="flex flex-wrap items-center gap-2">
                     <ActionButton icon={Eye} label="Ver detalle" onClick={() => onView(material)} />
-                    <ActionButton icon={Pencil} label="Editar" onClick={() => onEdit(material)} />
-                    <ActionButton icon={material.isActive ? CirclePause : CirclePlay} label={material.isActive ? 'Desactivar' : 'Activar'} onClick={() => onToggleStatus(material)} />
+                    {!readOnly && (
+                      <>
+                        <ActionButton icon={Pencil} label="Editar" onClick={() => onEdit?.(material)} />
+                        <ActionButton
+                          icon={material.isActive ? CirclePause : CirclePlay}
+                          label={material.isActive ? 'Desactivar' : 'Activar'}
+                          onClick={() => onToggleStatus?.(material)}
+                        />
+                      </>
+                    )}
                   </div>
                 </td>
               </tr>

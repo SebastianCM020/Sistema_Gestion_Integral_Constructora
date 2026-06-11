@@ -45,6 +45,7 @@ app.use('/api/v1/gastos',          require('./routes/gastos.routes'));          
 app.use('/api/v1/compras',   require('./routes/compras.routes'));    // Sprint 6 — HU-06 Requerimientos
 app.use('/api/v1/ordenes-cambio', require('./routes/ordenesCambio.routes')); // Sprint 7 - Órdenes de Cambio
 app.use('/api/v1/audit-logs', require('./routes/audit.routes'));    // Sprint 7 — Trazabilidad y Auditoría
+app.use('/api/v1/consumo',    require('./routes/consumo.routes'));  // Sprint 9 — HU-S9: Consumo en Obra
 // app.use('/api/v1/reportes',  require('./routes/reportes.routes'));
 
 // ── Manejador de errores global ─────────────────────────────────────────────

@@ -3,14 +3,13 @@ import { Boxes, FolderKanban, UploadCloud } from 'lucide-react';
 
 export function ConsumptionSummaryCard({ summary }) {
   const items = [
-    { id: 'assignedProjects', label: 'Proyectos asignados', value: summary.assignedProjects, icon: FolderKanban },
     { id: 'availableMaterials', label: 'Materiales activos', value: summary.availableMaterials, icon: Boxes },
     { id: 'pendingSync', label: 'Pendientes sync', value: summary.pendingSync, icon: UploadCloud },
   ];
 
   return (
     <section className="rounded-[12px] border border-[#D1D5DB] bg-white p-4 shadow-sm">
-      <div className="grid gap-3 sm:grid-cols-3">
+      <div className="grid gap-3 sm:grid-cols-2">
         {items.map((item) => {
           const Icon = item.icon;
 

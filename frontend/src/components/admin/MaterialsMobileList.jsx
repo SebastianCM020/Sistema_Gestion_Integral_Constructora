@@ -4,7 +4,7 @@ import { formatMaterialDate } from '../../utils/materialHelpers.js';
 import { MaterialStatusBadge } from './MaterialStatusBadge.jsx';
 import { UnitBadge } from './UnitBadge.jsx';
 
-export function MaterialsMobileList({ materials, onView, onEdit, onToggleStatus }) {
+export function MaterialsMobileList({ materials, onView, onEdit, onToggleStatus, readOnly = false }) {
   return (
     <div className="space-y-4 lg:hidden">
       {materials.map((material) => (
@@ -24,10 +24,18 @@ export function MaterialsMobileList({ materials, onView, onEdit, onToggleStatus 
 
           <p className="mt-4 text-sm text-gray-600">{material.observations || 'Sin observaciones registradas.'}</p>
 
-          <div className="mt-4 grid gap-2 sm:grid-cols-3">
+          <div className={`mt-4 grid gap-2 ${readOnly ? 'grid-cols-1' : 'sm:grid-cols-3'}`}>
             <ActionButton icon={Eye} label="Detalle" onClick={() => onView(material)} />
-            <ActionButton icon={Pencil} label="Editar" onClick={() => onEdit(material)} />
-            <ActionButton icon={material.isActive ? CirclePause : CirclePlay} label={material.isActive ? 'Desactivar' : 'Activar'} onClick={() => onToggleStatus(material)} />
+            {!readOnly && (
+              <>
+                <ActionButton icon={Pencil} label="Editar" onClick={() => onEdit?.(material)} />
+                <ActionButton
+                  icon={material.isActive ? CirclePause : CirclePlay}
+                  label={material.isActive ? 'Desactivar' : 'Activar'}
+                  onClick={() => onToggleStatus?.(material)}
+                />
+              </>
+            )}
           </div>
         </article>
       ))}

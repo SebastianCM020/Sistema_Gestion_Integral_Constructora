@@ -45,10 +45,12 @@ export function MaterialsCatalogView({
 
   const modules = getModulesForUser(currentUser);
   const isAdmin = currentUser.roleId === 'admin' || currentUser.roleName === 'Administrador del Sistema';
+  // Bodeguero y otros roles pueden ver el catálogo en solo-lectura
+  const canView = isAdmin || currentUser.roleName === 'Bodeguero' || currentUser.roleName === 'Residente';
 
-  // Sprint 6: Carga desde API real con soloActivos=false para que Admin vea inactivos
+  // Sprint 6: Carga desde API real. Admin ve inactivos; otros roles ven solo activos.
   useEffect(() => {
-    if (!isAdmin) {
+    if (!canView) {
       setLoadStatus('ready');
       return;
     }
@@ -59,7 +61,7 @@ export function MaterialsCatalogView({
         if (currentUser.adminUsersShouldFail) {
           throw new Error('Simulated load error for adminerror user');
         }
-        const result = await fetchMateriales({ soloActivos: false, isOnline: true });
+        const result = await fetchMateriales({ soloActivos: !isAdmin, isOnline: true });
         setMaterials(Array.isArray(result.data) ? result.data : []);
         setLoadStatus('ready');
       } catch (error) {
@@ -161,7 +163,8 @@ export function MaterialsCatalogView({
     }
   };
 
-  if (!isAdmin) {
+  // Sin acceso ni siquiera de lectura → pantalla de acceso denegado
+  if (!canView) {
     return (
       <div className="min-h-screen bg-[#F7F9FC] font-sans text-[#111827]">
         <AppHeader
@@ -172,7 +175,6 @@ export function MaterialsCatalogView({
           onLogout={onLogout}
           onOpenNavigation={() => setMobileNavOpen(true)}
         />
-
         <div className="mx-auto grid max-w-[1440px] gap-6 px-4 py-6 lg:grid-cols-[300px_minmax(0,1fr)] md:px-6">
           <SidebarNavigation
             modules={modules}
@@ -185,7 +187,6 @@ export function MaterialsCatalogView({
             onOpenProfile={onOpenProfile}
             onLogout={onLogout}
           />
-
           <main>
             <section className="rounded-[12px] border border-[#DC2626]/15 bg-white p-8 shadow-sm">
               <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#DC2626]/10 text-[#DC2626]">
@@ -193,11 +194,10 @@ export function MaterialsCatalogView({
               </div>
               <h1 className="text-2xl font-semibold text-[#2F3A45]">No tiene acceso a esta sección</h1>
               <p className="mt-2 max-w-2xl text-sm text-gray-600">
-                La gestión del catálogo de materiales es exclusiva del Administrador del Sistema. Vuelva al panel principal para continuar sin perder el contexto de su sesión.
+                La consulta del catálogo de materiales no está habilitada para su rol actual.
               </p>
-              <div className="mt-6 flex flex-wrap gap-3">
+              <div className="mt-6">
                 <button onClick={onGoHome} className="inline-flex h-[44px] items-center justify-center rounded-[12px] bg-[#1F4E79] px-4 text-sm font-medium text-white hover:bg-[#153a5c]">Volver al panel principal</button>
-                <button onClick={() => onOpenAdminSection('users')} className="inline-flex h-[44px] items-center justify-center rounded-[12px] border border-[#D1D5DB] px-4 text-sm font-medium text-[#2F3A45] hover:bg-gray-50">Ir a administración</button>
               </div>
             </section>
           </main>
@@ -234,8 +234,13 @@ export function MaterialsCatalogView({
         />
 
         <main className="min-w-0 space-y-6">
-          <AdminSectionTabs activeTab="materials" onChange={onOpenAdminSection} />
-          <MaterialHeader onGoHome={onGoHome} onGoAdmin={() => onOpenAdminSection('users')} onCreate={() => openOverlay('create')} />
+          {isAdmin && <AdminSectionTabs activeTab="materials" onChange={onOpenAdminSection} />}
+          <MaterialHeader
+            onGoHome={onGoHome}
+            onGoAdmin={() => onOpenAdminSection('users')}
+            onCreate={() => openOverlay('create')}
+            readOnly={!isAdmin}
+          />
 
           {feedback ? (
             <div className={`fixed bottom-6 right-6 z-[9999] rounded-[12px] border px-5 py-4 text-sm font-semibold shadow-xl max-w-md ${
@@ -288,8 +293,20 @@ export function MaterialsCatalogView({
                   />
                 ) : (
                   <>
-                    <MaterialsTable materials={visibleMaterials} onView={(material) => openOverlay('detail', material)} onEdit={(material) => openOverlay('edit', material)} onToggleStatus={(material) => openOverlay('status', material)} />
-                    <MaterialsMobileList materials={visibleMaterials} onView={(material) => openOverlay('detail', material)} onEdit={(material) => openOverlay('edit', material)} onToggleStatus={(material) => openOverlay('status', material)} />
+                    <MaterialsTable
+                      materials={visibleMaterials}
+                      onView={(material) => openOverlay('detail', material)}
+                      onEdit={(material) => openOverlay('edit', material)}
+                      onToggleStatus={(material) => openOverlay('status', material)}
+                      readOnly={!isAdmin}
+                    />
+                    <MaterialsMobileList
+                      materials={visibleMaterials}
+                      onView={(material) => openOverlay('detail', material)}
+                      onEdit={(material) => openOverlay('edit', material)}
+                      onToggleStatus={(material) => openOverlay('status', material)}
+                      readOnly={!isAdmin}
+                    />
                   </>
                 )}
               </section>

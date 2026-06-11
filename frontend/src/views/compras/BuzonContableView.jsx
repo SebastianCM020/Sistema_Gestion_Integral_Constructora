@@ -33,9 +33,10 @@ import {
 
 const ROLES_PERMITIDOS  = ['Contador', 'Administrador del Sistema'];
 const ESTADOS_TABS = [
-  { id: 'REVISION_CONTABLE', label: 'Pendientes',  icon: Clock,        color: 'amber'  },
-  { id: 'APROBADO',    label: 'Aprobados',   icon: CheckCircle2, color: 'emerald' },
-  { id: 'RECHAZADO',   label: 'Rechazados',  icon: XCircle,      color: 'red'    },
+  { id: 'REVISION_CONTABLE', label: 'Pendientes',    icon: Clock,        color: 'amber'  },
+  { id: 'EN_REVISION',       label: 'Pend. Gerencia',icon: TrendingUp,   color: 'blue'   },
+  { id: 'APROBADO',          label: 'Aprobados',     icon: CheckCircle2, color: 'emerald' },
+  { id: 'RECHAZADO',         label: 'Rechazados',    icon: XCircle,      color: 'red'    },
 ];
 
 const ESTADO_CONFIG = {
@@ -469,8 +470,7 @@ export function BuzonContableView({
     try {
       await validarContabilidadReq(id);
       setDrawerReq(null);
-      setFeedback({ tone: 'success', message: 'Requerimiento validado. Se ha notificado al gerente.' });
-      // Recargar desde servidor para que las tabs reflejen datos reales
+      setFeedback({ tone: 'success', message: 'Requerimiento validado. Se ha notificado al gerente para su revisión final.' });
       await Promise.all([cargarTab(), cargarStats()]);
     } catch (err) {
       setFeedback({ tone: 'error', message: err.response?.data?.error || 'Error al validar el requerimiento.' });

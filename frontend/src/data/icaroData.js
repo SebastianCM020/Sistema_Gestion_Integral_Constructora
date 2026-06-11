@@ -1,6 +1,7 @@
 import {
   ArrowLeftRight,
   BarChart3,
+  Bell,
   Boxes,
   Building2,
   Cable,
@@ -110,12 +111,13 @@ export const moduleCatalog = [
   },
   {
     id: 'inventory',
-    name: 'Recepción e inventario',
-    description: 'Reciba materiales y controle existencias de forma segura.',
+    name: 'Bodega y Recepciones',
+    description: 'Recepcione materiales de requerimientos aprobados y controle el stock físico por proyecto.',
     icon: Warehouse,
-    helperText: 'Controle ingresos y diferencias antes del cierre del día.',
+    helperText: 'Seleccione un proyecto y constate los requerimientos pendientes de recibir.',
     statusLabel: 'Disponible para su rol',
   },
+
   {
     id: 'inventory-movements',
     name: 'Control de movimientos de inventario',
@@ -279,10 +281,9 @@ const roleCatalog = {
     label: 'Bodeguero',
     orientation: 'Controle recepción, inventario y alertas de stock del proyecto.',
     projectLabel: 'Bodega central de obra',
-    moduleIds: ['inventory', 'inventory-movements', 'consumption', 'catalog'],
+    moduleIds: ['inventory', 'consumption', 'catalog'],
     quickActions: [
-      { id: 'qa-store-inventory', label: 'Abrir inventario', description: 'Revise ingresos y salidas del día.', icon: Warehouse, actionType: 'module', moduleId: 'inventory' },
-      { id: 'qa-store-movements', label: 'Controlar movimientos', description: 'Consulte trazabilidad y alertas del inventario.', icon: ArrowLeftRight, actionType: 'module', moduleId: 'inventory-movements' },
+      { id: 'qa-store-inventory', label: 'Bodega y stock', description: 'Recepcione materiales y controle existencias por proyecto.', icon: Warehouse, actionType: 'module', moduleId: 'inventory' },
       { id: 'qa-store-consumption', label: 'Ver consumos', description: 'Consulte movimientos por frente y responsable.', icon: PackageSearch, actionType: 'module', moduleId: 'consumption' },
       { id: 'qa-store-catalog', label: 'Consultar materiales', description: 'Verifique referencias y unidades activas.', icon: Boxes, actionType: 'module', moduleId: 'catalog' },
     ],

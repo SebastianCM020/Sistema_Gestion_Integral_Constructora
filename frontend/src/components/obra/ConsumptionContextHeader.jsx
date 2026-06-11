@@ -3,13 +3,21 @@ import { ArrowLeft, FolderSync, MapPinned } from 'lucide-react';
 import { getProjectAccessLabel, getProjectContextText, getProjectDatesText } from '../../utils/progressHelpers.js';
 import { ConsumptionPendingSyncBadge } from './ConsumptionPendingSyncBadge.jsx';
 
-export function ConsumptionContextHeader({ currentProject, hasMultipleProjects, pendingSyncCount, onGoHome, onOpenProjectModal }) {
+export function ConsumptionContextHeader({ currentProject, hasMultipleProjects, totalAssignedProjects, pendingSyncCount, onGoHome, onOpenProjectModal }) {
   return (
     <section className="rounded-[12px] border border-[#D1D5DB] bg-white p-4 shadow-sm">
-      <button type="button" onClick={onGoHome} className="inline-flex h-[40px] items-center gap-2 rounded-[12px] border border-[#D1D5DB] px-3 text-sm font-medium text-[#2F3A45] hover:bg-[#F7F9FC]">
-        <ArrowLeft size={16} />
-        Volver al panel
-      </button>
+      <div className="flex items-center justify-between">
+        <button type="button" onClick={onGoHome} className="inline-flex h-[40px] items-center gap-2 rounded-[12px] border border-[#D1D5DB] px-3 text-sm font-medium text-[#2F3A45] hover:bg-[#F7F9FC]">
+          <ArrowLeft size={16} />
+          Volver al panel
+        </button>
+        {totalAssignedProjects ? (
+          <div className="inline-flex items-center gap-2 rounded-[12px] bg-[#E8F0F8] px-3 py-1.5 text-sm font-medium text-[#1F4E79]">
+            <FolderSync size={16} />
+            <span>{totalAssignedProjects} proyecto{totalAssignedProjects !== 1 ? 's' : ''} asignado{totalAssignedProjects !== 1 ? 's' : ''}</span>
+          </div>
+        ) : null}
+      </div>
 
       <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
@@ -28,7 +36,7 @@ export function ConsumptionContextHeader({ currentProject, hasMultipleProjects, 
             <div className="mt-3 grid gap-2 text-sm text-gray-600 sm:grid-cols-2">
               <div className="inline-flex items-center gap-2">
                 <MapPinned size={14} className="text-[#1F4E79]" />
-                {getProjectAccessLabel(currentProject.accessMode)}
+                {getProjectAccessLabel(currentProject?.accessMode)}
               </div>
               <div className="inline-flex items-center gap-2">
                 <FolderSync size={14} className="text-[#1F4E79]" />

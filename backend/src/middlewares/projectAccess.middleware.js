@@ -47,13 +47,17 @@ const requireProjectAccess = async (req, res, next) => {
       return res.status(404).json({ error: 'Proyecto no encontrado.' });
     }
 
-    // El Administrador, Presidente / Gerente, Contador y Auxiliar tienen acceso irrestricto a todos los proyectos
+    // El Administrador, Presidente / Gerente, Contador, Auxiliar y Bodeguero
+    // tienen acceso irrestricto a todos los proyectos activos.
+    // El Bodeguero gestiona el inventario global (no se le asignan proyectos individuales).
     const { ROLES } = require('./auth.middleware');
+    const userRolLower = (req.user.rol || '').toLowerCase();
     if (
-      req.user.rol === ROLES.ADMIN ||
-      req.user.rol === ROLES.PRESIDENTE ||
-      req.user.rol === ROLES.CONTADOR ||
-      req.user.rol === ROLES.AUXILIAR
+      userRolLower === ROLES.ADMIN.toLowerCase() ||
+      userRolLower === ROLES.PRESIDENTE.toLowerCase() ||
+      userRolLower === ROLES.CONTADOR.toLowerCase() ||
+      userRolLower === ROLES.AUXILIAR.toLowerCase() ||
+      userRolLower === ROLES.BODEGUERO.toLowerCase()
     ) {
       req.proyecto = proyecto;
       return next();

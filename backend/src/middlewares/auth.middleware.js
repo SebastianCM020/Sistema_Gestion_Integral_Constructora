@@ -92,7 +92,12 @@ const requireRole = (roles) => {
       userRol = 'Administrador del Sistema';
     }
 
-    if (!roles.includes(userRol)) {
+    // Comparación insensible a mayúsculas para evitar bloqueos silenciosos
+    // por inconsistencias entre el token y las constantes ROLES.
+    const userRolLower = userRol.toLowerCase();
+    const rolesLower   = roles.map((r) => r.toLowerCase());
+
+    if (!rolesLower.includes(userRolLower)) {
       return res.status(403).json({
         error: `Acceso denegado. Se requiere uno de los siguientes roles: ${roles.join(', ')}.`
       });

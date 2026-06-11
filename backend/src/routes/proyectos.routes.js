@@ -13,15 +13,17 @@ router.get('/', requireAuth, async (req, res) => {
   try {
     let proyectos;
 
+    const userRol = req.user.rol ? req.user.rol.toLowerCase() : '';
     if (
-      req.user.rol === ROLES.ADMIN ||
-      req.user.rol === ROLES.PRESIDENTE ||
-      req.user.rol === ROLES.CONTADOR ||
-      req.user.rol === ROLES.AUXILIAR
+      userRol === ROLES.ADMIN.toLowerCase() ||
+      userRol === ROLES.PRESIDENTE.toLowerCase() ||
+      userRol === ROLES.CONTADOR.toLowerCase() ||
+      userRol === ROLES.AUXILIAR.toLowerCase() ||
+      userRol === ROLES.BODEGUERO.toLowerCase()
     ) {
-      console.log(`[ProyectosRouter] Admin/Management/Accounting role (${req.user.rol}) ${req.user.id} requested all projects.`);
-      // El Admin ve todos
+      console.log(`[ProyectosRouter] Role (${req.user.rol}) ${req.user.id} — returning all active projects.`);
       proyectos = await prisma.proyecto.findMany({
+        where: { estado: { in: ['ACTIVO', 'ACTIVE'] } },
         orderBy: { createdAt: 'desc' },
         include: {
           responsable: {
@@ -42,7 +44,8 @@ router.get('/', requireAuth, async (req, res) => {
           where: {
             idUsuario:  req.user.id,
             fechaInicio: { lte: hoyFin },
-            fechaFin:    { gte: hoyInicio },
+            fechaFin: { gte: hoyInicio },
+            proyecto: { estado: { in: ['ACTIVO', 'ACTIVE'] } }
           },
           include: {
             proyecto: {

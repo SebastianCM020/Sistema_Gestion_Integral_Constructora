@@ -159,3 +159,19 @@ export const patchProjectStatus = async (id, estado) => {
   }
 };
 
+
+// Sprint 9: GET /proyectos/mis-proyectos
+export const fetchProyectosAsignados = async () => {
+  try {
+    const { data } = await api.get('/proyectos');
+    const raw = Array.isArray(data.data) ? data.data : (Array.isArray(data) ? data : []);
+    return { data: raw.map(normalize), total: raw.length };
+  } catch (error) {
+    if (isMockMode(error)) {
+      console.warn('[projects.service] Backend no disponible — fetchProyectosAsignados retorna vacio');
+      return { data: [], total: 0 };
+    }
+    throw error;
+  }
+};
+

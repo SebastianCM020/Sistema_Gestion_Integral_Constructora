@@ -257,6 +257,26 @@ const obtenerNotificaciones = async (req, res) => {
         requerimiento: r
       }));
       return res.status(200).json({ data: notifications });
+    } else if (rol.toLowerCase() === ROLES.BODEGUERO.toLowerCase()) {
+      // Para bodegueros: requerimientos aprobados listos para recepcionar
+      const aprobados = await prisma.requerimientoCompra.findMany({
+        where: { estado: 'APROBADO' },
+        include: {
+          proyecto: { select: { nombre: true, codigo: true } },
+          aprobador: { select: { nombre: true, apellido: true } }
+        },
+        orderBy: { fechaAprobacion: 'desc' },
+        take: 10
+      });
+      const notifications = aprobados.map(r => ({
+        id: r.id,
+        tipo: 'APROBADO',
+        titulo: 'Listo para recepción',
+        mensaje: `Requerimiento aprobado en ${r.proyecto.codigo}`,
+        fecha: r.fechaAprobacion || r.createdAt,
+        requerimiento: r
+      }));
+      return res.status(200).json({ data: notifications });
     } else {
       return res.status(200).json({ data: [] });
     }

@@ -211,7 +211,7 @@ export function RequerimientosView({
       setShowForm(false);
       setFeedback({
         tone: 'success',
-        message: 'Requerimiento creado en estado EN REVISIÓN. Los gerentes han sido notificados.',
+        message: 'Requerimiento creado en estado REVISIÓN CONTABLE. El contador ha sido notificado.',
       });
     } catch (err) {
       const status = err.response?.status;

@@ -13,8 +13,8 @@ import { RequerimientosView } from '../../views/compras/RequerimientosView';    
 import { BandejaGerencialView } from '../../views/compras/BandejaGerencialView'; // Sprint 6
 import { BuzonContableView } from '../../views/compras/BuzonContableView';
 import { OrdenesCambioView } from '../../views/obra/OrdenesCambioView';
-import { InventoryReceptionView } from '../../views/inventario/InventoryReceptionView';
-import { InventoryMovementsView } from '../../views/inventario/InventoryMovementsView';
+import { BodegaDashboardView }  from '../../views/inventario/BodegaDashboardView';
+// Las vistas antiguas de inventario se reemplazan por la vista unificada del Sprint 8
 import { BillingDocumentsView } from '../../views/contabilidad/BillingDocumentsView';
 import { ReportsDashboardView } from '../../views/reportes/ReportsDashboardView';
 import { AuditTraceabilityView } from '../../views/auditoria/AuditTraceabilityView';
@@ -22,6 +22,7 @@ import { ValidationAccessControlView } from '../../views/system/ValidationAccess
 import { TechnicalSettingsView } from '../../views/admin/TechnicalSettingsView';
 import { ModuleWorkspaceView } from '../../views/ModuleWorkspaceView';
 import { ProfileView } from '../../views/ProfileView';
+import { MaterialsCatalogView } from '../../views/admin/MaterialsCatalogView';
 
 export default function ModuleRouterPage() {
   const { moduleId } = useParams();
@@ -58,19 +59,20 @@ export default function ModuleRouterPage() {
   if (moduleId === 'review') return <BandejaGerencialView {...commonProps} />;
   if (moduleId === 'accounting-review') return <BuzonContableView {...commonProps} />;
   if (moduleId === 'change-orders') return <OrdenesCambioView {...commonProps} />;
-  if (moduleId === 'inventory') return <InventoryReceptionView {...commonProps} />;
-  if (moduleId === 'inventory-movements') return <InventoryMovementsView {...commonProps} />;
+  if (moduleId === 'inventory') return <BodegaDashboardView {...commonProps} />;
+  if (moduleId === 'inventory-movements') return <BodegaDashboardView {...commonProps} />;
   if (moduleId === 'payroll') return <BillingDocumentsView {...commonProps} />;
   if (moduleId === 'reports') return <ReportsDashboardView {...commonProps} />;
   if (moduleId === 'audit') return <AuditTraceabilityView {...commonProps} />;
   if (moduleId === 'system-validations') return <ValidationAccessControlView {...commonProps} />;
   if (moduleId === 'technical-settings') return <TechnicalSettingsView {...commonProps} />;
 
+  if (moduleId === 'catalog') return <MaterialsCatalogView {...commonProps} />;
+
   // Si hay mapeos de redirect
   if (moduleId === 'administration') return <Navigate to="/admin/users" replace />;
   if (moduleId === 'projects') return <Navigate to="/admin/projects" replace />;
   if (moduleId === 'rubros') return <Navigate to="/admin/rubros" replace />;
-  if (moduleId === 'catalog') return <Navigate to="/admin/materials" replace />;
 
   const moduleData = getModuleById(moduleId);
 

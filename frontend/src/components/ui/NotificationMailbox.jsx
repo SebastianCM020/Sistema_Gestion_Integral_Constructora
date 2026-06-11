@@ -17,6 +17,14 @@ export function NotificationMailbox({ currentUser }) {
       navigate('/module/review');
     } else if (currentUser.roleName === 'Contador') {
       navigate('/module/accounting-review');
+    } else if (currentUser.roleName === 'Bodeguero') {
+      const projectId = notif.requerimiento?.idProyecto || '';
+      const t = Date.now();
+      if (projectId) {
+        navigate(`/module/inventory?idProyecto=${projectId}&t=${t}`);
+      } else {
+        navigate(`/module/inventory?t=${t}`);
+      }
     } else {
       const projectId = notif.requerimiento?.idProyecto || '';
       if (projectId) {
@@ -27,13 +35,14 @@ export function NotificationMailbox({ currentUser }) {
     }
   };
 
-  // Solo mostrar para Gerente, Residente, Admin y Contador
+  // Solo mostrar para Gerente, Residente, Admin, Contador y Bodeguero
   const showMailbox = [
     'Presidente / Gerente',
     'Residente',
     'Administrador del Sistema',
     'Auxiliar de Contabilidad',
-    'Contador'
+    'Contador',
+    'Bodeguero'
   ].includes(currentUser.roleName);
 
   const loadNotifications = async () => {
@@ -134,6 +143,8 @@ export function NotificationMailbox({ currentUser }) {
                     ? 'No hay requerimientos de compra pendientes de revisión.'
                     : currentUser.roleName === 'Contador'
                     ? 'No hay requerimientos pendientes de validación contable.'
+                    : currentUser.roleName === 'Bodeguero'
+                    ? 'No hay requerimientos aprobados listos para recepción.'
                     : 'Tus requerimientos no han tenido cambios de estado recientes.'}
                 </p>
               </div>

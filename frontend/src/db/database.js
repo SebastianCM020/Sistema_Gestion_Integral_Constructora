@@ -70,6 +70,59 @@ db.version(2).stores({
   ].join(', '),
 });
 
+// ── Versión 3 — Sprint 9: Consumos en Obra ───────────────────────────────────
+db.version(3).stores({
+  materiales_local: [
+    '&id',
+    'codigo',
+    'categoria',
+    'nombre',
+    'activo',
+    'sync_status',
+    'server_updated_at',
+  ].join(', '),
+
+  inventario_local: [
+    '[id_material+id_proyecto]',
+    'id_material',
+    'id_proyecto',
+    'sync_status',
+  ].join(', '),
+
+  movimientos_inventario_local: [
+    '&id',
+    'id_material',
+    'id_proyecto',
+    'id_usuario',
+    'tipo_movimiento',
+    'sync_status',
+    'local_created_at',
+  ].join(', '),
+
+  avances_local: [
+    '&id',
+    'idProyecto',
+    'idRubro',
+    'sync_status',
+    'local_created_at',
+  ].join(', '),
+
+  /**
+   * Tabla: consumos_local (Sprint 9)
+   * Consumos en obra registrados offline por el Residente.
+   * idempotencyKey garantiza que el servidor nunca procese dos veces el mismo consumo.
+   */
+  consumos_local: [
+    '&id',               // UUID local (idempotencyKey del cliente)
+    '&idempotencyKey',   // UUID único — enviado al servidor para prevenir duplicados
+    'idProyecto',
+    'idMaterial',
+    'idUsuario',
+    'sync_status',       // 'pending' | 'synced' | 'error'
+    'local_created_at',
+  ].join(', '),
+});
+
 // ── Hooks de ciclo de vida ───────────────────────────────────────────────────
 db.on('ready', () => {
   console.log('[ICARO DB] IndexedDB inicializada correctamente →', DB_NAME);
