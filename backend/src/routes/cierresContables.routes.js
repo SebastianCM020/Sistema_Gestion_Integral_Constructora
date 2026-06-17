@@ -1,31 +1,116 @@
 /**
- * cierresContables.routes.js — Sprint 05
- * Módulo: Cierre Contable Mensual
+ * cierresContables.routes.js — Sprint 10 (Reemplaza placeholder Sprint 05)
+ * Módulo: Cierre Contable Mensual con Transacciones y Hash SHA-256
  *
- * Evidencia: Sprint_05_Informe_Pruebas_ICARO.docx (INF-PRU-SPR-05)
- * Pruebas:   backend/tests/planilla_contable.test.js  CP-079 – CP-084
+ * Actividades cubiertas:
+ *   Act-1: GET  /consolidacion        — Consolidación mensual
+ *   Act-2: POST /validar              — Validación pre-cierre
+ *   Act-3: POST /ejecutar             — Cierre transaccional + hash
+ *   Act-5: Rollback automático via Prisma $transaction
+ *
+ * RBAC:
+ *   - Lectura (consolidacion, listado, detalle): Admin, Contador, Presidente
+ *   - Escritura (validar, ejecutar):             Admin, Contador
  */
+
 const router = require('express').Router();
 const { requireAuth, requireRole, ROLES } = require('../middlewares/auth.middleware');
 
-// POST /cierres-contables
-// Solo Admin/Presidente/Contador ejecutan cierre mensual.
-// Residente (CP-080) y Bodeguero (CP-081) reciben 403.
-router.post(
-  '/',
+const {
+  getConsolidacion,
+  postValidarPreCierre,
+  postEjecutarCierre,
+  getCierres,
+  getCierreById,
+  postRechazarConsumo,
+} = require('../controllers/cierre.controller');
+
+// ── Grupos de roles ───────────────────────────────────────────────────────────
+
+// Roles que pueden leer/consultar cierres y consolidaciones
+const rolesLectura = [ROLES.ADMIN, ROLES.CONTADOR, ROLES.PRESIDENTE, ROLES.AUXILIAR];
+
+// Roles que pueden ejecutar cierre y validación
+const rolesEjecucion = [ROLES.ADMIN, ROLES.CONTADOR];
+
+// ── Rutas ─────────────────────────────────────────────────────────────────────
+
+/**
+ * GET /api/v1/cierres-contables/consolidacion?idProyecto=&mesAnio=YYYY-MM
+ *
+ * Act-1: Resumen contable-operativo por proyecto y periodo.
+ * Sin persistencia — solo previsualización.
+ */
+router.get(
+  '/consolidacion',
   requireAuth,
-  requireRole([ROLES.ADMIN, ROLES.PRESIDENTE, ROLES.CONTADOR, ROLES.AUXILIAR]),
-  (_req, res) => res.status(201).json({ message: 'Cierre contable mensual registrado.' })
+  requireRole(rolesLectura),
+  getConsolidacion,
 );
 
-// GET /cierres-contables
-// Admin, Presidente, Contador y Auxiliar consultan historial de cierres.
-// Contador tiene acceso de lectura (CP-084).
+/**
+ * POST /api/v1/cierres-contables/validar
+ * Body: { idProyecto: string, mesAnio: "YYYY-MM" }
+ *
+ * Act-2: Validación pre-cierre.
+ * Responde 200 si puede proceder o 422 con lista de errores.
+ */
+router.post(
+  '/validar',
+  requireAuth,
+  requireRole(rolesEjecucion),
+  postValidarPreCierre,
+);
+
+/**
+ * POST /api/v1/cierres-contables/ejecutar
+ * Body: { idProyecto: string, mesAnio: "YYYY-MM" }
+ *
+ * Act-3 + Act-5: Cierre mensual transaccional.
+ * BEGIN → consolidar → cerrar → hash SHA-256 → COMMIT (o ROLLBACK).
+ */
+router.post(
+  '/ejecutar',
+  requireAuth,
+  requireRole(rolesEjecucion),
+  postEjecutarCierre,
+);
+
+/**
+ * GET /api/v1/cierres-contables?idProyecto=&limit=&offset=
+ *
+ * Historial de cierres mensuales.
+ */
 router.get(
   '/',
   requireAuth,
-  requireRole([ROLES.ADMIN, ROLES.PRESIDENTE, ROLES.CONTADOR, ROLES.AUXILIAR]),
-  (_req, res) => res.status(200).json({ cierres: [] })
+  requireRole(rolesLectura),
+  getCierres,
+);
+
+/**
+ * GET /api/v1/cierres-contables/:id
+ *
+ * Detalle de un cierre: incluye hash de integridad y consolidación.
+ */
+router.get(
+  '/:id',
+  requireAuth,
+  requireRole(rolesLectura),
+  getCierreById,
+);
+
+/**
+ * POST /api/v1/cierres-contables/rechazar-consumo
+ * Body: { idMovimiento: string, observacion: string }
+ *
+ * Rechaza un consumo creando un movimiento inverso de AJUSTE.
+ */
+router.post(
+  '/rechazar-consumo',
+  requireAuth,
+  requireRole(rolesEjecucion),
+  postRechazarConsumo,
 );
 
 module.exports = router;

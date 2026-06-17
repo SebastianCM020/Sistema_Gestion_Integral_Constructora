@@ -50,7 +50,9 @@ model Usuario {
   // Sprint 7
   ordenesCambioSolicitadas OrdenCambio[]          @relation("OrdenCambioSolicitante")
   ordenesCambioAprobadas   OrdenCambio[]          @relation("OrdenCambioAprobador")
-  notificaciones           NotificacionSistema[]
+  notificaciones              NotificacionSistema[]
+  consolidacionesGeneradas    ConsolidacionMensual[]  @relation("ConsolidacionGenerador") // Sprint 10
+  validacionesEjecutadas      ValidacionPreCierre[]   @relation("ValidacionEjecutor")     // Sprint 10
 
   @@map("usuarios")
 }
@@ -80,6 +82,8 @@ model Proyecto {
   cierres            CierreMensual[]
   movimientos        MovimientoInventario[]     // HU-03
   ordenesCambio      OrdenCambio[]              // Sprint 7
+  consolidaciones    ConsolidacionMensual[]              // Sprint 10
+  validaciones       ValidacionPreCierre[]               // Sprint 10
 
   @@map("proyectos")
 }
@@ -264,7 +268,8 @@ model CierreMensual {
 
   proyecto  Proyecto      @relation(fields: [idProyecto], references: [id])
   contador  Usuario       @relation(fields: [idContador], references: [id])
-  planillas PlanillaPdf[]
+  planillas       PlanillaPdf[]
+  consolidacion   ConsolidacionMensual?  // Sprint 10
 
   @@map("cierre_mensual")
 }
@@ -344,4 +349,65 @@ model NotificacionSistema {
   usuarioDest  Usuario @relation(fields: [idUsuarioDest], references: [id], onDelete: Cascade)
 
   @@map("notificaciones_sistema")
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SPRINT 10 — Auditoría, Consolidación y Cierre Mensual
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// Snapshot contable-operativo generado en el momento del cierre.
+// Relación 1:1 con CierreMensual.
+model ConsolidacionMensual {
+  id                   String   @id @default(uuid()) @db.Uuid
+  idCierre             String   @unique @map("id_cierre") @db.Uuid
+  idProyecto           String   @map("id_proyecto") @db.Uuid
+  mesAnio              String   @map("mes_anio") @db.VarChar(7)
+
+  // Avances
+  totalAvanceQty       Decimal  @default(0) @map("total_avance_qty") @db.Decimal(14, 4)
+  totalAvanceMonto     Decimal  @default(0) @map("total_avance_monto") @db.Decimal(14, 2)
+  rubrosEjecutados     Int      @default(0) @map("rubros_ejecutados")
+
+  // Compras
+  totalRequerimientos  Int      @default(0) @map("total_requerimientos")
+  totalComprasMonto    Decimal  @default(0) @map("total_compras_monto") @db.Decimal(14, 2)
+  totalRecepciones     Int      @default(0) @map("total_recepciones")
+
+  // Consumos en obra
+  totalConsumosQty     Decimal  @default(0) @map("total_consumos_qty") @db.Decimal(14, 4)
+  totalConsumosMonto   Decimal  @default(0) @map("total_consumos_monto") @db.Decimal(14, 2)
+
+  // Snapshot inventario (JSON)
+  snapshotInventario   Json?    @map("snapshot_inventario")
+
+  // Avance global del proyecto en %
+  porcentajeAvance     Decimal  @default(0) @map("porcentaje_avance") @db.Decimal(5, 2)
+
+  // Metadata
+  generadoPor          String   @map("generado_por") @db.Uuid
+  generadoEn           DateTime @default(now()) @map("generado_en") @db.Timestamptz
+  hashPayload          String?  @map("hash_payload") @db.VarChar(64)
+
+  cierre   CierreMensual @relation(fields: [idCierre], references: [id])
+  proyecto Proyecto      @relation(fields: [idProyecto], references: [id])
+  usuario  Usuario       @relation("ConsolidacionGenerador", fields: [generadoPor], references: [id])
+
+  @@map("consolidacion_mensual")
+}
+
+// Registro de cada intento de validación pre-cierre (auditable e inmutable).
+model ValidacionPreCierre {
+  id            String   @id @default(uuid()) @db.Uuid
+  idProyecto    String   @map("id_proyecto") @db.Uuid
+  mesAnio       String   @map("mes_anio") @db.VarChar(7)
+  // 'OK' | 'BLOQUEADO' | 'PENDIENTE'
+  estado        String   @default("PENDIENTE") @db.VarChar(10)
+  errores       Json?
+  ejecutadoPor  String   @map("ejecutado_por") @db.Uuid
+  ejecutadoEn   DateTime @default(now()) @map("ejecutado_en") @db.Timestamptz
+
+  proyecto  Proyecto @relation(fields: [idProyecto], references: [id])
+  ejecutor  Usuario  @relation("ValidacionEjecutor", fields: [ejecutadoPor], references: [id])
+
+  @@map("validacion_pre_cierre")
 }

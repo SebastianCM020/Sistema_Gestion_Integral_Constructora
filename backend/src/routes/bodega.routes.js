@@ -15,7 +15,14 @@ const express  = require('express');
 const router   = express.Router();
 const { requireAuth, requireRole, ROLES } = require('../middlewares/auth.middleware');
 const { requireProjectAccess } = require('../middlewares/projectAccess.middleware');
+const { bloquearPeriodoCerrado } = require('../middlewares/checkCierrePeriodo.middleware');
 const bodegaController = require('../controllers/bodega.controller');
+
+// Extractor para el middleware de cierre
+const extractBodega = async (req) => ({
+  idProyecto: req.params.idProyecto,
+  fecha: req.body.fechaMovimiento || new Date()
+});
 
 // Bodeguero y Admin pueden registrar movimientos y recepciones
 const canWrite = [requireAuth, requireRole([ROLES.ADMIN, ROLES.BODEGUERO])];
@@ -55,6 +62,7 @@ router.post(
   '/proyectos/:idProyecto/requerimientos/:idRequerimiento/recepcionar',
   ...canWrite,
   requireProjectAccess,
+  bloquearPeriodoCerrado(extractBodega),
   bodegaController.recepcionarMateriales
 );
 
@@ -69,6 +77,7 @@ router.post(
   '/proyectos/:idProyecto/movimientos',
   ...canWrite,
   requireProjectAccess,
+  bloquearPeriodoCerrado(extractBodega),
   bodegaController.registrarMovimiento
 );
 
