@@ -1,9 +1,16 @@
 import React from 'react';
-import { CircleCheckBig, Home, Repeat } from 'lucide-react';
+import { CircleCheckBig, History, Repeat } from 'lucide-react';
 import { formatConsumptionDate, formatConsumptionQuantity } from '../../utils/consumptionHelpers.js';
 import { ConsumptionPendingSyncBadge } from './ConsumptionPendingSyncBadge.jsx';
 
-export function ConsumptionSuccessState({ record, onRegisterAnother, onGoHome }) {
+/**
+ * Muestra el estado de éxito tras registrar un consumo.
+ *
+ * @param {object}   record             - Datos del consumo registrado
+ * @param {Function} onRegisterAnother  - Vuelve al formulario para nuevo consumo
+ * @param {Function} onViewHistory      - Hace scroll al historial de consumos
+ */
+export function ConsumptionSuccessState({ record, onRegisterAnother, onViewHistory }) {
   return (
     <section className="rounded-[12px] border border-[#16A34A]/15 bg-white p-5 shadow-sm">
       <div className="flex items-start gap-4">
@@ -21,7 +28,7 @@ export function ConsumptionSuccessState({ record, onRegisterAnother, onGoHome })
         <p className="mt-2"><span className="font-semibold">Material:</span> {record.materialCode} · {record.materialName}</p>
         <p className="mt-2"><span className="font-semibold">Cantidad registrada:</span> {formatConsumptionQuantity(record.quantityConsumed)} {record.unit}</p>
         <p className="mt-2"><span className="font-semibold">Fecha:</span> {formatConsumptionDate(record.registeredAt)}</p>
-        <div className="mt-3"><ConsumptionPendingSyncBadge syncStatus={record.syncStatus} /></div>
+        <div className="mt-3"><ConsumptionPendingSyncBadge count={record.syncStatus === 'pending' ? 1 : 0} /></div>
       </div>
 
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -29,9 +36,9 @@ export function ConsumptionSuccessState({ record, onRegisterAnother, onGoHome })
           <Repeat size={16} />
           Registrar otro consumo
         </button>
-        <button type="button" onClick={onGoHome} className="inline-flex h-[44px] items-center justify-center gap-2 rounded-[12px] border border-[#D1D5DB] px-4 text-sm font-medium text-[#2F3A45] hover:bg-[#F7F9FC]">
-          <Home size={16} />
-          Volver al panel
+        <button type="button" onClick={onViewHistory} className="inline-flex h-[44px] items-center justify-center gap-2 rounded-[12px] border border-[#1F4E79] px-4 text-sm font-medium text-[#1F4E79] hover:bg-[#DCEAF7]/40">
+          <History size={16} />
+          Ver historial completo
         </button>
       </div>
     </section>

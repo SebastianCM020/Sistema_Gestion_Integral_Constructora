@@ -5,24 +5,28 @@ require('dotenv').config({ path: './.env' });
 
 async function run() {
   const bodeguero = await prisma.usuario.findFirst({
-    where: { email: 'bodega@icaro.com' },
+    where: { email: 'bodeguero@icaro.dev' },
     include: { rol: true }
   });
+  
+  if (!bodeguero) {
+    console.log("No se encontro bodeguero@icaro.dev");
+    return;
+  }
   
   const token = jwt.sign(
     { id: bodeguero.id, rol: bodeguero.rol.nombre, email: bodeguero.email },
     process.env.JWT_SECRET || 'secret'
   );
   
-  const axios = require('axios');
-  try {
-    const res = await axios.get('http://localhost:3000/api/v1/compras/notificaciones', {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    console.log(JSON.stringify(res.data, null, 2));
-  } catch (err) {
-    console.error(err.response ? err.response.data : err.message);
-  }
+  console.log("Token", token);
+  
+  const res = await fetch('http://localhost:3000/api/v1/proyectos', {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  
+  const data = await res.json();
+  console.log("API Proyectos:", data.data ? data.data.length : data);
 }
 
 run().finally(() => prisma.$disconnect());

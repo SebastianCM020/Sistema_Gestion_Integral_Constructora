@@ -19,14 +19,17 @@ const inferTabla = (path) => {
   const segment = path.replace(/^\/api\/v1\//, '').split('/')[0];
   // Normalizar nombres conocidos al nombre real de la tabla
   const tableMap = {
-    users:      'usuarios',
-    proyectos:  'proyectos',
-    avances:    'avance_obra',
-    compras:    'requerimiento_compra',
-    auth:       'usuarios',
-    materiales: 'materiales',          // Sprint 3 — HU-02
-    bodega:     'movimiento_inventario',// Sprint 3 — HU-03
-    compras:    'requerimiento_compra', // Sprint 6 — HU-06
+    users:               'usuarios',
+    proyectos:           'proyectos',
+    avances:             'avance_obra',
+    compras:             'requerimiento_compra',
+    auth:                'usuarios',
+    materiales:          'materiales',
+    bodega:              'movimiento_inventario',
+    'ordenes-cambio':    'ordenes_cambio',
+    'cierres-contables': 'cierre_mensual',    // Sprint 10
+    'audit-logs':        'audit_log',
+    consumo:             'movimiento_inventario',
   };
   return tableMap[segment] || segment;
 };
@@ -87,6 +90,8 @@ const auditMiddleware = (req, res, next) => {
     const idRegistro = inferIdRegistro(req.path) || req.params?.id || null;
     const idUsuario  = req.user?.id || null;
     const ipOrigen   = extractIp(req);
+    // Sprint 10: inferir módulo del sistema desde la URL
+    const modulo     = req.path.replace(/^\/api\/v1\//, '').split('/')[0] || null;
 
     logAction({
       tabla,

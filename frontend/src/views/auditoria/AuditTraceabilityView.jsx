@@ -8,11 +8,12 @@
 // RBAC: Solo Administrador del Sistema.
 // ─────────────────────────────────────────────────────────────────────────────
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ShieldAlert, RefreshCw, Search, Filter, X, Clock,
   CheckCircle2, XCircle, Database, AlertCircle, Loader2,
-  ChevronDown, ChevronUp, Eye, User, Server,
+  ChevronDown, ChevronUp, User, Server,
+  Download, FileText, FileSpreadsheet,
 } from 'lucide-react';
 import { AppHeader }         from '../../components/ui/AppHeader.jsx';
 import { SidebarNavigation } from '../../components/ui/SidebarNavigation.jsx';
@@ -24,13 +25,16 @@ import { fetchAuditLogs }    from '../../services/audit.service.js';
 const PAGE_SIZE = 30;
 
 const TABLA_LABELS = {
-  requerimiento_compra:   'Requerimiento de Compra',
-  usuarios:               'Usuarios',
-  proyectos:              'Proyectos',
-  movimiento_inventario:  'Inventario / Bodega',
-  avance_obra:            'Avance de Obra',
-  ordenes_cambio:         'Órdenes de Cambio',
-  notificaciones_sistema: 'Notificaciones',
+  requerimiento_compra:    'Requerimiento de Compra',
+  usuarios:                'Usuarios',
+  proyectos:               'Proyectos',
+  movimiento_inventario:   'Inventario / Bodega',
+  avance_obra:             'Avance de Obra',
+  ordenes_cambio:          'Órdenes de Cambio',
+  notificaciones_sistema:  'Notificaciones',
+  cierre_mensual:          'Cierre Mensual',
+  consolidacion_mensual:   'Consolidación Mensual',
+  validacion_pre_cierre:   'Validación Pre-cierre',
 };
 
 const OP_CONFIG = {
@@ -155,13 +159,15 @@ export function AuditTraceabilityView({
   const isAuthorizedRole = currentUser.roleName === 'Administrador del Sistema';
 
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const tableRef = useRef(null);
 
   // ── Filtros ─────────────────────────────────────────────────────────────
-  const [busqueda,   setBusqueda]   = useState('');
-  const [filtTabla,  setFiltTabla]  = useState('');
-  const [filtOp,     setFiltOp]     = useState('');
-  const [filtDesde,  setFiltDesde]  = useState('');
-  const [filtHasta,  setFiltHasta]  = useState('');
+  const [busqueda,    setBusqueda]   = useState('');
+  const [filtTabla,   setFiltTabla]  = useState('');
+  const [filtOp,      setFiltOp]     = useState('');
+  const [filtDesde,   setFiltDesde]  = useState('');
+  const [filtHasta,   setFiltHasta]  = useState('');
+  const [filtUsuario, setFiltUsuario] = useState(''); // Sprint 10: filtro por email/nombre
 
   // ── Datos ────────────────────────────────────────────────────────────────
   const [logs,       setLogs]       = useState([]);
@@ -170,6 +176,47 @@ export function AuditTraceabilityView({
   const [loadStatus, setLoadStatus] = useState('loading');
 
   // ── Carga ────────────────────────────────────────────────────────────────
+
+  // ── Exportación ──────────────────────────────────────────────────────
+  const exportarCSV = () => {
+    const headers = ['ID','Fecha y Hora','Operación','Tabla','Usuario','Email','IP Origen'];
+    const rows = logsFiltrados.map((l) => [
+      l.id,
+      l.timestamp ? new Date(l.timestamp).toLocaleString('es-CO') : '',
+      l.operacion,
+      l.tabla,
+      l.userName || 'Sistema',
+      l.userEmail || '',
+      l.ipOrigen || '',
+    ]);
+    const csv = [headers, ...rows].map((r) => r.map((c) => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = `audit_log_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const exportarPDF = () => {
+    const win = window.open('', '_blank');
+    if (!win) return;
+    const rows = logsFiltrados.map((l) =>
+      `<tr><td>${l.id}</td><td>${l.timestamp ? new Date(l.timestamp).toLocaleString('es-CO') : ''}</td>` +
+      `<td>${l.operacion}</td><td>${l.tabla}</td><td>${l.userName || 'Sistema'}</td><td>${l.ipOrigen || ''}</td></tr>`
+    ).join('');
+    win.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Audit Log ICARO</title>
+      <style>body{font-family:sans-serif;font-size:11px;padding:16px}h1{font-size:16px;margin-bottom:8px}
+      table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:4px 8px;text-align:left}
+      th{background:#1F4E79;color:white}tr:nth-child(even){background:#f5f5f5}</style></head>
+      <body><h1>Registro de Auditoría — ICARO CONSTRUCTORES</h1>
+      <p>Exportado: ${new Date().toLocaleString('es-CO')} | Registros: ${logsFiltrados.length}</p>
+      <table><thead><tr><th>#ID</th><th>Fecha</th><th>Operación</th><th>Tabla</th><th>Usuario</th><th>IP</th></tr></thead>
+      <tbody>${rows}</tbody></table></body></html>`);
+    win.document.close();
+    win.print();
+  };
 
   const cargar = useCallback(async () => {
     if (!isAuthorizedRole || isRestricted) { setLoadStatus('forbidden'); return; }
@@ -194,19 +241,31 @@ export function AuditTraceabilityView({
 
   useEffect(() => { cargar(); }, [cargar]);
 
-  // ── Filtrado local por búsqueda de texto ─────────────────────────────────
+  // ── Filtrado local por búsqueda de texto + usuario ─────────────────────────
   const logsFiltrados = useMemo(() => {
-    if (!busqueda.trim()) return logs;
-    const q = busqueda.toLowerCase();
-    return logs.filter((l) =>
-      l.tabla?.toLowerCase().includes(q) ||
-      l.userName?.toLowerCase().includes(q) ||
-      l.userEmail?.toLowerCase().includes(q) ||
-      l.idRegistro?.toLowerCase().includes(q) ||
-      l.ipOrigen?.toLowerCase().includes(q) ||
-      JSON.stringify(l.datosDespues || {}).toLowerCase().includes(q)
-    );
-  }, [logs, busqueda]);
+    let result = logs;
+    // Filtro por usuario (nombre o email)
+    if (filtUsuario.trim()) {
+      const u = filtUsuario.toLowerCase();
+      result = result.filter((l) =>
+        l.userName?.toLowerCase().includes(u) ||
+        l.userEmail?.toLowerCase().includes(u)
+      );
+    }
+    // Filtro por búsqueda libre
+    if (busqueda.trim()) {
+      const q = busqueda.toLowerCase();
+      result = result.filter((l) =>
+        l.tabla?.toLowerCase().includes(q) ||
+        l.userName?.toLowerCase().includes(q) ||
+        l.userEmail?.toLowerCase().includes(q) ||
+        l.idRegistro?.toLowerCase().includes(q) ||
+        l.ipOrigen?.toLowerCase().includes(q) ||
+        JSON.stringify(l.datosDespues || {}).toLowerCase().includes(q)
+      );
+    }
+    return result;
+  }, [logs, busqueda, filtUsuario]);
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
@@ -303,14 +362,35 @@ export function AuditTraceabilityView({
                 Registro inmutable de acciones CUD · {total.toLocaleString('es-CO')} eventos en total
               </p>
             </div>
-            <button
-              id="btn-refrescar-audit"
-              onClick={() => { setPage(0); cargar(); }}
-              className="inline-flex items-center gap-2 self-start rounded-lg border border-[#E5E7EB] bg-white px-3 py-2 text-sm font-medium text-[#374151] shadow-sm hover:bg-[#F9FAFB] sm:self-auto"
-            >
-              <RefreshCw size={15} />
-              Actualizar
-            </button>
+            <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+              <button
+                id="btn-refrescar-audit"
+                onClick={() => { setPage(0); cargar(); }}
+                className="inline-flex items-center gap-2 rounded-lg border border-[#E5E7EB] bg-white px-3 py-2 text-sm font-medium text-[#374151] shadow-sm hover:bg-[#F9FAFB]"
+              >
+                <RefreshCw size={15} />
+                Actualizar
+              </button>
+              {/* Sprint 10: Exportación PDF/Excel */}
+              <button
+                id="btn-export-csv"
+                onClick={exportarCSV}
+                disabled={loadStatus !== 'ready' || logsFiltrados.length === 0}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700 hover:bg-emerald-100 disabled:opacity-40"
+                title="Exportar a Excel (CSV)"
+              >
+                <FileSpreadsheet size={15} /> Excel
+              </button>
+              <button
+                id="btn-export-pdf"
+                onClick={exportarPDF}
+                disabled={loadStatus !== 'ready' || logsFiltrados.length === 0}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700 hover:bg-red-100 disabled:opacity-40"
+                title="Exportar a PDF (imprimir)"
+              >
+                <FileText size={15} /> PDF
+              </button>
+            </div>
           </div>
 
           {/* ── Stats rápidas ───────────────────────────────────────────── */}
@@ -340,7 +420,7 @@ export function AuditTraceabilityView({
             <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400">
               <Filter size={12} className="mr-1 inline" /> Filtros
             </p>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
 
               {/* Búsqueda local */}
               <div className="relative sm:col-span-2 lg:col-span-1">
@@ -380,6 +460,18 @@ export function AuditTraceabilityView({
                 <option value="DELETE">Eliminación (DELETE)</option>
               </select>
 
+              {/* Sprint 10: Filtro por usuario */}
+              <div className="relative">
+                <User size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  id="audit-filtro-usuario"
+                  value={filtUsuario}
+                  onChange={(e) => { setFiltUsuario(e.target.value); setPage(0); }}
+                  placeholder="Filtrar por usuario..."
+                  className="w-full rounded-lg border border-[#D1D5DB] pl-9 pr-3 py-2 text-sm text-[#374151] placeholder-gray-400 focus:border-[#1F4E79] focus:outline-none focus:ring-2 focus:ring-[#1F4E79]/20"
+                />
+              </div>
+
               {/* Rango de fechas */}
               <div className="flex gap-2 sm:col-span-2 lg:col-span-1">
                 <input
@@ -402,9 +494,9 @@ export function AuditTraceabilityView({
             </div>
 
             {/* Botón limpiar filtros */}
-            {(filtTabla || filtOp || filtDesde || filtHasta || busqueda) && (
+            {(filtTabla || filtOp || filtDesde || filtHasta || busqueda || filtUsuario) && (
               <button
-                onClick={() => { setFiltTabla(''); setFiltOp(''); setFiltDesde(''); setFiltHasta(''); setBusqueda(''); setPage(0); }}
+                onClick={() => { setFiltTabla(''); setFiltOp(''); setFiltDesde(''); setFiltHasta(''); setBusqueda(''); setFiltUsuario(''); setPage(0); }}
                 className="mt-3 inline-flex items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-500 hover:bg-gray-50"
               >
                 <X size={12} /> Limpiar filtros

@@ -15,7 +15,14 @@
 const express    = require('express');
 const router     = express.Router();
 const { requireAuth, requireRole, ROLES } = require('../middlewares/auth.middleware');
+const { bloquearPeriodoCerrado } = require('../middlewares/checkCierrePeriodo.middleware');
 const comprasController = require('../controllers/compras.controller');
+
+// Extractor para el middleware de cierre
+const extractCompras = async (req) => ({
+  idProyecto: req.params.idProyecto,
+  fecha: req.body.fechaSolicitud || new Date()
+});
 
 // ── Grupos de roles ────────────────────────────────────────────────────────────
 /** Roles que pueden leer requerimientos */
@@ -72,6 +79,7 @@ router.get(
 router.post(
   '/proyectos/:idProyecto/requerimientos',
   ...canCreate,
+  bloquearPeriodoCerrado(extractCompras),
   comprasController.crearRequerimiento
 );
 

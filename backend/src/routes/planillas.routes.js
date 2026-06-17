@@ -28,14 +28,78 @@ router.get(
   (_req, res) => res.status(200).json({ planillas: [] })
 );
 
-// GET /planillas/:id/pdf
-// Solo Admin y Presidente generan el PDF (CP-077, CP-078).
-// Bodeguero recibe 403 (CP-076).
-router.get(
-  '/:id/pdf',
+const { PrismaClient } = require('@prisma/client');
+const { pdfQueue } = require('../services/queueService');
+const prisma = new PrismaClient();
+
+// POST /planillas/generate/:cierreId
+// Generar PDF para un cierre contable. Valida que esté CERRADO y encola el trabajo.
+router.post(
+  '/generate/:cierreId',
   requireAuth,
-  requireRole([ROLES.ADMIN, ROLES.PRESIDENTE]),
-  (req, res) => res.status(200).json({ pdf: `stub-planilla-${req.params.id}` })
+  requireRole([ROLES.ADMIN, ROLES.PRESIDENTE, ROLES.CONTADOR]),
+  async (req, res) => {
+    try {
+      const { cierreId } = req.params;
+      const cierre = await prisma.cierreMensual.findUnique({ where: { id: cierreId } });
+
+      if (!cierre) {
+        return res.status(404).json({ success: false, message: 'Cierre no encontrado' });
+      }
+
+      if (cierre.estadoCierre !== 'CERRADO') {
+        return res.status(400).json({ 
+          success: false, 
+          message: 'No se puede generar planilla PDF porque el periodo no está CERRADO.' 
+        });
+      }
+
+      // Crear registro en PlanillaPdf
+      const planilla = await prisma.planillaPdf.create({
+        data: {
+          idCierre: cierreId,
+          idGenerador: req.user.id,
+          estadoGen: 'PENDING'
+        }
+      });
+
+      // Encolar trabajo
+      await pdfQueue.add('generate-pdf', {
+        planillaId: planilla.id,
+        cierreId,
+        userId: req.user.id
+      });
+
+      res.status(202).json({
+        success: true,
+        message: 'Generación de planilla PDF encolada.',
+        planillaId: planilla.id
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Error encolando PDF' });
+    }
+  }
+);
+
+// GET /planillas/cierre/:cierreId
+// Obtener planillas generadas de un cierre específico
+router.get(
+  '/cierre/:cierreId',
+  requireAuth,
+  async (req, res) => {
+    try {
+      const planillas = await prisma.planillaPdf.findMany({
+        where: { idCierre: req.params.cierreId },
+        orderBy: { createdAt: 'desc' },
+        include: { generador: { select: { nombre: true, apellido: true } } }
+      });
+      res.json({ success: true, planillas });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Error obteniendo planillas' });
+    }
+  }
 );
 
 module.exports = router;

@@ -16,6 +16,7 @@ import { OrdenesCambioView } from '../../views/obra/OrdenesCambioView';
 import { BodegaDashboardView }  from '../../views/inventario/BodegaDashboardView';
 // Las vistas antiguas de inventario se reemplazan por la vista unificada del Sprint 8
 import { BillingDocumentsView } from '../../views/contabilidad/BillingDocumentsView';
+import { ConsolidacionMensualView } from '../../views/contabilidad/ConsolidacionMensualView';
 import { ReportsDashboardView } from '../../views/reportes/ReportsDashboardView';
 import { AuditTraceabilityView } from '../../views/auditoria/AuditTraceabilityView';
 import { ValidationAccessControlView } from '../../views/system/ValidationAccessControlView';
@@ -61,6 +62,7 @@ export default function ModuleRouterPage() {
   if (moduleId === 'change-orders') return <OrdenesCambioView {...commonProps} />;
   if (moduleId === 'inventory') return <BodegaDashboardView {...commonProps} />;
   if (moduleId === 'inventory-movements') return <BodegaDashboardView {...commonProps} />;
+  if (moduleId === 'accounting') return <ConsolidacionMensualView {...commonProps} />;
   if (moduleId === 'payroll') return <BillingDocumentsView {...commonProps} />;
   if (moduleId === 'reports') return <ReportsDashboardView {...commonProps} />;
   if (moduleId === 'audit') return <AuditTraceabilityView {...commonProps} />;
