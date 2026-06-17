@@ -46,7 +46,8 @@ app.use('/api/v1/compras',   require('./routes/compras.routes'));    // Sprint 6
 app.use('/api/v1/ordenes-cambio', require('./routes/ordenesCambio.routes')); // Sprint 7 - Órdenes de Cambio
 app.use('/api/v1/audit-logs', require('./routes/audit.routes'));    // Sprint 7 — Trazabilidad y Auditoría
 app.use('/api/v1/consumo',    require('./routes/consumo.routes'));  // Sprint 9 — HU-S9: Consumo en Obra
-// app.use('/api/v1/reportes',  require('./routes/reportes.routes'));
+app.use('/api/v1/reportes',  require('./routes/reportes.routes'));
+app.use('/api/v1/test',      require('./routes/test.routes'));      // Sprint 11 - Pruebas 401/403
 
 // ── Manejador de errores global ─────────────────────────────────────────────
 app.use((err, _req, res, _next) => {
@@ -64,8 +65,28 @@ app.use((err, _req, res, _next) => {
 });
 
 // ── Inicio del servidor ─────────────────────────────────────────────────────
+const http = require('http');
+const server = http.createServer(app);
+
+// Inicializar Socket.io
+const io = require('./socket').init(server);
+
+// Inicializar Worker de PDF
+require('./workers/pdfWorker');
+
+io.on('connection', (socket) => {
+  console.log(`[Socket] Cliente conectado: ${socket.id}`);
+  socket.on('join_user', (userId) => {
+    socket.join(`user_${userId}`);
+    console.log(`[Socket] Cliente ${socket.id} se unió a la sala user_${userId}`);
+  });
+  socket.on('disconnect', () => {
+    console.log(`[Socket] Cliente desconectado: ${socket.id}`);
+  });
+});
+
 if (require.main === module) {
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`
     ╔═══════════════════════════════════════════════╗
     ║   ICARO BACKEND  — Puerto ${PORT}                ║
@@ -74,6 +95,5 @@ if (require.main === module) {
     `);
   });
 }
-
 
 module.exports = app;

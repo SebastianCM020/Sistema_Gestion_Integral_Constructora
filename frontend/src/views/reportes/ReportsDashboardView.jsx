@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { AlertTriangle, ShieldAlert } from 'lucide-react';
+import { AlertTriangle, ShieldAlert, Download, Loader2 } from 'lucide-react';
 import { AppHeader } from '../../components/ui/AppHeader.jsx';
 import { SidebarNavigation } from '../../components/ui/SidebarNavigation.jsx';
 import { SectionHeader } from '../../components/ui/SectionHeader.jsx';
@@ -20,88 +20,153 @@ import { EmptyReportsState } from '../../components/reportes/EmptyReportsState.j
 import { ReportsLoadingState } from '../../components/reportes/ReportsLoadingState.jsx';
 import { ReportsErrorState } from '../../components/reportes/ReportsErrorState.jsx';
 import { getModulesForUser } from '../../data/icaroData.js';
-import { getAssignedProjectsForUser } from '../../data/mockAssignedProjects.js';
-import { getOperationalReportByScope } from '../../data/mockOperationalReports.js';
-import { getAccountingReportByScope } from '../../data/mockAccountingReports.js';
-import { getManagerDashboardByScope } from '../../data/mockManagerDashboard.js';
 import { getReportsPartialDataMeta } from '../../utils/dashboardHelpers.js';
 import { buildReportFilterSummary, getAllowedReportTabs, getDefaultReportTab, reportPeriodsCatalog, reportTabsCatalog, filterReportRowsByDimension } from '../../utils/reportHelpers.js';
 
-function createProjectOptions(currentUser) {
-  const assignedProjects = getAssignedProjectsForUser(currentUser.email);
+// Reemplazamos importaciones mock con fetch real
+import axios from 'axios';
+import { io } from 'socket.io-client';
 
-  if (['Presidente / Gerente', 'Administrador del Sistema'].includes(currentUser.roleName)) {
-    return [
-      {
-        id: 'portfolio-all',
-        code: 'CORP',
-        name: 'Consolidado corporativo',
-        accessMode: 'reports-portfolio',
-      },
-      ...assignedProjects,
-    ];
-  }
-
-  return assignedProjects;
-}
-
-function buildContextLabel(tabLabel, project, period) {
-  return `${tabLabel} · ${project?.code ?? 'sin proyecto'} · ${period?.label ?? 'sin periodo'}`;
-}
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api/v1';
 
 export function ReportsDashboardView({ currentUser, isRestricted = false, onGoHome, onOpenProfile, onLogout, onOpenModule }) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [loadStatus, setLoadStatus] = useState('loading');
   const [retryCount, setRetryCount] = useState(0);
-  const [projects] = useState(() => createProjectOptions(currentUser));
-  const [currentProjectId, setCurrentProjectId] = useState(() => projects[0]?.id ?? '');
-  const [currentPeriodId, setCurrentPeriodId] = useState('2026-03');
+  
+  // Real data
+  const [proyectosList, setProyectosList] = useState([]);
+  const [consolidacionesList, setConsolidacionesList] = useState([]);
+  const [planillasList, setPlanillasList] = useState([]);
+  const [isGenerating, setIsGenerating] = useState(false);
+  
+  const [currentProjectId, setCurrentProjectId] = useState('');
+  const [currentPeriodId, setCurrentPeriodId] = useState('');
   const [dimensionFilter, setDimensionFilter] = useState('all');
   const [activeTab, setActiveTab] = useState(() => getDefaultReportTab(currentUser.roleName));
   const [activeOverlay, setActiveOverlay] = useState(null);
 
   const modules = getModulesForUser(currentUser);
-  const isAuthorizedRole = ['Presidente / Gerente', 'Contador', 'Administrador del Sistema'].includes(currentUser.roleName);
+  const isAuthorizedRole = ['Presidente / Gerente', 'Contador', 'Administrador del Sistema', 'Residente'].includes(currentUser.roleName);
   const allowedTabIds = useMemo(() => getAllowedReportTabs(currentUser.roleName), [currentUser.roleName]);
   const availableTabs = useMemo(() => allowedTabIds.map((tabId) => reportTabsCatalog[tabId]), [allowedTabIds]);
-  const currentProject = useMemo(() => projects.find((project) => project.id === currentProjectId) ?? null, [projects, currentProjectId]);
+  
+  const currentProject = useMemo(() => proyectosList.find((project) => project.id === currentProjectId) ?? null, [proyectosList, currentProjectId]);
   const currentPeriod = useMemo(() => reportPeriodsCatalog.find((period) => period.id === currentPeriodId) ?? null, [currentPeriodId]);
-  const operationalReport = useMemo(() => getOperationalReportByScope(currentProjectId, currentPeriodId), [currentProjectId, currentPeriodId]);
-  const accountingReport = useMemo(() => getAccountingReportByScope(currentProjectId, currentPeriodId), [currentProjectId, currentPeriodId]);
-  const managerDashboard = useMemo(() => getManagerDashboardByScope(currentProjectId, currentPeriodId), [currentProjectId, currentPeriodId]);
-  const activeDataset = activeTab === 'manager' ? managerDashboard : activeTab === 'operational' ? operationalReport : accountingReport;
-  const visibleRows = useMemo(() => {
-    if (activeTab === 'operational') {
-      return filterReportRowsByDimension(operationalReport?.operationalRows ?? [], dimensionFilter);
-    }
 
-    if (activeTab === 'accounting') {
-      return filterReportRowsByDimension(accountingReport?.accountingRows ?? [], dimensionFilter);
-    }
+  useEffect(() => {
+    if (!currentUser?.id) return;
+    const socketUrl = API_URL.replace('/api/v1', '');
+    const socket = io(socketUrl);
+    
+    socket.on('connect', () => {
+      socket.emit('join_user', currentUser.id);
+    });
 
-    return [];
-  }, [activeTab, operationalReport, accountingReport, dimensionFilter]);
+    socket.on('planilla_ready', (data) => {
+      setPlanillasList(prev => prev.map(p => p.id === data.planillaId ? { ...p, estadoGen: 'READY', urlArchivo: data.url } : p));
+      setIsGenerating(false);
+    });
+
+    socket.on('planilla_error', (data) => {
+      setPlanillasList(prev => prev.map(p => p.id === data.planillaId ? { ...p, estadoGen: 'ERROR' } : p));
+      setIsGenerating(false);
+    });
+
+    return () => socket.disconnect();
+  }, [currentUser]);
+
+  // Fetch from API
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoadStatus('loading');
+      try {
+        const token = localStorage.getItem('icaro_token');
+        const res = await axios.get(`${API_URL}/reportes/dashboard`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        
+        if (res.data.success) {
+          const projs = res.data.proyectos || [];
+          setProyectosList(projs);
+          setConsolidacionesList(res.data.consolidaciones || []);
+          
+          if (projs.length > 0 && !currentProjectId) setCurrentProjectId(projs[0].id);
+          if (!currentPeriodId) setCurrentPeriodId(reportPeriodsCatalog[0].id);
+          
+          setLoadStatus('ready');
+        } else {
+          setLoadStatus('error');
+        }
+      } catch (err) {
+        console.error('Error fetching dashboard', err);
+        setLoadStatus('error');
+      }
+    };
+    if (isAuthorizedRole && !isRestricted) fetchData();
+  }, [retryCount, currentUser, isRestricted, isAuthorizedRole]);
+
+  // Construir activeDataset dinámico según consolidaciones
+  const activeDataset = useMemo(() => {
+    if (!currentProjectId || !currentPeriodId) return null;
+    const consol = consolidacionesList.find(c => c.idProyecto === currentProjectId && c.mesAnio === currentPeriodId);
+    if (!consol) return null;
+
+    // Fake metrics adaptadas de consolidacion
+    return {
+      updatedAt: consol.generadoEn,
+      metrics: [
+        { id: 'avance', label: 'Avance %', value: consol.porcentajeAvance + '%', diff: 0, trend: 'neutral' },
+        { id: 'compras', label: 'Monto Compras', value: '$' + Number(consol.totalComprasMonto).toLocaleString(), diff: 0, trend: 'neutral' }
+      ],
+      charts: [],
+      insights: [
+        { id: '1', title: 'Avance registrado', description: `Se ha reportado ${consol.totalAvanceQty} unidades avanzadas.`, type: 'info' }
+      ],
+      partialData: false
+    };
+  }, [currentProjectId, currentPeriodId, consolidacionesList]);
+
+  // Cargar planillas disponibles si hay dataset
+  useEffect(() => {
+    const fetchPlanillas = async () => {
+      if (!currentProjectId || !currentPeriodId) return;
+      const consol = consolidacionesList.find(c => c.idProyecto === currentProjectId && c.mesAnio === currentPeriodId);
+      if (!consol) return setPlanillasList([]);
+      
+      try {
+        const token = localStorage.getItem('icaro_token');
+        const res = await axios.get(`${API_URL}/planillas/cierre/${consol.idCierre}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (res.data.success) setPlanillasList(res.data.planillas);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchPlanillas();
+  }, [currentProjectId, currentPeriodId, consolidacionesList]);
+
+  const handleGeneratePdf = async () => {
+    const consol = consolidacionesList.find(c => c.idProyecto === currentProjectId && c.mesAnio === currentPeriodId);
+    if (!consol) return;
+    try {
+      setIsGenerating(true);
+      const token = localStorage.getItem('icaro_token');
+      await axios.post(`${API_URL}/planillas/generate/${consol.idCierre}`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      alert('Generación de PDF encolada. Se notificará cuando esté listo.');
+    } catch (err) {
+      alert(err.response?.data?.message || 'Error al generar PDF');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   const partialDataMeta = useMemo(() => getReportsPartialDataMeta(activeDataset), [activeDataset]);
   const filterSummary = useMemo(() => buildReportFilterSummary(activeTab, currentProject, currentPeriod, dimensionFilter), [activeTab, currentProject, currentPeriod, dimensionFilter]);
-  const selectedDetailItem = activeOverlay?.type === 'detail' ? activeOverlay.item : null;
-  const selectedDefinitionItem = activeOverlay?.type === 'definition' ? activeOverlay.item : null;
-  const contextLabel = buildContextLabel(reportTabsCatalog[activeTab]?.label ?? 'Reporte', currentProject, currentPeriod);
-
-  useEffect(() => {
-    setLoadStatus('loading');
-
-    const timer = window.setTimeout(() => {
-      setLoadStatus(currentUser.reportsShouldFail ? 'error' : 'ready');
-    }, 650);
-
-    return () => window.clearTimeout(timer);
-  }, [currentUser.reportsShouldFail, retryCount]);
-
-  useEffect(() => {
-    if (!allowedTabIds.includes(activeTab)) {
-      setActiveTab(allowedTabIds[0] ?? 'manager');
-    }
-  }, [allowedTabIds, activeTab]);
+  const contextLabel = `${reportTabsCatalog[activeTab]?.label ?? 'Reporte'} · ${currentProject?.name ?? 'sin proyecto'} · ${currentPeriod?.label ?? 'sin periodo'}`;
 
   if (!isAuthorizedRole || isRestricted) {
     return (
@@ -113,17 +178,14 @@ export function ReportsDashboardView({ currentUser, isRestricted = false, onGoHo
             <section className="rounded-[12px] border border-[#DC2626]/15 bg-white p-8 shadow-sm">
               <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#DC2626]/10 text-[#DC2626]"><ShieldAlert size={28} /></div>
               <h1 className="text-2xl font-semibold text-[#2F3A45]">No tiene acceso a esta sección</h1>
-              <p className="mt-2 max-w-2xl text-sm text-gray-600">Los reportes y dashboards están disponibles para perfiles autorizados de consulta ejecutiva, contable o administrativa. Vuelva al panel principal para continuar.</p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <button type="button" onClick={onGoHome} className="inline-flex h-[44px] items-center justify-center rounded-[12px] bg-[#1F4E79] px-4 text-sm font-medium text-white hover:bg-[#153a5c]">Volver al panel principal</button>
-                <button type="button" onClick={onOpenProfile} className="inline-flex h-[44px] items-center justify-center rounded-[12px] border border-[#D1D5DB] px-4 text-sm font-medium text-[#2F3A45] hover:bg-[#F7F9FC]">Abrir mi perfil</button>
-              </div>
             </section>
           </main>
         </div>
       </div>
     );
   }
+
+  const latestPlanilla = planillasList[0];
 
   return (
     <div className="min-h-screen bg-[#F7F9FC] font-sans text-[#111827]">
@@ -139,12 +201,12 @@ export function ReportsDashboardView({ currentUser, isRestricted = false, onGoHo
 
           {loadStatus === 'ready' ? (
             <>
-              {!projects.length ? (
+              {!proyectosList.length ? (
                 <EmptyReportsState title="No tiene proyectos disponibles para consulta" description="No hay proyectos autorizados para el alcance analítico de su sesión actual." actionLabel="Volver al panel" onAction={onGoHome} />
               ) : (
                 <>
                   <ReportsFiltersBar
-                    projects={projects}
+                    projects={proyectosList}
                     periods={reportPeriodsCatalog}
                     currentProjectId={currentProjectId}
                     currentPeriodId={currentPeriodId}
@@ -153,64 +215,42 @@ export function ReportsDashboardView({ currentUser, isRestricted = false, onGoHo
                     onChangePeriod={setCurrentPeriodId}
                     onChangeDimension={setDimensionFilter}
                     onReset={() => {
-                      setCurrentProjectId(projects[0]?.id ?? '');
+                      setCurrentProjectId(proyectosList[0]?.id ?? '');
                       setCurrentPeriodId('2026-03');
                       setDimensionFilter('all');
                     }}
                   />
 
-                  <ReportsTabsSwitcher tabs={availableTabs} activeTab={activeTab} onChange={setActiveTab} />
-
-                  <section className={`rounded-[12px] border bg-white p-4 shadow-sm ${partialDataMeta.tone === 'warning' ? 'border-[#F59E0B]/20' : 'border-[#16A34A]/20'}`}>
-                    <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                      <div className="flex items-start gap-3">
-                        <div className={`flex h-10 w-10 items-center justify-center rounded-[12px] ${partialDataMeta.tone === 'warning' ? 'bg-[#FFF7ED] text-[#92400E]' : 'bg-[#16A34A]/10 text-[#16A34A]'}`}>
-                          <AlertTriangle size={18} />
-                        </div>
-                        <div>
-                          <h2 className="text-sm font-semibold text-[#2F3A45]">{partialDataMeta.title}</h2>
-                          <p className="mt-1 text-sm text-gray-600">{partialDataMeta.description}</p>
-                        </div>
-                      </div>
-                      {activeDataset?.partialData ? <button type="button" onClick={() => setActiveOverlay({ type: 'incomplete' })} className="inline-flex h-[40px] items-center justify-center rounded-[10px] border border-[#D1D5DB] px-3 text-sm font-medium text-[#2F3A45] hover:bg-[#F7F9FC]">Ver detalle</button> : null}
-                    </div>
-                  </section>
+                  {/* Acciones de PDF para Planillas */}
+                  <div className="flex gap-2 bg-white p-4 rounded-[12px] border border-gray-200">
+                    <button 
+                      onClick={handleGeneratePdf}
+                      disabled={isGenerating || !activeDataset}
+                      className="flex items-center gap-2 bg-[#1F4E79] text-white px-4 py-2 rounded-lg hover:bg-[#153a5c] disabled:opacity-50"
+                    >
+                      {isGenerating ? <Loader2 className="animate-spin" size={16}/> : <Download size={16}/>}
+                      Generar PDF
+                    </button>
+                    {latestPlanilla && latestPlanilla.estadoGen === 'READY' && (
+                      <a href={`${API_URL.replace('/api/v1','')}${latestPlanilla.urlArchivo}`} target="_blank" rel="noreferrer"
+                         className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
+                        <Download size={16}/> Descargar PDF ({new Date(latestPlanilla.createdAt).toLocaleDateString()})
+                      </a>
+                    )}
+                    {latestPlanilla && latestPlanilla.estadoGen === 'PENDING' && (
+                      <span className="flex items-center px-4 py-2 text-sm text-gray-500">Planilla en cola...</span>
+                    )}
+                  </div>
 
                   {!activeDataset ? (
                     <EmptyReportsState title="No hay datos disponibles para los filtros seleccionados" description="Cambie el tipo de reporte, proyecto o periodo para continuar con la consulta." actionLabel="Limpiar filtros" onAction={() => {
-                      setCurrentProjectId(projects[0]?.id ?? '');
+                      setCurrentProjectId(proyectosList[0]?.id ?? '');
                       setCurrentPeriodId('2026-03');
                       setDimensionFilter('all');
                     }} />
                   ) : (
                     <>
-                      {activeTab === 'manager' ? <ManagerKpiCards metrics={activeDataset.metrics} onOpenDetail={(item) => setActiveOverlay({ type: 'detail', item: { ...item, kind: 'metric' } })} onOpenDefinition={(item) => setActiveOverlay({ type: 'definition', item })} /> : <ReportsSummaryCards metrics={activeDataset.metrics} onOpenDetail={(item) => setActiveOverlay({ type: 'detail', item: { ...item, kind: 'metric' } })} onOpenDefinition={(item) => setActiveOverlay({ type: 'definition', item })} />}
-
-                      {activeTab === 'manager' ? (
-                        <div className="grid gap-6 xl:grid-cols-2">
-                          {activeDataset.charts.map((chart) => (
-                            <div key={chart.id} className="space-y-4">
-                              <DashboardChartCard chart={chart} onOpenDetail={(item) => setActiveOverlay({ type: 'detail', item: { ...item, kind: 'chart' } })} onOpenDefinition={(item) => setActiveOverlay({ type: 'definition', item })} />
-                              <ChartLegendCard chart={chart} />
-                            </div>
-                          ))}
-                        </div>
-                      ) : null}
-
-                      {activeTab === 'operational' ? (
-                        <section className="space-y-3 rounded-[12px] border border-[#D1D5DB] bg-white p-6 shadow-sm">
-                          <SectionHeader title="Reporte operativo" description="Revise el comportamiento operativo del proyecto, sus frentes y alertas del periodo seleccionado." />
-                          {!visibleRows.length ? <EmptyReportsState title="No hay registros operativos para el filtro actual" description="Cambie la dimensión o el periodo para revisar otro corte operativo." actionLabel="Mostrar todas las dimensiones" onAction={() => setDimensionFilter('all')} /> : <OperationalReportTable rows={visibleRows} onOpenDetail={(row) => setActiveOverlay({ type: 'detail', item: { ...row, kind: 'row' } })} />}
-                        </section>
-                      ) : null}
-
-                      {activeTab === 'accounting' ? (
-                        <section className="space-y-3 rounded-[12px] border border-[#D1D5DB] bg-white p-6 shadow-sm">
-                          <SectionHeader title="Reporte contable" description="Revise el resumen contable del periodo, cartera, facturación y pendientes de conciliación." />
-                          {!visibleRows.length ? <EmptyReportsState title="No hay registros contables para el filtro actual" description="Cambie la dimensión o el periodo para revisar otro corte contable." actionLabel="Mostrar todas las dimensiones" onAction={() => setDimensionFilter('all')} /> : <AccountingReportTable rows={visibleRows} onOpenDetail={(row) => setActiveOverlay({ type: 'detail', item: { ...row, kind: 'row' } })} />}
-                        </section>
-                      ) : null}
-
+                      <ManagerKpiCards metrics={activeDataset.metrics} />
                       <section className="space-y-3 rounded-[12px] border border-[#D1D5DB] bg-white p-6 shadow-sm">
                         <SectionHeader title="Insights y alertas" description="Identifique hallazgos útiles para la toma de decisiones con el filtro actualmente aplicado." />
                         <div className="grid gap-4 xl:grid-cols-2">
@@ -225,10 +265,6 @@ export function ReportsDashboardView({ currentUser, isRestricted = false, onGoHo
           ) : null}
         </main>
       </div>
-
-      {selectedDetailItem ? <MetricDetailDrawer item={selectedDetailItem} contextLabel={contextLabel} onClose={() => setActiveOverlay(null)} /> : null}
-      {selectedDefinitionItem ? <KpiDefinitionModal item={selectedDefinitionItem} contextLabel={contextLabel} onClose={() => setActiveOverlay(null)} /> : null}
-      {activeOverlay?.type === 'incomplete' ? <DataCompletenessModal meta={partialDataMeta} onClose={() => setActiveOverlay(null)} /> : null}
     </div>
   );
 }

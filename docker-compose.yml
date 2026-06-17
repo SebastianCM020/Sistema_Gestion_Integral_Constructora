@@ -30,6 +30,18 @@ services:
       - icaro_net
 
   # ─────────────────────────────────────────────
+  # REDIS — Para colas BullMQ
+  # ─────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: icaro_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - icaro_net
+
+  # ─────────────────────────────────────────────
   # BACKEND — Node.js + Express + Prisma
   # ─────────────────────────────────────────────
   backend:
@@ -44,9 +56,13 @@ services:
       - "3001:3001"
     environment:
       - DATABASE_URL=postgresql://icaro_user:icaro_secret@db:5432/Icaro_System
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_started
     volumes:
       - ./backend:/app
       - /app/node_modules
