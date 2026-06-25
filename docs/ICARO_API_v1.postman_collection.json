@@ -1,0 +1,495 @@
+{
+  "info": {
+    "_postman_id": "icaro-v1-collection",
+    "name": "Sistema ICARO — API REST v1",
+    "description": "Colección completa de endpoints del Sistema ICARO CONSTRUCTORES BMGM S.A.S.\n\n## Instrucciones de uso\n1. Importar esta colección en Postman\n2. Crear un environment con las variables: `BASE_URL`, `TOKEN`\n3. Ejecutar primero `Auth / Login` para obtener el token\n4. El token se guarda automáticamente en la variable `TOKEN`\n\n## Variables de environment\n- `BASE_URL`: http://localhost:3001/api/v1\n- `TOKEN`: (se autocompleta tras el login)\n- `PROJECT_ID`: UUID de un proyecto de prueba\n- `RUBRO_ID`: UUID de un rubro de prueba",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "BASE_URL", "value": "http://localhost:3001/api/v1" },
+    { "key": "TOKEN",    "value": "" },
+    { "key": "PROJECT_ID", "value": "" },
+    { "key": "RUBRO_ID",   "value": "" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{TOKEN}}", "type": "string" }]
+  },
+  "item": [
+
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "const body = pm.response.json();",
+                "if (body.token) {",
+                "  pm.collectionVariables.set('TOKEN', body.token);",
+                "  console.log('✅ Token guardado');",
+                "}"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@icaro.dev\",\n  \"password\": \"admin\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/login", "host": ["{{BASE_URL}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Me (Perfil propio)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/auth/me", "host": ["{{BASE_URL}}"], "path": ["auth", "me"] }
+          }
+        },
+        {
+          "name": "Health Check",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "url": { "raw": "http://localhost:3001/health", "host": ["http://localhost:3001"], "path": ["health"] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Listar usuarios",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/users", "host": ["{{BASE_URL}}"], "path": ["users"] }
+          }
+        },
+        {
+          "name": "Crear usuario",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Pérez\",\n  \"email\": \"juan.perez@icaro.dev\",\n  \"password\": \"Test1234!\",\n  \"idRol\": 5\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/users", "host": ["{{BASE_URL}}"], "path": ["users"] }
+          }
+        },
+        {
+          "name": "Cambiar rol de usuario",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"idRol\": 3\n}" },
+            "url": { "raw": "{{BASE_URL}}/users/:id/role", "host": ["{{BASE_URL}}"], "path": ["users", ":id", "role"], "variable": [{ "key": "id", "value": "" }] }
+          }
+        },
+        {
+          "name": "Activar / Desactivar usuario",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"activo\": false\n}" },
+            "url": { "raw": "{{BASE_URL}}/users/:id/status", "host": ["{{BASE_URL}}"], "path": ["users", ":id", "status"], "variable": [{ "key": "id", "value": "" }] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Proyectos",
+      "item": [
+        {
+          "name": "Listar proyectos",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/proyectos", "host": ["{{BASE_URL}}"], "path": ["proyectos"] }
+          }
+        },
+        {
+          "name": "Crear proyecto",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigo\": \"PRY-2025-001\",\n  \"nombre\": \"Edificio Central Riobamba\",\n  \"presupuestoTotal\": 500000,\n  \"fechaInicio\": \"2025-01-01\",\n  \"fechaFinPrevista\": \"2025-12-31\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/proyectos", "host": ["{{BASE_URL}}"], "path": ["proyectos"] }
+          }
+        },
+        {
+          "name": "Obtener proyecto por ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/proyectos/{{PROJECT_ID}}", "host": ["{{BASE_URL}}"], "path": ["proyectos", "{{PROJECT_ID}}"] }
+          }
+        },
+        {
+          "name": "Cambiar estado del proyecto",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"estado\": \"INACTIVO\"\n}" },
+            "url": { "raw": "{{BASE_URL}}/proyectos/{{PROJECT_ID}}/estado", "host": ["{{BASE_URL}}"], "path": ["proyectos", "{{PROJECT_ID}}", "estado"] }
+          }
+        },
+        {
+          "name": "Asignar usuario a proyecto",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idUsuario\": \"\",\n  \"fechaInicio\": \"2025-01-01\",\n  \"fechaFin\": \"2025-12-31\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/proyectos/{{PROJECT_ID}}/asignaciones", "host": ["{{BASE_URL}}"], "path": ["proyectos", "{{PROJECT_ID}}", "asignaciones"] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Rubros",
+      "item": [
+        {
+          "name": "Listar rubros por proyecto",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/rubros?idProyecto={{PROJECT_ID}}", "host": ["{{BASE_URL}}"], "path": ["rubros"], "query": [{ "key": "idProyecto", "value": "{{PROJECT_ID}}" }] }
+          }
+        },
+        {
+          "name": "Crear rubro",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idProyecto\": \"{{PROJECT_ID}}\",\n  \"codigo\": \"R-001\",\n  \"descripcion\": \"Excavación manual\",\n  \"unidad\": \"m3\",\n  \"precioUnitario\": 18.50,\n  \"cantidadPresupuestada\": 500\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/rubros", "host": ["{{BASE_URL}}"], "path": ["rubros"] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Avances de Obra",
+      "item": [
+        {
+          "name": "Listar avances por proyecto",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/avances?idProyecto={{PROJECT_ID}}", "host": ["{{BASE_URL}}"], "path": ["avances"], "query": [{ "key": "idProyecto", "value": "{{PROJECT_ID}}" }] }
+          }
+        },
+        {
+          "name": "Registrar avance de obra",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idProyecto\": \"{{PROJECT_ID}}\",\n  \"idRubro\": \"{{RUBRO_ID}}\",\n  \"cantidadAvance\": 50,\n  \"fechaRegistro\": \"2025-05-15\",\n  \"notas\": \"Avance en zona sur\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/avances", "host": ["{{BASE_URL}}"], "path": ["avances"] }
+          }
+        },
+        {
+          "name": "Validar avance (Superintendente)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"estado\": \"VALIDATED\"\n}" },
+            "url": { "raw": "{{BASE_URL}}/avances/:id/validar", "host": ["{{BASE_URL}}"], "path": ["avances", ":id", "validar"], "variable": [{ "key": "id", "value": "" }] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Compras (Requerimientos)",
+      "item": [
+        {
+          "name": "Listar requerimientos del proyecto",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/compras?idProyecto={{PROJECT_ID}}", "host": ["{{BASE_URL}}"], "path": ["compras"], "query": [{ "key": "idProyecto", "value": "{{PROJECT_ID}}" }] }
+          }
+        },
+        {
+          "name": "Crear requerimiento de compra",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idProyecto\": \"{{PROJECT_ID}}\",\n  \"justificacion\": \"Materiales para cimentación\",\n  \"materiales\": [\n    { \"idMaterial\": \"\", \"cantidadSolicitada\": 100 }\n  ]\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/compras", "host": ["{{BASE_URL}}"], "path": ["compras"] }
+          }
+        },
+        {
+          "name": "Aprobar requerimiento",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"accion\": \"APROBAR\"\n}" },
+            "url": { "raw": "{{BASE_URL}}/compras/:id/aprobar", "host": ["{{BASE_URL}}"], "path": ["compras", ":id", "aprobar"], "variable": [{ "key": "id", "value": "" }] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Bodega e Inventario",
+      "item": [
+        {
+          "name": "Ver inventario del proyecto",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/bodega/proyectos/{{PROJECT_ID}}/inventario", "host": ["{{BASE_URL}}"], "path": ["bodega", "proyectos", "{{PROJECT_ID}}", "inventario"] }
+          }
+        },
+        {
+          "name": "Historial de movimientos",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/bodega/proyectos/{{PROJECT_ID}}/movimientos?limit=20&page=1", "host": ["{{BASE_URL}}"], "path": ["bodega", "proyectos", "{{PROJECT_ID}}", "movimientos"], "query": [{ "key": "limit", "value": "20" }, { "key": "page", "value": "1" }] }
+          }
+        },
+        {
+          "name": "Registrar movimiento libre",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idMaterial\": \"\",\n  \"tipoMovimiento\": \"ENTRADA\",\n  \"cantidad\": 50,\n  \"observacion\": \"Ingreso de materiales\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/bodega/proyectos/{{PROJECT_ID}}/movimientos", "host": ["{{BASE_URL}}"], "path": ["bodega", "proyectos", "{{PROJECT_ID}}", "movimientos"] }
+          }
+        },
+        {
+          "name": "Requerimientos aprobados (para recepción)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/bodega/proyectos/{{PROJECT_ID}}/requerimientos-aprobados", "host": ["{{BASE_URL}}"], "path": ["bodega", "proyectos", "{{PROJECT_ID}}", "requerimientos-aprobados"] }
+          }
+        },
+        {
+          "name": "Recepcionar materiales de requerimiento",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"detallesRecepcion\": [\n    {\n      \"idMaterial\": \"\",\n      \"cantidadRecibida\": 25,\n      \"observacion\": \"Recepción parcial\"\n    }\n  ]\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/bodega/proyectos/{{PROJECT_ID}}/requerimientos/:idReq/recepcionar", "host": ["{{BASE_URL}}"], "path": ["bodega", "proyectos", "{{PROJECT_ID}}", "requerimientos", ":idReq", "recepcionar"], "variable": [{ "key": "idReq", "value": "" }] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Materiales",
+      "item": [
+        {
+          "name": "Listar materiales",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/materiales?activo=true", "host": ["{{BASE_URL}}"], "path": ["materiales"], "query": [{ "key": "activo", "value": "true" }] }
+          }
+        },
+        {
+          "name": "Crear material",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigo\": \"MAT-001\",\n  \"nombre\": \"Cemento Portland\",\n  \"categoria\": \"Cemento\",\n  \"unidad\": \"saco\",\n  \"descripcion\": \"Cemento tipo I\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/materiales", "host": ["{{BASE_URL}}"], "path": ["materiales"] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Cierres Contables (Sprint 10)",
+      "item": [
+        {
+          "name": "Listar cierres",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/cierres-contables?idProyecto={{PROJECT_ID}}&limit=10&offset=0", "host": ["{{BASE_URL}}"], "path": ["cierres-contables"], "query": [{ "key": "idProyecto", "value": "{{PROJECT_ID}}" }, { "key": "limit", "value": "10" }, { "key": "offset", "value": "0" }] }
+          }
+        },
+        {
+          "name": "Consolidación mensual",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/cierres-contables/consolidacion?idProyecto={{PROJECT_ID}}&mesAnio=2025-05", "host": ["{{BASE_URL}}"], "path": ["cierres-contables", "consolidacion"], "query": [{ "key": "idProyecto", "value": "{{PROJECT_ID}}" }, { "key": "mesAnio", "value": "2025-05" }] }
+          }
+        },
+        {
+          "name": "Validación pre-cierre",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"idProyecto\": \"{{PROJECT_ID}}\",\n  \"mesAnio\": \"2025-05\"\n}" },
+            "url": { "raw": "{{BASE_URL}}/cierres-contables/validar", "host": ["{{BASE_URL}}"], "path": ["cierres-contables", "validar"] }
+          }
+        },
+        {
+          "name": "Ejecutar cierre mensual",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"idProyecto\": \"{{PROJECT_ID}}\",\n  \"mesAnio\": \"2025-05\"\n}" },
+            "url": { "raw": "{{BASE_URL}}/cierres-contables/ejecutar", "host": ["{{BASE_URL}}"], "path": ["cierres-contables", "ejecutar"] }
+          }
+        },
+        {
+          "name": "Obtener cierre por ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/cierres-contables/:id", "host": ["{{BASE_URL}}"], "path": ["cierres-contables", ":id"], "variable": [{ "key": "id", "value": "" }] }
+          }
+        },
+        {
+          "name": "Rechazar consumo",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"idMovimiento\": \"\",\n  \"observacion\": \"Consumo registrado por error\"\n}" },
+            "url": { "raw": "{{BASE_URL}}/cierres-contables/rechazar-consumo", "host": ["{{BASE_URL}}"], "path": ["cierres-contables", "rechazar-consumo"] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Reportes y Dashboard (Sprint 11)",
+      "item": [
+        {
+          "name": "Dashboard con KPIs reales",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/reportes/dashboard", "host": ["{{BASE_URL}}"], "path": ["reportes", "dashboard"] }
+          }
+        },
+        {
+          "name": "KPIs por proyecto específico",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/reportes/kpis?idProyecto={{PROJECT_ID}}", "host": ["{{BASE_URL}}"], "path": ["reportes", "kpis"], "query": [{ "key": "idProyecto", "value": "{{PROJECT_ID}}" }] }
+          }
+        },
+        {
+          "name": "Exportar a Excel (.xlsx)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/reportes/exportar-excel", "host": ["{{BASE_URL}}"], "path": ["reportes", "exportar-excel"] }
+          }
+        },
+        {
+          "name": "Exportar Excel — proyecto específico",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/reportes/exportar-excel?idProyecto={{PROJECT_ID}}", "host": ["{{BASE_URL}}"], "path": ["reportes", "exportar-excel"], "query": [{ "key": "idProyecto", "value": "{{PROJECT_ID}}" }] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Órdenes de Cambio (Sprint 7)",
+      "item": [
+        {
+          "name": "Listar órdenes de cambio",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/ordenes-cambio?idProyecto={{PROJECT_ID}}", "host": ["{{BASE_URL}}"], "path": ["ordenes-cambio"], "query": [{ "key": "idProyecto", "value": "{{PROJECT_ID}}" }] }
+          }
+        },
+        {
+          "name": "Crear orden de cambio",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idProyecto\": \"{{PROJECT_ID}}\",\n  \"idRubro\": \"{{RUBRO_ID}}\",\n  \"motivo\": \"Ampliación por cambio de diseño\",\n  \"cantidadAdicional\": 50\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/ordenes-cambio", "host": ["{{BASE_URL}}"], "path": ["ordenes-cambio"] }
+          }
+        },
+        {
+          "name": "Aprobar orden de cambio",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"accion\": \"APROBADA\",\n  \"comentario\": \"Aprobado por gerencia\"\n}" },
+            "url": { "raw": "{{BASE_URL}}/ordenes-cambio/:id/resolver", "host": ["{{BASE_URL}}"], "path": ["ordenes-cambio", ":id", "resolver"], "variable": [{ "key": "id", "value": "" }] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Audit Logs",
+      "item": [
+        {
+          "name": "Listar audit logs",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/audit-logs?limit=20&page=1", "host": ["{{BASE_URL}}"], "path": ["audit-logs"], "query": [{ "key": "limit", "value": "20" }, { "key": "page", "value": "1" }] }
+          }
+        },
+        {
+          "name": "Listar audit logs — filtrado por tabla",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/audit-logs?tabla=cierre_mensual&limit=10", "host": ["{{BASE_URL}}"], "path": ["audit-logs"], "query": [{ "key": "tabla", "value": "cierre_mensual" }, { "key": "limit", "value": "10" }] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Seguridad — Tests",
+      "item": [
+        {
+          "name": "Test 401 (siempre retorna 401)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/test/401", "host": ["{{BASE_URL}}"], "path": ["test", "401"] }
+          }
+        },
+        {
+          "name": "Test 403 (con token sin permisos)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/test/403", "host": ["{{BASE_URL}}"], "path": ["test", "403"] }
+          }
+        }
+      ]
+    }
+
+  ]
+}

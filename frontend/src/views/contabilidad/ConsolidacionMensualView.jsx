@@ -15,7 +15,7 @@ import {
   BarChart3, ShieldCheck, Lock, RefreshCw, CheckCircle2, XCircle,
   AlertTriangle, Loader2, Hash, Calendar, Building2, TrendingUp,
   ShoppingCart, Package, Layers, ChevronDown, ChevronUp, ShieldAlert,
-  ClipboardList, BadgeCheck, ArrowRight,
+  ClipboardList, BadgeCheck, ArrowRight, ThumbsUp, ThumbsDown,
 } from 'lucide-react';
 import { AppHeader }         from '../../components/ui/AppHeader.jsx';
 import { SidebarNavigation } from '../../components/ui/SidebarNavigation.jsx';
@@ -26,6 +26,7 @@ import {
   postEjecutarCierre,
   fetchCierres,
   postRechazarConsumo,
+  postAprobarConsumo,
 } from '../../services/cierre.service.js';
 import { fetchProjects } from '../../services/projects.service.js';
 
@@ -220,6 +221,7 @@ export function ConsolidacionMensualView({
   const [cierre, setCierre]               = useState(null);   // resultado del cierre
   const [loadingCierre, setLoadingCierre] = useState(false);
   const [rechazandoId, setRechazandoId]   = useState(null);
+  const [aprobandoId,  setAprobandoId]    = useState(null);
   const [historialCierres, setHistorialCierres] = useState([]);
   const [errorMsg, setErrorMsg]           = useState('');
 
@@ -306,11 +308,25 @@ export function ConsolidacionMensualView({
     try {
       await postRechazarConsumo(idMovimiento, observacion);
       await cargarConsolidacion(true);
-      alert('Consumo rechazado. Se ha creado un ajuste de inventario.');
     } catch (err) {
       setErrorMsg(err?.response?.data?.message || 'Error al rechazar el consumo.');
     } finally {
       setRechazandoId(null);
+    }
+  };
+
+  // ── Aprobar consumo ────────────────────────────────────────────────────
+  const handleAprobarConsumo = async (idMovimiento) => {
+    setAprobandoId(idMovimiento);
+    setErrorMsg('');
+    try {
+      await postAprobarConsumo(idMovimiento);
+      // Recargar para remover el consumo de la lista de pendientes
+      await cargarConsolidacion(true);
+    } catch (err) {
+      setErrorMsg(err?.response?.data?.message || 'Error al aprobar el consumo.');
+    } finally {
+      setAprobandoId(null);
     }
   };
 
@@ -526,7 +542,86 @@ export function ConsolidacionMensualView({
                   sub={`${consolidacion.cantidadAvances} registros de avance`} color="green" />
               </div>
 
-              {/* Snapshot inventario */}
+              {/* Detalle de consumos para validación — APARECE PRIMERO */}
+              {consolidacion.consumosDetalle?.length > 0 && (
+                <div className="overflow-hidden rounded-2xl border border-[#E5E7EB] bg-white shadow-sm">
+                  <div className="border-b border-[#F3F4F6] bg-[#F9FAFB] px-5 py-3 flex items-center justify-between">
+                    <p className="text-sm font-semibold text-[#374151]">
+                      <ClipboardList size={14} className="mr-1.5 inline text-[#1F4E79]" />
+                      Validación de Consumos Registrados
+                      <span className="ml-2 inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
+                        {consolidacion.consumosDetalle.length} consumo(s)
+                      </span>
+                    </p>
+                    {!yaCerrado && !cierre && puedeEjecutar && (
+                      <p className="text-xs text-gray-400">Revise y apruebe o rechace cada consumo antes de cerrar</p>
+                    )}
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-[#F3F4F6] bg-gray-50/50">
+                          <th className="px-5 py-2.5 text-left text-xs font-semibold text-gray-500">Fecha</th>
+                          <th className="px-5 py-2.5 text-left text-xs font-semibold text-gray-500">Material</th>
+                          <th className="px-5 py-2.5 text-left text-xs font-semibold text-gray-500">Responsable</th>
+                          <th className="px-5 py-2.5 text-right text-xs font-semibold text-gray-500">Cantidad</th>
+                          {!yaCerrado && !cierre && puedeEjecutar && (
+                            <th className="px-5 py-2.5 text-center text-xs font-semibold text-gray-500">Acción</th>
+                          )}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {consolidacion.consumosDetalle.map((c) => (
+                          <tr key={c.id} className="border-b border-[#F3F4F6] hover:bg-[#F9FAFB]">
+                            <td className="px-5 py-2.5 text-xs text-gray-500">{new Date(c.fecha).toLocaleDateString('es-CO')}</td>
+                            <td className="px-5 py-2.5 text-sm text-[#374151]">
+                              {c.nombre} <span className="text-xs text-gray-400">({c.codigo})</span>
+                            </td>
+                            <td className="px-5 py-2.5 text-xs text-gray-500">{c.responsable}</td>
+                            <td className="px-5 py-2.5 text-right text-sm font-semibold text-[#111827]">
+                              {formatNum(c.cantidad, 2)} {c.unidad}
+                            </td>
+                            {!yaCerrado && !cierre && puedeEjecutar && (
+                              <td className="px-5 py-2.5">
+                                <div className="flex items-center justify-center gap-1.5">
+                                  {/* Botón Aprobar */}
+                                  <button
+                                    onClick={() => handleAprobarConsumo(c.id)}
+                                    disabled={aprobandoId === c.id || rechazandoId === c.id}
+                                    title="Aprobar consumo"
+                                    className="inline-flex items-center gap-1 rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 transition-colors"
+                                  >
+                                    {aprobandoId === c.id
+                                      ? <Loader2 size={12} className="animate-spin" />
+                                      : <ThumbsUp size={12} />
+                                    }
+                                    Aprobar
+                                  </button>
+                                  {/* Botón Rechazar */}
+                                  <button
+                                    onClick={() => handleRechazarConsumo(c.id)}
+                                    disabled={rechazandoId === c.id || aprobandoId === c.id}
+                                    title="Rechazar consumo y reversar inventario"
+                                    className="inline-flex items-center gap-1 rounded-lg border border-red-200 bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700 hover:bg-red-100 disabled:opacity-50 transition-colors"
+                                  >
+                                    {rechazandoId === c.id
+                                      ? <Loader2 size={12} className="animate-spin" />
+                                      : <ThumbsDown size={12} />
+                                    }
+                                    Rechazar
+                                  </button>
+                                </div>
+                              </td>
+                            )}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {/* Snapshot inventario — APARECE DESPUÉS DE CONSUMOS */}
               {consolidacion.snapshotInventario?.length > 0 && (
                 <div className="overflow-hidden rounded-2xl border border-[#E5E7EB] bg-white shadow-sm">
                   <div className="border-b border-[#F3F4F6] bg-[#F9FAFB] px-5 py-3">
@@ -562,57 +657,7 @@ export function ConsolidacionMensualView({
                 </div>
               )}
 
-              {/* Detalle de consumos para validación */}
-              {consolidacion.consumosDetalle?.length > 0 && (
-                <div className="overflow-hidden rounded-2xl border border-[#E5E7EB] bg-white shadow-sm mt-5">
-                  <div className="border-b border-[#F3F4F6] bg-[#F9FAFB] px-5 py-3">
-                    <p className="text-sm font-semibold text-[#374151]">
-                      <ClipboardList size={14} className="mr-1.5 inline" />
-                      Validación de Consumos Registrados ({consolidacion.consumosDetalle.length})
-                    </p>
-                  </div>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
-                      <thead>
-                        <tr className="border-b border-[#F3F4F6]">
-                          <th className="px-5 py-2.5 text-left text-xs font-semibold text-gray-500">Fecha</th>
-                          <th className="px-5 py-2.5 text-left text-xs font-semibold text-gray-500">Material</th>
-                          <th className="px-5 py-2.5 text-left text-xs font-semibold text-gray-500">Responsable</th>
-                          <th className="px-5 py-2.5 text-right text-xs font-semibold text-gray-500">Cantidad</th>
-                          {!yaCerrado && !cierre && puedeEjecutar && (
-                            <th className="px-5 py-2.5 text-center text-xs font-semibold text-gray-500">Acción</th>
-                          )}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {consolidacion.consumosDetalle.map((c) => (
-                          <tr key={c.id} className="border-b border-[#F3F4F6] hover:bg-[#F9FAFB]">
-                            <td className="px-5 py-2.5 text-xs text-gray-500">{new Date(c.fecha).toLocaleDateString('es-CO')}</td>
-                            <td className="px-5 py-2.5 text-sm text-[#374151]">
-                              {c.nombre} <span className="text-xs text-gray-400">({c.codigo})</span>
-                            </td>
-                            <td className="px-5 py-2.5 text-xs text-gray-500">{c.responsable}</td>
-                            <td className="px-5 py-2.5 text-right text-sm font-semibold text-[#111827]">
-                              {formatNum(c.cantidad, 2)} {c.unidad}
-                            </td>
-                            {!yaCerrado && !cierre && puedeEjecutar && (
-                              <td className="px-5 py-2.5 text-center">
-                                <button
-                                  onClick={() => handleRechazarConsumo(c.id)}
-                                  disabled={rechazandoId === c.id}
-                                  className="text-xs font-medium text-red-600 hover:text-red-800 disabled:opacity-50"
-                                >
-                                  {rechazandoId === c.id ? 'Rechazando...' : 'Rechazar'}
-                                </button>
-                              </td>
-                            )}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              )}
+
 
               {/* Panel de acciones — solo si el periodo no está cerrado */}
               {!yaCerrado && !cierre && puedeEjecutar && (

@@ -4,6 +4,35 @@ export const reportPeriodsCatalog = [
   { id: '2026-04', label: 'Abril 2026' },
 ];
 
+export function generateProjectPeriods(project) {
+  if (!project || !project.fechaInicio || !project.fechaFinPrevista) {
+    return reportPeriodsCatalog;
+  }
+
+  const periods = [];
+  const start = new Date(project.fechaInicio);
+  const end = new Date(project.fechaFinPrevista);
+  const formatter = new Intl.DateTimeFormat('es-CO', { month: 'long', year: 'numeric' });
+
+  let current = new Date(start.getFullYear(), start.getMonth(), 1);
+  const endDate = new Date(end.getFullYear(), end.getMonth(), 1);
+
+  while (current <= endDate) {
+    const monthStr = (current.getMonth() + 1).toString().padStart(2, '0');
+    const id = `${current.getFullYear()}-${monthStr}`;
+    
+    // Capitalize first letter of month
+    let label = formatter.format(current);
+    label = label.charAt(0).toUpperCase() + label.slice(1);
+
+    periods.push({ id, label });
+    current.setMonth(current.getMonth() + 1);
+  }
+
+  // Si por alguna razón está vacío (fechas invertidas, etc.), devolver el predeterminado
+  return periods.length > 0 ? periods.reverse() : reportPeriodsCatalog;
+}
+
 export const reportTabsCatalog = {
   manager: { id: 'manager', label: 'Dashboard gerencial', description: 'KPIs consolidados para lectura ejecutiva.' },
   operational: { id: 'operational', label: 'Reporte operativo', description: 'Indicadores de ejecución y frentes activos.' },

@@ -23,6 +23,7 @@ const {
   getCierres,
   getCierreById,
   postRechazarConsumo,
+  postAprobarConsumo,
 } = require('../controllers/cierre.controller');
 
 // ── Grupos de roles ───────────────────────────────────────────────────────────
@@ -111,6 +112,20 @@ router.post(
   requireAuth,
   requireRole(rolesEjecucion),
   postRechazarConsumo,
+);
+
+/**
+ * POST /api/v1/cierres-contables/aprobar-consumo
+ * Body: { idMovimiento: string }
+ *
+ * Aprueba (valida) un consumo y registra trazabilidad en audit_log.
+ * No modifica el movimiento ni el inventario.
+ */
+router.post(
+  '/aprobar-consumo',
+  requireAuth,
+  requireRole(rolesEjecucion),
+  postAprobarConsumo,
 );
 
 module.exports = router;

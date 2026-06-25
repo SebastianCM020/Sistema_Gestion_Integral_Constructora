@@ -56,7 +56,20 @@ const canReviewAccounting = [requireAuth, requireRole([
  */
 router.get('/bandeja-gerencial', ...canApprove, comprasController.bandejaGerencial);
 router.get('/bandeja-contable', ...canReviewAccounting, comprasController.bandejaContable);
+router.get('/stats-contable', ...canReviewAccounting, comprasController.statsContable);
 router.get('/notificaciones', requireAuth, comprasController.obtenerNotificaciones);
+
+// ── Presupuesto Contable por Proyecto ─────────────────────────────────────────
+/**
+ * GET /api/v1/compras/proyectos/:idProyecto/presupuesto-contable
+ * Resumen de presupuesto para la revisión del Contador.
+ * Query: ?idRequerimiento=UUID (excluye ese req del cálculo de comprometido)
+ */
+router.get(
+  '/proyectos/:idProyecto/presupuesto-contable',
+  ...canReviewAccounting,
+  comprasController.obtenerPresupuestoContable
+);
 
 // ── Requerimientos por Proyecto ───────────────────────────────────────────────
 /**

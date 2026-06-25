@@ -14,14 +14,17 @@ export function NotificationMailbox({ currentUser }) {
   const handleNotifClick = (notif) => {
     setIsOpen(false);
     if (currentUser.roleName === 'Presidente / Gerente' || currentUser.roleName === 'Administrador del Sistema') {
-      navigate('/module/review');
+      const t = Date.now();
+      navigate(`/module/review?t=${t}`);
     } else if (currentUser.roleName === 'Contador') {
-      navigate('/module/accounting-review');
+      const t = Date.now();
+      navigate(`/module/accounting-review?t=${t}`);
     } else if (currentUser.roleName === 'Bodeguero') {
       const projectId = notif.requerimiento?.idProyecto || '';
+      const reqId = notif.requerimiento?.id || '';
       const t = Date.now();
       if (projectId) {
-        navigate(`/module/inventory?idProyecto=${projectId}&t=${t}`);
+        navigate(`/module/inventory?idProyecto=${projectId}&idReq=${reqId}&t=${t}`);
       } else {
         navigate(`/module/inventory?t=${t}`);
       }
@@ -63,9 +66,17 @@ export function NotificationMailbox({ currentUser }) {
   };
 
   useEffect(() => {
+    // Carga inicial
     loadNotifications();
-    // Polling cada 15 segundos para mantenerlo actualizado
-    const interval = setInterval(loadNotifications, 15000);
+
+    // Polling cada 60 s (no 15 s) para reducir carga de red
+    // Se pausa automáticamente cuando la pestaña no está activa
+    const interval = setInterval(() => {
+      if (!document.hidden) {
+        loadNotifications();
+      }
+    }, 60_000);
+
     return () => clearInterval(interval);
   }, [currentUser]);
 

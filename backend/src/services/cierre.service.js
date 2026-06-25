@@ -417,9 +417,55 @@ const obtenerCierre = async (idCierre) => {
 };
 
 /**
- * Revierte un consumo de obra detectado como falso/incorrecto durante el cierre.
- * Esto se logra creando un movimiento inverso de tipo 'AJUSTE' (entrada).
+ * Aprueba (valida) un consumo de obra: registra la revisión en audit_log.
+ * No modifica el movimiento ni el inventario; solo deja trazabilidad
+ * de que el Contador revisó y decidió mantener el consumo.
  */
+const aprobarConsumo = async (idMovimiento, idUsuario) => {
+  const movimiento = await prisma.movimientoInventario.findUnique({
+    where: { id: idMovimiento },
+    include: { material: { select: { nombre: true, codigo: true } } },
+  });
+
+  if (!movimiento || movimiento.tipoMovimiento !== 'SALIDA') {
+    const err = new Error('El consumo indicado no existe o no es de tipo SALIDA.');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  // Verificar si el periodo ya fue cerrado
+  const mesAnio = `${movimiento.fechaMovimiento.getFullYear()}-${String(movimiento.fechaMovimiento.getMonth() + 1).padStart(2, '0')}`;
+  const cierreCerrado = await prisma.cierreMensual.findFirst({
+    where: { idProyecto: movimiento.idProyecto, mesAnio, estadoCierre: 'CERRADO' },
+  });
+  if (cierreCerrado) {
+    const err = new Error('No se pueden aprobar consumos de un periodo que ya se encuentra CERRADO.');
+    err.statusCode = 409;
+    throw err;
+  }
+
+  // Registrar trazabilidad en audit_log sin tocar el movimiento
+  await logAction({
+    tabla:        'movimiento_inventario',
+    operacion:    'UPDATE',
+    idRegistro:   idMovimiento,
+    idUsuario,
+    datosAntes:   null,
+    datosDespues: {
+      accion:      'APROBACION_CONSUMO',
+      idMovimiento,
+      material:    movimiento.material?.nombre,
+      codigo:      movimiento.material?.codigo,
+      cantidad:    parseFloat(movimiento.cantidad),
+      revisadoPor: idUsuario,
+      revisadoEn:  new Date().toISOString(),
+    },
+    ipOrigen: null,
+  });
+
+  return { aprobado: true, idMovimiento };
+};
+
 const rechazarConsumo = async (idMovimiento, idUsuario, observacionRechazo) => {
   return await prisma.$transaction(async (tx) => {
     const movOriginal = await tx.movimientoInventario.findUnique({ where: { id: idMovimiento } });
@@ -484,5 +530,7 @@ module.exports = {
   listarCierres,
   obtenerCierre,
   rechazarConsumo,
+  aprobarConsumo,
   generarHashSHA256,
 };
+

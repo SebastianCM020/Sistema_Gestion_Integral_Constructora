@@ -17,14 +17,16 @@ import {
   Bell, CheckCircle2, XCircle, AlertCircle, Clock,
   Loader2, ClipboardList, ShieldAlert, RefreshCw,
   ChevronRight, X, Eye, Filter, Package, User, Building2,
-  Calendar, MessageSquare, TrendingUp, CheckSquare,
+  Calendar, MessageSquare, TrendingUp, CheckSquare, DollarSign,
+  AlertTriangle,
 } from 'lucide-react';
 import { AppHeader }         from '../../components/ui/AppHeader.jsx';
 import { SidebarNavigation } from '../../components/ui/SidebarNavigation.jsx';
 import { getModulesForUser } from '../../data/icaroData.js';
 import {
   fetchBandejaContable,
-  fetchRequerimientos,
+  fetchStatsContable,
+  fetchPresupuestoContable,
   validarContabilidadReq,
   rechazarRequerimiento,
 } from '../../services/compras.service.js';
@@ -60,6 +62,12 @@ const formatDate = (iso) => {
 
 const formatCantidad = (n) =>
   Number(n).toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+
+/**
+ * Formatea un valor monetario en pesos colombianos.
+ */
+const formatMoneda = (n) =>
+  Number(n ?? 0).toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
 // ── Sub-componentes ──────────────────────────────────────────────────────────
 
@@ -98,10 +106,26 @@ function StatCard({ label, value, icon: Icon, color }) {
 
 /**
  * Drawer lateral con el detalle completo del requerimiento.
+ * Incluye panel de presupuesto del proyecto para la validación contable.
  */
 function RequerimientoDrawer({ req, onClose, onValidar, onRechazar, procesando }) {
-  const [comentario, setComentario] = useState('');
-  const [confirmValidar, setConfirmValidar] = useState(false);
+  const [comentario,       setComentario]      = useState('');
+  const [confirmValidar,   setConfirmValidar]  = useState(false);
+  const [confirmRechazar,  setConfirmRechazar] = useState(false);
+  const [presupuesto,      setPresupuesto]     = useState(null);
+  const [cargandoPresp,    setCargandoPresp]   = useState(false);
+
+  // Cargar resumen de presupuesto cuando se abre el drawer con un req pendiente
+  useEffect(() => {
+    if (!req || req.estado !== 'REVISION_CONTABLE' || !req.idProyecto) return;
+    let cancelado = false;
+    setCargandoPresp(true);
+    fetchPresupuestoContable(req.idProyecto, req.id)
+      .then((result) => { if (!cancelado) setPresupuesto(result.data); })
+      .catch(() => { if (!cancelado) setPresupuesto(null); })
+      .finally(() => { if (!cancelado) setCargandoPresp(false); });
+    return () => { cancelado = true; };
+  }, [req?.id, req?.idProyecto, req?.estado]);
 
   if (!req) return null;
 
@@ -212,7 +236,7 @@ function RequerimientoDrawer({ req, onClose, onValidar, onRechazar, procesando }
                       <th className="px-3 py-2 text-left font-semibold text-gray-500">Código</th>
                       <th className="px-3 py-2 text-right font-semibold text-gray-500">Cant.</th>
                       <th className="px-3 py-2 text-left font-semibold text-gray-500">Unidad</th>
-                      <th className="px-3 py-2 text-right font-semibold text-gray-500">Recibida</th>
+                      <th className="px-3 py-2 text-left font-semibold text-gray-500">Categoría</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#F3F4F6]">
@@ -224,9 +248,7 @@ function RequerimientoDrawer({ req, onClose, onValidar, onRechazar, procesando }
                           {formatCantidad(d.cantidadSolicitada)}
                         </td>
                         <td className="px-3 py-2 text-gray-500">{d.material?.unidad}</td>
-                        <td className="px-3 py-2 text-right text-gray-500">
-                          {formatCantidad(d.cantidadRecibida)}
-                        </td>
+                        <td className="px-3 py-2 text-gray-400">{d.material?.categoria ?? '—'}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -235,11 +257,98 @@ function RequerimientoDrawer({ req, onClose, onValidar, onRechazar, procesando }
             )}
           </section>
 
+          {/* Panel de presupuesto (solo si está en REVISION_CONTABLE) */}
+          {esPendiente && (
+            <section>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400 flex items-center gap-1">
+                <DollarSign size={12} />
+                Presupuesto del Proyecto
+              </p>
+
+              {cargandoPresp ? (
+                <div className="flex items-center gap-2 rounded-lg bg-gray-50 p-4 text-xs text-gray-400">
+                  <Loader2 size={14} className="animate-spin" />
+                  Calculando presupuesto disponible…
+                </div>
+              ) : presupuesto ? (
+                <div className="space-y-2">
+
+                  {/* Alerta de presupuesto */}
+                  {presupuesto.alerta && (
+                    <div className={`flex items-start gap-2 rounded-lg border p-3 text-xs ${
+                      presupuesto.alerta.tipo === 'critico'
+                        ? 'border-red-200 bg-red-50 text-red-700'
+                        : 'border-amber-200 bg-amber-50 text-amber-700'
+                    }`}>
+                      {presupuesto.alerta.tipo === 'critico'
+                        ? <AlertCircle size={14} className="shrink-0 mt-0.5" />
+                        : <AlertTriangle size={14} className="shrink-0 mt-0.5" />}
+                      <p>{presupuesto.alerta.mensaje}</p>
+                    </div>
+                  )}
+
+                  {/* Barra de uso */}
+                  <div className="rounded-lg border border-[#E5E7EB] bg-[#F9FAFB] p-3 space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-gray-500">Uso del presupuesto</span>
+                      <span className={`font-bold ${
+                        presupuesto.porcentajeUsado >= 100 ? 'text-red-600' :
+                        presupuesto.porcentajeUsado >= 80  ? 'text-amber-600' :
+                        'text-emerald-600'
+                      }`}>{presupuesto.porcentajeUsado}%</span>
+                    </div>
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
+                      <div
+                        className={`h-2 rounded-full transition-all ${
+                          presupuesto.porcentajeUsado >= 100 ? 'bg-red-500' :
+                          presupuesto.porcentajeUsado >= 80  ? 'bg-amber-500' :
+                          'bg-emerald-500'
+                        }`}
+                        style={{ width: `${Math.min(presupuesto.porcentajeUsado, 100)}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Cifras */}
+                  <div className="grid grid-cols-1 gap-1.5">
+                    {[
+                      { label: 'Presupuesto total',    value: presupuesto.presupuestoTotal,            color: 'text-[#111827]' },
+                      { label: 'Ejecutado en obra',    value: presupuesto.presupuestoEjecutadoRubros,  color: 'text-amber-600' },
+                      { label: 'Comprometido (reqs.)', value: presupuesto.presupuestoComprometido,     color: 'text-blue-600'  },
+                      { label: 'Disponible',           value: presupuesto.presupuestoDisponible,       color: presupuesto.tienePresupuesto ? 'text-emerald-600 font-semibold' : 'text-red-600 font-semibold' },
+                    ].map(({ label, value, color }) => (
+                      <div key={label} className="flex items-center justify-between rounded-md bg-white border border-[#E5E7EB] px-3 py-1.5 text-xs">
+                        <span className="text-gray-500">{label}</span>
+                        <span className={color}>{formatMoneda(value)}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Indicador de disponibilidad */}
+                  <div className={`flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium ${
+                    presupuesto.tienePresupuesto
+                      ? 'bg-emerald-50 border border-emerald-200 text-emerald-700'
+                      : 'bg-red-50 border border-red-200 text-red-700'
+                  }`}>
+                    {presupuesto.tienePresupuesto
+                      ? <CheckCircle2 size={14} />
+                      : <XCircle size={14} />}
+                    {presupuesto.tienePresupuesto
+                      ? 'Hay presupuesto disponible para este requerimiento.'
+                      : 'Presupuesto insuficiente. Se recomienda rechazar.'}
+                  </div>
+                </div>
+              ) : (
+                <p className="text-xs text-gray-400 italic">No se pudo obtener el resumen de presupuesto.</p>
+              )}
+            </section>
+          )}
+
           {/* Sección de acciones (solo si REVISION_CONTABLE) */}
           {esPendiente && (
             <section className="space-y-4 border-t border-gray-100 pt-4">
               <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">
-                Acción gerencial
+                Decisión contable
               </p>
 
               {/* Confirmar validación */}
@@ -271,7 +380,7 @@ function RequerimientoDrawer({ req, onClose, onValidar, onRechazar, procesando }
               ) : (
                 <button
                   id={`btn-validar-drawer-${req.id}`}
-                  onClick={() => setConfirmValidar(true)}
+                  onClick={() => { setConfirmValidar(true); setConfirmRechazar(false); }}
                   disabled={procesando === req.id}
                   className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50 transition-colors"
                 >
@@ -281,30 +390,50 @@ function RequerimientoDrawer({ req, onClose, onValidar, onRechazar, procesando }
               )}
 
               {/* Rechazo con comentario obligatorio */}
-              <div className="space-y-2">
-                <label className="block text-xs font-medium text-gray-600">
-                  Motivo de rechazo <span className="text-red-500">*</span>
-                </label>
-                <textarea
-                  id={`textarea-rechazo-${req.id}`}
-                  rows={3}
-                  value={comentario}
-                  onChange={(e) => setComentario(e.target.value)}
-                  placeholder="Ej: Presupuesto insuficiente para este período, requiere reformulación..."
-                  className="w-full resize-none rounded-lg border border-[#D1D5DB] px-3 py-2 text-sm text-[#111827] placeholder-gray-400 focus:border-red-400 focus:outline-none focus:ring-2 focus:ring-red-200"
-                />
+              {confirmRechazar ? (
+                <div className="space-y-3 rounded-lg border border-red-200 bg-red-50 p-3">
+                  <label className="block text-xs font-medium text-red-700">
+                    Motivo de rechazo <span className="text-red-500">*</span>
+                  </label>
+                  <textarea
+                    id={`textarea-rechazo-${req.id}`}
+                    rows={3}
+                    value={comentario}
+                    onChange={(e) => setComentario(e.target.value)}
+                    placeholder="Ej: Presupuesto insuficiente para este período, requiere reformulación..."
+                    className="w-full resize-none rounded-lg border border-red-200 px-3 py-2 text-sm text-[#111827] placeholder-gray-400 focus:border-red-400 focus:outline-none focus:ring-2 focus:ring-red-200"
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setConfirmRechazar(false)}
+                      className="flex-1 rounded-lg border border-red-200 bg-white py-2 text-xs font-medium text-gray-600 hover:bg-gray-50"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      id={`btn-rechazar-drawer-${req.id}`}
+                      onClick={() => { if (comentario.trim()) onRechazar(req.id, comentario); }}
+                      disabled={!comentario.trim() || procesando === req.id}
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg border border-red-200 bg-red-600 py-2 text-xs font-medium text-white hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    >
+                      {procesando === req.id
+                        ? <Loader2 size={13} className="animate-spin" />
+                        : <XCircle size={13} />}
+                      Rechazar
+                    </button>
+                  </div>
+                </div>
+              ) : (
                 <button
                   id={`btn-rechazar-drawer-${req.id}`}
-                  onClick={() => { if (comentario.trim()) onRechazar(req.id, comentario); }}
-                  disabled={!comentario.trim() || procesando === req.id}
+                  onClick={() => { setConfirmRechazar(true); setConfirmValidar(false); }}
+                  disabled={procesando === req.id}
                   className="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-red-200 bg-red-50 py-2.5 text-sm font-medium text-red-700 hover:bg-red-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                 >
-                  {procesando === req.id
-                    ? <Loader2 size={14} className="animate-spin" />
-                    : <XCircle size={16} />}
-                  Rechazar con motivo
+                  <XCircle size={16} />
+                  Rechazar Requerimiento
                 </button>
-              </div>
+              )}
             </section>
           )}
         </div>
@@ -421,18 +550,15 @@ export function BuzonContableView({
   const cargarStats = useCallback(async () => {
     if (!tieneAcceso) return;
     try {
-      const [rPend, rApro, rRech] = await Promise.all([
-        fetchBandejaContable({ limit: 1, offset: 0, estado: 'REVISION_CONTABLE' }),
-        fetchBandejaContable({ limit: 1, offset: 0, estado: 'APROBADO' }),
-        fetchBandejaContable({ limit: 1, offset: 0, estado: 'RECHAZADO' }),
-      ]);
+      // Una sola petición al servidor en lugar de 3 requests paralelos
+      const result = await fetchStatsContable();
       setStats({
-        pendientes: rPend.total ?? 0,
-        validados: rApro.total ?? 0,
-        rechazados: rRech.total ?? 0,
+        pendientes: result.data?.pendientes ?? 0,
+        validados:  result.data?.validados  ?? 0,
+        rechazados: result.data?.rechazados ?? 0,
       });
-    } catch { /* silencioso */ }
-  }, [tieneAcceso]);
+    } catch { /* silencioso — los stats son informativos, no críticos */ }
+  }, [tieneAcceso, location.search]);
 
   const cargarTab = useCallback(async () => {
     if (!tieneAcceso) { setLoadStatus('forbidden'); return; }
@@ -579,9 +705,9 @@ export function BuzonContableView({
             <>
               {/* ── Stats cards ─────────────────────────────────────────── */}
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-3">
-                <StatCard label="Pendientes"  value={stats.pendientes}  icon={Clock}        color="amber"   />
-                <StatCard label="Aprobados"   value={stats.validados}   icon={CheckCircle2} color="emerald" />
-                <StatCard label="Rechazados"  value={stats.rechazados}  icon={XCircle}      color="red"     />
+                <StatCard label="Pendientes"      value={stats.pendientes}  icon={Clock}        color="amber"   />
+                <StatCard label="Env. a Gerencia" value={stats.validados}   icon={TrendingUp}   color="blue"    />
+                <StatCard label="Rechazados"      value={stats.rechazados}  icon={XCircle}      color="red"     />
               </div>
 
               {/* ── Toast de feedback ────────────────────────────────────── */}

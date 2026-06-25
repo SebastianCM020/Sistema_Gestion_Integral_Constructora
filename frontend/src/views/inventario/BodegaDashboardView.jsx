@@ -242,8 +242,10 @@ export function BodegaDashboardView({
 
   const [searchParams, setSearchParams] = useSearchParams();
   const queryProjectId = searchParams.get('idProyecto');
+  const queryReqId     = searchParams.get('idReq');
   const queryTimestamp = searchParams.get('t');
   const prevQueryProjectIdRef = React.useRef(queryProjectId);
+  const [isFetching, setIsFetching] = useState(false);
 
   const modules = getModulesForUser(currentUser);
   const isAuthorized = currentUser.roleName === 'Bodeguero';
@@ -304,19 +306,33 @@ export function BodegaDashboardView({
     if (!proyectoActualId || loadStatus !== 'ready') return;
 
     const cargarDatosProyecto = async () => {
+      setIsFetching(true);
       const [resReqs, resMov, resInv] = await Promise.allSettled([
         fetchRequerimientosAprobados(proyectoActualId, navigator.onLine),
         fetchMovimientos(proyectoActualId, { limit: 50, isOnline: navigator.onLine }),
         fetchInventario(proyectoActualId, navigator.onLine),
       ]);
 
-      if (resReqs.status === 'fulfilled')  setRequerimientos(resReqs.value.data ?? []);
+      if (resReqs.status === 'fulfilled') {
+        const reqs = resReqs.value.data ?? [];
+        setRequerimientos(reqs);
+        
+        // Auto-seleccionar requerimiento si viene en la URL
+        if (queryReqId) {
+          const reqMatch = reqs.find((r) => r.id === queryReqId);
+          if (reqMatch) {
+            setReqSeleccionado(reqMatch);
+          }
+        }
+      }
+      
       if (resMov.status  === 'fulfilled')  setMovimientos(resMov.value.data   ?? []);
       if (resInv.status  === 'fulfilled')  setInventario(resInv.value.data    ?? []);
+      setIsFetching(false);
     };
 
     cargarDatosProyecto();
-  }, [proyectoActualId, loadStatus, queryTimestamp]);
+  }, [proyectoActualId, loadStatus, queryTimestamp, queryReqId]);
 
   // ── Handlers ──────────────────────────────────────────────────────────────
 
@@ -575,7 +591,12 @@ export function BodegaDashboardView({
               <div className="grid gap-6 xl:grid-cols-[1fr_1.1fr]">
 
                 {/* ── Panel izquierdo: Requerimientos APROBADOS ── */}
-                <section className="space-y-3 rounded-[12px] border border-[#D1D5DB] bg-white p-6 shadow-sm">
+                <section className="space-y-3 rounded-[12px] border border-[#D1D5DB] bg-white p-6 shadow-sm relative">
+                  {isFetching && (
+                    <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/60 rounded-[12px] backdrop-blur-sm">
+                      <Loader2 size={32} className="animate-spin text-[#1F4E79]" />
+                    </div>
+                  )}
                   <SectionHeader
                     title="Requerimientos aprobados"
                     description={`Proyecto: ${proyectoActual?.nombre ?? '—'}. Seleccione uno para recepcionar materiales.`}

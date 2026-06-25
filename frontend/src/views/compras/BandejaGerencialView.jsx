@@ -13,6 +13,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Bell, CheckCircle2, XCircle, AlertCircle, Clock,
   Loader2, ClipboardList, ShieldAlert, RefreshCw,
@@ -100,6 +101,7 @@ function StatCard({ label, value, icon: Icon, color }) {
 function RequerimientoDrawer({ req, onClose, onAprobar, onRechazar, procesando }) {
   const [comentario, setComentario] = useState('');
   const [confirmAprobar, setConfirmAprobar] = useState(false);
+  const [confirmRechazar, setConfirmRechazar] = useState(false);
 
   if (!req) return null;
 
@@ -269,7 +271,7 @@ function RequerimientoDrawer({ req, onClose, onAprobar, onRechazar, procesando }
               ) : (
                 <button
                   id={`btn-aprobar-drawer-${req.id}`}
-                  onClick={() => setConfirmAprobar(true)}
+                  onClick={() => { setConfirmAprobar(true); setConfirmRechazar(false); }}
                   disabled={procesando === req.id}
                   className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50 transition-colors"
                 >
@@ -279,30 +281,50 @@ function RequerimientoDrawer({ req, onClose, onAprobar, onRechazar, procesando }
               )}
 
               {/* Rechazo con comentario obligatorio */}
-              <div className="space-y-2">
-                <label className="block text-xs font-medium text-gray-600">
-                  Motivo de rechazo <span className="text-red-500">*</span>
-                </label>
-                <textarea
-                  id={`textarea-rechazo-${req.id}`}
-                  rows={3}
-                  value={comentario}
-                  onChange={(e) => setComentario(e.target.value)}
-                  placeholder="Ej: Presupuesto insuficiente para este período, requiere reformulación..."
-                  className="w-full resize-none rounded-lg border border-[#D1D5DB] px-3 py-2 text-sm text-[#111827] placeholder-gray-400 focus:border-red-400 focus:outline-none focus:ring-2 focus:ring-red-200"
-                />
+              {confirmRechazar ? (
+                <div className="space-y-3 rounded-lg border border-red-200 bg-red-50 p-3">
+                  <label className="block text-xs font-medium text-red-700">
+                    Motivo de rechazo <span className="text-red-500">*</span>
+                  </label>
+                  <textarea
+                    id={`textarea-rechazo-${req.id}`}
+                    rows={3}
+                    value={comentario}
+                    onChange={(e) => setComentario(e.target.value)}
+                    placeholder="Ej: Presupuesto insuficiente para este período, requiere reformulación..."
+                    className="w-full resize-none rounded-lg border border-red-200 px-3 py-2 text-sm text-[#111827] placeholder-gray-400 focus:border-red-400 focus:outline-none focus:ring-2 focus:ring-red-200"
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setConfirmRechazar(false)}
+                      className="flex-1 rounded-lg border border-red-200 bg-white py-2 text-xs font-medium text-gray-600 hover:bg-gray-50"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      id={`btn-rechazar-drawer-${req.id}`}
+                      onClick={() => { if (comentario.trim()) onRechazar(req.id, comentario); }}
+                      disabled={!comentario.trim() || procesando === req.id}
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg border border-red-200 bg-red-600 py-2 text-xs font-medium text-white hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    >
+                      {procesando === req.id
+                        ? <Loader2 size={13} className="animate-spin" />
+                        : <XCircle size={13} />}
+                      Rechazar
+                    </button>
+                  </div>
+                </div>
+              ) : (
                 <button
                   id={`btn-rechazar-drawer-${req.id}`}
-                  onClick={() => { if (comentario.trim()) onRechazar(req.id, comentario); }}
-                  disabled={!comentario.trim() || procesando === req.id}
+                  onClick={() => { setConfirmRechazar(true); setConfirmAprobar(false); }}
+                  disabled={procesando === req.id}
                   className="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-red-200 bg-red-50 py-2.5 text-sm font-medium text-red-700 hover:bg-red-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                 >
-                  {procesando === req.id
-                    ? <Loader2 size={14} className="animate-spin" />
-                    : <XCircle size={16} />}
-                  Rechazar con motivo
+                  <XCircle size={16} />
+                  Rechazar Requerimiento
                 </button>
-              </div>
+              )}
             </section>
           )}
         </div>
@@ -393,6 +415,7 @@ export function BandejaGerencialView({
 }) {
   const modules      = getModulesForUser(currentUser);
   const tieneAcceso  = ROLES_PERMITIDOS.includes(currentUser.roleName);
+  const location     = useLocation();
 
   // Estado de UI
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -430,7 +453,7 @@ export function BandejaGerencialView({
         rechazados: rRech.total ?? 0,
       });
     } catch { /* silencioso */ }
-  }, [tieneAcceso]);
+  }, [tieneAcceso, location.search]);
 
   const cargarTab = useCallback(async () => {
     if (!tieneAcceso) { setLoadStatus('forbidden'); return; }
@@ -448,7 +471,7 @@ export function BandejaGerencialView({
       console.error('[BandejaGerencial] Error cargando tab:', err);
       setLoadStatus('error');
     }
-  }, [tieneAcceso, tabActiva, page]);
+  }, [tieneAcceso, tabActiva, page, location.search]);
 
   useEffect(() => { cargarTab(); }, [cargarTab]);
   useEffect(() => { cargarStats(); }, [cargarStats]);

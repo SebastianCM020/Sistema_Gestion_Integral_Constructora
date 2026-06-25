@@ -17,7 +17,9 @@ const {
   listarCierres,
   obtenerCierre,
   rechazarConsumo,
+  aprobarConsumo,
 } = require('../services/cierre.service');
+
 const { extractIp } = require('../services/audit.service');
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -256,6 +258,46 @@ const postRechazarConsumo = async (req, res) => {
   }
 };
 
+/**
+ * POST /api/v1/cierres-contables/aprobar-consumo
+ * Body: { idMovimiento: string }
+ *
+ * Aprueba un consumo registrando trazabilidad en audit_log.
+ * No modifica el movimiento ni el inventario.
+ * Roles: Contador, Admin
+ */
+const postAprobarConsumo = async (req, res) => {
+  try {
+    const { idMovimiento } = req.body || {};
+    const idUsuario = req.user?.id;
+
+    if (!idMovimiento) {
+      return res.status(400).json({
+        success: false,
+        message: 'Se requiere "idMovimiento" en el body.',
+      });
+    }
+
+    if (!idUsuario) {
+      return res.status(401).json({ success: false, message: 'Usuario no autenticado.' });
+    }
+
+    const resultado = await aprobarConsumo(idMovimiento, idUsuario);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Consumo aprobado. Trazabilidad registrada.',
+      data: resultado,
+    });
+  } catch (error) {
+    console.error('[CierreController] postAprobarConsumo:', error.message);
+    return res.status(error.statusCode || 400).json({
+      success: false,
+      message: error.message || 'Error al aprobar el consumo.',
+    });
+  }
+};
+
 module.exports = {
   getConsolidacion,
   postValidarPreCierre,
@@ -263,4 +305,5 @@ module.exports = {
   getCierres,
   getCierreById,
   postRechazarConsumo,
+  postAprobarConsumo,
 };
