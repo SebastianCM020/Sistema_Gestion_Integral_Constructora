@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ShieldAlert } from 'lucide-react';
 import { AppHeader } from '../../components/ui/AppHeader.jsx';
 import { SectionHeader } from '../../components/ui/SectionHeader.jsx';
@@ -19,34 +19,72 @@ import { ReceptionConfirmModal } from '../../components/inventario/ReceptionConf
 import { ReceptionForm } from '../../components/inventario/ReceptionForm.jsx';
 import { ReceptionSuccessState } from '../../components/inventario/ReceptionSuccessState.jsx';
 import { getModulesForUser } from '../../data/icaroData.js';
-import { getApprovedRequestsByProject } from '../../data/mockApprovedRequests.js';
-import { getAssignedProjectsForUser } from '../../data/mockAssignedProjects.js';
-import { mockInventoryByProject } from '../../data/mockInventoryByProject.js';
-import { getReceptionHistoryByProject } from '../../data/mockReceptionHistory.js';
+// ── Servicios reales (reemplaza mocks) ─────────────────────────────────────
 import {
-  applyReceptionToInventory,
+  fetchRequerimientosAprobados,
+  recepcionarMateriales as apiRecepcionarMateriales,
+  fetchInventario,
+} from '../../services/bodega.service.js';
+import { fetchProyectosAsignados } from '../../services/projects.service.js';
+import {
   buildReceptionDraftFromRequest,
   defaultInventoryFilters,
   emptyReceptionDraft,
   filterApprovedRequests,
   filterInventoryItems,
-  formatInventoryDate,
   getProjectInventorySummary,
   getReceptionDeltaSummary,
   hasReceptionChanges,
-  markRequestAsReceived,
 } from '../../utils/inventoryHelpers.js';
 import { validateReceptionDraft } from '../../utils/receptionValidationHelpers.js';
+
+/**
+ * Adapta un requerimiento del backend al formato que espera la UI.
+ * Mantiene compatibilidad con los helpers de inventoryHelpers.js.
+ */
+const adaptarRequerimiento = (req) => ({
+  requestId: req.id,
+  requestCode: req.id.slice(0, 8).toUpperCase(),
+  projectId: req.idProyecto,
+  projectCode: req.proyecto?.codigo ?? '',
+  projectName: req.proyecto?.nombre ?? '',
+  receptionStatus: 'available',
+  lines: (req.detalles ?? []).map((d) => ({
+    materialId: d.idMaterial,
+    materialName: d.material?.nombre ?? d.idMaterial,
+    materialCode: d.material?.codigo ?? '',
+    unit: d.material?.unidad ?? 'u',
+    quantityRequested: parseFloat(d.cantidadSolicitada),
+    quantityReceived: parseFloat(d.cantidadRecibida ?? 0),
+    cantidadRecibida: parseFloat(d.cantidadSolicitada) - parseFloat(d.cantidadRecibida ?? 0),
+  })),
+});
+
+/**
+ * Adapta un item de inventario del backend al formato de la UI.
+ */
+const adaptarInventario = (inv) => ({
+  materialId: inv.idMaterial,
+  materialCode: inv.material?.codigo ?? '',
+  materialName: inv.material?.nombre ?? inv.idMaterial,
+  category: inv.material?.categoria ?? '',
+  unit: inv.material?.unidad ?? 'u',
+  stockCurrent: parseFloat(inv.stockActual ?? inv.cantidadDisponible ?? 0),
+  lastUpdated: inv.ultimaActualizacion ?? new Date().toISOString(),
+  totalEntradas: parseFloat(inv.desglose?.totalEntradas ?? 0),
+  totalSalidas: parseFloat(inv.desglose?.totalSalidas ?? 0),
+});
 
 export function InventoryReceptionView({ currentUser, isRestricted = false, onGoHome, onOpenProfile, onLogout, onOpenModule }) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [loadStatus, setLoadStatus] = useState('loading');
   const [retryCount, setRetryCount] = useState(0);
-  const [projects] = useState(() => getAssignedProjectsForUser(currentUser.email));
-  const [currentProjectId, setCurrentProjectId] = useState(projects[0]?.id ?? '');
-  const [requestsByProject, setRequestsByProject] = useState(() => Object.fromEntries(projects.map((project) => [project.id, getApprovedRequestsByProject(project.id)])));
-  const [inventoryByProject, setInventoryByProject] = useState(() => Object.fromEntries(projects.map((project) => [project.id, (mockInventoryByProject[project.id] ?? []).map((item) => ({ ...item }))])));
-  const [receptionHistoryByProject, setReceptionHistoryByProject] = useState(() => Object.fromEntries(projects.map((project) => [project.id, getReceptionHistoryByProject(project.id)])));
+  // Datos reales desde el backend
+  const [projects, setProjects] = useState([]);
+  const [currentProjectId, setCurrentProjectId] = useState('');
+  const [requestsByProject, setRequestsByProject] = useState({});
+  const [inventoryByProject, setInventoryByProject] = useState({});
+  const [receptionHistoryByProject] = useState({});
   const [filters, setFilters] = useState(defaultInventoryFilters);
   const [selectedRequestId, setSelectedRequestId] = useState(null);
   const [receptionDraft, setReceptionDraft] = useState(emptyReceptionDraft);
@@ -57,27 +95,114 @@ export function InventoryReceptionView({ currentUser, isRestricted = false, onGo
 
   const modules = getModulesForUser(currentUser);
   const isAuthorizedRole = currentUser.roleName === 'Bodeguero';
-  const currentProject = useMemo(() => projects.find((project) => project.id === currentProjectId) ?? null, [projects, currentProjectId]);
-  const currentRequests = useMemo(() => requestsByProject[currentProjectId] ?? [], [requestsByProject, currentProjectId]);
-  const currentInventory = useMemo(() => inventoryByProject[currentProjectId] ?? [], [inventoryByProject, currentProjectId]);
-  const currentReceptionHistory = useMemo(() => receptionHistoryByProject[currentProjectId] ?? [], [receptionHistoryByProject, currentProjectId]);
-  const pendingRequests = useMemo(() => currentRequests.filter((request) => request.receptionStatus === 'available'), [currentRequests]);
-  const visibleRequests = useMemo(() => filterApprovedRequests(pendingRequests, filters.requestQuery), [pendingRequests, filters.requestQuery]);
-  const visibleInventory = useMemo(() => filterInventoryItems(currentInventory, filters.inventoryQuery), [currentInventory, filters.inventoryQuery]);
-  const selectedRequest = useMemo(() => currentRequests.find((request) => request.requestId === selectedRequestId) ?? null, [currentRequests, selectedRequestId]);
+  const isOnline = navigator.onLine;
+
+  const currentProject = useMemo(
+    () => projects.find((p) => p.id === currentProjectId) ?? null,
+    [projects, currentProjectId]
+  );
+  const currentRequests = useMemo(
+    () => requestsByProject[currentProjectId] ?? [],
+    [requestsByProject, currentProjectId]
+  );
+  const currentInventory = useMemo(
+    () => inventoryByProject[currentProjectId] ?? [],
+    [inventoryByProject, currentProjectId]
+  );
+  const currentReceptionHistory = useMemo(
+    () => receptionHistoryByProject[currentProjectId] ?? [],
+    [receptionHistoryByProject, currentProjectId]
+  );
+  const pendingRequests = useMemo(
+    () => currentRequests.filter((r) => r.receptionStatus === 'available'),
+    [currentRequests]
+  );
+  const visibleRequests = useMemo(
+    () => filterApprovedRequests(pendingRequests, filters.requestQuery),
+    [pendingRequests, filters.requestQuery]
+  );
+  const visibleInventory = useMemo(
+    () => filterInventoryItems(currentInventory, filters.inventoryQuery),
+    [currentInventory, filters.inventoryQuery]
+  );
+  const selectedRequest = useMemo(
+    () => currentRequests.find((r) => r.requestId === selectedRequestId) ?? null,
+    [currentRequests, selectedRequestId]
+  );
   const selectedInventoryItem = activeOverlay?.type === 'inventory-detail' ? activeOverlay.item : null;
-  const currentSummary = useMemo(() => getProjectInventorySummary(currentInventory, currentRequests, currentReceptionHistory), [currentInventory, currentRequests, currentReceptionHistory]);
-  const receptionSummary = useMemo(() => getReceptionDeltaSummary(receptionDraft.lines), [receptionDraft.lines]);
+  const currentSummary = useMemo(
+    () => getProjectInventorySummary(currentInventory, currentRequests, currentReceptionHistory),
+    [currentInventory, currentRequests, currentReceptionHistory]
+  );
+  const receptionSummary = useMemo(
+    () => getReceptionDeltaSummary(receptionDraft.lines),
+    [receptionDraft.lines]
+  );
 
-  useEffect(() => {
+  /**
+   * Carga proyectos asignados y datos iniciales de bodega desde el backend real.
+   */
+  const cargarDatosIniciales = useCallback(async () => {
     setLoadStatus('loading');
+    try {
+      const proyectosRes = await fetchProyectosAsignados();
+      const proyectosData = proyectosRes?.data ?? proyectosRes ?? [];
 
-    const timer = window.setTimeout(() => {
-      setLoadStatus(currentUser.inventoryShouldFail ? 'error' : 'ready');
-    }, 650);
+      if (!proyectosData.length) {
+        setProjects([]);
+        setLoadStatus('ready');
+        return;
+      }
 
-    return () => window.clearTimeout(timer);
-  }, [currentUser.inventoryShouldFail, retryCount]);
+      // Adaptar formato del backend al formato de la UI
+      const proyectosAdaptados = proyectosData.map((p) => ({
+        id: p.id,
+        code: p.codigo,
+        name: p.nombre,
+        estado: p.estado,
+      }));
+
+      setProjects(proyectosAdaptados);
+      const primerProyecto = proyectosAdaptados[0];
+      setCurrentProjectId((prev) => prev || primerProyecto.id);
+
+      // Cargar requerimientos e inventario del primer proyecto en paralelo
+      await cargarDatosProyecto(primerProyecto.id);
+      setLoadStatus('ready');
+    } catch (error) {
+      console.error('[InventoryReceptionView] Error cargando datos:', error);
+      setLoadStatus('error');
+    }
+  }, [retryCount]);
+
+  /**
+   * Carga requerimientos aprobados e inventario de un proyecto específico.
+   */
+  const cargarDatosProyecto = useCallback(async (idProyecto) => {
+    try {
+      const [reqRes, invRes] = await Promise.all([
+        fetchRequerimientosAprobados(idProyecto, isOnline).catch(() => ({ data: [] })),
+        fetchInventario(idProyecto, isOnline).catch(() => ({ data: [] })),
+      ]);
+
+      const requerimientos = (reqRes.data ?? []).map(adaptarRequerimiento);
+      const inventario = (invRes.data ?? []).map(adaptarInventario);
+
+      setRequestsByProject((prev) => ({ ...prev, [idProyecto]: requerimientos }));
+      setInventoryByProject((prev) => ({ ...prev, [idProyecto]: inventario }));
+    } catch (error) {
+      console.error('[InventoryReceptionView] Error cargando proyecto:', idProyecto, error);
+    }
+  }, [isOnline]);
+
+  // Carga inicial de datos reales
+  useEffect(() => {
+    if (isAuthorizedRole && !isRestricted) {
+      cargarDatosIniciales();
+    } else {
+      setLoadStatus('ready');
+    }
+  }, [retryCount, isAuthorizedRole, isRestricted]);
 
   const clearReceptionState = () => {
     setSelectedRequestId(null);
@@ -87,10 +212,8 @@ export function InventoryReceptionView({ currentUser, isRestricted = false, onGo
     setSubmissionError(null);
   };
 
-  const handleSelectProject = (projectId) => {
-    if (projectId === currentProjectId) {
-      return;
-    }
+  const handleSelectProject = useCallback((projectId) => {
+    if (projectId === currentProjectId) return;
 
     if (hasReceptionChanges(receptionDraft)) {
       setActiveOverlay({ type: 'exit-reception', nextProjectId: projectId });
@@ -99,7 +222,11 @@ export function InventoryReceptionView({ currentUser, isRestricted = false, onGo
 
     setCurrentProjectId(projectId);
     clearReceptionState();
-  };
+    // Cargar datos del nuevo proyecto si no están en caché
+    if (!requestsByProject[projectId]) {
+      cargarDatosProyecto(projectId);
+    }
+  }, [currentProjectId, receptionDraft, requestsByProject, cargarDatosProyecto]);
 
   const handleSelectRequest = (requestId) => {
     const request = currentRequests.find((item) => item.requestId === requestId);
@@ -150,36 +277,58 @@ export function InventoryReceptionView({ currentUser, isRestricted = false, onGo
     setActiveOverlay({ type: 'confirm-reception' });
   };
 
-  const handleConfirmReception = () => {
+  /**
+   * Confirma la recepción enviando los datos al backend real.
+   * CA HU-S8-1/S8-2: Recepción transaccional con validaciones de backend.
+   */
+  const handleConfirmReception = useCallback(async () => {
     if (!selectedRequest) {
       setActiveOverlay(null);
       return;
     }
 
-    if (currentUser.receptionShouldFail) {
-      setSubmissionError('No fue posible registrar la recepción. Reintente sin salir de la pantalla actual.');
+    try {
+      // Mapear líneas del draft al formato que espera el backend
+      const detallesRecepcion = receptionDraft.lines
+        .filter((line) => parseFloat(line.cantidadRecibida) > 0)
+        .map((line) => ({
+          idMaterial: line.materialId,
+          cantidadRecibida: parseFloat(line.cantidadRecibida),
+          observacion: `Recepción bodega — ${new Date().toLocaleDateString('es-EC')}`,
+        }));
+
+      await apiRecepcionarMateriales({
+        idProyecto: currentProjectId,
+        idRequerimiento: selectedRequest.requestId,
+        detallesRecepcion,
+        isOnline,
+      });
+
+      // Actualizar datos locales desde el backend para mantener consistencia
+      await cargarDatosProyecto(currentProjectId);
+
+      const receptionRecord = {
+        id: `rec-${Date.now()}`,
+        requestCode: selectedRequest.requestCode,
+        projectId: selectedRequest.projectId,
+        projectCode: selectedRequest.projectCode,
+        projectName: selectedRequest.projectName,
+        receivedAt: new Date().toISOString(),
+        lines: receptionDraft.lines,
+      };
+
+      setFeedback({ requestCode: selectedRequest.requestCode, receptionRecord });
+      clearReceptionState();
+    } catch (error) {
+      const mensaje =
+        error.response?.data?.error ||
+        error.response?.data?.message ||
+        error.message ||
+        'No fue posible registrar la recepción. Reintente sin salir de la pantalla actual.';
+      setSubmissionError(mensaje);
       setActiveOverlay(null);
-      return;
     }
-
-    const { updatedInventory, receptionRecord } = applyReceptionToInventory(currentInventory, receptionDraft.lines, selectedRequest.requestId, currentUser);
-    const completedRecord = {
-      ...receptionRecord,
-      requestCode: selectedRequest.requestCode,
-      projectId: selectedRequest.projectId,
-      projectCode: selectedRequest.projectCode,
-      projectName: selectedRequest.projectName,
-    };
-
-    setInventoryByProject((currentMap) => ({ ...currentMap, [currentProjectId]: updatedInventory }));
-    setReceptionHistoryByProject((currentMap) => ({ ...currentMap, [currentProjectId]: [completedRecord, ...(currentMap[currentProjectId] ?? [])] }));
-    setRequestsByProject((currentMap) => ({
-      ...currentMap,
-      [currentProjectId]: markRequestAsReceived(currentMap[currentProjectId] ?? [], selectedRequest.requestId, receptionDraft.lines),
-    }));
-    setFeedback({ requestCode: selectedRequest.requestCode, receptionRecord: completedRecord });
-    clearReceptionState();
-  };
+  }, [selectedRequest, receptionDraft, currentProjectId, isOnline, cargarDatosProyecto]);
 
   if (!isAuthorizedRole || isRestricted) {
     return (

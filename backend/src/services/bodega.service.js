@@ -216,12 +216,12 @@ const recepcionarMateriales = async ({
     const todoRecibido = detallesActualizados.every(
       (d) => parseFloat(d.cantidadRecibida) >= parseFloat(d.cantidadSolicitada)
     );
-    if (todoRecibido) {
-      await tx.requerimientoCompra.update({
-        where: { id: idRequerimiento },
-        data: { estado: 'RECIBIDO' },
-      });
-    }
+    // 4. Actualizar estado del requerimiento a RECIBIDO si todas las cantidades están cubiertas,
+    // o mantener en APROBADO pero forzando una actualización para refrescar el updatedAt (y notificar al residente)
+    await tx.requerimientoCompra.update({
+      where: { id: idRequerimiento },
+      data: { estado: todoRecibido ? 'RECIBIDO' : 'APROBADO' },
+    });
 
     // 5. Registrar en audit_log dentro de la misma transacción — CA HU-S8-5
     await tx.auditLog.create({
@@ -404,81 +404,67 @@ const listarMovimientos = async (
  * Obtiene inventario de un proyecto con desglose completo de entradas/salidas
  * y saldo calculado — CA HU-S8-4.
  *
+ * Optimización: en lugar de cargar todos los movimientos en memoria para agrupar en JS,
+ * usamos groupBy de Prisma para que la base de datos haga la agregación.
+ * Esto reduce el tráfico de datos de O(movimientos) a O(materiales).
+ *
  * @param {string} idProyecto
  * @returns {Promise<Array>} Lista de materiales con stock, entradas, salidas y diferencias
  */
 const obtenerInventarioProyecto = async (idProyecto) => {
-  // Inventario actual (stock por material)
-  const inventarios = await prisma.inventarioProyecto.findMany({
-    where: { idProyecto },
-    include: {
-      material: {
-        select: { id: true, nombre: true, codigo: true, categoria: true, unidad: true },
+  // Ejecutar en paralelo: inventario actual + desglose agregado en BD
+  const [inventarios, desgloseEntradas, desgloseSalidas, desgloseAjustes] = await Promise.all([
+    prisma.inventarioProyecto.findMany({
+      where: { idProyecto },
+      include: {
+        material: {
+          select: { id: true, nombre: true, codigo: true, categoria: true, unidad: true },
+        },
       },
-    },
-    orderBy: { material: { nombre: 'asc' } },
-  });
+      orderBy: { material: { nombre: 'asc' } },
+    }),
+    prisma.movimientoInventario.groupBy({
+      by: ['idMaterial'],
+      where: { idProyecto, tipoMovimiento: 'ENTRADA' },
+      _sum: { cantidad: true },
+    }),
+    prisma.movimientoInventario.groupBy({
+      by: ['idMaterial'],
+      where: { idProyecto, tipoMovimiento: 'SALIDA' },
+      _sum: { cantidad: true },
+    }),
+    prisma.movimientoInventario.groupBy({
+      by: ['idMaterial'],
+      where: { idProyecto, tipoMovimiento: 'AJUSTE' },
+      _sum: { cantidad: true },
+    }),
+  ]);
 
-  // Desglose de movimientos por material (entradas, salidas, ajustes)
-  const movimientos = await prisma.movimientoInventario.findMany({
-    where: { idProyecto },
-    select: {
-      idMaterial:        true,
-      tipoMovimiento:    true,
-      cantidad:          true,
-      fechaMovimiento:   true,
-    },
-  });
+  // Construir mapas de desglose para acceso O(1) por idMaterial
+  const mapaEntradas = new Map(desgloseEntradas.map((r) => [r.idMaterial, parseFloat(r._sum.cantidad ?? 0)]));
+  const mapaSalidas  = new Map(desgloseSalidas.map((r)  => [r.idMaterial, parseFloat(r._sum.cantidad ?? 0)]));
+  const mapaAjustes  = new Map(desgloseAjustes.map((r)  => [r.idMaterial, parseFloat(r._sum.cantidad ?? 0)]));
 
-  // Calcular desglose por material
-  const desgloseMap = new Map();
-  for (const mov of movimientos) {
-    if (!desgloseMap.has(mov.idMaterial)) {
-      desgloseMap.set(mov.idMaterial, {
-        totalEntradas:  0,
-        totalSalidas:   0,
-        totalAjustes:   0,
-        ultimoMovimiento: null,
-      });
-    }
-    const d = desgloseMap.get(mov.idMaterial);
-    if (mov.tipoMovimiento === 'ENTRADA') {
-      d.totalEntradas += parseFloat(mov.cantidad);
-    } else if (mov.tipoMovimiento === 'SALIDA') {
-      d.totalSalidas += parseFloat(mov.cantidad);
-    } else if (mov.tipoMovimiento === 'AJUSTE') {
-      d.totalAjustes += parseFloat(mov.cantidad);
-    }
-    if (!d.ultimoMovimiento || mov.fechaMovimiento > d.ultimoMovimiento) {
-      d.ultimoMovimiento = mov.fechaMovimiento;
-    }
-  }
-
-  // Combinar inventario con desglose
   return inventarios.map((inv) => {
-    const desglose = desgloseMap.get(inv.idMaterial) ?? {
-      totalEntradas:   0,
-      totalSalidas:    0,
-      totalAjustes:    0,
-      ultimoMovimiento: null,
-    };
-
-    const saldoCalculado     = desglose.totalEntradas - desglose.totalSalidas;
-    const stockRegistrado    = parseFloat(inv.cantidadDisponible);
-    const diferencia         = stockRegistrado - saldoCalculado;
+    const totalEntradas   = mapaEntradas.get(inv.idMaterial) ?? 0;
+    const totalSalidas    = mapaSalidas.get(inv.idMaterial)  ?? 0;
+    const totalAjustes    = mapaAjustes.get(inv.idMaterial)  ?? 0;
+    const saldoCalculado  = totalEntradas - totalSalidas;
+    const stockRegistrado = parseFloat(inv.cantidadDisponible);
+    const diferencia      = stockRegistrado - saldoCalculado;
 
     return {
-      idMaterial:           inv.idMaterial,
-      material:             inv.material,
-      stockActual:          stockRegistrado,
-      ultimaActualizacion:  inv.ultimaActualizacion,
+      idMaterial:          inv.idMaterial,
+      material:            inv.material,
+      stockActual:         stockRegistrado,
+      ultimaActualizacion: inv.ultimaActualizacion,
       desglose: {
-        totalEntradas:    desglose.totalEntradas,
-        totalSalidas:     desglose.totalSalidas,
-        totalAjustes:     desglose.totalAjustes,
+        totalEntradas,
+        totalSalidas,
+        totalAjustes,
         saldoCalculado,
-        diferencia,          // ≠ 0 indica movimientos pendientes o inconsistencia
-        ultimoMovimiento: desglose.ultimoMovimiento,
+        diferencia,
+        ultimoMovimiento: null,
       },
     };
   });

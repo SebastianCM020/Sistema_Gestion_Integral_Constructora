@@ -157,12 +157,20 @@ const bandejaContable = async (req, res) => {
     const [requerimientos, total] = await Promise.all([
       prisma.requerimientoCompra.findMany({
         where: { estado },
-        include: {
+        select: {
+          id:              true,
+          idProyecto:      true,   // Requerido por el frontend para el endpoint de presupuesto
+          estado:          true,
+          justificacion:   true,
+          comentarioRechazo: true,
+          fechaSolicitud:  true,
+          fechaAprobacion: true,
           proyecto:    { select: { id: true, codigo: true, nombre: true } },
           solicitante: { select: { id: true, nombre: true, apellido: true, email: true } },
+          aprobador:   { select: { id: true, nombre: true, apellido: true } },
           detalles: {
             include: {
-              material: { select: { id: true, codigo: true, nombre: true, unidad: true } },
+              material: { select: { id: true, codigo: true, nombre: true, unidad: true, categoria: true } },
             },
           },
         },
@@ -235,28 +243,81 @@ const obtenerNotificaciones = async (req, res) => {
       }));
       return res.status(200).json({ data: notifications });
     } else if (rol === ROLES.RESIDENTE || rol === ROLES.AUXILIAR) {
-      // Para residentes y auxiliares: sus requerimientos que fueron aprobados o rechazados recientemente
+      // Para residentes y auxiliares: sus requerimientos que fueron aprobados, rechazados o recibidos (total/parcial) recientemente
       const recientes = await prisma.requerimientoCompra.findMany({
         where: {
           idSolicitante: userId,
-          estado: { in: ['APROBADO', 'RECHAZADO'] }
+          estado: { in: ['APROBADO', 'RECHAZADO', 'RECIBIDO'] }
         },
         include: {
           proyecto: { select: { nombre: true, codigo: true } },
-          aprobador: { select: { nombre: true, apellido: true } }
+          aprobador: { select: { nombre: true, apellido: true } },
+          detalles: { select: { cantidadRecibida: true } }
         },
-        orderBy: { fechaAprobacion: 'desc' },
-        take: 10
+        orderBy: { updatedAt: 'desc' },
+        take: 15
       });
-      const notifications = recientes.map(r => ({
-        id: r.id,
-        tipo: r.estado,
-        titulo: r.estado === 'APROBADO' ? 'Requerimiento Aprobado' : 'Requerimiento Rechazado',
-        mensaje: `Tu solicitud para ${r.proyecto.codigo} fue ${r.estado.toLowerCase()}`,
-        fecha: r.fechaAprobacion || r.createdAt,
-        requerimiento: r
-      }));
-      return res.status(200).json({ data: notifications });
+      
+      const notifications = recientes.flatMap(r => {
+        const notifs = [];
+        
+        if (r.estado === 'RECHAZADO') {
+          notifs.push({
+            id: r.id + '-rechazado',
+            tipo: 'RECHAZADO',
+            titulo: 'Requerimiento Rechazado',
+            mensaje: `Tu solicitud para ${r.proyecto.codigo} fue rechazada por el gerente.`,
+            fecha: r.fechaAprobacion || r.updatedAt || r.createdAt,
+            requerimiento: r
+          });
+          return notifs;
+        }
+
+        // Siempre notificar la aprobación (si existe la fecha)
+        if (r.fechaAprobacion) {
+          notifs.push({
+            id: r.id + '-aprobado',
+            tipo: 'APROBADO',
+            titulo: 'Requerimiento Aprobado',
+            mensaje: `Tu solicitud para ${r.proyecto.codigo} fue aprobada por el gerente.`,
+            fecha: r.fechaAprobacion,
+            requerimiento: r
+          });
+        }
+
+        // Si ya fue recibido completamente
+        if (r.estado === 'RECIBIDO') {
+          notifs.push({
+            id: r.id + '-recibido',
+            tipo: 'RECIBIDO',
+            titulo: 'Materiales Recibidos (Completado)',
+            mensaje: `Tu solicitud para ${r.proyecto.codigo} ha sido recibida completamente en bodega.`,
+            fecha: r.updatedAt,
+            requerimiento: r
+          });
+        } else if (r.estado === 'APROBADO') {
+          // Verificar si hay recepción parcial
+          const receivedAnything = r.detalles?.some(d => parseFloat(d.cantidadRecibida || 0) > 0);
+          if (receivedAnything) {
+            notifs.push({
+              id: r.id + '-parcial',
+              tipo: 'RECEPCION_PARCIAL',
+              titulo: 'Recepción Parcial en Bodega',
+              mensaje: `Se ha recibido una parte de los materiales para ${r.proyecto.codigo}.`,
+              fecha: r.updatedAt,
+              requerimiento: r
+            });
+          }
+        }
+
+        return notifs;
+      });
+
+      // Ordenar por fecha y tomar las 10 más recientes
+      notifications.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+      const recentNotifications = notifications.slice(0, 10);
+
+      return res.status(200).json({ data: recentNotifications });
     } else if (rol.toLowerCase() === ROLES.BODEGUERO.toLowerCase()) {
       // Para bodegueros: requerimientos aprobados listos para recepcionar
       const aprobados = await prisma.requerimientoCompra.findMany({
@@ -305,6 +366,48 @@ const validarContabilidad = async (req, res) => {
   }
 };
 
+/**
+ * GET /api/v1/compras/proyectos/:idProyecto/presupuesto-contable
+ * Retorna el resumen de presupuesto del proyecto para la revisión del Contador.
+ * Query params: ?idRequerimiento=UUID (excluye ese req del comprometido)
+ * RBAC: Contador y Admin.
+ */
+const obtenerPresupuestoContable = async (req, res) => {
+  try {
+    const { idProyecto }       = req.params;
+    const { idRequerimiento }  = req.query;
+
+    const resumen = await comprasService.obtenerPresupuestoContable(
+      idProyecto,
+      idRequerimiento || null
+    );
+    return res.status(200).json({ data: resumen });
+  } catch (error) {
+    console.error('[compras] obtenerPresupuestoContable:', error.message);
+    return res.status(error.status || 500).json({ error: error.message || 'Error al obtener presupuesto.' });
+  }
+};
+
+/**
+ * GET /api/v1/compras/stats-contable
+ * Retorna en UNA SOLA query el conteo de requerimientos por estado para la bandeja contable.
+ * Evita el antipatrón de 3 requests separados para obtener los mismos datos.
+ * RBAC: Admin, Contador.
+ */
+const statsContable = async (req, res) => {
+  try {
+    const [pendientes, validados, rechazados] = await Promise.all([
+      prisma.requerimientoCompra.count({ where: { estado: 'REVISION_CONTABLE' } }),
+      prisma.requerimientoCompra.count({ where: { estado: 'EN_REVISION' } }),
+      prisma.requerimientoCompra.count({ where: { estado: 'RECHAZADO' } }),
+    ]);
+    return res.status(200).json({ data: { pendientes, validados, rechazados } });
+  } catch (error) {
+    console.error('[compras] statsContable:', error.message);
+    return res.status(500).json({ error: 'Error al obtener estadísticas contables.' });
+  }
+};
+
 module.exports = {
   crearRequerimiento,
   listarRequerimientos,
@@ -313,6 +416,8 @@ module.exports = {
   rechazarRequerimiento,
   bandejaGerencial,
   bandejaContable,
+  statsContable,
+  obtenerPresupuestoContable,
   obtenerNotificaciones,
   validarContabilidad,
 };

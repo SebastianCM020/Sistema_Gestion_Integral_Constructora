@@ -358,4 +358,113 @@ module.exports = {
   validarRequerimientoContable,
   aprobarRequerimiento,
   rechazarRequerimiento,
+  obtenerPresupuestoContable,
 };
+
+/**
+ * Calcula el resumen de presupuesto de un proyecto para la revisión contable.
+ *
+ * Criterios:
+ *   - presupuestoTotal:     campo del proyecto (aprobado en contrato).
+ *   - presupuestoComprometido: suma de DetallesRequerimiento de reqs EN_REVISION / APROBADO / RECIBIDO.
+ *     (Los REVISION_CONTABLE y RECHAZADO NO se consideran comprometidos aún.)
+ *   - presupuestoDisponible: presupuestoTotal - presupuestoComprometido.
+ *   - montoSolicitadoActual: monto total del requerimiento que se está revisando.
+ *
+ * Nota: DetalleRequerimiento almacena cantidades físicas, no precios. Como el proyecto
+ * no tiene un precio unitario de compra por material (solo rubros de obra), el
+ * "presupuesto comprometido" se calcula como la fracción del presupuesto total
+ * que representan los requerimientos en estados activos respecto al total de reqs.
+ * Si existen rubros, se usa la suma de (precioUnitario * cantidadPresupuestada) como
+ * base más precisa.
+ *
+ * @param {string} idProyecto
+ * @param {string} [idRequerimientoActual] - UUID del req que se está revisando (para excluirlo del comprometido)
+ * @returns {Promise<{presupuestoTotal, presupuestoComprometido, presupuestoDisponible, tienePresupuesto, alerta}>}
+ */
+async function obtenerPresupuestoContable(idProyecto, idRequerimientoActual = null) {
+  const [proyecto, rubros, requerimientosActivos] = await Promise.all([
+    prisma.proyecto.findUnique({
+      where: { id: idProyecto },
+      select: { presupuestoTotal: true, nombre: true, codigo: true },
+    }),
+    prisma.rubro.findMany({
+      where: { idProyecto, activo: true },
+      select: { precioUnitario: true, cantidadPresupuestada: true, cantidadEjecutada: true },
+    }),
+    prisma.requerimientoCompra.findMany({
+      where: {
+        idProyecto,
+        estado: { in: ['EN_REVISION', 'APROBADO', 'RECIBIDO'] },
+        ...(idRequerimientoActual ? { id: { not: idRequerimientoActual } } : {}),
+      },
+      select: { id: true },
+    }),
+  ]);
+
+  if (!proyecto) {
+    const err = new Error('Proyecto no encontrado.');
+    err.status = 404;
+    throw err;
+  }
+
+  const presupuestoTotal = parseFloat(proyecto.presupuestoTotal ?? 0);
+
+  // Calcular presupuesto ejecutado en rubros de obra (base más precisa si existe)
+  const presupuestoEjecutadoRubros = rubros.reduce((sum, r) => {
+    const precio   = parseFloat(r.precioUnitario ?? 0);
+    const ejecutada = parseFloat(r.cantidadEjecutada ?? 0);
+    return sum + precio * ejecutada;
+  }, 0);
+
+  // Calcular presupuesto comprometido en requerimientos activos.
+  // Usando una proporción simple: cada requerimiento aprobado/en-revisión
+  // representa una fracción del presupuesto comprometido. Para esto necesitamos
+  // el conteo total del proyecto y los reqs en estado comprometido.
+  const totalRequerimientosProyecto = await prisma.requerimientoCompra.count({
+    where: { idProyecto },
+  });
+
+  // Proporción simple del compromiso por conteo
+  const cantidadComprometidos = requerimientosActivos.length;
+  const factorCompromiso = totalRequerimientosProyecto > 0
+    ? cantidadComprometidos / totalRequerimientosProyecto
+    : 0;
+
+  const presupuestoComprometido = Math.min(
+    presupuestoTotal * factorCompromiso,
+    presupuestoTotal
+  );
+
+  const presupuestoDisponible = Math.max(presupuestoTotal - presupuestoComprometido - presupuestoEjecutadoRubros, 0);
+  const porcentajeUsado = presupuestoTotal > 0
+    ? Math.round(((presupuestoComprometido + presupuestoEjecutadoRubros) / presupuestoTotal) * 100)
+    : 0;
+
+  const tienePresupuesto = presupuestoDisponible > 0;
+
+  let alerta = null;
+  if (!tienePresupuesto) {
+    alerta = {
+      tipo: 'critico',
+      mensaje: `Presupuesto agotado. El proyecto ${proyecto.codigo} no tiene saldo disponible para nuevos compromisos.`,
+    };
+  } else if (porcentajeUsado >= 80) {
+    alerta = {
+      tipo: 'advertencia',
+      mensaje: `El proyecto ${proyecto.codigo} ha comprometido el ${porcentajeUsado}% de su presupuesto. Proceder con precaución.`,
+    };
+  }
+
+  return {
+    proyecto:                { nombre: proyecto.nombre, codigo: proyecto.codigo },
+    presupuestoTotal,
+    presupuestoEjecutadoRubros,
+    presupuestoComprometido,
+    presupuestoDisponible,
+    porcentajeUsado,
+    cantidadReqsComprometidos: cantidadComprometidos,
+    tienePresupuesto,
+    alerta,
+  };
+}

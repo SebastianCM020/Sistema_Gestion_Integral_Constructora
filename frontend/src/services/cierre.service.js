@@ -86,15 +86,29 @@ export const fetchCierreById = async (idCierre) => {
 };
 
 /**
- * Rechaza un consumo y crea un movimiento inverso.
- * @param {string} idMovimiento 
- * @param {string} observacion 
+ * Rechaza un consumo y crea un movimiento inverso de AJUSTE.
+ * @param {string} idMovimiento
+ * @param {string} observacion
  * @returns {Promise<object>}
  */
 export const postRechazarConsumo = async (idMovimiento, observacion) => {
   const { data } = await api.post('/cierres-contables/rechazar-consumo', {
     idMovimiento,
     observacion,
+  });
+  return data.data;
+};
+
+/**
+ * Aprueba (valida) un consumo registrándolo en el audit_log.
+ * No modifica el movimiento ni el inventario: solo deja trazabilidad
+ * de que el contador revisó y aprobó el consumo.
+ * @param {string} idMovimiento
+ * @returns {Promise<object>}
+ */
+export const postAprobarConsumo = async (idMovimiento) => {
+  const { data } = await api.post('/cierres-contables/aprobar-consumo', {
+    idMovimiento,
   });
   return data.data;
 };

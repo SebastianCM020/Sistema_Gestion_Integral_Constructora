@@ -194,6 +194,7 @@ model RequerimientoCompra {
   fechaSolicitud      DateTime  @default(now()) @map("fecha_solicitud") @db.Timestamptz
   fechaAprobacion     DateTime? @map("fecha_aprobacion") @db.Timestamptz
   createdAt           DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt           DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
 
   proyecto    Proyecto  @relation(fields: [idProyecto], references: [id])
   solicitante Usuario   @relation("SolicitanteReq", fields: [idSolicitante], references: [id])

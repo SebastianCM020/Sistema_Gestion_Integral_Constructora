@@ -137,3 +137,28 @@ export const validarContabilidadReq = async (id) => {
   const { data } = await api.put(`/compras/requerimientos/${id}/validar-contabilidad`);
   return data;
 };
+
+/**
+ * Obtiene el resumen de presupuesto de un proyecto para la revisión contable.
+ *
+ * @param {string} idProyecto
+ * @param {string} [idRequerimiento] - Excluye este req del cálculo de comprometido
+ * @returns {Promise<{data: object}>}
+ */
+export const fetchPresupuestoContable = async (idProyecto, idRequerimiento = null) => {
+  const params = {};
+  if (idRequerimiento) params.idRequerimiento = idRequerimiento;
+  const { data } = await api.get(`/compras/proyectos/${idProyecto}/presupuesto-contable`, { params });
+  return data;
+};
+
+/**
+ * Obtiene los conteos de estado para la bandeja contable en UNA SOLA petición.
+ * Evita el antipatrón de 3 requests separados para obtener los mismos datos.
+ *
+ * @returns {Promise<{data: {pendientes: number, validados: number, rechazados: number}}>}
+ */
+export const fetchStatsContable = async () => {
+  const { data } = await api.get('/compras/stats-contable');
+  return data;
+};

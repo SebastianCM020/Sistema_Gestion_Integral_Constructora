@@ -24,7 +24,7 @@ export default defineConfig({
         // Cachear la API para modo offline
         runtimeCaching: [
           {
-            urlPattern: /^http:\/\/localhost:3001\/api\/.*/i,
+            urlPattern: /\/api\/.*/i,
             handler: 'NetworkFirst',
             options: {
               cacheName: 'icaro-api-cache',

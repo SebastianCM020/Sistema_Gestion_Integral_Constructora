@@ -3,6 +3,7 @@ const router  = express.Router();
 const { requireAuth, ROLES }     = require('../middlewares/auth.middleware');
 const { requireProjectAccess }   = require('../middlewares/projectAccess.middleware');
 const prisma = require('../utils/prisma');
+const socketModule = require('../socket');
 
 /**
  * GET /api/v1/proyectos
@@ -274,6 +275,20 @@ router.patch('/:id/estado', requireAuth, async (req, res) => {
     const mensaje = nuevoEstado === 'INACTIVO'
       ? `Proyecto "${proyecto.nombre}" desactivado. Las nuevas transacciones operativas han sido bloqueadas.`
       : `Estado del proyecto "${proyecto.nombre}" actualizado a ${nuevoEstado}.`;
+
+    // Notificar en tiempo real a todos los clientes conectados (Sprint WebSocket)
+    try {
+      const io = socketModule.getIO();
+      io.emit('proyecto:estadoCambiado', {
+        idProyecto: id,
+        nuevoEstado,
+        nombre: proyecto.nombre,
+        mensaje,
+        timestamp: new Date().toISOString(),
+      });
+    } catch {
+      // Socket no inicializado (ej: entorno de tests) — sin impacto en la respuesta HTTP
+    }
 
     return res.status(200).json({ message: mensaje, data: actualizado });
   } catch (error) {

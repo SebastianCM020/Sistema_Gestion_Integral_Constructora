@@ -12,7 +12,7 @@ import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   Plus, Trash2, ClipboardList, AlertCircle, CheckCircle2,
-  ChevronDown, Loader2, Package, ShieldAlert,
+  ChevronDown, Loader2, Package, ShieldAlert, Eye, X
 } from 'lucide-react';
 import { AppHeader } from '../../components/ui/AppHeader.jsx';
 import { SidebarNavigation } from '../../components/ui/SidebarNavigation.jsx';
@@ -29,6 +29,96 @@ const FORM_INICIAL = {
   justificacion: '',
   detalles:      [{ ...DETALLE_VACIO }],
 };
+
+function RequerimientoDetalleModal({ req, onClose, badgeEstado }) {
+  if (!req) return null;
+
+  return (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-gray-900/50 p-4 backdrop-blur-sm transition-opacity">
+      <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl flex flex-col max-h-[90vh]">
+        <div className="flex items-center justify-between border-b border-gray-100 bg-gray-50 px-6 py-4 shrink-0">
+          <div>
+            <h3 className="text-lg font-semibold text-[#2F3A45]">Detalle del requerimiento</h3>
+            <p className="text-xs text-gray-500 mt-0.5">ID: {req.id}</p>
+          </div>
+          <button onClick={onClose} className="rounded-full p-1.5 text-gray-400 hover:bg-gray-200 hover:text-gray-600 transition-colors">
+            <X size={20} />
+          </button>
+        </div>
+
+        <div className="overflow-y-auto p-6 space-y-6">
+          <div className="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Proyecto</p>
+              <p className="font-semibold text-[#2F3A45]">{req.proyecto?.nombre ?? '—'}</p>
+            </div>
+            <div>
+              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Solicitante</p>
+              <p className="font-medium text-[#2F3A45]">{req.solicitante ? `${req.solicitante.nombre} ${req.solicitante.apellido}` : '—'}</p>
+            </div>
+            <div>
+              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Fecha de solicitud</p>
+              <p className="font-medium text-[#2F3A45]">{new Date(req.fechaSolicitud).toLocaleString('es-CO')}</p>
+            </div>
+            {req.fechaAprobacion && (
+              <div>
+                <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Fecha de aprobación</p>
+                <p className="font-medium text-[#2F3A45]">{new Date(req.fechaAprobacion).toLocaleString('es-CO')}</p>
+                {req.aprobador && <p className="text-xs text-gray-500 mt-0.5">Por: {req.aprobador.nombre} {req.aprobador.apellido}</p>}
+              </div>
+            )}
+            <div>
+              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Estado</p>
+              <div>{badgeEstado(req.estado)}</div>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Justificación</p>
+            <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 text-sm text-[#2F3A45]">
+              {req.justificacion}
+            </div>
+          </div>
+
+          {req.comentarioRechazo && (
+            <div>
+              <p className="text-xs font-medium text-red-600 uppercase tracking-wider mb-2">Motivo de rechazo</p>
+              <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                {req.comentarioRechazo}
+              </div>
+            </div>
+          )}
+
+          <div>
+            <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
+              Materiales solicitados ({req.detalles?.length || 0})
+            </p>
+            <div className="overflow-hidden rounded-lg border border-gray-200">
+              <table className="w-full text-sm">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-4 py-2 text-left font-medium text-gray-500">Material</th>
+                    <th className="px-4 py-2 text-center font-medium text-gray-500">Cantidad</th>
+                    <th className="px-4 py-2 text-center font-medium text-gray-500">Recibida</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {req.detalles?.map(d => (
+                    <tr key={d.id} className="hover:bg-gray-50">
+                      <td className="px-4 py-2 text-[#2F3A45]">{d.material?.nombre} <span className="text-gray-400 text-xs ml-1">({d.material?.unidad})</span></td>
+                      <td className="px-4 py-2 text-center font-semibold text-[#2F3A45]">{parseFloat(d.cantidadSolicitada)}</td>
+                      <td className="px-4 py-2 text-center text-gray-600">{parseFloat(d.cantidadRecibida ?? 0)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // ── Componente principal ──────────────────────────────────────────────────────
 export function RequerimientosView({
@@ -55,6 +145,7 @@ export function RequerimientosView({
   const [form, setForm]                       = useState({ ...FORM_INICIAL, idProyecto: idProyecto || queryProjectId || '' });
   const [errors, setErrors]                   = useState({});
   const [showForm, setShowForm]               = useState(false);
+  const [reqSeleccionado, setReqSeleccionado] = useState(null);
   const canCreateRequests = ['Residente', 'Administrador del Sistema'].includes(currentUser.roleName);
 
   // ── Cargar datos iniciales ─────────────────────────────────────────────────
@@ -234,7 +325,8 @@ export function RequerimientosView({
 
   const badgeEstado = (estado) => {
     const map = {
-      EN_REVISION: { label: 'En Revisión', cls: 'bg-amber-100 text-amber-800' },
+      REVISION_CONTABLE: { label: 'Rev. Contable', cls: 'bg-purple-100 text-purple-800' },
+      EN_REVISION: { label: 'Rev. Gerencia', cls: 'bg-amber-100 text-amber-800' },
       APROBADO:    { label: 'Aprobado',    cls: 'bg-green-100 text-green-800' },
       RECHAZADO:   { label: 'Rechazado',   cls: 'bg-red-100 text-red-800' },
       RECIBIDO:    { label: 'Recibido',    cls: 'bg-blue-100 text-blue-800' },
@@ -540,6 +632,7 @@ export function RequerimientosView({
                     <th className="px-4 py-3 text-left font-semibold text-[#6B7280]">Ítems</th>
                     <th className="px-4 py-3 text-left font-semibold text-[#6B7280]">Estado</th>
                     <th className="px-4 py-3 text-left font-semibold text-[#6B7280]">Fecha</th>
+                    <th className="px-4 py-3 text-right font-semibold text-[#6B7280]">Acciones</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#F3F4F6]">
@@ -559,6 +652,15 @@ export function RequerimientosView({
                         <td className="px-4 py-3 text-gray-500">
                           {new Date(req.fechaSolicitud).toLocaleDateString('es-CO')}
                         </td>
+                        <td className="px-4 py-3 text-right">
+                          <button
+                            onClick={() => setReqSeleccionado(req)}
+                            className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-[#1F4E79] transition-colors"
+                            title="Ver detalle"
+                          >
+                            <Eye size={18} />
+                          </button>
+                        </td>
                       </tr>
                       {req.estado === 'RECHAZADO' && req.comentarioRechazo && (
                         <tr className="bg-red-50/50 border-t-0">
@@ -575,6 +677,14 @@ export function RequerimientosView({
           )}
         </main>
       </div>
+      
+      {reqSeleccionado && (
+        <RequerimientoDetalleModal 
+          req={reqSeleccionado} 
+          onClose={() => setReqSeleccionado(null)} 
+          badgeEstado={badgeEstado}
+        />
+      )}
     </div>
   );
 }

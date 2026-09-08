@@ -88,7 +88,7 @@ export const moduleCatalog = [
   {
     id: 'review',
     name: 'Bandeja Gerencial',
-    description: 'Aprobación final de requerimientos (Sprint 6).',
+    description: 'Aprobación final de requerimientos.',
     icon: ClipboardCheck,
     helperText: 'Apruebe o rechace requerimientos de compra.',
     statusLabel: 'Módulo Principal',
