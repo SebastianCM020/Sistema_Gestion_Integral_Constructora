@@ -1,4 +1,4 @@
-# Diseño Arquitectónico — Sistema ICARO
+# Diseño Arquitectónico — Sistema ICARO (DEPRECADA)
 ## Sistema de Gestión Integral · CONSTRUCTORES BMGM S.A.S.
 
 **Versión:** 1.0  
